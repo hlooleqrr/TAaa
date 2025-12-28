@@ -8,14 +8,15 @@
     * { box-sizing: border-box; }
     body {
       font-family: 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f4f6f8;
+      background: #f3f4f6; /* رمادي فاتح مريح */
       margin: 0;
       text-align: center;
       font-size: 20px;
       direction: rtl;
+      color: #111827;
     }
     header {
-      background: linear-gradient(135deg, #005c48, #009476);
+      background: linear-gradient(135deg, #064e3b, #16a34a); /* أخضر غامق لتدرّج أنيق */
       color: #fff;
       padding: 20px 10px;
       position: sticky;
@@ -45,10 +46,10 @@
       padding: 0 10px;
     }
     .card {
-      background: #fff;
+      background: #ffffff;
       border-radius: 18px;
       padding: 22px 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
       margin-bottom: 18px;
       text-align: center;
       width: 100%;
@@ -67,20 +68,21 @@
       transition: transform .12s ease, box-shadow .12s ease, background .12s ease, opacity .12s ease;
     }
     button.primary, .btn.primary {
-      background: #009476;
-      color: #fff;
-      box-shadow: 0 8px 16px rgba(0,148,118,0.35);
+      background: #0f766e; /* أخضر تركوازي أنيق */
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(15, 118, 110, 0.35);
     }
     button.primary:hover, .btn.primary:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(0,148,118,0.42);
+      box-shadow: 0 10px 22px rgba(15, 118, 110, 0.45);
+      background: #115e59;
     }
     button.secondary, .btn.secondary {
-      background: #e3f2fd;
-      color: #1565c0;
+      background: #e5f3ff; /* أزرق فاتح */
+      color: #1d4ed8;
     }
     button.secondary:hover, .btn.secondary:hover {
-      background: #d1e7ff;
+      background: #dbeafe;
     }
     button.small, .btn.small {
       padding: 8px 16px;
@@ -93,8 +95,16 @@
       margin: 10px 0 4px;
       font-size: 18px;
       border-radius: 10px;
-      border: 1px solid #d0d7de;
+      border: 1px solid #d1d5db;
       text-align: right;
+      background: #f9fafb;
+      color: #111827;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0f766e;
+      box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.35);
+      background: #ffffff;
     }
     label {
       display: block;
@@ -102,6 +112,7 @@
       font-size: 16px;
       margin-top: 10px;
       margin-bottom: 2px;
+      color: #374151;
     }
 
     .fade-in {
@@ -126,16 +137,17 @@
     .welcome-title {
       font-size: 24px;
       margin-bottom: 8px;
+      color: #111827;
     }
     .welcome-sub {
       font-size: 15px;
-      color: #555;
+      color: #6b7280;
       margin-bottom: 20px;
     }
 
     .steps-badge {
       font-size: 13px;
-      color: #777;
+      color: #6b7280;
       margin-bottom: 8px;
     }
 
@@ -149,23 +161,23 @@
       margin-bottom: 10px;
     }
     .client-chip {
-      background: #e3f2fd;
-      color: #1565c0;
+      background: #e0f2fe;
+      color: #0369a1;
       border-radius: 999px;
       padding: 6px 14px;
       font-size: 14px;
     }
     .badge-mode {
-      background: #fff7e6;
-      color: #b36b00;
+      background: #fffbeb;
+      color: #92400e;
       border-radius: 999px;
       padding: 4px 12px;
       font-size: 12px;
       display: inline-block;
     }
     .badge-duration {
-      background: #e8f5e9;
-      color: #1b5e20;
+      background: #ecfdf5;
+      color: #166534;
       border-radius: 999px;
       padding: 4px 12px;
       font-size: 12px;
@@ -179,8 +191,8 @@
       gap: 14px;
       padding: 14px;
       border-radius: 16px;
-      background: #f5fffb;
-      border: 1px dashed #00a27e;
+      background: #f0fdf4;
+      border: 1px dashed #22c55e;
       margin: 10px 0 14px;
       text-align: right;
     }
@@ -188,13 +200,13 @@
       width: 52px;
       height: 52px;
       border-radius: 14px;
-      background: #fff;
+      background: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #e5e7eb;
     }
     .bank-logo img {
       max-width: 100%;
@@ -204,39 +216,40 @@
     .bank-text-main {
       font-size: 16px;
       font-weight: 600;
+      color: #0f172a;
     }
     .bank-text-sub {
       font-size: 13px;
-      color: #555;
+      color: #4b5563;
     }
 
     .result-main-block {
-      background: radial-gradient(circle at top, #e8fff7 0, #ffffff 55%);
+      background: radial-gradient(circle at top, #ecfdf5 0, #ffffff 60%);
       border-radius: 18px;
       padding: 14px 16px;
       margin-top: 6px;
       text-align: right;
-      border: 1px solid #c8e6c9;
+      border: 1px solid #bbf7d0;
     }
     .result-main-title {
       font-size: 15px;
-      color: #004d40;
+      color: #047857;
       margin-bottom: 4px;
     }
     .result-amount-main {
       font-size: 24px;
       font-weight: 800;
-      color: #00695c;
+      color: #047857;
       margin: 4px 0 2px;
     }
     .result-amount-sub {
       font-size: 14px;
-      color: #2e7d32;
+      color: #15803d;
       margin: 1px 0;
     }
     .result-amount-small {
       font-size: 13px;
-      color: #555;
+      color: #4b5563;
     }
 
     .result-section-title {
@@ -244,12 +257,12 @@
       font-size: 15px;
       font-weight: 700;
       margin: 14px 0 6px;
-      color: #263238;
+      color: #111827;
     }
     .result-section-box {
       border-radius: 16px;
-      background: #fafafa;
-      border: 1px solid #eeeeee;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
       padding: 10px 14px;
       text-align: right;
     }
@@ -257,18 +270,20 @@
     .instalment-row {
       font-size: 14px;
       padding: 5px 0;
-      border-bottom: 1px dashed #eee;
+      border-bottom: 1px dashed #e5e7eb;
       text-align: right;
+      color: #374151;
     }
 
     .alert-error {
-      color: #d32f2f;
-      background: #ffebee;
+      color: #b91c1c;
+      background: #fef2f2;
       border-radius: 12px;
       padding: 10px 12px;
       font-size: 14px;
       margin: 8px 0;
       text-align: right;
+      border: 1px solid #fecaca;
     }
 
     /* لوحة المسؤول */
@@ -285,21 +300,24 @@
       margin-top: 14px;
     }
     .admin-table th, .admin-table td {
-      border: 1px solid #eee;
+      border: 1px solid #e5e7eb;
       padding: 6px 8px;
       font-size: 13px;
       text-align: center;
     }
     .admin-table th {
-      background: #f5f5f5;
+      background: #f3f4f6;
+      color: #374151;
     }
 
     footer {
       font-size: 13px;
-      color: #666;
+      color: #6b7280;
       margin-top: 20px;
       padding: 10px;
       position: relative;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
     }
 
     /* أيقونة المشرف أسفل الفوتر في الصفحة الأولى */
@@ -310,8 +328,8 @@
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background: rgba(0,0,0,0.08);
-      color: #333;
+      background: rgba(15, 23, 42, 0.08);
+      color: #111827;
       font-size: 20px;
       display: none;
       align-items: center;
@@ -320,7 +338,7 @@
       z-index: 50;
     }
     #adminIcon:hover {
-      background: rgba(0,0,0,0.15);
+      background: rgba(15, 23, 42, 0.18);
     }
   </style>
 </head>
@@ -347,7 +365,7 @@
       <button class="primary" onclick="startClientFlow()">
         ابدأ كعميل
       </button>
-      <div style="margin-top:16px; font-size:13px; color:#777;">
+      <div style="margin-top:16px; font-size:13px; color:#6b7280;">
         النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة وترسلها للعميل مباشرة.
       </div>
     </div>
@@ -387,8 +405,8 @@
   <!-- صفحة "قريباً" لشراء مديونية تمويل عقاري -->
   <div id="comingSoonPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px;">شراء مديونية تمويل عقاري</h2>
-      <p style="font-size:15px; color:#555;">
+      <h2 style="margin-top:0; font-size:20px; color:#111827;">شراء مديونية تمويل عقاري</h2>
+      <p style="font-size:15px; color:#6b7280;">
         حالياً لا يوجد احتساب لشراء المديونية العقارية عبر هذه الحاسبة.<br>
         سيتم التحديث وإضافة الخدمة في الأسابيع القادمة إن شاء الله 🙏
       </p>
@@ -401,8 +419,8 @@
   <!-- صفحة دخول المسؤول -->
   <div id="adminLoginPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px;">دخول المشرف</h2>
-      <p style="font-size:14px; color:#b71c1c; text-align:right;">
+      <h2 style="margin-top:0; font-size:20px; color:#111827;">دخول المشرف</h2>
+      <p style="font-size:14px; color:#b91c1c; text-align:right;">
         ⚠️ هذا القسم مخصص للمشرفين المرخص لهم فقط.<br>
         أي محاولة دخول ببيانات غير صحيحة قد تعتبر استخداماً غير مصرح به.
       </p>
@@ -421,8 +439,8 @@
   <!-- صفحة لوحة المسؤول -->
   <div id="adminPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px;">لوحة إعدادات البنوك</h2>
-      <p style="font-size:13px; color:#555; text-align:right;">
+      <h2 style="margin-top:0; font-size:20px; color:#111827;">لوحة إعدادات البنوك</h2>
+      <p style="font-size:13px; color:#6b7280; text-align:right;">
         من هنا تضيف وتعدّل شرائح الرواتب ونسب هامش الربح لكل بنك ونوع تمويل.  
         هذه البيانات تستخدم في خيار <strong>ترشيح بنك مناسب تلقائياً</strong>.
       </p>
@@ -497,7 +515,7 @@
         </tbody>
       </table>
 
-      <div style="margin-top:10px; font-size:12px; color:#777; text-align:right;">
+      <div style="margin-top:10px; font-size:12px; color:#9ca3af; text-align:right;">
         ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك.  
         ضع ملفات الصور في مجلد <code>img</code> بنفس الأسماء المشار إليها في الكود.
       </div>
@@ -1044,11 +1062,11 @@
     if(financeType === 'تمويل عقاري' && supported === 'مدعوم'){
       const sup = salary < 10000 ? 150000 : 100000;
       if(bundle === 'نعم'){
-        supportText = `<div class="result-amount-small" style="color:#006064;">دعم حكومي مضاف تقديرياً: ${sup.toLocaleString()} ريال</div>`;
+        supportText = `<div class="result-amount-small" style="color:#0f766e;">دعم حكومي مضاف تقديرياً: ${sup.toLocaleString()} ريال</div>`;
       }else{
         const dist = Math.min(months, 240),
               monthly = Math.round(sup / dist);
-        supportText = `<div class="result-amount-small" style="color:#006064;">تم توزيع دعم ${sup.toLocaleString()} ريال على ${dist} شهر ≈ ${monthly.toLocaleString()} ريال شهرياً</div>`;
+        supportText = `<div class="result-amount-small" style="color:#0f766e;">تم توزيع دعم ${sup.toLocaleString()} ريال على ${dist} شهر ≈ ${monthly.toLocaleString()} ريال شهرياً</div>`;
       }
     }
 
@@ -1074,7 +1092,7 @@
     const resultCard = document.getElementById('resultCard');
     let html = '';
 
-    html += `<h2 style="margin:0 0 10px; font-size:18px; text-align:right; color:#263238;">
+    html += `<h2 style="margin:0 0 10px; font-size:18px; text-align:right; color:#111827;">
       نتيجة الحسبة (التقريبية)
     </h2>`;
 
@@ -1130,7 +1148,7 @@
           ${netWithoutFeesFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
         ${supportText}
-        <div style="margin-top:8px; font-size:13px; color:#444;">
+        <div style="margin-top:8px; font-size:13px; color:#374151;">
           نكتبه بالحروف عشان ما تلخبط بالفاصلة:
           <strong>${numberToArabicWords(parseInt(finalNetFixed))}</strong>
         </div>
@@ -1155,7 +1173,7 @@
           </div>
         `;
       } else {
-        const styleColor = netAfterBuyout < 5000 ? 'color:#b71c1c;' : 'color:#1b5e20;';
+        const styleColor = netAfterBuyout < 5000 ? 'color:#b91c1c;' : 'color:#166534;';
         html += `
           <div style="margin-top:6px; font-size:14px; ${styleColor}">
             الصافي المتوقع للعميل بعد سداد المديونية:
@@ -1164,7 +1182,7 @@
         `;
         if (netAfterBuyout < 5000) {
           html += `
-            <div style="margin-top:4px; font-size:13px; color:#b71c1c;">
+            <div style="margin-top:4px; font-size:13px; color:#b91c1c;">
               قد يعتذر البنك المشتري، نرجو الانتباه.
             </div>
           `;
@@ -1190,25 +1208,25 @@
     html += `
       <div class="result-section-title">تفاصيل الرسوم والأرباح</div>
       <div class="result-section-box">
-        <div style="color:#b71c1c; font-size:14px;">
+        <div style="color:#b91c1c; font-size:14px;">
           الربح دون الرسوم:
           <strong>${(totalInst - netWithoutFees).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
-        <div style="color:#b71c1c; font-size:15px; margin-top:2px;">
+        <div style="color:#b91c1c; font-size:15px; margin-top:2px;">
           الربح مع الرسوم:
           <strong>${totalProfitWithFees.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
-        <div style="font-size:13px; margin-top:4px;">
+        <div style="font-size:13px; margin-top:4px; color:#4b5563;">
           معامل الربح: ${profitFactor.toFixed(3)}
         </div>
-        <div style="font-size:13px;">
+        <div style="font-size:13px; color:#4b5563;">
           الرسوم الإدارية (بدون الضريبة): ${adminFee.toFixed(0)} ريال
         </div>
-        <div style="font-size:13px;">
+        <div style="font-size:13px; color:#4b5563;">
           ضريبة الرسوم (15٪): ${vat.toFixed(0)} ريال
         </div>
-        ${addCommodityFee ? `<div style="font-size:13px;">رسوم السلع: ${commodityFee.toFixed(0)} ريال</div>` : ''}
-        <div style="font-size:13px; margin-top:4px;">
+        ${addCommodityFee ? `<div style="font-size:13px; color:#4b5563;">رسوم السلع: ${commodityFee.toFixed(0)} ريال</div>` : ''}
+        <div style="font-size:13px; margin-top:4px; color:#374151;">
           إجمالي التمويل مع الأرباح (مجموع الأقساط):
           ${totalInst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
@@ -1220,7 +1238,7 @@
       html += `
         <div class="result-section-title">بنوك أخرى مقترحة (من الأقل إلى الأعلى)</div>
         <div class="result-section-box">
-          <ul style="margin:0; padding-right:18px; font-size:13px; color:#444; list-style-type:disc; text-align:right;">
+          <ul style="margin:0; padding-right:18px; font-size:13px; color:#4b5563; list-style-type:disc; text-align:right;">
       `;
       altBanks.forEach(b => {
         html += `<li>${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong></li>`;
@@ -1229,7 +1247,7 @@
     }
 
     html += `
-      <div style="margin-top:16px; font-size:14px; color:#555; text-align:center;">
+      <div style="margin-top:16px; font-size:14px; color:#4b5563; text-align:center;">
         خذ لقطة شاشة لهذه الصفحة وأرسلها للعميل 📲<br>
         للتواصل: <strong>0506214458</strong> - موقعنا: <strong>hlooleqrr.com</strong>
       </div>
