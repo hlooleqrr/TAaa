@@ -362,10 +362,6 @@
     #adminIcon:hover {
       background: rgba(15, 23, 42, 0.18);
     }
-
-    #resultCard {
-      /* نخليها طبيعية بدون ارتفاع إجباري لتقليل التمرير قدر الإمكان */
-    }
   </style>
 </head>
 <body>
@@ -392,7 +388,7 @@
         ابدأ كعميل
       </button>
       <div style="margin-top:12px; font-size:13px; color:#6b7280;">
-        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة وترسلها للعميل مباشرة.
+        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة أو تحفظها كصورة وترسلها للعميل مباشرة.
       </div>
     </div>
   </div>
@@ -407,7 +403,6 @@
       <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
         <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للصفحة الرئيسية</button>
         <div>
-          <button id="nextButton" class="primary small" style="display:none;" onclick="nextQuestion()">التالي</button>
           <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
         </div>
       </div>
@@ -424,6 +419,7 @@
     </div>
     <div style="margin-top:10px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
       <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
+      <button class="secondary small" onclick="downloadResultAsImage()">📄 حفظ النتيجة كصورة</button>
       <button class="primary small" onclick="resetCalc(); showPage('calculator');">🔁 إعادة حسبة جديدة</button>
     </div>
   </div>
@@ -540,8 +536,8 @@
       </table>
 
       <div style="margin-top:8px; font-size:11px; color:#9ca3af; text-align:right;">
-        ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك.  
-        ضع ملفات الصور في مجلد <code>img</code> بنفس الأسماء المشار إليها في الكود.
+        ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك (من الدومين الرسمي عبر خدمات الشعارات).  
+        لو ما ظهر الشعار، تقدر تعدل الكود وتضع رابط صورة مخصص.
       </div>
 
       <div style="margin-top:12px; text-align:left;">
@@ -560,6 +556,9 @@
 <div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
   🛠️
 </div>
+
+<!-- مكتبة تحويل الكرت إلى صورة -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5zs6JQMiJq1tB8qE5zjuGc4xZM2W0fvkYlCYzK2nDmF0U9UfI9+7CuWHa3gwxMZkR4P1CqU8i3bP1d5U3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
   function showPage(name) {
@@ -584,15 +583,15 @@
   }
 
   const bankLogoMap = {
-    'مصرف الراجحي': 'img/alrajhi.png',
-    'البنك الأهلي السعودي': 'img/alahli.png',
-    'بنك الرياض': 'img/riyad.png',
-    'بنك البلاد': 'img/bilad.png',
-    'بنك الجزيرة': 'img/jazira.png',
-    'البنك السعودي الفرنسي': 'img/bsf.png',
-    'بنك ساب': 'img/sab.png',
-    'البنك العربي الوطني': 'img/anb.png',
-    'البنك السعودي للاستثمار': 'img/saib.png'
+    'مصرف الراجحي': 'https://logo.clearbit.com/alrajhibank.com.sa',
+    'البنك الأهلي السعودي': 'https://logo.clearbit.com/alahli.com',
+    'بنك الرياض': 'https://logo.clearbit.com/riyadbank.com',
+    'بنك البلاد': 'https://logo.clearbit.com/bankalbilad.com',
+    'بنك الجزيرة': 'https://logo.clearbit.com/bankaljazira.com',
+    'البنك السعودي الفرنسي': 'https://logo.clearbit.com/alfransi.com.sa',
+    'بنك ساب': 'https://logo.clearbit.com/sab.com',
+    'البنك العربي الوطني': 'https://logo.clearbit.com/anb.com.sa',
+    'البنك السعودي للاستثمار': 'https://logo.clearbit.com/saudinv.com'
   };
 
   let bankConfigs = [];
@@ -856,7 +855,6 @@
   function showSorryPage(name){
     showPage('calculator');
     const cont = document.getElementById('question');
-    document.getElementById('nextButton').style.display = 'none';
     cont.innerHTML = `<div class="fade-in alert-error">
       <strong>معليش ${name}، يظهر إن عمرك تعدّى سن التقاعد المسموح للتمويل.</strong><br>
       إذا كنت متقاعد تواصل معنا مباشرة على الجوال للاستفسار.
@@ -868,9 +866,10 @@
       hasStarted = true;
       document.getElementById('mainButton').style.display = 'none';
       document.getElementById('resetButtonContainer').style.display = 'block';
-      document.getElementById('nextButton').style.display = 'inline-flex';
       showQuestion();
-    }else{ resetCalc(); }
+    }else{
+      resetCalc();
+    }
   }
 
   function resetCalc(){
@@ -881,8 +880,26 @@
     hasStarted = true;
     document.getElementById('mainButton').style.display = 'none';
     document.getElementById('resetButtonContainer').style.display = 'block';
-    document.getElementById('nextButton').style.display = 'inline-flex';
     showQuestion();
+  }
+
+  function attachAutoAdvance(el){
+    if (!el) return;
+    if (el.tagName === 'SELECT') {
+      el.addEventListener('change', function(){
+        if (el.value) nextQuestion();
+      });
+    } else {
+      el.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (el.value) nextQuestion();
+        }
+      });
+      el.addEventListener('blur', function(){
+        if (el.value) nextQuestion();
+      });
+    }
   }
 
   function showQuestion(){
@@ -915,7 +932,6 @@
       q = commitmentQuestions[commitmentStep];
       if(q.show && !q.show(currentCommitment)){ commitmentStep++; showQuestion(); return; }
     }else{
-      document.getElementById('nextButton').style.display = 'none';
       calculate();
       return;
     }
@@ -923,6 +939,8 @@
     const div = document.createElement('div');
     div.classList.add('fade-in');
     div.innerHTML = `<label>${q.label}</label>`;
+    let fieldEl;
+
     if(q.type === 'select'){
       const sel = document.createElement('select');
       sel.id = q.id;
@@ -940,11 +958,14 @@
         });
       }
       div.appendChild(sel);
+      fieldEl = sel;
     } else {
       div.innerHTML += `<input type="${q.type}" id="${q.id}" ${q.default ? `value="${q.default}"` : ''}>`;
+      fieldEl = div.querySelector('input');
     }
 
     cont.appendChild(div);
+    attachAutoAdvance(fieldEl);
   }
 
   function nextQuestion(){
@@ -986,7 +1007,6 @@
           showQuestion();
           return;
         }else{
-          document.getElementById('nextButton').style.display = 'none';
           calculate();
           return;
         }
@@ -1106,6 +1126,7 @@
 
     const allNegative = finalPhases.every(p => p.inst <= 0);
 
+    const isBuyoutPersonal = financeType === 'شراء مديونية تمويل شخصي';
     const buyoutAmount = isBuyoutPersonal
       ? parseFloat(answers.buyoutAmount || '0')
       : 0;
@@ -1235,6 +1256,7 @@
     });
     html += `</div>`;
 
+    const altBanks = matchingBanks.slice(1, 4);
     if (altBanks.length > 0) {
       html += `
         <div class="result-section-title">٣ بنوك أخرى منافسة (من الأقل نسبة إلى الأعلى)</div>
@@ -1242,7 +1264,11 @@
           <ul style="margin:0; padding-right:16px; font-size:13px; color:#4b5563; list-style-type:disc; text-align:right;">
       `;
       altBanks.forEach(b => {
-        html += `<li>${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong></li>`;
+        const logo = bankLogoMap[b.bankName];
+        html += `<li>
+          ${logo ? `<img src="${logo}" alt="${b.bankName}" style="width:20px; height:20px; vertical-align:middle; border-radius:4px; margin-left:4px;">` : ''}
+          ${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong>
+        </li>`;
       });
       html += `</ul></div>`;
     }
@@ -1274,11 +1300,22 @@
         ⚠️ هذه الحسبة تقريبية وليست عرضاً ملزماً، والنسب الفعلية تعتمد على سياسات البنك وقت تقديم الطلب.
       </div>
       <div style="margin-top:8px; font-size:14px; font-weight:bold; color:#1e3a8a; text-align:center;">
-        📸 خذ لقطة شاشة وارسلها للعميل مباشرة
+        📸 تقدر تحفظ النتيجة كصورة من الزر أسفل أو تلتقط لقطة شاشة وترسلها للعميل.
       </div>
     `;
 
     resultCard.innerHTML = html;
+  }
+
+  function downloadResultAsImage(){
+    const card = document.getElementById('resultCard');
+    if (!card) return;
+    html2canvas(card, {scale: 2}).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'fino-result.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
   }
 
   function updateDateTime(){
