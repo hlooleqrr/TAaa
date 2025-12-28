@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>سرعة تملك العقار والحلول التمويلية - ترشيح البنك المناسب</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+        header {
+            background: #0b5ed7;
+            color: #fff;
+            padding: 12px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #ffd54f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        header p {
+            margin: 2px 0 0;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 16px 80px;
+        }
+
+        .page {
+            display: none;
+            background: #fff;
+            border-radius: 10px;
+            padding: 18px 16px 22px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        .page.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: #0b5ed7;
+        }
+
+        .primary-btn, .secondary-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 999px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .primary-btn {
+            background: linear-gradient(135deg, #0b5ed7, #198754);
+            color: #fff;
+            font-weight: 600;
+            width: 100%;
+            max-width: 260px;
+        }
+        .primary-btn span.bismillah {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .secondary-btn {
+            background: #e9f0ff;
+            color: #0b5ed7;
+            margin-top: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #c9d4f0;
+            font-size: 15px;
+            background: #f9fbff;
+        }
+
+        .result-card {
+            border-radius: 10px;
+            border: 1px solid #dde4f5;
+            background: #f9fbff;
+            padding: 14px 12px;
+            margin-bottom: 14px;
+        }
+        .bank-logo {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: #0b5ed7;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .result-main {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .result-main h3 {
+            margin: 0 0 4px;
+            font-size: 17px;
+        }
+        .result-main p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .banks-list {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .banks-list ol {
+            margin: 4px 0 0;
+            padding-left: 22px;
+            padding-right: 0;
+        }
+        .banks-list li {
+            margin-bottom: 2px;
+        }
+
+        .disclaimer {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #b00020;
+            line-height: 1.6;
+            display: flex;
+            gap: 6px;
+            align-items: flex-start;
+        }
+        .disclaimer-icon {
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .screenshot-note {
+            margin-top: 14px;
+            font-size: 14px;
+            color: #ffd54f;
+            font-weight: 600;
+        }
+        .screenshot-note a {
+            color: #ffd54f;
+            text-decoration: underline;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .soon-msg h2 {
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .soon-msg p {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+        .soon-msg a {
+            color: #0b5ed7;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #0b5ed7;
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            text-align: center;
+        }
+        footer span {
+            display: block;
+        }
+        footer a {
+            color: #ffd54f;
+            text-decoration: none;
+        }
+
+        @media (min-width: 700px) {
+            header h1 {
+                font-size: 20px;
+            }
+            main {
+                padding-top: 30px;
+                padding-bottom: 90px;
+            }
+            .primary-btn {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">
+        <div class="logo-circle">س</div>
+        <div>
+            <h1>سرعة تملك العقار والحلول التمويلية</h1>
+            <p>ترشيح البنك المناسب حسب النسب الحالية</p>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- الصفحة الأولى: ابدأ بسم الله -->
+    <section id="page-start" class="page active center">
+        <p style="font-size:15px; margin-bottom:16px;">
+            أهلاً بك في منصة ترشيح البنك الأنسب حسب النسب الحالية للتمويل العقاري المدعوم.
+        </p>
+        <button class="primary-btn" onclick="goToPage('page-type')">
+            ابدأ • <span class="bismillah">بسم الله</span>
+        </button>
+    </section>
+
+    <!-- الصفحة الثانية: اختيار نوع التمويل -->
+    <section id="page-type" class="page">
+        <h2>اختر نوع التمويل</h2>
+        <label for="financeType">نوع التمويل</label>
+        <select id="financeType" onchange="handleFinanceType()">
+            <option value="">— يرجى اختيار نوع التمويل —</option>
+            <option value="mortgage">تمويل عقاري</option>
+            <option value="personal">تمويل شخصي</option>
+            <option value="buyout-personal">شراء مديونية شخصي</option>
+            <option value="buyout-mortgage">شراء مديونية عقاري</option>
+            <option value="consumer">تمويل استهلاكي</option>
+            <option value="car-lease">تمويل إجار مركبات</option>
+        </select>
+    </section>
+
+    <!-- صفحة تمويل عقاري: مدعوم / غير مدعوم -->
+    <section id="page-mortgage-support" class="page">
+        <h2>نوع التمويل العقاري</h2>
+        <label for="mortgageSupport">هل التمويل العقاري مدعوم؟</label>
+        <select id="mortgageSupport" onchange="handleMortgageSupport()">
+            <option value="">— يرجى اختيار نوع التمويل العقاري —</option>
+            <option value="supported">مدعوم</option>
+            <option value="unsupported">غير مدعوم</option>
+        </select>
+    </section>
+
+    <!-- صفحة عدد الأشهر للتمويل العقاري المدعوم -->
+    <section id="page-months" class="page">
+        <h2>اختر عدد الأشهر للتمويل العقاري المدعوم</h2>
+        <p style="font-size:14px; margin-top:0; margin-bottom:10px;">
+            متاح من 60 حتى 360 شهرًا، حسب سياسة الدعم.
+        </p>
+        <label for="monthsSelect">عدد الأشهر</label>
+        <select id="monthsSelect">
+            <option value="">— اختر عدد الأشهر —</option>
+            <option value="60">60 شهر</option>
+            <option value="120">120 شهر</option>
+            <option value="180">180 شهر</option>
+            <option value="240">240 شهر</option>
+            <option value="300">300 شهر</option>
+            <option value="360">360 شهر</option>
+        </select>
+        <br/><br/>
+        <button class="primary-btn" onclick="calculateRecommendation()">
+            عرض ترشيح البنك المناسب
+        </button>
+    </section>
+
+    <!-- صفحة نتيجة الترشيح -->
+    <section id="page-result" class="page">
+        <h2>نتيجة ترشيح البنك المناسب</h2>
+        <div id="resultContent"></div>
+
+        <button class="secondary-btn" onclick="goToPage('page-type')">
+            🔁 تغيير نوع التمويل
+        </button>
+    </section>
+
+    <!-- صفحة: قريباً لباقي أنواع التمويل -->
+    <section id="page-soon" class="page center">
+        <div class="soon-msg">
+            <h2>نأسف، لا يمكن ترشيح أي نسب لهذا التمويل حاليًا</h2>
+            <p>جاري التحديث خلال الأيام المقبلة.</p>
+            <p>تواصل معنا اتصالاً أو عبر واتساب على
+                <a href="tel:0506214458">0506214458</a>
+            </p>
+            <p>أو زر موقعنا الرسمي:
+                <a href="https://hlooleqrr.com" target="_blank" rel="noopener">hlooleqrr.com</a>
+            </p>
+        </div>
+        <button class="secondary-btn" onclick="goToPage('page-start')">
+            ⬅ الرجوع للصفحة الرئيسية
+        </button>
+    </section>
+</main>
+
+<footer>
+    <span>جميع الحقوق محفوظة &mdash; سرعة تملك العقار والحلول التمويلية</span>
+    <span id="liveDateTime">...</span>
+</footer>
+
+<script>
+    // تنقّل بين "الصفحات" داخل نفس الملف
+    function goToPage(pageId) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageId);
+        if (target) {
+            target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    // من الصفحة الثانية حسب نوع التمويل
+    function handleFinanceType() {
+        const type = document.getElementById('financeType').value;
+        if (!type) return;
+
+        if (type === 'mortgage') {
+            goToPage('page-mortgage-support');
+        } else {
+            // باقي الأنواع حالياً تُحوَّل لصفحة "قريباً"
+            goToPage('page-soon');
+        }
+    }
+
+    // في حالة التمويل العقاري مدعوم/غير مدعوم
+    function handleMortgageSupport() {
+        const value = document.getElementById('mortgageSupport').value;
+        if (!value) return;
+
+        if (value === 'supported') {
+            goToPage('page-months');
+        } else {
+            // غير مدعوم حالياً غير مفعل
+            goToPage('page-soon');
+        }
+    }
+
+    // جدول البنوك
+    const banks = [
+        { id: 'rajhi', name: 'مصرف الراجحي', initials: 'الراجحي' },
+        { id: 'inma', name: 'مصرف الإنماء', initials: 'الإنماء' },
+        { id: 'snb', name: 'البنك الأهلي السعودي', initials: 'الأهلي' },
+        { id: 'riyad', name: 'بنك الرياض', initials: 'الرياض' },
+        { id: 'bilad', name: 'بنك البلاد', initials: 'البلاد' },
+        { id: 'sabb', name: 'ساب', initials: 'ساب' },
+        { id: 'fransi', name: 'البنك السعودي الفرنسي', initials: 'الفرنسي' },
+        { id: 'arab', name: 'البنك العربي الوطني', initials: 'العربي' },
+        { id: 'jazira', name: 'بنك الجزيرة', initials: 'الجزيرة' },
+        { id: 'gib', name: 'بنك الخليج الدولي', initials: 'الخليج' },
+        { id: 'emirates', name: 'بنك الإمارات دبي الوطني', initials: 'الإمارات' }
+    ];
+
+    // نسب التمويل العقاري المدعوم حسب الأشهر (لبقية البنوك)
+    const standardRatesByMonths = {
+        60: 6,
+        120: 7,
+        180: 8,
+        240: 9,
+        300: 10,
+        360: 11
+    };
+
+    function getSupportedMortgageRate(bankId, months) {
+        months = Number(months);
+        if (!standardRatesByMonths[months]) return null;
+
+        if (bankId === 'rajhi') {
+            return 2.99; // الراجحي ثابت 2.99 لجميع السنوات
+        }
+        if (bankId === 'inma') {
+            return 7; // الإنماء 7 لجميع السنوات
+        }
+        return standardRatesByMonths[months];
+    }
+
+    function calculateRecommendation() {
+        const monthsSelect = document.getElementById('monthsSelect');
+        const months = monthsSelect.value;
+        if (!months) {
+            alert('يرجى اختيار عدد الأشهر أولاً.');
+            return;
+        }
+
+        const banksWithRates = banks
+            .map(b => {
+                const rate = getSupportedMortgageRate(b.id, months);
+                return rate ? { ...b, rate } : null;
+            })
+            .filter(Boolean)
+            .sort((a, b) => a.rate - b.rate);
+
+        if (!banksWithRates.length) {
+            goToPage('page-soon');
+            return;
+        }
+
+        const bestBank = banksWithRates[0];
+        const resultDiv = document.getElementById('resultContent');
+
+        let html = '';
+
+        html += '<div class="result-card">';
+        html += '  <div class="result-main">';
+        html += '     <div class="bank-logo">' + bestBank.initials + '</div>';
+        html += '     <div>';
+        html += '       <h3>تم ترشيح البنك الأنسب لك</h3>';
+        html += '       <p>البنك المرشَّح: <strong>' + bestBank.name + '</strong></p>';
+        html += '       <p>نسبة الربح التقريبية للتمويل العقاري المدعوم لمدّة '
+             + months + ' شهر: <strong>' + bestBank.rate.toFixed(2) + '%</strong></p>';
+        html += '     </div>';
+        html += '  </div>';
+
+        html += '  <div class="banks-list">';
+        html += '    <p>ترتيب باقي البنوك حسب النسبة (من الأقل إلى الأعلى):</p>';
+        html += '    <ol>';
+
+        banksWithRates.slice(1).forEach(b => {
+            html += '<li>' + b.name + ' — ' + b.rate.toFixed(2) + '%</li>';
+        });
+
+        html += '    </ol>';
+        html += '  </div>';
+
+        html += '  <div class="disclaimer">';
+        html += '    <span class="disclaimer-icon">⚠️</span>';
+        html += '    <span>';
+        html += 'هذا الترشيح مبدئي ولا يمكن تبنّيـه لاتخاذ قرار نهائي بأخذ التمويل. ';
+        html += 'هذه النِّسَب عامة، وقد تقوم بعض البنوك أو شركات التمويل برفع أو خفض النِّسَب ';
+        html += 'على بعض العملاء بناءً على سياسات خاصة بها. لذلك وجب التنويه.';
+        html += '    </span>';
+        html += '  </div>';
+
+        html += '  <div class="screenshot-note">';
+        html += '📸 خذ لقطة للشاشة وتواصل معنا على الجوال ';
+        html += '<a href="tel:0506214458">0506214458</a>';
+        html += ' أو عبر موقعنا الرسمي ';
+        html += '<a href="https://hlooleqrr.com" target="_blank" rel="noopener">hlooleqrr.com</a>';
+        html += '.</div>';
+
+        html += '</div>';
+
+        resultDiv.innerHTML = html;
+        goToPage('page-result');
+    }
+
+    // التاريخ والوقت في الفوتر (ميلادي + ثواني)
+    function updateDateTime() {
+        const now = new Date();
+        const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+        const dayName = days[now.getDay()];
+
+        const date = now.toLocaleDateString('ar-EG', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+        const time = now.toLocaleTimeString('ar-EG', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
+
+        document.getElementById('liveDateTime').textContent =
+            dayName + ' - ' + date + ' - ' + time;
+    }
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+</script>
+
+</body>
+</html>
