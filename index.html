@@ -159,7 +159,7 @@
             font-size: 11px;
             color: #7d8597;
         }
-        select, input[type="number"], input[type="password"] {
+        select, input[type="number"], input[type="password"], input[type="text"] {
             width: 100%;
             padding: 9px 10px;
             border-radius: var(--radius-md);
@@ -398,7 +398,7 @@
                 <span class="dot">2</span> جهة العمل والدعم
             </div>
             <div class="step-pill" id="step-pill-3">
-                <span class="dot">3</شهر> شريحة الراتب والمدة
+                <span class="dot">3</span> شريحة الراتب والمدة
             </div>
         </div>
 
@@ -464,13 +464,8 @@
             <div id="step-3" style="display:none;">
                 <div class="field">
                     <label for="salarySegment">شريحة الراتب الشهري</label>
-                    <select id="salarySegment">
-                        <option value="">اختر شريحة الراتب...</option>
-                        <option value="below8">أقل من 8,000 ريال</option>
-                        <option value="8to12">من 8,000 إلى أقل من 12,000 ريال</option>
-                        <option value="12to20">من 12,000 إلى أقل من 20,000 ريال</option>
-                        <option value="20plus">20,000 ريال فأعلى</option>
-                    </select>
+                    <select id="salarySegment"></select>
+                    <small id="salaryHint">شرائح الراتب يتم ضبطها من لوحة تحكم المسؤول.</small>
                 </div>
 
                 <div class="field">
@@ -572,14 +567,20 @@
 
             <div class="field">
                 <label for="adminSalarySegment">شريحة الراتب</label>
-                <select id="adminSalarySegment">
-                    <option value="">اختر شريحة الراتب...</option>
-                    <option value="below8">أقل من 8,000 ريال</option>
-                    <option value="8to12">من 8,000 إلى أقل من 12,000 ريال</option>
-                    <option value="12to20">من 12,000 إلى أقل من 20,000 ريال</option>
-                    <option value="20plus">20,000 ريال فأعلى</option>
-                </select>
+                <select id="adminSalarySegment"></select>
+                <small>شرائح الراتب يتم ضبطها من النموذج أدناه.</small>
             </div>
+
+            <div class="field">
+                <label for="newSalarySegmentLabel">إضافة شريحة راتب جديدة</label>
+                <input type="text" id="newSalarySegmentLabel" placeholder="مثال: من 8,000 إلى أقل من 12,000 ريال" />
+                <small>تتم إضافة الشريحة لتظهر في اختيارات العميل ولوحة التحكم.</small>
+            </div>
+            <div class="actions-row">
+                <button class="btn btn-outline btn-sm" onclick="addSalarySegment()">إضافة شريحة راتب</button>
+            </div>
+
+            <div class="admin-rules" id="salarySegmentsList"></div>
 
             <div class="field">
                 <label for="adminMonths">عدد الأشهر</label>
@@ -626,6 +627,7 @@ const banks = [
     { id: 'gib', name: 'بنك الخليج الدولي', initials: 'الخليج' },
     { id: 'emirates', name: 'بنك الإمارات دبي الوطني', initials: 'الإمارات' }
 ];
+
 const adminBankSelect = document.getElementById('adminBank');
 if (adminBankSelect) {
     adminBankSelect.innerHTML =
@@ -633,6 +635,86 @@ if (adminBankSelect) {
         banks.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
 }
 
+// ------------------------------
+// شرائح الراتب (يحددها المسؤول)
+// ------------------------------
+function loadSalarySegments() {
+    try {
+        const raw = localStorage.getItem('salarySegmentsV1');
+        if (!raw) return [];
+        return JSON.parse(raw);
+    } catch (e) {
+        return [];
+    }
+}
+function saveSalarySegments(segments) {
+    localStorage.setItem('salarySegmentsV1', JSON.stringify(segments));
+}
+function initSalarySegments() {
+    let segments = loadSalarySegments();
+    if (!segments || !segments.length) {
+        // شريحة افتراضية عامة يمكن تعديلها أو إضافة غيرها
+        segments = [{ id: 'general', label: 'شريحة راتب عامة' }];
+        saveSalarySegments(segments);
+    }
+    renderSalarySegmentsOptions();
+    renderSalarySegmentsList();
+}
+function renderSalarySegmentsOptions() {
+    const segments = loadSalarySegments();
+    const clientSelect = document.getElementById('salarySegment');
+    const adminSelect = document.getElementById('adminSalarySegment');
+    let opts = '<option value="">اختر شريحة الراتب...</option>';
+    segments.forEach(seg => {
+        opts += `<option value="${seg.id}">${seg.label}</option>`;
+    });
+    if (clientSelect) clientSelect.innerHTML = opts;
+    if (adminSelect) adminSelect.innerHTML = opts;
+}
+function renderSalarySegmentsList() {
+    const container = document.getElementById('salarySegmentsList');
+    if (!container) return;
+    const segments = loadSalarySegments();
+    if (!segments.length) {
+        container.innerHTML = '<div class="empty-state" style="padding:4px 0 0;">لا توجد شرائح راتب بعد.</div>';
+        return;
+    }
+    container.innerHTML = segments.map(seg => `
+        <div class="rule-row">
+            <div>${seg.label}</div>
+        </div>
+    `).join('');
+}
+function addSalarySegment() {
+    const input = document.getElementById('newSalarySegmentLabel');
+    const label = (input.value || '').trim();
+    const msg = document.getElementById('adminSaveMsg');
+    msg.textContent = '';
+    msg.className = 'admin-msg';
+    if (!label) {
+        msg.textContent = 'أدخل اسم شريحة الراتب أولاً.'; 
+        msg.classList.add('error');
+        return;
+    }
+    let segments = loadSalarySegments();
+    const id = 'seg' + Date.now();
+    segments.push({ id, label });
+    saveSalarySegments(segments);
+    input.value = '';
+    msg.textContent = 'تمت إضافة شريحة الراتب بنجاح.'; 
+    msg.classList.add('success');
+    renderSalarySegmentsOptions();
+    renderSalarySegmentsList();
+}
+function getSalaryLabelById(id) {
+    const segments = loadSalarySegments();
+    const seg = segments.find(s => s.id === id);
+    return seg ? seg.label : 'شريحة راتب';
+}
+
+// ------------------------------
+// الخطوات في واجهة العميل
+// ------------------------------
 function goToStep(step) {
     for (let i = 1; i <= 3; i++) {
         document.getElementById(`step-pill-${i}`).classList.toggle('active', i === step);
@@ -641,7 +723,6 @@ function goToStep(step) {
     if (step === 2) updateSupportVisibility();
     if (step === 3) fillMonthsForClient();
 }
-
 function updateSupportVisibility() {
     const financeType = document.getElementById('financeType').value;
     const employeeType = document.getElementById('employeeType').value;
@@ -685,6 +766,9 @@ function fillMonthsForClient() {
     document.getElementById('monthsHint').textContent = hint;
 }
 
+// ------------------------------
+// نموذج البيانات ومعرّف المفتاح
+// ------------------------------
 function buildRateKey(params) {
     const {
         financeType,
@@ -710,6 +794,9 @@ function buildRateKey(params) {
     ].join('|');
 }
 
+// ------------------------------
+// تخزين بيانات المسؤول في localStorage
+// ------------------------------
 function loadRates() {
     try {
         const raw = localStorage.getItem('bankRatesV2');
@@ -732,18 +819,27 @@ function saveAdminRate() {
     const itizez = document.getElementById('adminItizez').value;
     const msg = document.getElementById('adminSaveMsg');
     msg.textContent = ''; msg.className = 'admin-msg';
+
     if (!bankId || !financeType || !employeeType || !salarySegment || !months || !rateInput) {
-        msg.textContent = 'فضلاً أكمل جميع الحقول المطلوبة قبل الحفظ.'; msg.classList.add('error'); return;
+        msg.textContent = 'فضلاً أكمل جميع الحقول المطلوبة قبل الحفظ.'; 
+        msg.classList.add('error'); 
+        return;
     }
     if ((financeType === 'mortgage' || financeType === 'mortgage-buyout') && !supportType) {
-        msg.textContent = 'يرجى اختيار حالة الدعم لهذا التمويل العقاري.'; msg.classList.add('error'); return;
+        msg.textContent = 'يرجى اختيار حالة الدعم لهذا التمويل العقاري.'; 
+        msg.classList.add('error'); 
+        return;
     }
     if (employeeType === 'military' && financeType === 'mortgage' && supportType === 'supported' && !itizez) {
-        msg.textContent = 'يرجى تحديد ما إذا كانت النسبة خاصة بعملاء اعتزاز أو غيرهم.'; msg.classList.add('error'); return;
+        msg.textContent = 'يرجى تحديد ما إذا كانت النسبة خاصة بعملاء اعتزاز أو غيرهم.'; 
+        msg.classList.add('error'); 
+        return;
     }
     const rate = Number(rateInput);
     if (!rate || rate <= 0) {
-        msg.textContent = 'الرجاء إدخال نسبة صحيحة أكبر من صفر.'; msg.classList.add('error'); return;
+        msg.textContent = 'الرجاء إدخال نسبة صحيحة أكبر من صفر.'; 
+        msg.classList.add('error'); 
+        return;
     }
     const key = buildRateKey({
         financeType,
@@ -795,7 +891,7 @@ function renderAdminRules() {
         const months = parts[5];
         const financeLabel = mapFinanceType(financeType);
         const empLabel = mapEmployeeType(emp);
-        const salLabel = mapSalarySegment(sal);
+        const salLabel = getSalaryLabelById(sal);
         const supLabel = mapSupportType(support);
         const itzLabel = mapItizez(itz);
         return `
@@ -813,6 +909,9 @@ function renderAdminRules() {
     }).join('');
 }
 
+// ------------------------------
+// استرجاع النسبة (مخصص أو افتراضي)
+// ------------------------------
 function getRateForBank(bankId, params) {
     const data = loadRates();
     const bankData = data[bankId] || {};
@@ -844,6 +943,9 @@ function getRateForBank(bankId, params) {
     return baseRate ? { rate: baseRate, source: 'نسبة افتراضية عامة' } : null;
 }
 
+// ------------------------------
+// حساب الترشيح للعميل
+// ------------------------------
 function calculateRecommendationClient() {
     const financeType = document.getElementById('financeType').value;
     const employeeType = document.getElementById('employeeType').value;
@@ -876,7 +978,7 @@ function calculateRecommendationClient() {
     const best = results[0];
     const financeLabel = mapFinanceType(financeType);
     const empLabel = mapEmployeeType(employeeType);
-    const salLabel = mapSalarySegment(salarySegment);
+    const salLabel = getSalaryLabelById(salarySegment);
     const supLabel = mapSupportType(
         (financeType === 'mortgage' || financeType === 'mortgage-buyout') ? supportType : 'na'
     );
@@ -927,6 +1029,9 @@ function calculateRecommendationClient() {
     document.getElementById('resultArea').innerHTML = html;
 }
 
+// ------------------------------
+// خرائط النصوص
+// ------------------------------
 function mapFinanceType(v) {
     switch (v) {
         case 'mortgage': return 'تمويل عقاري';
@@ -947,15 +1052,6 @@ function mapEmployeeType(v) {
         default: return 'جهة عمل عامة';
     }
 }
-function mapSalarySegment(v) {
-    switch (v) {
-        case 'below8': return 'راتب أقل من 8,000 ريال';
-        case '8to12': return 'راتب من 8,000 إلى أقل من 12,000 ريال';
-        case '12to20': return 'راتب من 12,000 إلى أقل من 20,000 ريال';
-        case '20plus': return 'راتب 20,000 ريال فأعلى';
-        default: return 'شريحة راتب عامة';
-    }
-}
 function mapSupportType(v) {
     switch (v) {
         case 'supported': return 'تمويل عقاري مدعوم';
@@ -971,6 +1067,9 @@ function mapItizez(v) {
     }
 }
 
+// ------------------------------
+// الدخول والخروج للمسؤول
+// ------------------------------
 function adminLogin() {
     const pass = document.getElementById('adminPassword').value;
     const msg = document.getElementById('adminLoginMsg');
@@ -981,6 +1080,8 @@ function adminLogin() {
         document.getElementById('admin-panel').style.display = 'block';
         msg.textContent = '';
         renderAdminRules();
+        renderSalarySegmentsOptions();
+        renderSalarySegmentsList();
     } else {
         msg.textContent = 'تم إغلاق الوصول، لا تكرر المحاولة حتى لا يتم حجب جهازك.';
         msg.classList.add('error');
@@ -1024,10 +1125,18 @@ function adminEmployeeChanged() {
         document.getElementById('adminItizez').value = '';
     }
 }
+
+// ------------------------------
+// أيقونة المسؤول
+// ------------------------------
 function scrollToAdmin() {
     const adminSection = document.querySelector('.card:nth-of-type(2)');
     if (adminSection) adminSection.scrollIntoView({ behavior: 'smooth' });
 }
+
+// ------------------------------
+// التاريخ والوقت في الفوتر
+// ------------------------------
 function updateDateTime() {
     const now = new Date();
     const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
@@ -1038,7 +1147,10 @@ function updateDateTime() {
 }
 updateDateTime();
 setInterval(updateDateTime, 1000);
+
+// إعداد مبدئي
 adminFinanceTypeChanged();
+initSalarySegments();
 goToStep(1);
 </script>
 
