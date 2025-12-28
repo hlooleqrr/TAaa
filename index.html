@@ -104,7 +104,7 @@
             font-size: 15px;
             font-weight: 600;
         }
-        select {
+        select, input[type="password"], input[type="number"] {
             width: 100%;
             padding: 10px;
             border-radius: 8px;
@@ -210,7 +210,7 @@
             background: #0b5ed7;
             color: #fff;
             font-size: 12px;
-            padding: 6px 12px;
+            padding: 6px 12px 4px;
             display: flex;
             flex-direction: column;
             gap: 2px;
@@ -222,6 +222,30 @@
         footer a {
             color: #ffd54f;
             text-decoration: none;
+        }
+
+        /* أيقونة المسؤولين الصغيرة جداً */
+        .admin-icon {
+            position: fixed;
+            bottom: 30px; /* فوق الفوتر بشوي */
+            left: 6px;
+            font-size: 8px;
+            opacity: 0.12;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .admin-error {
+            color: #b00020;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+        .admin-success {
+            color: #198754;
+            font-size: 13px;
+            margin-top: 8px;
         }
 
         @media (min-width: 700px) {
@@ -335,7 +359,68 @@
             ⬅ الرجوع للصفحة الرئيسية
         </button>
     </section>
+
+    <!-- صفحة دخول المسؤولين -->
+    <section id="page-admin-login" class="page">
+        <h2>دخول فقط المسؤولين</h2>
+        <label for="adminPassword">ادخل الرمز السري</label>
+        <input type="password" id="adminPassword" placeholder="••••••••" />
+        <button class="primary-btn" style="margin-top:14px;" onclick="adminLogin()">
+            دخول المسؤول
+        </button>
+        <div id="adminLoginMessage"></div>
+    </section>
+
+    <!-- صفحة لوحة تحكم المسؤول -->
+    <section id="page-admin-panel" class="page">
+        <h2>لوحة تحكم المسؤول — تحديث نسب البنوك</h2>
+
+        <label for="adminBank">اختر البنك</label>
+        <select id="adminBank"></select>
+
+        <label for="adminFinanceType" style="margin-top:10px;">اختر نوع التمويل</label>
+        <select id="adminFinanceType" onchange="handleAdminFinanceTypeChange()">
+            <option value="">— اختر نوع التمويل —</option>
+            <option value="mortgage">تمويل عقاري</option>
+            <option value="personal">تمويل شخصي</option>
+            <option value="buyout-personal">شراء مديونية شخصي</option>
+            <option value="buyout-mortgage">شراء مديونية عقاري</option>
+            <option value="consumer">تمويل استهلاكي</option>
+            <option value="car-lease">تمويل إجار مركبات</option>
+        </select>
+
+        <div id="adminSupportWrapper" style="margin-top:10px; display:none;">
+            <label for="adminSupport">نوع التمويل العقاري</label>
+            <select id="adminSupport">
+                <option value="">— اختر مدعوم أو غير مدعوم —</option>
+                <option value="supported">مدعوم</option>
+                <option value="unsupported">غير مدعوم</option>
+            </select>
+        </div>
+
+        <label for="adminMonths" style="margin-top:10px;">عدد الأشهر</label>
+        <select id="adminMonths"></select>
+
+        <label for="adminRate" style="margin-top:10px;">النسبة المئوية (مثال: 6 أو 2.99)</label>
+        <input type="number" id="adminRate" step="0.01" min="0" />
+
+        <button class="primary-btn" style="margin-top:16px;" onclick="saveAdminRate()">
+            حفظ النسبة لهذا البنك
+        </button>
+
+        <div id="adminSaveMessage"></div>
+
+        <button class="secondary-btn" onclick="goToPage('page-start')">
+            ⬅ العودة للواجهة الرئيسية
+        </button>
+    </section>
+
 </main>
+
+<!-- الأيقونة الصغيرة جداً للمسؤولين -->
+<button class="admin-icon" onclick="goToPage('page-admin-login')" title="">
+    ▫️
+</button>
 
 <footer>
     <span>جميع الحقوق محفوظة &mdash; سرعة تملك العقار والحلول التمويلية</span>
@@ -395,7 +480,14 @@
         { id: 'emirates', name: 'بنك الإمارات دبي الوطني', initials: 'الإمارات' }
     ];
 
-    // نسب التمويل العقاري المدعوم حسب الأشهر (لبقية البنوك)
+    // تعبئة قائمة البنوك في لوحة المسؤول
+    const adminBankSelect = document.getElementById('adminBank');
+    if (adminBankSelect) {
+        adminBankSelect.innerHTML = '<option value="">— اختر البنك —</option>' +
+            banks.map(b => '<option value="' + b.id + '">' + b.name + '</option>').join('');
+    }
+
+    // نسب التمويل العقاري المدعوم حسب الأشهر (لبقية البنوك) افتراضية
     const standardRatesByMonths = {
         60: 6,
         120: 7,
@@ -405,8 +497,84 @@
         360: 11
     };
 
+    // قراءة النسب من localStorage
+    function getCustomRate(bankId, financeKey, months) {
+        try {
+            const stored = localStorage.getItem('bankRates');
+            if (!stored) return null;
+            const data = JSON.parse(stored);
+            if (!data[bankId] || !data[bankId][financeKey]) return null;
+            const rate = data[bankId][financeKey][months];
+            if (typeof rate === 'number') return rate;
+            return null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // حفظ النسب من لوحة المسؤول
+    function saveAdminRate() {
+        const bankId = document.getElementById('adminBank').value;
+        const financeType = document.getElementById('adminFinanceType').value;
+        const months = document.getElementById('adminMonths').value;
+        const rateInput = document.getElementById('adminRate').value;
+        const support = document.getElementById('adminSupport').value;
+        const msgDiv = document.getElementById('adminSaveMessage');
+        msgDiv.textContent = '';
+        msgDiv.className = '';
+
+        if (!bankId || !financeType || !months || !rateInput) {
+            msgDiv.textContent = 'فضلاً اختر البنك ونوع التمويل وعدد الأشهر وأدخل النسبة.';
+            msgDiv.className = 'admin-error';
+            return;
+        }
+
+        let financeKey = financeType;
+        if (financeType === 'mortgage') {
+            if (!support) {
+                msgDiv.textContent = 'يرجى اختيار مدعوم أو غير مدعوم.';
+                msgDiv.className = 'admin-error';
+                return;
+            }
+            financeKey = 'mortgage-' + support; // mortgage-supported أو mortgage-unsupported
+        }
+
+        const rate = Number(rateInput);
+        if (isNaN(rate) || rate <= 0) {
+            msgDiv.textContent = 'يرجى إدخال نسبة صحيحة أكبر من صفر.';
+            msgDiv.className = 'admin-error';
+            return;
+        }
+
+        let data = {};
+        try {
+            const existing = localStorage.getItem('bankRates');
+            if (existing) data = JSON.parse(existing);
+        } catch(e) {
+            data = {};
+        }
+
+        if (!data[bankId]) data[bankId] = {};
+        if (!data[bankId][financeKey]) data[bankId][financeKey] = {};
+        data[bankId][financeKey][months] = rate;
+
+        localStorage.setItem('bankRates', JSON.stringify(data));
+
+        msgDiv.textContent = 'تم الحفظ بنجاح ✅';
+        msgDiv.className = 'admin-success';
+    }
+
+    // الحصول على النسبة للتمويل العقاري المدعوم (من المسؤول أو من الافتراضي)
     function getSupportedMortgageRate(bankId, months) {
         months = Number(months);
+
+        // أولاً: ابحث عن نسبة مخصصة محفوظة من لوحة التحكم
+        const custom = getCustomRate(bankId, 'mortgage-supported', months);
+        if (custom !== null) {
+            return custom;
+        }
+
+        // ثانياً: fallback إلى النسب الافتراضية
         if (!standardRatesByMonths[months]) return null;
 
         if (bankId === 'rajhi') {
@@ -486,6 +654,59 @@
 
         resultDiv.innerHTML = html;
         goToPage('page-result');
+    }
+
+    // دخول المسؤول
+    function adminLogin() {
+        const pass = document.getElementById('adminPassword').value;
+        const msg = document.getElementById('adminLoginMessage');
+        msg.textContent = '';
+        msg.className = '';
+
+        const secret = '11qq11qQ@';
+
+        if (pass === secret) {
+            document.getElementById('adminPassword').value = '';
+            msg.textContent = '';
+            goToPage('page-admin-panel');
+        } else {
+            msg.textContent = 'تم إغلاق الصفحة، لا تكرر لكي لا يتم حجب جهازك.';
+            msg.className = 'admin-error';
+            // إرجاعه للصفحة الرئيسية بعد ثانيتين
+            setTimeout(() => {
+                goToPage('page-start');
+                msg.textContent = '';
+            }, 2000);
+        }
+    }
+
+    // تغيير نوع التمويل في لوحة المسؤول لتحديث الأشهر
+    function handleAdminFinanceTypeChange() {
+        const financeType = document.getElementById('adminFinanceType').value;
+        const monthsSelect = document.getElementById('adminMonths');
+        const supportWrapper = document.getElementById('adminSupportWrapper');
+
+        monthsSelect.innerHTML = '';
+
+        if (!financeType) {
+            supportWrapper.style.display = 'none';
+            return;
+        }
+
+        let maxMonths = 60;
+
+        if (financeType === 'mortgage') {
+            maxMonths = 360;
+            supportWrapper.style.display = 'block';
+        } else {
+            supportWrapper.style.display = 'none';
+        }
+
+        let options = '<option value="">— اختر عدد الأشهر —</option>';
+        for (let m = 1; m <= maxMonths; m++) {
+            options += '<option value="' + m + '">' + m + ' شهر</option>';
+        }
+        monthsSelect.innerHTML = options;
     }
 
     // التاريخ والوقت في الفوتر (ميلادي + ثواني)
