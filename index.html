@@ -146,6 +146,7 @@
       gap: 10px;
       align-items: center;
       flex-wrap: wrap;
+      margin-bottom: 10px;
     }
     .client-chip {
       background: #e3f2fd;
@@ -158,9 +159,20 @@
       background: #fff7e6;
       color: #b36b00;
       border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 13px;
+      padding: 4px 12px;
+      font-size: 12px;
+      display: inline-block;
     }
+    .badge-duration {
+      background: #e8f5e9;
+      color: #1b5e20;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 12px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
     .bank-card {
       display: flex;
       align-items: center;
@@ -169,7 +181,7 @@
       border-radius: 16px;
       background: #f5fffb;
       border: 1px dashed #00a27e;
-      margin: 16px 0;
+      margin: 10px 0 14px;
       text-align: right;
     }
     .bank-logo {
@@ -194,29 +206,57 @@
       font-weight: 600;
     }
     .bank-text-sub {
-      font-size: 14px;
+      font-size: 13px;
       color: #555;
     }
 
+    .result-main-block {
+      background: radial-gradient(circle at top, #e8fff7 0, #ffffff 55%);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-top: 6px;
+      text-align: right;
+      border: 1px solid #c8e6c9;
+    }
+    .result-main-title {
+      font-size: 15px;
+      color: #004d40;
+      margin-bottom: 4px;
+    }
     .result-amount-main {
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 800;
       color: #00695c;
-      margin: 12px 0 4px;
+      margin: 4px 0 2px;
     }
     .result-amount-sub {
-      font-size: 16px;
+      font-size: 14px;
       color: #2e7d32;
-      margin: 2px 0;
+      margin: 1px 0;
     }
     .result-amount-small {
-      font-size: 14px;
+      font-size: 13px;
       color: #555;
+    }
+
+    .result-section-title {
+      text-align: right;
+      font-size: 15px;
+      font-weight: 700;
+      margin: 14px 0 6px;
+      color: #263238;
+    }
+    .result-section-box {
+      border-radius: 16px;
+      background: #fafafa;
+      border: 1px solid #eeeeee;
+      padding: 10px 14px;
+      text-align: right;
     }
 
     .instalment-row {
-      font-size: 15px;
-      padding: 6px 0;
+      font-size: 14px;
+      padding: 5px 0;
       border-bottom: 1px dashed #eee;
       text-align: right;
     }
@@ -226,7 +266,7 @@
       background: #ffebee;
       border-radius: 12px;
       padding: 10px 12px;
-      font-size: 15px;
+      font-size: 14px;
       margin: 8px 0;
       text-align: right;
     }
@@ -264,7 +304,6 @@
 
     /* أيقونة المشرف أسفل الفوتر في الصفحة الأولى */
     #adminIcon {
-      display: none;
       position: fixed;
       bottom: 6px;
       left: 8px;
@@ -337,7 +376,7 @@
   <!-- صفحة النتيجة النهائية -->
   <div id="resultPage" class="page">
     <div class="card fade-in" id="resultCard">
-      <!-- يتم تعبئتها من الجافاسكربت -->
+      <!-- تعبئة من الجافاسكربت -->
     </div>
     <div style="margin-top:16px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
       <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
@@ -510,7 +549,6 @@
   /*  إعداد شعارات البنوك */
   /***********************/
   const bankLogoMap = {
-    // تأكد من وضع هذه الملفات في مجلد img
     'مصرف الراجحي': 'img/alrajhi.png',
     'البنك الأهلي السعودي': 'img/alahli.png',
     'بنك الرياض': 'img/riyad.png',
@@ -528,7 +566,6 @@
   let bankConfigs = [];
 
   const defaultBankConfigs = [
-    // أمثلة افتراضية، عدّلها من لوحة المسؤول
     { bankName: 'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 4000, maxSalary: 8000, margin: 5.5 },
     { bankName: 'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 8001, maxSalary: 20000, margin: 4.9 },
     { bankName: 'البنك الأهلي السعودي', financeType: 'mortgage', supportedType: 'مدعوم', minSalary: 4000, maxSalary: 15000, margin: 4.3 },
@@ -629,12 +666,10 @@
     renderBankTable();
   }
 
-  // ترجيع جميع البنوك المطابقة مرتبة من الأقل نسبة إلى الأعلى
   function getMatchingBanksForAnswers() {
     const salary = parseFloat(answers.salary || '0');
     if (!salary) return [];
     const isMortgage = answers.financeType && answers.financeType.includes('عقاري') && !answers.financeType.includes('شراء مديونية تمويل شخصي');
-    // في شراء مديونية تمويل شخصي نعتبره تمويل شخصي
     const fType = (answers.financeType && answers.financeType.includes('شخصي')) ? 'personal' : (isMortgage ? 'mortgage' : 'personal');
     const supp = answers.supported || 'الكل';
 
@@ -817,25 +852,21 @@
       q = generalQuestions[step];
       if(q.show && !q.show(answers)){ step++; showQuestion(); return; }
 
-      // إذا اختار شراء مديونية تمويل عقاري نوقف ونطلع صفحة "قريباً"
       if(q.id === 'salary' && answers.financeType === 'شراء مديونية تمويل عقاري'){
-        // لا نحتاج راتب، نوجهه مباشرة لصفحة "قريباً"
         showPage('comingSoon');
         return;
       }
 
-      // إذا وضع طريقة الحسبة = ترشيح بنك، وحنا الآن على profitMargin
       if(q.id === 'profitMargin' && answers.calcMode === 'ترشيح بنك مناسب تلقائياً'){
         const list = getMatchingBanksForAnswers();
         const rec = list[0];
         if(rec){
           answers.recommendedBank = rec;
           answers.profitMargin = rec.margin;
-          step++; // نطوي سؤال النسبة اليدوية ونكمل
+          step++;
           showQuestion();
           return;
         } else {
-          // ما فيه بنك مرشح مناسب، نرجع للنسبة اليدوية
           alert('لا يوجد حالياً بنك مطابق لبياناتك في إعدادات المسؤول، سيتم استخدام النسبة التي تدخلها يدوياً.');
         }
       }
@@ -888,7 +919,6 @@
     if(step < generalQuestions.length){
       answers[q.id] = val;
 
-      // إذا انتهينا من financeType واختار "شراء مديونية تمويل عقاري" ننتقل لصفحة "قريباً"
       if(q.id === 'financeType' && val === 'شراء مديونية تمويل عقاري'){
         showPage('comingSoon');
         return;
@@ -931,7 +961,6 @@
           years  = months / 12,
           { financeType, supported, bundle } = answers;
 
-    // نسبة هامش الربح: إما يدوي، أو من بنك مرشح (تم حقنها في profitMargin مسبقاً)
     let profitMargin = parseFloat(answers.profitMargin);
 
     let deductionRate = 0, extraSupport = 0, addCommodityFee = false;
@@ -995,12 +1024,10 @@
     // الرسوم الإدارية
     let adminFee = 0, vat = 0;
     if (isPersonalLike) {
-      // شخصي/استهلاكي: 0.5% أو 2500 أيهما أقل
       adminFee = netFinance * 0.005;
       if (adminFee > 2500) adminFee = 2500;
       vat = adminFee * 0.15;
     } else {
-      // عقاري كما السابق
       adminFee = netFinance * 0.01;
       vat = adminFee * 0.15;
       if(adminFee + vat > 5750){ adminFee = 5000; vat = 750; }
@@ -1033,32 +1060,34 @@
 
     const allNegative = finalPhases.every(p => p.inst <= 0);
 
-    // حساب شراء مديونية تمويل شخصي إن وُجد
     const buyoutAmount = (financeType === 'شراء مديونية تمويل شخصي')
       ? parseFloat(answers.buyoutAmount || '0')
       : 0;
     const netAfterBuyout = finalNet - buyoutAmount;
 
-    // قائمة البنوك المقترحة (أفضل بنك + ثلاثة بنوك أخرى)
     const matchingBanks = getMatchingBanksForAnswers();
     const recommendedBank = matchingBanks[0] || null;
     const altBanks = matchingBanks.slice(1, 4);
 
     answers.recommendedBank = answers.recommendedBank || recommendedBank;
 
-    // بناء صفحة النتيجة
     const resultCard = document.getElementById('resultCard');
     let html = '';
 
+    html += `<h2 style="margin:0 0 10px; font-size:18px; text-align:right; color:#263238;">
+      نتيجة الحسبة (التقريبية)
+    </h2>`;
+
     html += `<div class="result-header">
       <div class="client-chip">مرحباً ومسهلا يا ${name}</div>
-      <div>
-        <div class="badge-mode">${answers.calcMode === 'ترشيح بنك مناسب تلقائياً' ? 'الحسبة تمت مع ترشيح بنك مناسب' : 'الحسبة تمت على النسبة المدخلة'}</div>
-        <div style="font-size:12px; color:#777; margin-top:4px;">مدة التمويل: ${duration}</div>
+      <div style="text-align:right;">
+        <span class="badge-mode">
+          ${answers.calcMode === 'ترشيح بنك مناسب تلقائياً' ? 'الحسبة تمت مع ترشيح بنك مناسب' : 'الحسبة تمت على النسبة المدخلة'}
+        </span><br>
+        <span class="badge-duration">مدة التمويل: ${duration}</span>
       </div>
     </div>`;
 
-    // كرت البنك المرشّح
     if (recommendedBank) {
       const b = recommendedBank;
       const logoSrc = bankLogoMap[b.bankName];
@@ -1082,25 +1111,18 @@
       </div>`;
     }
 
-    html += `<div style="margin-top:10px; text-align:right;">
-      <strong>تفاصيل الأقساط الشهرية (تقديرية):</strong>
-    </div>`;
-
-    finalPhases.forEach(p => {
-      html += `<div class="instalment-row">
-        القسط من الشهر <strong>${p.from}</strong> إلى <strong>${p.to}</strong>:
-        ${p.inst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
-      </div>`;
-    });
-
+    // كرت المبلغ الرئيسي
     html += `
-      <div style="margin-top:14px; text-align:right;">
+      <div class="result-main-block">
+        <div class="result-main-title">التمويل الصافي الأهم 👇</div>
         <div class="result-amount-main">
-          التمويل الصافي بعد خصم الرسوم الإدارية ورسوم السلع (إن وجدت):
           ${finalNetFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
         <div class="result-amount-sub">
-          بعد خصم الرسوم الإدارية فقط (مع الضريبة، بدون رسوم السلع):
+          بعد خصم الرسوم الإدارية مع ضريبة القيمة المضافة ورسوم السلع (إن وجدت)
+        </div>
+        <div class="result-amount-small">
+          بعد خصم الرسوم الإدارية مع الضريبة فقط (بدون رسوم السلع):
           ${netAfterAdminFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
         <div class="result-amount-small">
@@ -1108,25 +1130,26 @@
           ${netWithoutFeesFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
         ${supportText}
-        <div style="margin-top:8px; font-size:14px; color:#444;">
+        <div style="margin-top:8px; font-size:13px; color:#444;">
           نكتبه بالحروف عشان ما تلخبط بالفاصلة:
           <strong>${numberToArabicWords(parseInt(finalNetFixed))}</strong>
         </div>
       </div>
     `;
 
-    // جزء خاص بشراء مديونية تمويل شخصي
+    // قسم شراء مديونية تمويل شخصي
     if (financeType === 'شراء مديونية تمويل شخصي') {
       html += `
-        <div style="margin-top:16px; text-align:right; font-size:14px;">
-          <strong>شراء مديونية تمويل شخصي:</strong><br>
-          مبلغ التسديد المبكر للتمويل الحالي (المديونية): 
-          ${buyoutAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
-        </div>
+        <div class="result-section-title">تفاصيل شراء المديونية</div>
+        <div class="result-section-box">
+          <div style="font-size:14px; margin-bottom:4px;">
+            مبلغ التسديد المبكر للتمويل الحالي (المديونية): 
+            <strong>${buyoutAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
+          </div>
       `;
       if (netAfterBuyout <= 0) {
         html += `
-          <div class="alert-error" style="margin-top:8px;">
+          <div class="alert-error" style="margin-top:6px;">
             الصافي بعد سداد المديونية: ${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال.<br>
             قد يعتذر البنك المشتري، نرجو الانتباه.
           </div>
@@ -1134,9 +1157,9 @@
       } else {
         const styleColor = netAfterBuyout < 5000 ? 'color:#b71c1c;' : 'color:#1b5e20;';
         html += `
-          <div style="margin-top:8px; font-size:15px; ${styleColor}">
+          <div style="margin-top:6px; font-size:14px; ${styleColor}">
             الصافي المتوقع للعميل بعد سداد المديونية:
-            ${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+            <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
           </div>
         `;
         if (netAfterBuyout < 5000) {
@@ -1147,32 +1170,57 @@
           `;
         }
       }
+      html += `</div>`;
     }
 
+    // تفاصيل الأقساط
     html += `
-      <div style="margin-top:12px; text-align:right; font-size:14px;">
-        <div style="color:#b71c1c;">
+      <div class="result-section-title">تفاصيل الأقساط الشهرية (تقديرية)</div>
+      <div class="result-section-box">
+    `;
+    finalPhases.forEach(p => {
+      html += `<div class="instalment-row">
+        القسط من الشهر <strong>${p.from}</strong> إلى <strong>${p.to}</strong>:
+        ${p.inst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+      </div>`;
+    });
+    html += `</div>`;
+
+    // تفاصيل الرسوم والأرباح
+    html += `
+      <div class="result-section-title">تفاصيل الرسوم والأرباح</div>
+      <div class="result-section-box">
+        <div style="color:#b71c1c; font-size:14px;">
           الربح دون الرسوم:
-          ${(totalInst - netWithoutFees).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+          <strong>${(totalInst - netWithoutFees).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
-        <div style="color:#b71c1c; font-size:16px; margin-top:2px;">
+        <div style="color:#b71c1c; font-size:15px; margin-top:2px;">
           الربح مع الرسوم:
-          ${totalProfitWithFees.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+          <strong>${totalProfitWithFees.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
-        <div>معامل الربح: ${profitFactor.toFixed(3)}</div>
-        <div>الرسوم الإدارية (بدون الضريبة): ${adminFee.toFixed(0)} ريال</div>
-        <div>ضريبة الرسوم (15٪): ${vat.toFixed(0)} ريال</div>
-        ${addCommodityFee ? `<div>رسوم السلع: ${commodityFee.toFixed(0)} ريال</div>` : ''}
-        <div>إجمالي التمويل مع الأرباح (مجموع الأقساط): ${totalInst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</div>
+        <div style="font-size:13px; margin-top:4px;">
+          معامل الربح: ${profitFactor.toFixed(3)}
+        </div>
+        <div style="font-size:13px;">
+          الرسوم الإدارية (بدون الضريبة): ${adminFee.toFixed(0)} ريال
+        </div>
+        <div style="font-size:13px;">
+          ضريبة الرسوم (15٪): ${vat.toFixed(0)} ريال
+        </div>
+        ${addCommodityFee ? `<div style="font-size:13px;">رسوم السلع: ${commodityFee.toFixed(0)} ريال</div>` : ''}
+        <div style="font-size:13px; margin-top:4px;">
+          إجمالي التمويل مع الأرباح (مجموع الأقساط):
+          ${totalInst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+        </div>
       </div>
     `;
 
-    // عرض ثلاثة بنوك أخرى كنسبة من الأقل إلى الأعلى
+    // بنوك أخرى مقترحة
     if (altBanks.length > 0) {
       html += `
-        <div style="margin-top:16px; text-align:right; font-size:14px;">
-          <strong>بنوك أخرى مقترحة (بالترتيب من الأقل إلى الأعلى):</strong>
-          <ul style="margin:8px 0 0; padding-right:20px; font-size:13px; color:#444; list-style-type:disc;">
+        <div class="result-section-title">بنوك أخرى مقترحة (من الأقل إلى الأعلى)</div>
+        <div class="result-section-box">
+          <ul style="margin:0; padding-right:18px; font-size:13px; color:#444; list-style-type:disc; text-align:right;">
       `;
       altBanks.forEach(b => {
         html += `<li>${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong></li>`;
@@ -1208,7 +1256,6 @@
   /***********************/
   document.addEventListener('DOMContentLoaded', () => {
     loadBankConfigs();
-    // إظهار أيقونة المشرف في البداية (صفحة الهبوط)
     const icon = document.getElementById('adminIcon');
     if (icon) icon.style.display = 'flex';
   });
