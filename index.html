@@ -11,25 +11,27 @@
       background: #f3f4f6;
       margin: 0;
       text-align: center;
-      font-size: 22px; /* خط أكبر شوي */
+      font-size: 20px;
       direction: rtl;
       color: #111827;
     }
     header {
-      background: linear-gradient(135deg, #1d4ed8, #1e40af); /* أزرق */
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
       color: #fff;
-      padding: 18px 10px;
+      padding: 14px 10px;
       position: sticky;
       top: 0;
       z-index: 10;
     }
     header h1 {
       margin: 0;
-      font-size: 26px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
     }
     header p {
       margin: 4px 0 0;
-      font-size: 17px;
+      font-size: 16px;
       opacity: 0.95;
     }
     .top-bar {
@@ -42,15 +44,15 @@
 
     .page-container {
       max-width: 900px;
-      margin: 20px auto 40px;
+      margin: 16px auto 32px;
       padding: 0 10px;
     }
     .card {
       background: #ffffff;
       border-radius: 18px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
-      margin-bottom: 18px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+      margin-bottom: 14px;
       text-align: center;
       width: 100%;
     }
@@ -85,15 +87,15 @@
       background: #dbeafe;
     }
     button.small, .btn.small {
-      padding: 8px 16px;
-      font-size: 16px;
+      padding: 12px 20px;
+      font-size: 18px;
     }
 
     input, select {
       width: 100%;
-      padding: 13px 14px;
-      margin: 10px 0 4px;
-      font-size: 20px;
+      padding: 11px 12px;
+      margin: 8px 0 2px;
+      font-size: 18px;
       border-radius: 10px;
       border: 1px solid #d1d5db;
       text-align: right;
@@ -109,8 +111,8 @@
     label {
       display: block;
       text-align: right;
-      font-size: 18px;
-      margin-top: 10px;
+      font-size: 17px;
+      margin-top: 8px;
       margin-bottom: 2px;
       color: #374151;
     }
@@ -131,70 +133,70 @@
     .page.active { display: block; }
 
     .welcome-title {
-      font-size: 24px;
-      margin-bottom: 8px;
+      font-size: 23px;
+      margin-bottom: 6px;
       color: #111827;
     }
     .welcome-sub {
-      font-size: 16px;
+      font-size: 15px;
       color: #6b7280;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .steps-badge {
       font-size: 14px;
       color: #6b7280;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-align: right;
     }
 
     .result-header {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
     .client-chip {
       background: #e0f2fe;
       color: #1d4ed8;
       border-radius: 999px;
-      padding: 7px 16px;
-      font-size: 15px;
+      padding: 6px 14px;
+      font-size: 14px;
     }
     .badge-mode {
       background: #eff6ff;
       color: #1d4ed8;
       border-radius: 999px;
-      padding: 5px 12px;
-      font-size: 13px;
+      padding: 4px 10px;
+      font-size: 12px;
       display: inline-block;
     }
     .badge-duration {
       background: #e0f2fe;
       color: #1e3a8a;
       border-radius: 999px;
-      padding: 5px 12px;
-      font-size: 13px;
+      padding: 4px 10px;
+      font-size: 12px;
       display: inline-block;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .bank-card {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px;
+      gap: 12px;
+      padding: 12px;
       border-radius: 16px;
       background: #eff6ff;
       border: 1px dashed #2563eb;
-      margin: 10px 0 16px;
+      margin: 8px 0 12px;
       text-align: right;
     }
     .bank-logo {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: 14px;
       background: #ffffff;
       display: flex;
@@ -210,63 +212,88 @@
       object-fit: contain;
     }
     .bank-text-main {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 600;
       color: #0f172a;
     }
     .bank-text-sub {
-      font-size: 14px;
+      font-size: 13px;
       color: #4b5563;
     }
 
     .result-main-block {
       background: radial-gradient(circle at top, #e0f2fe 0, #ffffff 60%);
       border-radius: 18px;
-      padding: 16px 18px;
-      margin-top: 8px;
+      padding: 12px 14px;
+      margin-top: 4px;
       text-align: right;
       border: 1px solid #bfdbfe;
     }
     .result-main-title {
-      font-size: 16px;
-      color: #1d4ed8;
-      margin-bottom: 4px;
-    }
-    .result-amount-main {
-      font-size: 28px;
-      font-weight: 800;
-      color: #1e40af;
-      margin: 4px 0 2px;
-    }
-    .result-amount-sub {
       font-size: 15px;
       color: #1d4ed8;
-      margin: 3px 0;
+      margin-bottom: 2px;
+    }
+    .result-amount-main {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e40af;
+      margin: 2px 0;
+    }
+    .result-amount-sub {
+      font-size: 14px;
+      color: #1d4ed8;
+      margin: 2px 0;
     }
     .result-amount-small {
-      font-size: 14px;
+      font-size: 13px;
       color: #374151;
       margin-top: 2px;
     }
 
+    .dual-main-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .dual-box {
+      background: #eff6ff;
+      border-radius: 14px;
+      padding: 8px 10px;
+      font-size: 13px;
+      text-align: right;
+      border: 1px solid #dbeafe;
+    }
+    .dual-box-title {
+      font-size: 13px;
+      color: #1d4ed8;
+      margin-bottom: 2px;
+    }
+    .dual-box-amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+
     .result-section-title {
       text-align: right;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
-      margin: 16px 0 8px;
+      margin: 12px 0 6px;
       color: #111827;
     }
     .result-section-box {
       border-radius: 16px;
       background: #f9fafb;
       border: 1px solid #e5e7eb;
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-align: right;
     }
 
     .instalment-row {
-      font-size: 15px;
-      padding: 6px 0;
+      font-size: 14px;
+      padding: 4px 0;
       border-bottom: 1px dashed #e5e7eb;
       text-align: right;
       color: #374151;
@@ -276,9 +303,9 @@
       color: #b91c1c;
       background: #fef2f2;
       border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 15px;
-      margin: 8px 0;
+      padding: 8px 10px;
+      font-size: 14px;
+      margin: 6px 0;
       text-align: right;
       border: 1px solid #fecaca;
     }
@@ -286,19 +313,19 @@
     .admin-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-      gap: 10px 14px;
-      margin-top: 8px;
+      gap: 8px 12px;
+      margin-top: 6px;
       text-align: right;
     }
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 14px;
+      margin-top: 10px;
     }
     .admin-table th, .admin-table td {
       border: 1px solid #e5e7eb;
-      padding: 6px 8px;
-      font-size: 13px;
+      padding: 5px 6px;
+      font-size: 12px;
       text-align: center;
     }
     .admin-table th {
@@ -309,14 +336,13 @@
     footer {
       font-size: 13px;
       color: #6b7280;
-      margin-top: 20px;
-      padding: 10px;
+      margin-top: 10px;
+      padding: 8px;
       position: relative;
       background: #f9fafb;
       border-top: 1px solid #e5e7eb;
     }
 
-    /* أيقونة المشرف أسفل الشاشة في الصفحة الأولى فقط */
     #adminIcon {
       position: fixed;
       bottom: 6px;
@@ -337,9 +363,8 @@
       background: rgba(15, 23, 42, 0.18);
     }
 
-    /* صفحة النتيجة طويلة ومناسبة للجوال */
     #resultCard {
-      min-height: calc(100vh - 220px);
+      /* نخليها طبيعية بدون ارتفاع إجباري لتقليل التمرير قدر الإمكان */
     }
   </style>
 </head>
@@ -366,38 +391,38 @@
       <button class="primary" onclick="startClientFlow()">
         ابدأ كعميل
       </button>
-      <div style="margin-top:16px; font-size:14px; color:#6b7280;">
+      <div style="margin-top:12px; font-size:13px; color:#6b7280;">
         النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة وترسلها للعميل مباشرة.
       </div>
     </div>
   </div>
 
-  <!-- صفحة الحاسبة (أسئلة متتابعة) -->
+  <!-- صفحة الحاسبة -->
   <div id="calculatorPage" class="page">
     <div class="card">
       <div class="steps-badge">
         أسئلة بسيطة خطوة بخطوة للوصول لأدق حسبة ممكنة 👌
       </div>
       <div id="question"></div>
-      <div style="margin-top:16px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+      <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
         <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للصفحة الرئيسية</button>
         <div>
           <button id="nextButton" class="primary small" style="display:none;" onclick="nextQuestion()">التالي</button>
           <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
         </div>
       </div>
-      <div id="resetButtonContainer" style="margin-top:10px; display:none;">
+      <div id="resetButtonContainer" style="margin-top:8px; display:none;">
         <button class="secondary small" onclick="resetCalc()">🔁 إعادة الحسبة</button>
       </div>
     </div>
   </div>
 
-  <!-- صفحة النتيجة النهائية -->
+  <!-- صفحة النتيجة -->
   <div id="resultPage" class="page">
     <div class="card fade-in" id="resultCard">
       <!-- تعبئة من الجافاسكربت -->
     </div>
-    <div style="margin-top:16px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+    <div style="margin-top:10px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
       <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
       <button class="primary small" onclick="resetCalc(); showPage('calculator');">🔁 إعادة حسبة جديدة</button>
     </div>
@@ -406,12 +431,12 @@
   <!-- صفحة "قريباً" لشراء مديونية تمويل عقاري -->
   <div id="comingSoonPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px; color:#111827;">شراء مديونية تمويل عقاري</h2>
-      <p style="font-size:15px; color:#6b7280;">
+      <h2 style="margin-top:0; font-size:19px; color:#111827;">شراء مديونية تمويل عقاري</h2>
+      <p style="font-size:14px; color:#6b7280;">
         حالياً لا يوجد احتساب لشراء المديونية العقارية عبر هذه الحاسبة.<br>
         سيتم التحديث وإضافة الخدمة في الأسابيع القادمة إن شاء الله 🙏
       </p>
-      <div style="margin-top:16px;">
+      <div style="margin-top:12px;">
         <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
       </div>
     </div>
@@ -420,28 +445,28 @@
   <!-- صفحة دخول المسؤول -->
   <div id="adminLoginPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px; color:#111827;">دخول المشرف</h2>
-      <p style="font-size:14px; color:#b91c1c; text-align:right;">
+      <h2 style="margin-top:0; font-size:19px; color:#111827;">دخول المشرف</h2>
+      <p style="font-size:13px; color:#b91c1c; text-align:right;">
         ⚠️ هذا القسم مخصص للمشرفين المرخص لهم فقط.<br>
         أي محاولة دخول ببيانات غير صحيحة قد تعتبر استخداماً غير مصرح به.
       </p>
       <label for="adminPin">رمز الدخول</label>
       <input id="adminPin" type="password" placeholder="أدخل رمز المشرف" />
-      <div style="margin-top:16px;">
+      <div style="margin-top:12px;">
         <button class="primary small" onclick="handleAdminLogin()">دخول</button>
         <button class="secondary small" onclick="backToLanding()">إلغاء</button>
       </div>
-      <div id="adminLoginError" class="alert-error" style="display:none; margin-top:10px;">
+      <div id="adminLoginError" class="alert-error" style="display:none; margin-top:8px;">
         الرمز غير صحيح، حاول مرة أخرى.
       </div>
     </div>
   </div>
 
-  <!-- صفحة لوحة المسؤول -->
+  <!-- لوحة المسؤول -->
   <div id="adminPage" class="page">
     <div class="card fade-in">
-      <h2 style="margin-top:0; font-size:20px; color:#111827;">لوحة إعدادات البنوك</h2>
-      <p style="font-size:14px; color:#6b7280; text-align:right;">
+      <h2 style="margin-top:0; font-size:19px; color:#111827;">لوحة إعدادات البنوك</h2>
+      <p style="font-size:13px; color:#6b7280; text-align:right;">
         من هنا تضيف وتعدّل شرائح الرواتب ونسب هامش الربح لكل بنك ونوع تمويل.  
         هذه البيانات تستخدم في خيار <strong>ترشيح بنك مناسب تلقائياً</strong>.
       </p>
@@ -493,7 +518,7 @@
           </div>
         </div>
         <input type="hidden" id="adminEditIndex" value="" />
-        <div style="text-align:left; margin-top:14px;">
+        <div style="text-align:left; margin-top:10px;">
           <button type="submit" class="primary small">💾 حفظ</button>
           <button type="button" class="secondary small" onclick="clearAdminForm()">مسح النموذج</button>
         </div>
@@ -511,17 +536,15 @@
             <th>تحكم</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- تعبئة من الجافاسكربت -->
-        </tbody>
+        <tbody></tbody>
       </table>
 
-      <div style="margin-top:10px; font-size:12px; color:#9ca3af; text-align:right;">
+      <div style="margin-top:8px; font-size:11px; color:#9ca3af; text-align:right;">
         ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك.  
         ضع ملفات الصور في مجلد <code>img</code> بنفس الأسماء المشار إليها في الكود.
       </div>
 
-      <div style="margin-top:16px; text-align:left;">
+      <div style="margin-top:12px; text-align:left;">
         <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
       </div>
     </div>
@@ -534,15 +557,11 @@
   <span id="datetime"></span>
 </footer>
 
-<!-- أيقونة المشرف أسفل الشاشة في الصفحة الأولى -->
 <div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
   🛠️
 </div>
 
 <script>
-  /***********************/
-  /*  إدارة الصفحات     */
-  /***********************/
   function showPage(name) {
     ['landing','calculator','result','adminLogin','admin','comingSoon'].forEach(id => {
       const el = document.getElementById(id + 'Page');
@@ -564,9 +583,6 @@
     resetCalc();
   }
 
-  /***********************/
-  /*  إعداد شعارات البنوك */
-  /***********************/
   const bankLogoMap = {
     'مصرف الراجحي': 'img/alrajhi.png',
     'البنك الأهلي السعودي': 'img/alahli.png',
@@ -579,9 +595,6 @@
     'البنك السعودي للاستثمار': 'img/saib.png'
   };
 
-  /***********************/
-  /*  بيانات البنوك      */
-  /***********************/
   let bankConfigs = [];
 
   const defaultBankConfigs = [
@@ -705,9 +718,6 @@
     return list;
   }
 
-  /***********************/
-  /*  دخول المسؤول       */
-  /***********************/
   const ADMIN_PIN = '11qq11qQ@';
 
   function handleAdminLogin() {
@@ -721,9 +731,6 @@
     }
   }
 
-  /***********************/
-  /*  منطق الحاسبة       */
-  /***********************/
   let answers = { commitments: [] }, step = 0, commitmentStep = 0, currentCommitment = {};
   let hasStarted = false;
 
@@ -731,7 +738,6 @@
     { id:'clientName',label:'اسمك الكريم',type:'text' },
     { id:'birthDay',label:'اختر يوم الميلاد:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
     { id:'birthMonth',label:'اختر شهر الميلاد:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
-    // من 1430 تنازلياً إلى 1370
     { id:'birthYear',label:'اختر سنة الميلاد:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
     { id:'jobType',label:'نوع الوظيفة',type:'select',options:['عسكري','مدني (قطاع حكومي)','خاص (شبه حكومي)','خاص (شركة معتمدة)','خاص (شركة غير معتمدة)'] },
     { 
@@ -811,7 +817,6 @@
 
     const remainingYears = maxAge - age;
     const remainingMonths = remainingYears * 12;
-
     answers.retirementYearHijri = year + maxAge;
 
     if(remainingMonths <= 0){
@@ -888,13 +893,11 @@
       q = generalQuestions[step];
       if(q.show && !q.show(answers)){ step++; showQuestion(); return; }
 
-      // لو اختار شراء مديونية تمويل عقاري → صفحة قريباً
       if(q.id === 'salary' && answers.financeType === 'شراء مديونية تمويل عقاري'){
         showPage('comingSoon');
         return;
       }
 
-      // لو اختار ترشيح بنك → نجيب النسبة تلقائياً ونعدّي سؤال النسبة
       if(q.id === 'profitMargin' && answers.calcMode === 'ترشيح بنك مناسب تلقائياً'){
         const list = getMatchingBanksForAnswers();
         const rec = list[0];
@@ -1065,7 +1068,6 @@
     const profitFactor = (years * profitMargin / 100) + 1;
     const netFinance = totalInst / profitFactor;
 
-    // الرسوم
     let adminFee = 0, vat = 0;
     if (isPersonalLike) {
       adminFee = netFinance * 0.005;
@@ -1119,7 +1121,7 @@
     const resultCard = document.getElementById('resultCard');
     let html = '';
 
-    html += `<h2 style="margin:0 0 10px; font-size:20px; text-align:right; color:#111827;">
+    html += `<h2 style="margin:0 0 6px; font-size:18px; text-align:right; color:#111827;">
       نتيجة الحسبة (التقريبية)
     </h2>`;
 
@@ -1127,7 +1129,7 @@
       <div class="client-chip">مرحباً ومسهلا يا ${name}</div>
       <div style="text-align:right;">
         <span class="badge-mode">
-          ${answers.calcMode === 'ترشيح بنك مناسب تلقائياً' ? 'الحسبة تمت مع ترشيح بنك مناسب' : 'الحسبة تمت على النسبة المدخلة'}
+          ${answers.calcMode === 'ترشيح بنك مناسب تلقائياً' ? 'الحسبة مع ترشيح بنك مناسب' : 'الحسبة على النسبة المدخلة'}
         </span><br>
         <span class="badge-duration">مدة التمويل: ${duration}</span>
       </div>
@@ -1158,47 +1160,60 @@
 
     html += `
       <div class="result-main-block">
-        <div class="result-main-title">التمويل الصافي الأهم 👇</div>
+        <div class="result-main-title">أهم ما يهمك الآن 👇</div>
         <div class="result-amount-main">
           ${finalNetFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
         <div class="result-amount-sub">
-          بعد خصم الرسوم الإدارية مع ضريبة القيمة المضافة ${addCommodityFee ? 'ورسوم السلع' : ''}.
+          هذا هو التمويل الصافي المتوقع بعد خصم جميع الرسوم الإدارية والضريبة ${addCommodityFee ? 'ورسوم السلع' : ''}.
         </div>
-        <div class="result-amount-small">
-          بعد خصم الرسوم الإدارية مع الضريبة فقط (بدون رسوم السلع):
-          ${netAfterAdminFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
+        <div class="dual-main-grid">
+          <div class="dual-box">
+            <div class="dual-box-title">الصافي قبل أي رسوم</div>
+            <div class="dual-box-amount">
+              ${netWithoutFeesFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ر.س
+            </div>
+          </div>
+          <div class="dual-box">
+            <div class="dual-box-title">بعد الرسوم الإدارية + الضريبة فقط</div>
+            <div class="dual-box-amount">
+              ${netAfterAdminFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ر.س
+            </div>
+          </div>
         </div>
-        <div class="result-amount-small">
-          قبل خصم أي رسوم:
-          ${netWithoutFeesFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
-        </div>
+        ${isBuyoutPersonal && buyoutAmount > 0 ? `
+          <div class="dual-box" style="margin-top:6px;">
+            <div class="dual-box-title">كم يصفي لك بعد سداد التمويل القديم</div>
+            <div class="dual-box-amount">
+              ${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ر.س
+            </div>
+          </div>
+        ` : ''}
         ${supportText}
-        <div style="margin-top:8px; font-size:14px; color:#374151;">
-          نكتبه بالحروف عشان ما تلخبط بالفاصلة:
+        <div style="margin-top:6px; font-size:13px; color:#374151;">
+          مكتوب بالحروف لتوضيح الرقم:
           <strong>${numberToArabicWords(parseInt(finalNetFixed))}</strong>
         </div>
-        <div class="result-amount-small" style="margin-top:6px;">
+        <div class="result-amount-small" style="margin-top:4px;">
           نسبة هامش الربح المحتسبة: <strong>${profitMargin}% سنوياً</strong>
         </div>
       </div>
     `;
 
-    // لو شراء مديونية تمويل شخصي
     if (isBuyoutPersonal && buyoutAmount > 0) {
       html += `
-        <div class="result-section-title">شراء مديونية التمويل الشخصي</div>
+        <div class="result-section-title">تفاصيل شراء مديونية التمويل الشخصي</div>
         <div class="result-section-box">
           <div class="instalment-row">
-            مبلغ التسديد المبكر (المطلوب لسداد التمويل الحالي): 
+            مبلغ التسديد المبكر (سداد التمويل الحالي):
             <strong>${buyoutAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
           </div>
           <div class="instalment-row">
-            الصافي للعميل بعد خصم مبلغ التسديد المبكر من البنك البائع:
+            الصافي المتوقع بعد خصم مبلغ التسديد المبكر:
             <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
           </div>
           ${netAfterBuyout < 5000 ? `
-            <div class="alert-error" style="margin-top:8px;">
+            <div class="alert-error" style="margin-top:6px;">
               تنبيه: الصافي أقل من 5,000 ريال، قد يعتذر البنك المشتري عن قبول الطلب، نرجو الانتباه.
             </div>
           ` : ''}
@@ -1206,7 +1221,6 @@
       `;
     }
 
-    // الأقساط حسب الفترات
     html += `
       <div class="result-section-title">تفاصيل القسط المتوقع حسب الفترات</div>
       <div class="result-section-box">
@@ -1221,12 +1235,11 @@
     });
     html += `</div>`;
 
-    // البنوك الأخرى
     if (altBanks.length > 0) {
       html += `
-        <div class="result-section-title">٣ بنوك أخرى مقترحة (من الأقل نسبة إلى الأعلى)</div>
+        <div class="result-section-title">٣ بنوك أخرى منافسة (من الأقل نسبة إلى الأعلى)</div>
         <div class="result-section-box">
-          <ul style="margin:0; padding-right:18px; font-size:14px; color:#4b5563; list-style-type:disc; text-align:right;">
+          <ul style="margin:0; padding-right:16px; font-size:13px; color:#4b5563; list-style-type:disc; text-align:right;">
       `;
       altBanks.forEach(b => {
         html += `<li>${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong></li>`;
@@ -1234,7 +1247,6 @@
       html += `</ul></div>`;
     }
 
-    // ملخص الربح والرسوم
     html += `
       <div class="result-section-title">ملخص الأرباح والرسوم</div>
       <div class="result-section-box">
@@ -1243,7 +1255,7 @@
           <strong>${(totalInst - netWithoutFees).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
         <div class="instalment-row">
-          الربح مع الرسوم (بعد خصم جميع الرسوم من الصافي):
+          الربح مع الرسوم:
           <strong>${totalProfitWithFees.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
         <div class="instalment-row">
@@ -1258,20 +1270,17 @@
           <strong>${totalInst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
       </div>
-      <div style="margin-top:18px; font-size:14px; color:#6b7280; text-align:right;">
+      <div style="margin-top:10px; font-size:13px; color:#6b7280; text-align:right;">
         ⚠️ هذه الحسبة تقريبية وليست عرضاً ملزماً، والنسب الفعلية تعتمد على سياسات البنك وقت تقديم الطلب.
       </div>
-      <div style="margin-top:10px; font-size:15px; font-weight:bold; color:#1e40af; text-align:center;">
-        📸 خذ لقطة شاشة وارسلها لشخص التمويل أو للعميل مباشرة
+      <div style="margin-top:8px; font-size:14px; font-weight:bold; color:#1e3a8a; text-align:center;">
+        📸 خذ لقطة شاشة وارسلها للعميل مباشرة
       </div>
     `;
 
     resultCard.innerHTML = html;
   }
 
-  /***********************/
-  /*  التاريخ والتهيئة   */
-  /***********************/
   function updateDateTime(){
     const n = new Date();
     const y = n.getFullYear();
