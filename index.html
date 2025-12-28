@@ -159,7 +159,7 @@
             font-size: 11px;
             color: #7d8597;
         }
-        select, input[type="number"], input[type="password"], input[type="text"] {
+        select, input[type="number"], input[type="password"], input[type="text"], textarea {
             width: 100%;
             padding: 9px 10px;
             border-radius: var(--radius-md);
@@ -168,7 +168,8 @@
             font-size: 14px;
             outline: none;
         }
-        select:focus, input:focus {
+        textarea { min-height: 50px; resize: vertical; }
+        select:focus, input:focus, textarea:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 2px rgba(27,79,114,0.08);
         }
@@ -270,6 +271,7 @@
             background: #fbfcfe;
         }
         .rate-source { font-size: 11px; color: #7d8597; }
+        .rate-note { font-size: 11px; color: #8e44ad; }
         .disclaimer {
             margin-top: 10px;
             padding: 8px 10px;
@@ -319,19 +321,6 @@
             color: var(--accent);
             text-decoration: none;
         }
-        .admin-icon {
-            position: fixed;
-            bottom: 52px;
-            right: 6px;
-            font-size: 11px;
-            opacity: 0.28;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            padding: 0;
-            z-index: 2000;
-        }
-        .admin-icon:hover { opacity: 0.6; }
         .admin-msg { margin-top: 8px; font-size: 12px; }
         .admin-msg.error { color: var(--danger); }
         .admin-msg.success { color: var(--success); }
@@ -361,6 +350,16 @@
             font-size: 10px;
             padding: 3px 7px;
             cursor: pointer;
+        }
+        .admin-entry {
+            margin-top: 12px;
+            border-top: 1px dashed #d5d8dc;
+            padding-top: 8px;
+            text-align: left;
+        }
+        .admin-entry .btn {
+            font-size: 11px;
+            padding: 6px 10px;
         }
     </style>
 </head>
@@ -482,6 +481,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- زر دخول المسؤول في الصفحة الأولى -->
+        <div class="admin-entry">
+            <button class="btn btn-outline" onclick="showAdminSection()">دخول المسؤول</button>
+        </div>
     </section>
 
     <!-- جهة النتيجة ولوحة المسؤول -->
@@ -498,115 +502,120 @@
 
         <hr style="margin:16px 0 12px; border:none; border-top:1px dashed #d5d8dc;">
 
-        <div class="card-header" style="margin-bottom:6px;">
-            <h2 style="font-size:15px;">لوحة تحكم المسؤول (تحديث النِّسَب)</h2>
-            <span>تتطلب رمز الدخول الخاص</span>
-        </div>
-
-        <!-- شاشة تسجيل الدخول للمسؤول -->
-        <div id="admin-login">
-            <div class="field">
-                <label for="adminPassword">الرمز السري للمسؤول</label>
-                <input type="password" id="adminPassword" placeholder="•••••••••" />
-                <small>مخصص للمسؤولين فقط. أي استخدام غير مصرح به يعرضك للمساءلة.</small>
-            </div>
-            <div class="actions-row">
-                <button class="btn btn-primary btn-sm" onclick="adminLogin()">دخول المسؤول</button>
-            </div>
-            <div id="adminLoginMsg" class="admin-msg"></div>
-        </div>
-
-        <!-- لوحة المسؤول بعد الدخول -->
-        <div id="admin-panel" style="display:none;">
-            <div class="field">
-                <label for="adminBank">اختر البنك المراد تحديث نسبه</label>
-                <select id="adminBank"></select>
+        <div id="admin-section-wrapper" style="display:none;">
+            <div class="card-header" style="margin-bottom:6px;">
+                <h2 style="font-size:15px;">لوحة تحكم المسؤول (تحديث النِّسَب والعروض)</h2>
+                <span>مخصصة للمسؤولين فقط</span>
             </div>
 
-            <div class="field">
-                <label for="adminFinanceType">نوع التمويل</label>
-                <select id="adminFinanceType" onchange="adminFinanceTypeChanged()">
-                    <option value="">اختر نوع التمويل...</option>
-                    <option value="mortgage">تمويل عقاري</option>
-                    <option value="mortgage-buyout">شراء مديونية عقاري</option>
-                    <option value="personal">تمويل شخصي</option>
-                    <option value="personal-buyout">شراء مديونية شخصي</option>
-                    <option value="consumer">تمويل استهلاكي</option>
-                    <option value="car-lease">تمويل تأجير مركبات</option>
-                </select>
+            <!-- شاشة تسجيل الدخول للمسؤول -->
+            <div id="admin-login">
+                <div class="field">
+                    <label for="adminPassword">الرمز السري للمسؤول</label>
+                    <input type="password" id="adminPassword" placeholder="•••••••••" />
+                    <small>مخصص للمسؤولين فقط. أي استخدام غير مصرح به يعرضك للمساءلة.</small>
+                </div>
+                <div class="actions-row">
+                    <button class="btn btn-primary btn-sm" onclick="adminLogin()">دخول المسؤول</button>
+                </div>
+                <div id="adminLoginMsg" class="admin-msg"></div>
             </div>
 
-            <div class="field" id="adminSupportWrapper" style="display:none;">
-                <label for="adminSupportType">حالة الدعم (للتمويل العقاري)</label>
-                <select id="adminSupportType">
-                    <option value="">اختر حالة الدعم...</option>
-                    <option value="supported">تمويل مدعوم</option>
-                    <option value="unsupported">تمويل غير مدعوم</option>
-                </select>
+            <!-- لوحة المسؤول بعد الدخول -->
+            <div id="admin-panel" style="display:none; margin-top:10px;">
+                <div class="field">
+                    <label for="adminBank">اختر البنك المراد تحديث نسبه</label>
+                    <select id="adminBank" onchange="renderAdminRules()"></select>
+                </div>
+
+                <div class="field">
+                    <label for="adminFinanceType">نوع التمويل</label>
+                    <select id="adminFinanceType" onchange="adminFinanceTypeChanged()">
+                        <option value="">اختر نوع التمويل...</option>
+                        <option value="mortgage">تمويل عقاري</option>
+                        <option value="mortgage-buyout">شراء مديونية عقاري</option>
+                        <option value="personal">تمويل شخصي</option>
+                        <option value="personal-buyout">شراء مديونية شخصي</option>
+                        <option value="consumer">تمويل استهلاكي</option>
+                        <option value="car-lease">تمويل تأجير مركبات</option>
+                    </select>
+                </div>
+
+                <div class="field" id="adminSupportWrapper" style="display:none;">
+                    <label for="adminSupportType">حالة الدعم (للتمويل العقاري)</label>
+                    <select id="adminSupportType" onchange="adminEmployeeChanged()">
+                        <option value="">اختر حالة الدعم...</option>
+                        <option value="supported">تمويل مدعوم</option>
+                        <option value="unsupported">تمويل غير مدعوم</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="adminEmployeeType">نوع جهة العمل</label>
+                    <select id="adminEmployeeType" onchange="adminEmployeeChanged()">
+                        <option value="">اختر نوع جهة العمل...</option>
+                        <option value="civil">مدني / حكومي</option>
+                        <option value="military">عسكري</option>
+                        <option value="semi-gov">شبه حكومي</option>
+                        <option value="private">قطاع خاص</option>
+                    </select>
+                </div>
+
+                <div class="field" id="adminItizezWrapper" style="display:none;">
+                    <label for="adminItizez">هل النسبة تخص عملاء اعتزاز (وزارة الدفاع)؟</label>
+                    <select id="adminItizez">
+                        <option value="">اختر...</option>
+                        <option value="yes">نعم - برنامج اعتزاز وزارة الدفاع</option>
+                        <option value="no">لا - عملاء عسكريين آخرين</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="adminSalarySegment">شريحة الراتب</label>
+                    <select id="adminSalarySegment"></select>
+                    <small>شرائح الراتب يتم ضبطها من النموذج التالي.</small>
+                </div>
+
+                <div class="field">
+                    <label for="newSalarySegmentLabel">إضافة شريحة راتب جديدة</label>
+                    <input type="text" id="newSalarySegmentLabel" placeholder="مثال: من 5,000 إلى 6,000 ريال" />
+                    <small>تتم إضافة الشريحة لتظهر في اختيارات العميل ولوحة التحكم.</small>
+                </div>
+                <div class="actions-row">
+                    <button class="btn btn-outline btn-sm" onclick="addSalarySegment()">إضافة شريحة راتب</button>
+                </div>
+
+                <div class="admin-rules" id="salarySegmentsList"></div>
+
+                <div class="field">
+                    <label for="adminMonths">عدد أشهر التمويل</label>
+                    <select id="adminMonths"></select>
+                    <small>الأشهر متاحة من 1 إلى 60 للتمويلات الشخصية، وحتى 360 للتمويل العقاري.</small>
+                </div>
+
+                <div class="field">
+                    <label for="adminRate">النسبة المئوية (APR)</label>
+                    <input type="number" id="adminRate" step="0.01" min="0" placeholder="مثال: 2.99 أو 7" />
+                </div>
+
+                <div class="field">
+                    <label for="adminNote">ملاحظة / عرض خاص لهذا الشرط (اختياري)</label>
+                    <textarea id="adminNote" placeholder="مثال: خصم نصف الرسوم الإدارية أو إعفاء من قسطين أو عرض خاص لشريحة معينة"></textarea>
+                </div>
+
+                <div class="actions-row">
+                    <button class="btn btn-primary btn-sm" onclick="saveAdminRate()">حفظ النسبة والعرض</button>
+                    <button class="btn btn-outline btn-sm" onclick="logoutAdmin()">تسجيل خروج</button>
+                </div>
+
+                <div id="adminSaveMsg" class="admin-msg"></div>
+
+                <div class="admin-rules" id="adminRulesList"></div>
             </div>
-
-            <div class="field">
-                <label for="adminEmployeeType">نوع جهة العمل</label>
-                <select id="adminEmployeeType" onchange="adminEmployeeChanged()">
-                    <option value="">اختر نوع جهة العمل...</option>
-                    <option value="civil">مدني / حكومي</option>
-                    <option value="military">عسكري</option>
-                    <option value="semi-gov">شبه حكومي</option>
-                    <option value="private">قطاع خاص</option>
-                </select>
-            </div>
-
-            <div class="field" id="adminItizezWrapper" style="display:none;">
-                <label for="adminItizez">هل النسبة تخص عملاء اعتزاز (وزارة الدفاع)؟</label>
-                <select id="adminItizez">
-                    <option value="">اختر...</option>
-                    <option value="yes">نعم - برنامج اعتزاز وزارة الدفاع</option>
-                    <option value="no">لا - عملاء عسكريين آخرين</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="adminSalarySegment">شريحة الراتب</label>
-                <select id="adminSalarySegment"></select>
-                <small>شرائح الراتب يتم ضبطها من النموذج أدناه.</small>
-            </div>
-
-            <div class="field">
-                <label for="newSalarySegmentLabel">إضافة شريحة راتب جديدة</label>
-                <input type="text" id="newSalarySegmentLabel" placeholder="مثال: من 8,000 إلى أقل من 12,000 ريال" />
-                <small>تتم إضافة الشريحة لتظهر في اختيارات العميل ولوحة التحكم.</small>
-            </div>
-            <div class="actions-row">
-                <button class="btn btn-outline btn-sm" onclick="addSalarySegment()">إضافة شريحة راتب</button>
-            </div>
-
-            <div class="admin-rules" id="salarySegmentsList"></div>
-
-            <div class="field">
-                <label for="adminMonths">عدد الأشهر</label>
-                <select id="adminMonths"></select>
-                <small>للتمويل العقاري والشراء العقاري من 60 - 360 شهر، وللتمويلات الأخرى حتى 60 شهر.</small>
-            </div>
-
-            <div class="field">
-                <label for="adminRate">النسبة المئوية (APR)</label>
-                <input type="number" id="adminRate" step="0.01" min="0" placeholder="مثال: 2.99 أو 7" />
-            </div>
-
-            <div class="actions-row">
-                <button class="btn btn-primary btn-sm" onclick="saveAdminRate()">حفظ النسبة</button>
-                <button class="btn btn-outline btn-sm" onclick="logoutAdmin()">تسجيل خروج</button>
-            </div>
-
-            <div id="adminSaveMsg" class="admin-msg"></div>
-
-            <div class="admin-rules" id="adminRulesList"></div>
         </div>
     </section>
 
 </main>
-
-<button class="admin-icon" onclick="scrollToAdmin()" title="">▫️</button>
 
 <footer>
     <span>جميع الحقوق محفوظة &mdash; سرعة تملك العقار والحلول التمويلية</span>
@@ -635,9 +644,7 @@ if (adminBankSelect) {
         banks.map(b => `<option value="${b.id}">${b.name}</option>`).join('');
 }
 
-// ------------------------------
-// شرائح الراتب (يحددها المسؤول)
-// ------------------------------
+/* شرائح الراتب */
 function loadSalarySegments() {
     try {
         const raw = localStorage.getItem('salarySegmentsV1');
@@ -653,7 +660,6 @@ function saveSalarySegments(segments) {
 function initSalarySegments() {
     let segments = loadSalarySegments();
     if (!segments || !segments.length) {
-        // شريحة افتراضية عامة يمكن تعديلها أو إضافة غيرها
         segments = [{ id: 'general', label: 'شريحة راتب عامة' }];
         saveSalarySegments(segments);
     }
@@ -692,7 +698,7 @@ function addSalarySegment() {
     msg.textContent = '';
     msg.className = 'admin-msg';
     if (!label) {
-        msg.textContent = 'أدخل اسم شريحة الراتب أولاً.'; 
+        msg.textContent = 'أدخل اسم شريحة الراتب أولاً.';
         msg.classList.add('error');
         return;
     }
@@ -701,7 +707,7 @@ function addSalarySegment() {
     segments.push({ id, label });
     saveSalarySegments(segments);
     input.value = '';
-    msg.textContent = 'تمت إضافة شريحة الراتب بنجاح.'; 
+    msg.textContent = 'تمت إضافة شريحة الراتب بنجاح.';
     msg.classList.add('success');
     renderSalarySegmentsOptions();
     renderSalarySegmentsList();
@@ -712,9 +718,7 @@ function getSalaryLabelById(id) {
     return seg ? seg.label : 'شريحة راتب';
 }
 
-// ------------------------------
-// الخطوات في واجهة العميل
-// ------------------------------
+/* خطوات العميل */
 function goToStep(step) {
     for (let i = 1; i <= 3; i++) {
         document.getElementById(`step-pill-${i}`).classList.toggle('active', i === step);
@@ -751,24 +755,23 @@ function fillMonthsForClient() {
     const monthsSelect = document.getElementById('months');
     monthsSelect.innerHTML = '';
     let maxMonths = 60;
-    let minMonths = 6;
     let hint = '';
     if (financeType === 'mortgage' || financeType === 'mortgage-buyout') {
-        minMonths = 60; maxMonths = 360; hint = 'للتمويل العقاري يمكن الاختيار من 60 شهر حتى 360 شهر.';
+        maxMonths = 360;
+        hint = 'للتمويل العقاري يمكن الاختيار من 1 شهر حتى 360 شهر.';
     } else {
-        minMonths = 6; maxMonths = 60; hint = 'لبقية التمويلات يمكن الاختيار من 6 أشهر حتى 60 شهر.';
+        maxMonths = 60;
+        hint = 'لبقية التمويلات يمكن الاختيار من 1 شهر حتى 60 شهر.';
     }
     let options = '<option value="">اختر عدد الأشهر...</option>';
-    for (let m = minMonths; m <= maxMonths; m += (maxMonths > 60 ? 12 : 6)) {
+    for (let m = 1; m <= maxMonths; m++) {
         options += `<option value="${m}">${m} شهر</option>`;
     }
     monthsSelect.innerHTML = options;
     document.getElementById('monthsHint').textContent = hint;
 }
 
-// ------------------------------
-// نموذج البيانات ومعرّف المفتاح
-// ------------------------------
+/* مفتاح النسبة */
 function buildRateKey(params) {
     const {
         financeType,
@@ -794,9 +797,7 @@ function buildRateKey(params) {
     ].join('|');
 }
 
-// ------------------------------
-// تخزين بيانات المسؤول في localStorage
-// ------------------------------
+/* تخزين النسب */
 function loadRates() {
     try {
         const raw = localStorage.getItem('bankRatesV2');
@@ -817,28 +818,29 @@ function saveAdminRate() {
     const months = document.getElementById('adminMonths').value;
     const rateInput = document.getElementById('adminRate').value;
     const itizez = document.getElementById('adminItizez').value;
+    const note = (document.getElementById('adminNote').value || '').trim();
     const msg = document.getElementById('adminSaveMsg');
     msg.textContent = ''; msg.className = 'admin-msg';
 
     if (!bankId || !financeType || !employeeType || !salarySegment || !months || !rateInput) {
-        msg.textContent = 'فضلاً أكمل جميع الحقول المطلوبة قبل الحفظ.'; 
-        msg.classList.add('error'); 
+        msg.textContent = 'فضلاً أكمل جميع الحقول المطلوبة قبل الحفظ.';
+        msg.classList.add('error');
         return;
     }
     if ((financeType === 'mortgage' || financeType === 'mortgage-buyout') && !supportType) {
-        msg.textContent = 'يرجى اختيار حالة الدعم لهذا التمويل العقاري.'; 
-        msg.classList.add('error'); 
+        msg.textContent = 'يرجى اختيار حالة الدعم لهذا التمويل العقاري.';
+        msg.classList.add('error');
         return;
     }
     if (employeeType === 'military' && financeType === 'mortgage' && supportType === 'supported' && !itizez) {
-        msg.textContent = 'يرجى تحديد ما إذا كانت النسبة خاصة بعملاء اعتزاز أو غيرهم.'; 
-        msg.classList.add('error'); 
+        msg.textContent = 'يرجى تحديد ما إذا كانت النسبة خاصة بعملاء اعتزاز أو غيرهم.';
+        msg.classList.add('error');
         return;
     }
     const rate = Number(rateInput);
     if (!rate || rate <= 0) {
-        msg.textContent = 'الرجاء إدخال نسبة صحيحة أكبر من صفر.'; 
-        msg.classList.add('error'); 
+        msg.textContent = 'الرجاء إدخال نسبة صحيحة أكبر من صفر.';
+        msg.classList.add('error');
         return;
     }
     const key = buildRateKey({
@@ -851,9 +853,9 @@ function saveAdminRate() {
     });
     const data = loadRates();
     if (!data[bankId]) data[bankId] = {};
-    data[bankId][key] = rate;
+    data[bankId][key] = { rate, note };
     saveRates(data);
-    msg.textContent = 'تم حفظ النسبة بنجاح لهذا البنك والشريحة المختارة ✅';
+    msg.textContent = 'تم حفظ النسبة (والعرض إن وجد) بنجاح لهذا البنك والشريحة المختارة ✅';
     msg.classList.add('success');
     renderAdminRules();
 }
@@ -870,6 +872,7 @@ function deleteAdminRule(bankId, key) {
 function renderAdminRules() {
     const bankId = document.getElementById('adminBank').value;
     const list = document.getElementById('adminRulesList');
+    if (!list) return;
     if (!bankId) {
         list.innerHTML = '<div class="empty-state" style="padding:6px 0 2px;">اختر بنكًا لعرض النِّسَب المحدثة له.</div>';
         return;
@@ -881,7 +884,15 @@ function renderAdminRules() {
         list.innerHTML = '<div class="empty-state" style="padding:6px 0 2px;">لا توجد نسب مخصصة بعد لهذا البنك.</div>';
         return;
     }
-    list.innerHTML = entries.map(([key, rate]) => {
+    list.innerHTML = entries.map(([key, val]) => {
+        let rate, note;
+        if (typeof val === 'number') {
+            rate = val;
+            note = '';
+        } else {
+            rate = val.rate;
+            note = val.note || '';
+        }
         const parts = key.split('|');
         const financeType = parts[0];
         const support = parts[1];
@@ -899,9 +910,10 @@ function renderAdminRules() {
                 <div>
                     <strong>${financeLabel}</strong> - ${months} شهر
                     <br><small>${empLabel}${supLabel ? ' • ' + supLabel : ''}${itzLabel ? ' • ' + itzLabel : ''} • ${salLabel}</small>
+                    ${note ? `<br><span class="rate-note">ملاحظة: ${note}</span>` : ''}
                 </div>
                 <div style="text-align:left;">
-                    <div style="font-weight:600;">${rate.toFixed(2)}%</div>
+                    <div style="font-weight:600;">${Number(rate).toFixed(2)}%</div>
                     <button onclick="deleteAdminRule('${bankId}','${key.replace(/'/g,"&#39;")}')">حذف</button>
                 </div>
             </div>
@@ -909,15 +921,18 @@ function renderAdminRules() {
     }).join('');
 }
 
-// ------------------------------
-// استرجاع النسبة (مخصص أو افتراضي)
-// ------------------------------
+/* استرجاع النسبة */
 function getRateForBank(bankId, params) {
     const data = loadRates();
     const bankData = data[bankId] || {};
     const specificKey = buildRateKey(params);
     if (bankData.hasOwnProperty(specificKey)) {
-        return { rate: bankData[specificKey], source: 'مخصص من لوحة التحكم' };
+        const val = bankData[specificKey];
+        if (typeof val === 'number') {
+            return { rate: val, source: 'مخصص من لوحة التحكم', note: '' };
+        } else {
+            return { rate: val.rate, source: 'مخصص من لوحة التحكم', note: val.note || '' };
+        }
     }
     const months = Number(params.months || 0);
     const financeType = params.financeType;
@@ -940,12 +955,10 @@ function getRateForBank(bankId, params) {
         else if (months <= 48) baseRate = 11;
         else baseRate = 12;
     }
-    return baseRate ? { rate: baseRate, source: 'نسبة افتراضية عامة' } : null;
+    return baseRate ? { rate: baseRate, source: 'نسبة افتراضية عامة', note: '' } : null;
 }
 
-// ------------------------------
-// حساب الترشيح للعميل
-// ------------------------------
+/* حساب الترشيح للعميل */
 function calculateRecommendationClient() {
     const financeType = document.getElementById('financeType').value;
     const employeeType = document.getElementById('employeeType').value;
@@ -967,7 +980,7 @@ function calculateRecommendationClient() {
     };
     const results = banks.map(b => {
         const info = getRateForBank(b.id, params);
-        return info ? { ...b, rate: info.rate, source: info.source } : null;
+        return info ? { ...b, rate: info.rate, source: info.source, note: info.note } : null;
     }).filter(Boolean);
     if (!results.length) {
         document.getElementById('resultArea').innerHTML =
@@ -994,6 +1007,9 @@ function calculateRecommendationClient() {
     html += `      <p><strong>${best.name}</strong></p>`;
     html += `      <p>نسبة متوقعة للتمويل: <strong>${best.rate.toFixed(2)}%</strong></p>`;
     html += `      <span class="badge-pill">${best.source}</span>`;
+    if (best.note) {
+        html += `      <p class="rate-note" style="margin-top:4px;">ملاحظة / عرض خاص: ${best.note}</p>`;
+    }
     html += '    </div>';
     html += '  </div>';
     html += '  <p class="muted" style="margin-top:8px;">';
@@ -1006,12 +1022,17 @@ function calculateRecommendationClient() {
     html += '<div class="banks-list">';
     html += '  <p style="margin:0 0 4px;font-size:13px;">ترتيب باقي البنوك حسب النسبة (من الأقل إلى الأعلى):</p>';
     html += '  <table>';
-    html += '    <thead><tr><th>البنك</th><th>النسبة %</th><th>المصدر</th></tr></thead><tbody>';
+    html += '    <thead><tr><th>البنك</th><th>النسبة %</th><th>المصدر / العرض</th></tr></thead><tbody>';
     results.forEach((b, index) => {
         html += `<tr${index === 0 ? ' style="font-weight:600;background:#fef9e7;"' : ''}>`;
         html += `  <td>${b.name}</td>`;
         html += `  <td>${b.rate.toFixed(2)}</td>`;
-        html += `  <td class="rate-source">${b.source}</td>`;
+        html += '  <td class="rate-source">';
+        html += b.source;
+        if (b.note) {
+            html += `<br><span class="rate-note">عرض: ${b.note}</span>`;
+        }
+        html += '  </td>';
         html += '</tr>';
     });
     html += '  </tbody></table>';
@@ -1029,9 +1050,7 @@ function calculateRecommendationClient() {
     document.getElementById('resultArea').innerHTML = html;
 }
 
-// ------------------------------
-// خرائط النصوص
-// ------------------------------
+/* خرائط النصوص */
 function mapFinanceType(v) {
     switch (v) {
         case 'mortgage': return 'تمويل عقاري';
@@ -1067,9 +1086,7 @@ function mapItizez(v) {
     }
 }
 
-// ------------------------------
-// الدخول والخروج للمسؤول
-// ------------------------------
+/* دخول/خروج المسؤول */
 function adminLogin() {
     const pass = document.getElementById('adminPassword').value;
     const msg = document.getElementById('adminLoginMsg');
@@ -1092,6 +1109,8 @@ function logoutAdmin() {
     document.getElementById('admin-login').style.display = 'block';
     document.getElementById('adminLoginMsg').textContent = '';
 }
+
+/* تغيير نوع التمويل في لوحة المسؤول */
 function adminFinanceTypeChanged() {
     const financeType = document.getElementById('adminFinanceType').value;
     const supportWrapper = document.getElementById('adminSupportWrapper');
@@ -1103,16 +1122,18 @@ function adminFinanceTypeChanged() {
         document.getElementById('adminSupportType').value = '';
     }
     monthsSelect.innerHTML = '';
-    let min = 6, max = 60, step = 6;
+    let max = 60;
     if (financeType === 'mortgage' || financeType === 'mortgage-buyout') {
-        min = 60; max = 360; step = 12;
+        max = 360;
     }
     let options = '<option value="">اختر عدد الأشهر...</option>';
-    for (let m = min; m <= max; m += step) {
+    for (let m = 1; m <= max; m++) {
         options += `<option value="${m}">${m} شهر</option>`;
     }
     monthsSelect.innerHTML = options;
 }
+
+/* تغيير نوع الجهة العسكرية/الدعم */
 function adminEmployeeChanged() {
     const emp = document.getElementById('adminEmployeeType').value;
     const financeType = document.getElementById('adminFinanceType').value;
@@ -1126,17 +1147,16 @@ function adminEmployeeChanged() {
     }
 }
 
-// ------------------------------
-// أيقونة المسؤول
-// ------------------------------
-function scrollToAdmin() {
-    const adminSection = document.querySelector('.card:nth-of-type(2)');
-    if (adminSection) adminSection.scrollIntoView({ behavior: 'smooth' });
+/* زر دخول المسؤول من الصفحة الأولى */
+function showAdminSection() {
+    const wrap = document.getElementById('admin-section-wrapper');
+    if (wrap) {
+        wrap.style.display = 'block';
+        wrap.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
-// ------------------------------
-// التاريخ والوقت في الفوتر
-// ------------------------------
+/* التاريخ والوقت */
 function updateDateTime() {
     const now = new Date();
     const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
@@ -1148,7 +1168,7 @@ function updateDateTime() {
 updateDateTime();
 setInterval(updateDateTime, 1000);
 
-// إعداد مبدئي
+/* إعداد مبدئي */
 adminFinanceTypeChanged();
 initSalarySegments();
 goToStep(1);
