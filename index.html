@@ -338,20 +338,33 @@
       color: #6b7280;
       margin-top: 10px;
       padding: 8px;
+      position: relative;
       background: #f9fafb;
       border-top: 1px solid #e5e7eb;
-      text-align: center;
     }
 
     #adminIcon {
-      display: inline-block;
-      margin-right: 8px;
-      cursor: pointer;
-      font-size: 18px;
+      position: fixed;
+      bottom: 6px;
+      left: 8px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.08);
       color: #111827;
+      font-size: 20px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 50;
     }
     #adminIcon:hover {
-      color: #1d4ed8;
+      background: rgba(15, 23, 42, 0.18);
+    }
+
+    #resultCard {
+      /* نخليها طبيعية بدون ارتفاع إجباري لتقليل التمرير قدر الإمكان */
     }
   </style>
 </head>
@@ -379,7 +392,7 @@
         ابدأ كعميل
       </button>
       <div style="margin-top:12px; font-size:13px; color:#6b7280;">
-        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة أو تحفظها كصورة وترسلها للعميل مباشرة.
+        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة وترسلها للعميل مباشرة.
       </div>
     </div>
   </div>
@@ -391,16 +404,13 @@
         أسئلة بسيطة خطوة بخطوة للوصول لأدق حسبة ممكنة 👌
       </div>
       <div id="question"></div>
-
-      <div id="mainButtonsArea" style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-        <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للرئيسية</button>
-        <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
+      <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+        <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للصفحة الرئيسية</button>
+        <div>
+          <button id="nextButton" class="primary small" style="display:none;" onclick="nextQuestion()">التالي</button>
+          <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
+        </div>
       </div>
-
-      <div id="nextContainer" style="margin-top:14px; display:none; text-align:left;">
-        <button class="primary small" onclick="nextQuestion()">التالي ⬅️</button>
-      </div>
-
       <div id="resetButtonContainer" style="margin-top:8px; display:none;">
         <button class="secondary small" onclick="resetCalc()">🔁 إعادة الحسبة</button>
       </div>
@@ -531,8 +541,8 @@
       </table>
 
       <div style="margin-top:8px; font-size:11px; color:#9ca3af; text-align:right;">
-        ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك (من الدومين الرسمي عبر خدمات الشعارات).  
-        لو ما ظهر الشعار، تقدر تعدل الكود وتضع رابط صورة مخصص.
+        ملاحظة: شعارات البنوك تُجلب تلقائياً بالاعتماد على اسم البنك.  
+        ضع ملفات الصور في مجلد <code>img</code> بنفس الأسماء المشار إليها في الكود.
       </div>
 
       <div style="margin-top:12px; text-align:left;">
@@ -544,12 +554,15 @@
 </div>
 
 <footer>
-  <span id="adminIcon" onclick="showPage('adminLogin')">🛠️</span>
   جميع الحقوق محفوظة - منصة فينو FINO -
   <span id="datetime"></span>
 </footer>
 
-<!-- مكتبة تحويل الكرت إلى صورة -->
+<div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
+  🛠️
+</div>
+
+<!-- مكتبة حفظ الكرت كصورة -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5zs6JQMiJq1tB8qE5zjuGc4xZM2W0fvkYlCYzK2nDmF0U9UfI9+7CuWHa3gwxMZkR4P1CqU8i3bP1d5U3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
@@ -561,7 +574,7 @@
     });
     const icon = document.getElementById('adminIcon');
     if (icon) {
-      icon.style.display = (name === 'landing') ? 'inline-block' : 'none';
+      icon.style.display = (name === 'landing') ? 'flex' : 'none';
     }
   }
 
@@ -575,15 +588,15 @@
   }
 
   const bankLogoMap = {
-    'مصرف الراجحي': 'https://logo.clearbit.com/alrajhibank.com.sa',
-    'البنك الأهلي السعودي': 'https://logo.clearbit.com/alahli.com',
-    'بنك الرياض': 'https://logo.clearbit.com/riyadbank.com',
-    'بنك البلاد': 'https://logo.clearbit.com/bankalbilad.com',
-    'بنك الجزيرة': 'https://logo.clearbit.com/bankaljazira.com',
-    'البنك السعودي الفرنسي': 'https://logo.clearbit.com/alfransi.com.sa',
-    'بنك ساب': 'https://logo.clearbit.com/sab.com',
-    'البنك العربي الوطني': 'https://logo.clearbit.com/anb.com.sa',
-    'البنك السعودي للاستثمار': 'https://logo.clearbit.com/saudinv.com'
+    'مصرف الراجحي': 'img/alrajhi.png',
+    'البنك الأهلي السعودي': 'img/alahli.png',
+    'بنك الرياض': 'img/riyad.png',
+    'بنك البلاد': 'img/bilad.png',
+    'بنك الجزيرة': 'img/jazira.png',
+    'البنك السعودي الفرنسي': 'img/bsf.png',
+    'بنك ساب': 'img/sab.png',
+    'البنك العربي الوطني': 'img/anb.png',
+    'البنك السعودي للاستثمار': 'img/saib.png'
   };
 
   let bankConfigs = [];
@@ -847,7 +860,7 @@
   function showSorryPage(name){
     showPage('calculator');
     const cont = document.getElementById('question');
-    document.getElementById('nextContainer').style.display = 'none';
+    document.getElementById('nextButton').style.display = 'none';
     cont.innerHTML = `<div class="fade-in alert-error">
       <strong>معليش ${name}، يظهر إن عمرك تعدّى سن التقاعد المسموح للتمويل.</strong><br>
       إذا كنت متقاعد تواصل معنا مباشرة على الجوال للاستفسار.
@@ -859,11 +872,9 @@
       hasStarted = true;
       document.getElementById('mainButton').style.display = 'none';
       document.getElementById('resetButtonContainer').style.display = 'block';
-      document.getElementById('nextContainer').style.display = 'block';
+      document.getElementById('nextButton').style.display = 'inline-flex';
       showQuestion();
-    }else{
-      resetCalc();
-    }
+    }else{ resetCalc(); }
   }
 
   function resetCalc(){
@@ -874,7 +885,7 @@
     hasStarted = true;
     document.getElementById('mainButton').style.display = 'none';
     document.getElementById('resetButtonContainer').style.display = 'block';
-    document.getElementById('nextContainer').style.display = 'block';
+    document.getElementById('nextButton').style.display = 'inline-flex';
     showQuestion();
   }
 
@@ -908,6 +919,7 @@
       q = commitmentQuestions[commitmentStep];
       if(q.show && !q.show(currentCommitment)){ commitmentStep++; showQuestion(); return; }
     }else{
+      document.getElementById('nextButton').style.display = 'none';
       calculate();
       return;
     }
@@ -935,6 +947,7 @@
     } else {
       div.innerHTML += `<input type="${q.type}" id="${q.id}" ${q.default ? `value="${q.default}"` : ''}>`;
     }
+
     cont.appendChild(div);
   }
 
@@ -977,6 +990,7 @@
           showQuestion();
           return;
         }else{
+          document.getElementById('nextButton').style.display = 'none';
           calculate();
           return;
         }
@@ -1096,7 +1110,6 @@
 
     const allNegative = finalPhases.every(p => p.inst <= 0);
 
-    const isBuyoutPersonal = financeType === 'شراء مديونية تمويل شخصي';
     const buyoutAmount = isBuyoutPersonal
       ? parseFloat(answers.buyoutAmount || '0')
       : 0;
@@ -1226,19 +1239,14 @@
     });
     html += `</div>`;
 
-    const altBanks2 = matchingBanks.slice(1, 4);
-    if (altBanks2.length > 0) {
+    if (altBanks.length > 0) {
       html += `
         <div class="result-section-title">٣ بنوك أخرى منافسة (من الأقل نسبة إلى الأعلى)</div>
         <div class="result-section-box">
           <ul style="margin:0; padding-right:16px; font-size:13px; color:#4b5563; list-style-type:disc; text-align:right;">
       `;
-      altBanks2.forEach(b => {
-        const logo = bankLogoMap[b.bankName];
-        html += `<li>
-          ${logo ? `<img src="${logo}" alt="${b.bankName}" style="width:20px; height:20px; vertical-align:middle; border-radius:4px; margin-left:4px;">` : ''}
-          ${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong>
-        </li>`;
+      altBanks.forEach(b => {
+        html += `<li>${b.bankName} - نسبة هامش ربح تقريبية: <strong>${b.margin}%</strong></li>`;
       });
       html += `</ul></div>`;
     }
@@ -1270,7 +1278,7 @@
         ⚠️ هذه الحسبة تقريبية وليست عرضاً ملزماً، والنسب الفعلية تعتمد على سياسات البنك وقت تقديم الطلب.
       </div>
       <div style="margin-top:8px; font-size:14px; font-weight:bold; color:#1e3a8a; text-align:center;">
-        📸 تقدر تحفظ النتيجة كصورة من الزر أسفل أو تلتقط لقطة شاشة وترسلها للعميل.
+        📸 خذ لقطة شاشة وارسلها للعميل مباشرة
       </div>
     `;
 
@@ -1307,6 +1315,8 @@
     loadBankConfigs();
     updateDateTime();
     setInterval(updateDateTime, 1000);
+    const icon = document.getElementById('adminIcon');
+    if (icon) icon.style.display = 'flex';
   });
 </script>
 
