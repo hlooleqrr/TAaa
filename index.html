@@ -338,29 +338,20 @@
       color: #6b7280;
       margin-top: 10px;
       padding: 8px;
-      position: relative;
       background: #f9fafb;
       border-top: 1px solid #e5e7eb;
+      text-align: center;
     }
 
     #adminIcon {
-      position: fixed;
-      bottom: 6px;
-      left: 8px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(15, 23, 42, 0.08);
-      color: #111827;
-      font-size: 20px;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      display: inline-block;
+      margin-right: 8px;
       cursor: pointer;
-      z-index: 50;
+      font-size: 18px;
+      color: #111827;
     }
     #adminIcon:hover {
-      background: rgba(15, 23, 42, 0.18);
+      color: #1d4ed8;
     }
   </style>
 </head>
@@ -400,12 +391,16 @@
         أسئلة بسيطة خطوة بخطوة للوصول لأدق حسبة ممكنة 👌
       </div>
       <div id="question"></div>
-      <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-        <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للصفحة الرئيسية</button>
-        <div>
-          <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
-        </div>
+
+      <div id="mainButtonsArea" style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+        <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للرئيسية</button>
+        <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
       </div>
+
+      <div id="nextContainer" style="margin-top:14px; display:none; text-align:left;">
+        <button class="primary small" onclick="nextQuestion()">التالي ⬅️</button>
+      </div>
+
       <div id="resetButtonContainer" style="margin-top:8px; display:none;">
         <button class="secondary small" onclick="resetCalc()">🔁 إعادة الحسبة</button>
       </div>
@@ -549,13 +544,10 @@
 </div>
 
 <footer>
+  <span id="adminIcon" onclick="showPage('adminLogin')">🛠️</span>
   جميع الحقوق محفوظة - منصة فينو FINO -
   <span id="datetime"></span>
 </footer>
-
-<div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
-  🛠️
-</div>
 
 <!-- مكتبة تحويل الكرت إلى صورة -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5zs6JQMiJq1tB8qE5zjuGc4xZM2W0fvkYlCYzK2nDmF0U9UfI9+7CuWHa3gwxMZkR4P1CqU8i3bP1d5U3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -569,7 +561,7 @@
     });
     const icon = document.getElementById('adminIcon');
     if (icon) {
-      icon.style.display = (name === 'landing') ? 'flex' : 'none';
+      icon.style.display = (name === 'landing') ? 'inline-block' : 'none';
     }
   }
 
@@ -855,6 +847,7 @@
   function showSorryPage(name){
     showPage('calculator');
     const cont = document.getElementById('question');
+    document.getElementById('nextContainer').style.display = 'none';
     cont.innerHTML = `<div class="fade-in alert-error">
       <strong>معليش ${name}، يظهر إن عمرك تعدّى سن التقاعد المسموح للتمويل.</strong><br>
       إذا كنت متقاعد تواصل معنا مباشرة على الجوال للاستفسار.
@@ -866,6 +859,7 @@
       hasStarted = true;
       document.getElementById('mainButton').style.display = 'none';
       document.getElementById('resetButtonContainer').style.display = 'block';
+      document.getElementById('nextContainer').style.display = 'block';
       showQuestion();
     }else{
       resetCalc();
@@ -880,26 +874,8 @@
     hasStarted = true;
     document.getElementById('mainButton').style.display = 'none';
     document.getElementById('resetButtonContainer').style.display = 'block';
+    document.getElementById('nextContainer').style.display = 'block';
     showQuestion();
-  }
-
-  function attachAutoAdvance(el){
-    if (!el) return;
-    if (el.tagName === 'SELECT') {
-      el.addEventListener('change', function(){
-        if (el.value) nextQuestion();
-      });
-    } else {
-      el.addEventListener('keydown', function(e){
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          if (el.value) nextQuestion();
-        }
-      });
-      el.addEventListener('blur', function(){
-        if (el.value) nextQuestion();
-      });
-    }
   }
 
   function showQuestion(){
@@ -939,8 +915,6 @@
     const div = document.createElement('div');
     div.classList.add('fade-in');
     div.innerHTML = `<label>${q.label}</label>`;
-    let fieldEl;
-
     if(q.type === 'select'){
       const sel = document.createElement('select');
       sel.id = q.id;
@@ -958,14 +932,10 @@
         });
       }
       div.appendChild(sel);
-      fieldEl = sel;
     } else {
       div.innerHTML += `<input type="${q.type}" id="${q.id}" ${q.default ? `value="${q.default}"` : ''}>`;
-      fieldEl = div.querySelector('input');
     }
-
     cont.appendChild(div);
-    attachAutoAdvance(fieldEl);
   }
 
   function nextQuestion(){
@@ -1256,14 +1226,14 @@
     });
     html += `</div>`;
 
-    const altBanks = matchingBanks.slice(1, 4);
-    if (altBanks.length > 0) {
+    const altBanks2 = matchingBanks.slice(1, 4);
+    if (altBanks2.length > 0) {
       html += `
         <div class="result-section-title">٣ بنوك أخرى منافسة (من الأقل نسبة إلى الأعلى)</div>
         <div class="result-section-box">
           <ul style="margin:0; padding-right:16px; font-size:13px; color:#4b5563; list-style-type:disc; text-align:right;">
       `;
-      altBanks.forEach(b => {
+      altBanks2.forEach(b => {
         const logo = bankLogoMap[b.bankName];
         html += `<li>
           ${logo ? `<img src="${logo}" alt="${b.bankName}" style="width:20px; height:20px; vertical-align:middle; border-radius:4px; margin-left:4px;">` : ''}
@@ -1337,8 +1307,6 @@
     loadBankConfigs();
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    const icon = document.getElementById('adminIcon');
-    if (icon) icon.style.display = 'flex';
   });
 </script>
 
