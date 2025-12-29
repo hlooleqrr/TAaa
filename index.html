@@ -1166,7 +1166,7 @@
 
     html += `
       <div class="result-main-block">
-        <div class="result-main-title">أهم ما يهمك الآن 👇</div>
+        <div class="result-main-title">التمويل الممنو من البنك قبل خصم التمويل القايم من البنك البائع👇</div>
         <div class="result-amount-main">
           ${finalNetFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
@@ -1216,7 +1216,7 @@
           </div>
           <div class="instalment-row">
             الصافي المتوقع بعد خصم مبلغ التسديد المبكر:
-            <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
+            <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{5})+(?!\d))/g, ",")} ريال</strong>
           </div>
           ${netAfterBuyout < 5000 ? `
             <div class="alert-error" style="margin-top:6px;">
