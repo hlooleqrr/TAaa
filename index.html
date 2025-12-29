@@ -337,34 +337,38 @@
       font-size: 13px;
       color: #6b7280;
       margin-top: 10px;
-      padding: 8px;
+      padding: 8px 12px;
       position: relative;
       background: #f9fafb;
       border-top: 1px solid #e5e7eb;
     }
 
-    #adminIcon {
-      position: fixed;
-      bottom: 6px;
-      left: 8px;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: rgba(15, 23, 42, 0.08);
-      color: #111827;
-      font-size: 20px;
-      display: none;
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #adminIcon {
+      border-radius: 999px;
+      background: #e5e7eb;
+      padding: 6px 12px;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       cursor: pointer;
-      z-index: 50;
+      color: #111827;
     }
     #adminIcon:hover {
-      background: rgba(15, 23, 42, 0.18);
+      background: #d1d5db;
     }
 
     #resultCard {
-      /* نخليها طبيعية بدون ارتفاع إجباري لتقليل التمرير قدر الإمكان */
+      /* طبيعي بدون ارتفاع إجباري */
     }
   </style>
 </head>
@@ -392,7 +396,14 @@
         ابدأ كعميل
       </button>
       <div style="margin-top:12px; font-size:13px; color:#6b7280;">
-        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة وترسلها للعميل مباشرة.
+        النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة أو تحفظها كصورة وترسلها للعميل مباشرة.
+      </div>
+
+      <!-- أيقونة دخول المسؤول في الصفحة الأولى فقط -->
+      <div style="margin-top:16px; display:flex; justify-content:center;">
+        <div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
+          🛠️ <span style="font-size:12px;">دخول المسؤول</span>
+        </div>
       </div>
     </div>
   </div>
@@ -404,12 +415,9 @@
         أسئلة بسيطة خطوة بخطوة للوصول لأدق حسبة ممكنة 👌
       </div>
       <div id="question"></div>
-      <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-        <button class="secondary small" onclick="backToLanding()">⬅️ رجوع للصفحة الرئيسية</button>
-        <div>
-          <button id="nextButton" class="primary small" style="display:none;" onclick="nextQuestion()">التالي</button>
-          <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
-        </div>
+      <div style="margin-top:14px; display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap;">
+        <button id="nextButton" class="primary small" style="display:none;" onclick="nextQuestion()">التالي</button>
+        <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
       </div>
       <div id="resetButtonContainer" style="margin-top:8px; display:none;">
         <button class="secondary small" onclick="resetCalc()">🔁 إعادة الحسبة</button>
@@ -424,7 +432,10 @@
     </div>
     <div style="margin-top:10px; display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap;">
       <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
-      <button class="primary small" onclick="resetCalc(); showPage('calculator');">🔁 إعادة حسبة جديدة</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="secondary small" onclick="saveResultAsImage()">💾 حفظ النتيجة كصورة</button>
+        <button class="primary small" onclick="resetCalc(); showPage('calculator');">🔁 إعادة حسبة جديدة</button>
+      </div>
     </div>
   </div>
 
@@ -493,9 +504,9 @@
             <label>نوع التمويل</label>
             <select id="adminFinanceType">
               <option value="personal">تمويل شخصي / استهلاكي</option>
-              <option value="personal_buyout">شراء مديونية تمويل شخصي</option>
               <option value="mortgage">تمويل عقاري</option>
-              <option value="mortgage_buyout">شراء مديونية تمويل عقاري</option>
+              <option value="buyoutPersonal">شراء مديونية تمويل شخصي</option>
+              <option value="buyoutMortgage">شراء مديونية تمويل عقاري</option>
             </select>
           </div>
           <div>
@@ -555,13 +566,16 @@
 </div>
 
 <footer>
-  جميع الحقوق محفوظة - منصة فينو FINO -
-  <span id="datetime"></span>
+  <div class="footer-inner">
+    <div>
+      جميع الحقوق محفوظة - منصة فينو FINO -
+      <span id="datetime"></span>
+    </div>
+  </div>
 </footer>
 
-<div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
-  🛠️
-</div>
+<!-- مكتبة حفظ النتيجة كصورة -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
   function showPage(name) {
@@ -570,10 +584,6 @@
       if (!el) return;
       el.classList.toggle('active', id === name);
     });
-    const icon = document.getElementById('adminIcon');
-    if (icon) {
-      icon.style.display = (name === 'landing') ? 'flex' : 'none';
-    }
   }
 
   function backToLanding() {
@@ -600,10 +610,10 @@
   let bankConfigs = [];
 
   const defaultBankConfigs = [
-    { bankName: 'مصرف الراجحي', bankLabel:'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 4000, maxSalary: 8000, margin: 5.5 },
-    { bankName: 'مصرف الراجحي', bankLabel:'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 8001, maxSalary: 20000, margin: 4.9 },
-    { bankName: 'البنك الأهلي السعودي', bankLabel:'البنك الأهلي السعودي', financeType: 'mortgage', supportedType: 'مدعوم', minSalary: 4000, maxSalary: 15000, margin: 4.3 },
-    { bankName: 'بنك الرياض', bankLabel:'بنك الرياض', financeType: 'mortgage', supportedType: 'غير مدعوم', minSalary: 6000, maxSalary: 20000, margin: 4.8 }
+    { bankName: 'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 4000, maxSalary: 8000, margin: 5.5 },
+    { bankName: 'مصرف الراجحي', financeType: 'personal', supportedType: 'الكل', minSalary: 8001, maxSalary: 20000, margin: 4.9 },
+    { bankName: 'البنك الأهلي السعودي', financeType: 'mortgage', supportedType: 'مدعوم', minSalary: 4000, maxSalary: 15000, margin: 4.3 },
+    { bankName: 'بنك الرياض', financeType: 'mortgage', supportedType: 'غير مدعوم', minSalary: 6000, maxSalary: 20000, margin: 4.8 }
   ];
 
   function loadBankConfigs() {
@@ -629,15 +639,14 @@
     const tbody = document.querySelector('#adminTable tbody');
     tbody.innerHTML = '';
     bankConfigs.forEach((cfg, index) => {
+      let financeLabel =
+        cfg.financeType === 'personal' ? 'شخصي/استهلاكي' :
+        cfg.financeType === 'mortgage' ? 'عقاري' :
+        cfg.financeType === 'buyoutPersonal' ? 'شراء مديونية شخصي' :
+        cfg.financeType === 'buyoutMortgage' ? 'شراء مديونية عقاري' :
+        cfg.financeType;
+
       const tr = document.createElement('tr');
-
-      let financeLabel = '';
-      if (cfg.financeType === 'personal') financeLabel = 'تمويل شخصي / استهلاكي';
-      else if (cfg.financeType === 'personal_buyout') financeLabel = 'شراء مديونية تمويل شخصي';
-      else if (cfg.financeType === 'mortgage') financeLabel = 'تمويل عقاري';
-      else if (cfg.financeType === 'mortgage_buyout') financeLabel = 'شراء مديونية تمويل عقاري';
-      else financeLabel = cfg.financeType;
-
       tr.innerHTML = `
         <td>${cfg.bankName}</td>
         <td>${financeLabel}</td>
@@ -712,28 +721,23 @@
     const salary = parseFloat(answers.salary || '0');
     if (!salary) return [];
 
-    let wantedType = 'personal';
-    switch (answers.financeType) {
-      case 'تمويل شخصي أو تمويل استهلاكي':
-        wantedType = 'personal';
-        break;
-      case 'شراء مديونية تمويل شخصي':
-        wantedType = 'personal_buyout';
-        break;
-      case 'تمويل عقاري':
-        wantedType = 'mortgage';
-        break;
-      case 'شراء مديونية تمويل عقاري':
-        wantedType = 'mortgage_buyout';
-        break;
-      default:
-        wantedType = 'personal';
+    let fType;
+    if (answers.financeType === 'شراء مديونية تمويل شخصي') {
+      fType = 'buyoutPersonal';
+    } else if (answers.financeType === 'شراء مديونية تمويل عقاري') {
+      fType = 'buyoutMortgage';
+    } else if (answers.financeType && answers.financeType.includes('شخصي')) {
+      fType = 'personal';
+    } else if (answers.financeType && answers.financeType.includes('عقاري')) {
+      fType = 'mortgage';
+    } else {
+      fType = 'personal';
     }
 
     const supp = answers.supported || 'الكل';
 
     const list = bankConfigs.filter(cfg =>
-      cfg.financeType === wantedType &&
+      cfg.financeType === fType &&
       salary >= cfg.minSalary &&
       salary <= cfg.maxSalary &&
       (cfg.supportedType === 'الكل' || cfg.supportedType === supp)
@@ -763,7 +767,7 @@
     { id:'birthDay',label:'اختر يوم الميلاد:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
     { id:'birthMonth',label:'اختر شهر الميلاد:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
     { id:'birthYear',label:'اختر سنة الميلاد:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
-    { id:'jobType',label:'نوع الوظيفة',type:'select',options:['عسكري','مدني (قطاع حكومي)','خاص (شبه حكومي)','خاص (شركة معتمدة)','خاص (شركة غير معتمدة]'} ,
+    { id:'jobType',label:'نوع الوظيفة',type:'select',options:['عسكري','مدني (قطاع حكومي)','خاص (شبه حكومي)','خاص (شركة معتمدة)','خاص (شركة غير معتمدة)'] },
     { 
       id:'militaryRank',
       label:'اذكر الرتبة العسكرية',
@@ -1184,7 +1188,7 @@
 
     html += `
       <div class="result-main-block">
-        <div class="result-main-title">أهم ما يهمك الآن 👇</div>
+        <div class="result-main-title">التمويل 👇</div>
         <div class="result-amount-main">
           ${finalNetFixed.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال
         </div>
@@ -1234,7 +1238,7 @@
           </div>
           <div class="instalment-row">
             الصافي المتوقع بعد خصم مبلغ التسديد المبكر:
-            <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
+            <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{5})+(?!\d))/g, ",")} ريال</strong>
           </div>
           ${netAfterBuyout < 5000 ? `
             <div class="alert-error" style="margin-top:6px;">
@@ -1298,11 +1302,33 @@
         ⚠️ هذه الحسبة تقريبية وليست عرضاً ملزماً، والنسب الفعلية تعتمد على سياسات البنك وقت تقديم الطلب.
       </div>
       <div style="margin-top:8px; font-size:14px; font-weight:bold; color:#1e3a8a; text-align:center;">
-        📸 خذ لقطة شاشة وارسلها للعميل مباشرة
+        📸 تقدر تصوّر الشاشة أو تستخدم زر «حفظ النتيجة كصورة» وترسلها للعميل مباشرة
       </div>
     `;
 
     resultCard.innerHTML = html;
+  }
+
+  // حفظ النتيجة كصورة
+  function saveResultAsImage() {
+    const card = document.getElementById('resultCard');
+    if (!card) {
+      alert('لم يتم العثور على بطاقة النتيجة.');
+      return;
+    }
+    html2canvas(card, {
+      scale: 2
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'fino-result.png';
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }).catch(err => {
+      console.error(err);
+      alert('تعذر حفظ النتيجة كصورة، جرّب من متصفح آخر أو تأكد أن جافاسكربت مفعّل.');
+    });
   }
 
   function updateDateTime(){
@@ -1324,8 +1350,6 @@
     loadBankConfigs();
     updateDateTime();
     setInterval(updateDateTime, 1000);
-    const icon = document.getElementById('adminIcon');
-    if (icon) icon.style.display = 'flex';
   });
 </script>
 
