@@ -764,9 +764,9 @@
 
   const generalQuestions = [
     { id:'clientName',label:'اسمك الكريم',type:'text' },
-    { id:'birthDay',label:'اختر يوم الميلاد:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
-    { id:'birthMonth',label:'اختر شهر الميلاد:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
-    { id:'birthYear',label:'اختر سنة الميلاد:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
+    { id:'birthDay',label:'اختر يوم الميلاد هجري:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
+    { id:'birthMonth',label:'اختر شهر الميلاد هجري:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
+    { id:'birthYear',label:'اختر سنة الميلاد هجري:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
     { id:'jobType',label:'نوع الوظيفة',type:'select',options:['عسكري','مدني (قطاع حكومي)','خاص (شبه حكومي)','خاص (شركة معتمدة)','خاص (شركة غير معتمدة)'] },
     { 
       id:'militaryRank',
@@ -936,7 +936,7 @@
           showQuestion();
           return;
         } else {
-          alert('لا يوجد حالياً بنك مطابق لبياناتك في إعدادات المسؤول، سيتم استخدام النسبة التي تدخلها يدوياً.');
+          alert('للاسف حسب بياناتك لايمكننا ترشيح بنك معين    ، سيتم استخدام النسبة التي تدخلها يدوياً.');
         }
       }
     }else if(answers.hasCommitments === 'نعم'){
@@ -1182,7 +1182,7 @@
 
     if (allNegative) {
       html += `<div class="alert-error">
-        نعتذر منك، حسب البيانات المدخلة لا يوجد قسط متاح للتمويل حالياً.
+        نعتذر منك، حسب البيانات المدخلة لا يمكنك الحصول على تمويل.
       </div>`;
     }
 
@@ -1294,7 +1294,7 @@
           ${addCommodityFee ? ` + رسوم السلع: <strong>${commodityFee.toFixed(0)} ريال</strong>` : ''}
         </div>
         <div class="instalment-row">
-          إجمالي التمويل مع الأرباح (مجموع الأقساط المتوقعة):
+          إجمالي التمويل مع الأرباح :
           <strong>${totalInst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
         </div>
       </div>
