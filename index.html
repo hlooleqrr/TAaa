@@ -420,7 +420,7 @@
         <button id="mainButton" class="primary small" onclick="handleStartOrReset()">ابدأ الحسبة</button>
       </div>
       <div id="resetButtonContainer" style="margin-top:8px; display:none;">
-        <button class="secondary small" onclick="resetCalc()">🔁 إعادة الحسبة</button>
+        <button class="secondary small" onclick="resetCalc()">🔁إعادة الحسبة </button>
       </div>
     </div>
   </div>
@@ -448,7 +448,7 @@
         سيتم التحديث وإضافة الخدمة في الأسابيع القادمة إن شاء الله 🙏
       </p>
       <div style="margin-top:12px;">
-        <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
+        <button class="secondary small" onclick="backToLanding()"> رجوع للرئيسية</button>
       </div>
     </div>
   </div>
@@ -558,7 +558,7 @@
       </div>
 
       <div style="margin-top:12px; text-align:left;">
-        <button class="secondary small" onclick="backToLanding()">🏠 رجوع للرئيسية</button>
+        <button class="secondary small" onclick="backToLanding()"> رجوع للرئيسية</button>
       </div>
     </div>
   </div>
@@ -763,7 +763,7 @@
   let hasStarted = false;
 
   const generalQuestions = [
-    { id:'clientName',label:'تعرفنابأسمك  ',type:'text' },
+    { id:'clientName',label:'تعرفنا بأسمك  ',type:'text' },
     { id:'birthDay',label:'اختر يوم الميلاد هجري:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
     { id:'birthMonth',label:'اختر شهر الميلاد هجري:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
     { id:'birthYear',label:'اختر سنة الميلاد هجري:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
