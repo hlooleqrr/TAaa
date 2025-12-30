@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>منصة FINO - حاسبة وتمييز البنوك</title>
+  <title>منصة FINO -ترشيح التمويل الذكيFINO — Smart Finance Match </title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * { box-sizing: border-box; }
@@ -402,7 +402,7 @@
       <!-- أيقونة دخول المسؤول في الصفحة الأولى فقط -->
       <div style="margin-top:16px; display:flex; justify-content:center;">
         <div id="adminIcon" title="لوحة المشرفين 🛠️" onclick="showPage('adminLogin')">
-          🛠️ <span style="font-size:12px;">دخول المسؤول</span>
+          🛠️ <span style="font-size:12px;"></span>
         </div>
       </div>
     </div>
@@ -763,7 +763,7 @@
   let hasStarted = false;
 
   const generalQuestions = [
-    { id:'clientName',label:'اسمك الكريم',type:'text' },
+    { id:'clientName',label:'تعرفنابأسمك  ',type:'text' },
     { id:'birthDay',label:'اختر يوم الميلاد هجري:',type:'select',options:Array.from({length:30},(_,i)=>i+1),default:1 },
     { id:'birthMonth',label:'اختر شهر الميلاد هجري:',type:'select',options:Array.from({length:12},(_,i)=>i+1),default:1 },
     { id:'birthYear',label:'اختر سنة الميلاد هجري:',type:'select',options:Array.from({length:61},(_,i)=>1430 - i),default:1412 },
@@ -1237,7 +1237,7 @@
             <strong>${buyoutAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ريال</strong>
           </div>
           <div class="instalment-row">
-            الصافي لك بعد خصم مبلغ التسديد المبكر:
+            الصافي (لك) بعد خصم مبلغ التسديد المبكر:
             <strong>${netAfterBuyout.toFixed(0).replace(/\B(?=(\d{5})+(?!\d))/g, ",")} ريال</strong>
           </div>
           ${netAfterBuyout < 5000 ? `
