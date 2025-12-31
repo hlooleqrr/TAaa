@@ -2054,7 +2054,7 @@
 
         supportText += `
           <div class="support-panel">
-            <div class="support-title">✅ دعم سكني (شهري) حسب الجدول</div>
+            <div class="support-title">✅ دعم سكني (شهري) حسب مصفوفة الدعم</div>
             <div class="support-row"><span>قيمة الدعم الشهري</span><strong>${fmtMoney(housingSupportMonthly)}</strong></div>
             <div class="support-row"><span>إجمالي الدعم حتى ${dist} شهر</span><strong>${fmtMoney(housingSupportTotalForLoan)}</strong></div>
             <div class="support-badge">🟢 يتم صرف الدعم شهرياً</div>
@@ -2068,7 +2068,7 @@
 
         supportText += `
           <div class="support-panel">
-            <div class="support-title">✅ دعم سكني (تقديري)</div>
+            <div class="support-title">✅ دعم سكني </div>
             <div class="support-row" style="border-bottom:none;"><span>قيمة الدعم التقديرية</span><strong>${fmtMoney(sup)}</strong></div>
           </div>
         `;
@@ -2215,7 +2215,7 @@
       </div>
     `;
 
-    // الأقساط ( )
+    // الأقساط  
     html += `
       <div class="result-section-title">تفاصيل القسط المتوقع حسب الفترات</div>
       <div class="result-section-box">
@@ -2450,7 +2450,7 @@
     let supportLines = '';
     if(lc.supportSakaniAdded){
       if(lc.housingSupportMonthly > 0){
-        supportLines += `- دعم سكني (شهري) حسب الجدول: ${fmtMoney(lc.housingSupportMonthly)}\n`;
+        supportLines += `- دعم سكني (شهري) حسب مصفوفة الدعم: ${fmtMoney(lc.housingSupportMonthly)}\n`;
         supportLines += `- إجمالي دعم سكني (حتى 20 سنة كحد أقصى): ${fmtMoney(lc.supportSakaniAdded)}\n`;
       } else {
         supportLines += `- دعم سكني المضاف: ${fmtMoney(lc.supportSakaniAdded)}\n`;
