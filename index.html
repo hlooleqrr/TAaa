@@ -514,12 +514,7 @@
         النتيجة النهائية مصممة بحيث تقدر تصوّر الشاشة أو تحفظها كصورة .
       </div>
 
-      <!-- أيقونة دخول المسؤول في الصفحة الأولى فقط -->
-      <div style="margin-top:16px; display:flex; justify-content:center;">
-        <div id="adminIcon" title="لوحة المشرفين  " onclick="showPage('adminLogin')">
-          ❕ <span style="font-size:12px;"></span>
-        </div>
-      </div>
+      <!-- (تم نقل أيقونة دخول المسؤول لتكون داخل ▫️ أدوات المسؤول تحت الفوتر) -->
     </div>
   </div>
 
@@ -886,6 +881,7 @@
     <div style="margin-top:10px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;">
       <button class="primary small" onclick="openClientResultModal(true)">نتيجة للعميل</button>
       <button class="secondary small" onclick="openArchiveSaveModal()">حفظ النتيجة بالأرشيف</button>
+      <button class="secondary small" onclick="openAdminLoginFromMiniTools()">دخول المشرف</button>
     </div>
 
     <div style="margin-top:10px; font-size:12px; color:#6b7280;">
@@ -1216,6 +1212,11 @@
   }
   function closeMiniAdminActions(){
     document.getElementById('miniAdminActionsModal').style.display = 'none';
+  }
+
+  function openAdminLoginFromMiniTools(){
+    closeMiniAdminActions();
+    showPage('adminLogin');
   }
 
   function openArchiveSaveModal(){
@@ -2109,10 +2110,11 @@
     let mainShownValue = Number(finalNetFixed);
     let mainShownLabel = 'التمويل الصافي';
 
-    // (1) العقاري:   = صافي التمويل + الدعم (سكني/اعتزاز/كلاهما)
+    // (1) العقاري:   = صافي التمويل + الدعم (لكن لا يتم إضافة الدعم الشهري على الصافي)
     if(isMortgage){
-      mainShownValue = Number(finalNetFixed) + supportTotalAdded;
-      mainShownLabel = 'صافي التمويل مضاف له الدعم';
+      const supportAddedToNet = Number(supportEtezaazAdded || 0) + (housingSupportMonthly > 0 ? 0 : Number(supportSakaniAdded || 0));
+      mainShownValue = Number(finalNetFixed) + supportAddedToNet;
+      mainShownLabel = supportAddedToNet > 0 ? 'صافي التمويل مضاف له الدعم' : 'التمويل الصافي';
     }
 
     // (2) شراء المديونية الشخصي:  = ما يصفي للعميل
@@ -2172,7 +2174,11 @@
           صافي التمويل: <strong>${fmtMoney(base)}</strong><br>
           ${supportSakaniAdded ? `دعم سكني المضاف: <strong>${fmtMoney(supportSakaniAdded)}</strong><br>` : `دعم سكني المضاف: <strong>لا يوجد</strong><br>`}
           ${supportEtezaazAdded ? `دعم اعتزاز المضاف: <strong>${fmtMoney(supportEtezaazAdded)}</strong><br>` : `دعم اعتزاز المضاف: <strong>لا يوجد</strong><br>`}
-          الإجمالي (صافي التمويل + الدعم): <strong>${fmtMoney(mainShownValue)}</strong>
+          ${
+            (housingSupportMonthly > 0)
+              ? `الإجمالي المعروض (لا يشمل الدعم الشهري): <strong>${fmtMoney(mainShownValue)}</strong>`
+              : `الإجمالي (صافي التمويل + الدعم): <strong>${fmtMoney(mainShownValue)}</strong>`
+          }
         </div>
       `;
     } else if(isBuyoutPersonal && buyoutAmount > 0){
@@ -2426,10 +2432,11 @@
     // الصافي للعميل: إذا كتبته اعتمده، وإلا نعتمد  للنوع:
     let usedNet = (netOv !== null) ? netOv : lc.finalNet;
 
-    // في العقاري: العميل غالباً يبي "الصافي + الدعم" كقيمة مرسلة
+    // في العقاري: لا يتم إضافة الدعم الشهري على الصافي
     let usedNetWithSupport = usedNet;
-    if(lc.financeType === 'تمويل عقاري' && lc.supportTotalAdded){
-      usedNetWithSupport = usedNet + lc.supportTotalAdded;
+    const supportAddedToNet = (lc.supportEtezaazAdded || 0) + ((lc.housingSupportMonthly || 0) > 0 ? 0 : (lc.supportSakaniAdded || 0));
+    if(lc.financeType === 'تمويل عقاري' && supportAddedToNet){
+      usedNetWithSupport = usedNet + supportAddedToNet;
     }
 
     // في شراء المديونية الشخصي: لو موجود buyout ضمن النص نستخرج من lc.mainShownValue إن كان واضح
@@ -2501,7 +2508,9 @@
 `;
 
     if(lc.financeType === 'تمويل عقاري' && (lc.supportSakaniAdded || lc.supportEtezaazAdded)){
-      text += `صافي التمويل مضاف له الدعم: ${fmtMoney(usedNetWithSupport)}\n`;
+      if(supportAddedToNet){
+        text += `صافي التمويل مضاف له الدعم: ${fmtMoney(usedNetWithSupport)}\n`;
+      }
       text += `تفاصيل الدعم:\n${supportLines || '- لا يوجد\n'}`;
     }
 
