@@ -1,401 +1,226 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>حلول تمويلية | إعلان تسويقي</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --blue:#1f3fb3;
-      --gold:#b8871a;
-      --ink:#0b1220;
-      --bg:#ffffff;
-      --muted:#f3f6fb;
-      --shadow: 0 18px 45px rgba(10, 20, 40, .12);
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: "Tajawal", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
-      background:
-        radial-gradient(900px 500px at 15% 10%, rgba(59,130,246,.10), transparent 60%),
-        radial-gradient(900px 500px at 85% 20%, rgba(30,58,138,.10), transparent 55%),
-        linear-gradient(180deg, #fff, #fff 50%, #f7f9ff);
-      color:var(--ink);
-    }
-
-    .wrap{
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:22px 14px;
-    }
-
-    .card{
-      width:min(980px, 100%);
-      background:rgba(255,255,255,.88);
-      border:1px solid rgba(31,63,179,.10);
-      border-radius:22px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-
-    .top{
-      padding:22px 18px 10px;
-      text-align:center;
-    }
-
-    .title{
-      margin:0;
-      font-size: clamp(34px, 5vw, 64px);
-      font-weight:900;
-      letter-spacing:.2px;
-      color:var(--blue);
-      line-height:1.1;
-    }
-
-    .subline{
-      margin:12px 0 0;
-      font-size: clamp(18px, 2.6vw, 30px);
-      font-weight:800;
-      color:var(--gold);
-      line-height:1.25;
-    }
-
-    .subline2{
-      margin:6px 0 0;
-      font-size: clamp(18px, 2.6vw, 30px);
-      font-weight:900;
-      color:var(--blue);
-      line-height:1.25;
-    }
-
-    .subline3{
-      margin:6px 0 0;
-      font-size: clamp(16px, 2.2vw, 26px);
-      font-weight:800;
-      color:var(--gold);
-      line-height:1.25;
-    }
-
-    .stage{
-      padding: 10px 18px 22px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .scene{
-      width:min(780px, 100%);
-      background: linear-gradient(135deg, #0b4c8f, #0a63b6 45%, #0f3c8f);
-      border-radius:18px;
-      padding:22px 14px 16px;
-      position:relative;
-      overflow:hidden;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
-    }
-
-    .scene::before{
-      content:"";
-      position:absolute; inset:-60px;
-      background:
-        radial-gradient(500px 200px at 20% 40%, rgba(255,255,255,.10), transparent 60%),
-        radial-gradient(500px 200px at 80% 20%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 500px at 50% 120%, rgba(255,255,255,.10), transparent 50%);
-      filter: blur(2px);
-      pointer-events:none;
-    }
-
-    .sceneGrid{
-      position:absolute; inset:0;
-      background:
-        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-      background-size: 46px 46px;
-      opacity:.12;
-      pointer-events:none;
-      transform: skewY(-6deg);
-      transform-origin:center;
-    }
-
-    /* Wallet + items */
-    .walletWrap{
-      position:relative;
-      height: 290px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding-bottom: 8px;
-      z-index:2;
-    }
-
-    .wallet{
-      width: min(380px, 92%);
-      height: 190px;
-      position:relative;
-      filter: drop-shadow(0 14px 25px rgba(0,0,0,.25));
-    }
-
-    .wallet svg{width:100%; height:100%; display:block}
-
-    .items{
-      position:absolute;
-      width: min(520px, 100%);
-      height: 250px;
-      left:50%;
-      transform: translateX(-50%);
-      bottom: 110px; /* Mouth of wallet */
-      pointer-events:none;
-    }
-
-    .item{
-      position:absolute;
-      width: 110px;
-      height: 110px;
-      opacity:0;
-      transform: translateY(70px) scale(.82);
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
-      will-change: transform, opacity;
-    }
-
-    /* Staggered routes */
-    .money   { left: 52%;  bottom: 0; animation: popMoney 3.6s ease-in-out infinite; }
-    .house   { left: 18%;  bottom: -4px; animation: popHouse 3.6s ease-in-out infinite .25s; }
-    .car     { left: 73%;  bottom: -6px; animation: popCar 3.6s ease-in-out infinite .5s; }
-    .coins   { left: 38%;  bottom: -10px; animation: popCoins 3.6s ease-in-out infinite .75s; }
-
-    @keyframes popMoney{
-      0%   { opacity:0; transform: translateY(70px) rotate(-6deg) scale(.78); }
-      12%  { opacity:1; transform: translateY(-22px) rotate(-4deg) scale(1.02); }
-      40%  { opacity:1; transform: translateY(-118px) rotate(6deg) scale(1.03); }
-      70%  { opacity:1; transform: translateY(-118px) rotate(6deg) scale(1.03); }
-      100% { opacity:0; transform: translateY(-145px) rotate(10deg) scale(.95); }
-    }
-    @keyframes popHouse{
-      0%   { opacity:0; transform: translateY(70px) rotate(8deg) scale(.78); }
-      14%  { opacity:1; transform: translateY(-18px) rotate(4deg) scale(1.02); }
-      42%  { opacity:1; transform: translateY(-110px) rotate(-6deg) scale(1.03); }
-      70%  { opacity:1; transform: translateY(-110px) rotate(-6deg) scale(1.03); }
-      100% { opacity:0; transform: translateY(-140px) rotate(-10deg) scale(.95); }
-    }
-    @keyframes popCar{
-      0%   { opacity:0; transform: translateY(70px) rotate(-10deg) scale(.78); }
-      16%  { opacity:1; transform: translateY(-16px) rotate(-6deg) scale(1.02); }
-      44%  { opacity:1; transform: translateY(-104px) rotate(6deg) scale(1.03); }
-      70%  { opacity:1; transform: translateY(-104px) rotate(6deg) scale(1.03); }
-      100% { opacity:0; transform: translateY(-134px) rotate(10deg) scale(.95); }
-    }
-    @keyframes popCoins{
-      0%   { opacity:0; transform: translateY(70px) rotate(0deg) scale(.78); }
-      18%  { opacity:1; transform: translateY(-10px) rotate(0deg) scale(1.02); }
-      46%  { opacity:1; transform: translateY(-88px) rotate(-6deg) scale(1.03); }
-      70%  { opacity:1; transform: translateY(-88px) rotate(-6deg) scale(1.03); }
-      100% { opacity:0; transform: translateY(-118px) rotate(-10deg) scale(.95); }
-    }
-
-    .coming{
-      margin: 14px auto 0;
-      width: fit-content;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(255,255,255,.35);
-      box-shadow: 0 10px 25px rgba(0,0,0,.18);
-      font-weight: 900;
-      font-size: clamp(18px, 2.5vw, 28px);
-      color: #0a3a87;
-      position:relative;
-      z-index:3;
-    }
-
-    .coming span{
-      display:inline-block;
-      padding-inline: 2px;
-    }
-
-    .footer{
-      padding: 14px 18px 18px;
-      text-align:center;
-      background: linear-gradient(180deg, rgba(255,255,255,.0), rgba(31,63,179,.04));
-      border-top: 1px solid rgba(31,63,179,.08);
-      font-weight:700;
-      color: rgba(11,18,32,.70);
-      font-size: 14px;
-    }
-
-    /* Reduce motion */
-    @media (prefers-reduced-motion: reduce){
-      .item{ animation:none !important; opacity:1; transform: translateY(-70px) scale(1); }
-      .sceneGrid{ display:none; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سرعة تملك العقار والحلول التمويلية</title>
+<style>
+body{
+font-family:Tahoma, Arial;
+background:#0f172a;
+color:#fff;
+text-align:center;
+margin:0;
+padding:0;
+}
+.container{margin-top:100px;padding:0 12px;}
+input{
+padding:12px;
+width:min(280px, 90vw);
+border-radius:10px;
+border:none;
+margin:10px;
+font-size:16px;
+text-align:center;
+outline:none;
+}
+button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-size:16px;
+cursor:pointer;
+font-weight:700;
+}
+button:hover{background:#1d4ed8;}
+.card{
+background:#111827;
+padding:22px 16px;
+border-radius:14px;
+width:min(520px, 92vw);
+margin:20px auto;
+box-shadow:0 12px 40px rgba(0,0,0,.35);
+}
+.result{
+background:#0b3aa7;
+padding:14px;
+border-radius:12px;
+margin-top:18px;
+font-size:20px;
+font-weight:800;
+border:1px solid rgba(255,255,255,.18);
+}
+.badge{
+display:inline-block;
+padding:10px 14px;
+border-radius:12px;
+border:2px solid rgba(100,160,255,.75);
+background:rgba(37,99,235,.18);
+color:#cfe2ff;
+font-weight:900;
+min-width:120px;
+}
+.small{
+font-size:14px;
+color:#cbd5e1;
+margin-top:12px;
+line-height:1.8;
+}
+.hr{height:1px;background:rgba(255,255,255,.12);margin:14px 0;}
+.footer{
+position:fixed;
+left:0; right:0; bottom:0;
+background:rgba(15,23,42,.92);
+border-top:1px solid rgba(255,255,255,.12);
+padding:10px 14px;
+font-size:13px;
+color:#cbd5e1;
+backdrop-filter: blur(8px);
+}
+.footer b{color:#fff;}
+</style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="card">
 
-      <div class="top">
-        <h1 class="title">حلول تمويلية</h1>
-        <div class="subline">بأسرع وقت وبدون تعقيدات</div>
-        <div class="subline2">جميع أنحاء المملكة</div>
-        <div class="subline3">وأنت في مكانك</div>
-      </div>
+<div id="login" class="container">
+  <h2>سرعة تملك العقار والحلول التمويلية</h2>
+  <input type="password" id="password" placeholder="ادخل الرقم السري">
+  <br>
+  <button onclick="checkPass()">دخول</button>
+</div>
 
-      <div class="stage">
-        <div class="scene" aria-label="مشهد تسويقي: محفظة تخرج منها فلوس وعقار وسيارة">
-          <div class="sceneGrid" aria-hidden="true"></div>
+<div id="main" style="display:none;">
+  <div class="card">
+    <h3 style="margin-top:0">نسب تحويل مديونية التمويل الشخصي</h3>
+    <div class="small">* الترشيح حسب الأقل نسبة (شراء/تحويل مديونية فقط)</div>
+    <div class="hr"></div>
 
-          <div class="walletWrap">
-            <!-- Animated items -->
-            <div class="items">
-              <!-- Money -->
-              <div class="item money" aria-hidden="true">
-                <svg viewBox="0 0 120 120">
-                  <defs>
-                    <linearGradient id="gMoney" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#bdf7c8"/>
-                      <stop offset="1" stop-color="#2ecc71"/>
-                    </linearGradient>
-                  </defs>
-                  <rect x="14" y="20" width="92" height="58" rx="10" fill="url(#gMoney)" />
-                  <rect x="20" y="28" width="80" height="42" rx="8" fill="rgba(255,255,255,.22)" />
-                  <circle cx="60" cy="49" r="13" fill="rgba(0,0,0,.18)"/>
-                  <circle cx="60" cy="49" r="9" fill="rgba(255,255,255,.35)"/>
-                  <rect x="22" y="84" width="76" height="10" rx="5" fill="rgba(255,255,255,.18)"/>
-                </svg>
-              </div>
+    <input type="number" id="salary" placeholder="اذكر الراتب الصافي">
+    <br>
+    <button onclick="recommend()">رشح البنك</button>
 
-              <!-- House -->
-              <div class="item house" aria-hidden="true">
-                <svg viewBox="0 0 120 120">
-                  <defs>
-                    <linearGradient id="gHouse" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#ffffff"/>
-                      <stop offset="1" stop-color="#dbeafe"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M18 58 L60 24 L102 58" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M28 56 L60 30 L92 56 V100 H28 Z" fill="url(#gHouse)" stroke="rgba(255,255,255,.45)" stroke-width="2"/>
-                  <rect x="51" y="72" width="18" height="28" rx="4" fill="#1f3fb3" opacity=".85"/>
-                  <rect x="36" y="68" width="12" height="12" rx="3" fill="#60a5fa" opacity=".95"/>
-                  <rect x="72" y="68" width="12" height="12" rx="3" fill="#60a5fa" opacity=".95"/>
-                </svg>
-              </div>
-
-              <!-- Car -->
-              <div class="item car" aria-hidden="true">
-                <svg viewBox="0 0 140 120">
-                  <defs>
-                    <linearGradient id="gCar" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#e5e7eb"/>
-                      <stop offset="1" stop-color="#ffffff"/>
-                    </linearGradient>
-                  </defs>
-                  <path d="M34 64 L48 44 H92 L106 64" fill="url(#gCar)" stroke="rgba(255,255,255,.5)" stroke-width="2" />
-                  <rect x="26" y="62" width="92" height="26" rx="10" fill="rgba(255,255,255,.92)" stroke="rgba(255,255,255,.5)" stroke-width="2"/>
-                  <rect x="52" y="48" width="36" height="14" rx="5" fill="#93c5fd" opacity=".95"/>
-                  <circle cx="44" cy="90" r="10" fill="#111827" opacity=".9"/>
-                  <circle cx="44" cy="90" r="5" fill="#9ca3af"/>
-                  <circle cx="98" cy="90" r="10" fill="#111827" opacity=".9"/>
-                  <circle cx="98" cy="90" r="5" fill="#9ca3af"/>
-                </svg>
-              </div>
-
-              <!-- Coins -->
-              <div class="item coins" aria-hidden="true">
-                <svg viewBox="0 0 120 120">
-                  <defs>
-                    <linearGradient id="gCoin" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#fde68a"/>
-                      <stop offset="1" stop-color="#f59e0b"/>
-                    </linearGradient>
-                  </defs>
-                  <circle cx="48" cy="62" r="20" fill="url(#gCoin)"/>
-                  <circle cx="48" cy="62" r="14" fill="rgba(255,255,255,.22)"/>
-                  <circle cx="74" cy="52" r="18" fill="url(#gCoin)"/>
-                  <circle cx="74" cy="52" r="12" fill="rgba(255,255,255,.22)"/>
-                  <circle cx="68" cy="78" r="16" fill="url(#gCoin)"/>
-                  <circle cx="68" cy="78" r="10" fill="rgba(255,255,255,.22)"/>
-                </svg>
-              </div>
-            </div>
-
-            <!-- Wallet SVG -->
-            <div class="wallet" role="img" aria-label="محفظة">
-              <svg viewBox="0 0 520 260">
-                <defs>
-                  <linearGradient id="w1" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#0b2a70"/>
-                    <stop offset="1" stop-color="#1e6ad9"/>
-                  </linearGradient>
-                  <linearGradient id="w2" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#0a1f56"/>
-                    <stop offset="1" stop-color="#0b4aa8"/>
-                  </linearGradient>
-                </defs>
-
-                <!-- back -->
-                <path d="M70 88
-                         C80 46, 122 26, 170 34
-                         L402 72
-                         C458 82, 480 110, 470 154
-                         L450 226
-                         C442 248, 418 258, 394 252
-                         L124 214
-                         C84 208, 56 176, 60 140
-                         Z"
-                      fill="url(#w2)" opacity=".95"/>
-
-                <!-- front body -->
-                <path d="M56 110
-                         C60 78, 86 54, 118 58
-                         L430 92
-                         C462 96, 486 124, 482 156
-                         L468 218
-                         C462 246, 436 264, 408 260
-                         L92 218
-                         C62 214, 40 186, 44 156
-                         Z"
-                      fill="url(#w1)"/>
-
-                <!-- stitch -->
-                <path d="M92 206 L408 246"
-                      fill="none" stroke="rgba(255,255,255,.28)" stroke-width="6" stroke-linecap="round" stroke-dasharray="8 14"/>
-
-                <!-- strap -->
-                <path d="M240 112
-                         C270 114, 296 124, 306 144
-                         C316 166, 302 192, 272 198
-                         L240 192 Z"
-                      fill="rgba(255,255,255,.12)"/>
-
-                <!-- button -->
-                <circle cx="304" cy="156" r="20" fill="rgba(255,255,255,.88)"/>
-                <circle cx="304" cy="156" r="10" fill="rgba(31,63,179,.65)"/>
-              </svg>
-            </div>
-          </div>
-
-          <div class="coming">
-            <span>قريباً بإذن الله إطلاق المنصة</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-📞0506214458
-      </div>
-
-    </div>
+    <div id="output"></div>
   </div>
+</div>
+
+<div class="footer">
+  <b>سرعة تملك العقار والحلول التمويلية</b> — أدخل <b>الراتب الصافي</b> ثم اضغط <b>رشح البنك</b>
+</div>
+
+<script>
+function checkPass(){
+  const pass = document.getElementById("password").value;
+  if(pass === "11qq11qQ"){
+    document.getElementById("login").style.display = "none";
+    document.getElementById("main").style.display  = "block";
+  }else{
+    alert("رقم سري غير صحيح");
+  }
+}
+
+function getRate(bank, s){
+
+  // الأهلي (الصورة البنية)
+  if(bank === "الأهلي"){
+    if(s >= 45000) return 0.99;
+    if(s >= 25000) return 1.59;
+    if(s >= 15000) return 1.95;
+    if(s >= 10000) return 2.99;
+    if(s >= 7000)  return 3.50;
+    if(s >= 4000)  return 3.99;
+    if(s >= 3000)  return 4.49;
+    return 999;
+  }
+
+  // الرياض (صورة YES)
+  if(bank === "الرياض"){
+    if(s >= 40000) return 1.99;
+    if(s >= 25000) return 2.09;
+    if(s >= 20000) return 2.59;
+    if(s >= 10000) return 3.09;
+    if(s >= 6000)  return 4.09; // (اعتبار 5,999-9,999 ضمن 6,000-9,999 للتسهيل)
+    if(s >= 3000)  return 4.19;
+    return 999;
+  }
+
+  // ساب
+  if(bank === "ساب"){
+    if(s >= 30000) return 1.79;
+    if(s >= 15000) return 1.99;
+    if(s >= 10000) return 2.29;
+    return 999;
+  }
+
+  // الراجحي
+  if(bank === "الراجحي"){
+    if(s >= 40000) return 2.09;
+    if(s >= 25000) return 2.19;
+    if(s >= 15000) return 2.29;
+    if(s >= 10000) return 2.75;
+    if(s >= 4000)  return 4.00;
+    return 999;
+  }
+
+  // العربي الوطني (anb)
+  if(bank === "العربي"){
+    if(s >= 70000) return 1.59;
+    if(s >= 40000) return 1.79;
+    if(s >= 25000) return 1.99;
+    if(s >= 15000) return 2.09;
+    if(s >= 10000) return 2.29;
+    if(s >= 5000)  return 3.29;
+    return 999;
+  }
+
+  // الجزيرة (تم حذف الشريحة غير الواضحة 2.75% بالكامل)
+  if(bank === "الجزيرة"){
+    // من الصورة الواضحة المتبقية:
+    // أقل من 10,000 = 3.50%
+    // 10,000 - 14,999 = 2.89%
+    // 15,000 - 29,999 = 1.89%
+    // 30,000 - 49,000 = 1.69%
+    // 50,000 فأكثر = 1.49%
+    if(s >= 50000) return 1.49;
+    if(s >= 30000) return 1.69;
+    if(s >= 15000) return 1.89;
+    if(s >= 10000) return 2.89;
+    if(s > 0)      return 3.50; // أقل من 10,000
+    return 999;
+  }
+
+  return 999;
+}
+
+function recommend(){
+  const salary = parseFloat(document.getElementById("salary").value);
+  if(!salary || salary <= 0){
+    alert("ادخل الراتب الصافي بشكل صحيح");
+    return;
+  }
+
+  const banks = ["الأهلي","الرياض","ساب","الراجحي","العربي","الجزيرة"];
+  const results = banks.map(name => ({name, rate: getRate(name, salary)}))
+                       .filter(x => x.rate !== 999);
+
+  if(results.length === 0){
+    document.getElementById("output").innerHTML =
+      '<div class="result" style="background:#7f1d1d">لا توجد شريحة مناسبة لهذا الراتب ضمن البنوك الحالية</div>';
+    return;
+  }
+
+  results.sort((a,b)=>a.rate-b.rate);
+
+  const best = results[0];
+  const ranking = results.map((b,i)=> `${i+1}) ${b.name} <span style="color:#93c5fd;font-weight:800">(${b.rate}%)</span>`).join("<br>");
+
+  document.getElementById("output").innerHTML =
+    '<div class="result">البنك المرشح: <span style="font-weight:900">'+best.name+
+    '</span><br><br><span class="badge">'+best.rate+'%</span></div>' +
+    '<div class="small"><div class="hr"></div><b>ترتيب البنوك المنافسة من الأقل للأعلى:</b><br>'+ranking+'</div>';
+}
+</script>
+
 </body>
 </html>
