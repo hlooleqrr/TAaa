@@ -5,221 +5,119 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>سرعة تملك العقار والحلول التمويلية</title>
 <style>
-body{
-font-family:Tahoma, Arial;
-background:#0f172a;
-color:#fff;
-text-align:center;
-margin:0;
-padding:0;
-}
+body{font-family:Tahoma;background:#0f172a;color:#fff;text-align:center;margin:0}
 .container{margin-top:100px;padding:0 12px;}
-input{
-padding:12px;
-width:min(280px, 90vw);
-border-radius:10px;
-border:none;
-margin:10px;
-font-size:16px;
-text-align:center;
-outline:none;
-}
-button{
-padding:12px 20px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-size:16px;
-cursor:pointer;
-font-weight:700;
-}
-button:hover{background:#1d4ed8;}
-.card{
-background:#111827;
-padding:22px 16px;
-border-radius:14px;
-width:min(520px, 92vw);
-margin:20px auto;
-box-shadow:0 12px 40px rgba(0,0,0,.35);
-}
-.result{
-background:#0b3aa7;
-padding:14px;
-border-radius:12px;
-margin-top:18px;
-font-size:20px;
-font-weight:800;
-border:1px solid rgba(255,255,255,.18);
-}
-.badge{
-display:inline-block;
-padding:10px 14px;
-border-radius:12px;
-border:2px solid rgba(100,160,255,.75);
-background:rgba(37,99,235,.18);
-color:#cfe2ff;
-font-weight:900;
-min-width:120px;
-}
-.small{
-font-size:14px;
-color:#cbd5e1;
-margin-top:12px;
-line-height:1.8;
-}
-.hr{height:1px;background:rgba(255,255,255,.12);margin:14px 0;}
-.footer{
-position:fixed;
-left:0; right:0; bottom:0;
-background:rgba(15,23,42,.92);
-border-top:1px solid rgba(255,255,255,.12);
-padding:10px 14px;
-font-size:13px;
-color:#cbd5e1;
-backdrop-filter: blur(8px);
-}
-.footer b{color:#fff;}
+input{padding:12px;width:260px;border-radius:10px;border:none;margin:10px;font-size:16px;text-align:center}
+button{padding:12px 20px;border:none;border-radius:10px;background:#2563eb;color:#fff;font-size:16px;cursor:pointer;font-weight:700}
+button:hover{background:#1d4ed8}
+.card{background:#111827;padding:22px;border-radius:14px;width:90%;max-width:520px;margin:20px auto}
+.result{background:#0b3aa7;padding:14px;border-radius:12px;margin-top:18px;font-size:20px;font-weight:800}
+.badge{display:inline-block;padding:10px 14px;border-radius:12px;border:2px solid #60a5fa;background:#1e3a8a;color:#cfe2ff;font-weight:900}
+.small{font-size:14px;color:#cbd5e1;margin-top:12px;line-height:1.8}
 </style>
 </head>
 <body>
 
 <div id="login" class="container">
-  <h2>سرعة تملك العقار والحلول التمويلية</h2>
-  <input type="password" id="password" placeholder="ادخل الرقم السري">
-  <br>
-  <button onclick="checkPass()">دخول</button>
+<h2>سرعة تملك العقار والحلول التمويلية</h2>
+<input type="password" id="password" placeholder="ادخل الرقم السري">
+<br>
+<button onclick="checkPass()">دخول</button>
 </div>
 
 <div id="main" style="display:none;">
-  <div class="card">
-    <h3 style="margin-top:0">نسب تحويل مديونية التمويل الشخصي</h3>
-    <div class="small">* الترشيح حسب الأقل نسبة (شراء/تحويل مديونية فقط)</div>
-    <div class="hr"></div>
-
-    <input type="number" id="salary" placeholder="اذكر الراتب الصافي">
-    <br>
-    <button onclick="recommend()">رشح البنك</button>
-
-    <div id="output"></div>
-  </div>
+<div class="card">
+<h3>نسب تحويل مديونية التمويل الشخصي</h3>
+<input type="number" id="salary" placeholder="اذكر الراتب الصافي">
+<br>
+<button onclick="recommend()">رشح البنك</button>
+<div id="output"></div>
 </div>
-
-<div class="footer">
-  <b>سرعة تملك العقار والحلول التمويلية</b> — أدخل <b>الراتب الصافي</b> ثم اضغط <b>رشح البنك</b>
 </div>
 
 <script>
+
 function checkPass(){
-  const pass = document.getElementById("password").value;
-  if(pass === "11qq11qQ"){
-    document.getElementById("login").style.display = "none";
-    document.getElementById("main").style.display  = "block";
-  }else{
-    alert("رقم سري غير صحيح");
-  }
+if(document.getElementById("password").value==="11qq11qQ"){
+document.getElementById("login").style.display="none";
+document.getElementById("main").style.display="block";
+}else{alert("رقم سري غير صحيح");}
 }
 
-function getRate(bank, s){
+function getRate(bank,s){
 
-  // الأهلي (الصورة البنية)
-  if(bank === "الأهلي"){
-    if(s >= 45000) return 0.99;
-    if(s >= 25000) return 1.59;
-    if(s >= 15000) return 1.95;
-    if(s >= 10000) return 2.99;
-    if(s >= 7000)  return 3.50;
-    if(s >= 4000)  return 3.99;
-    if(s >= 3000)  return 4.49;
-    return 999;
-  }
+if(bank==="الأهلي"){
+if(s>=45000) return 0.99;
+if(s>=25000) return 1.59;
+if(s>=15000) return 1.95;
+if(s>=10000) return 2.99;
+if(s>=7000) return 3.50;
+if(s>=4000) return 3.99;
+if(s>=3000) return 4.49;
+}
 
-  // الرياض (صورة YES)
-  if(bank === "الرياض"){
-    if(s >= 40000) return 1.99;
-    if(s >= 25000) return 2.09;
-    if(s >= 20000) return 2.59;
-    if(s >= 10000) return 3.09;
-    if(s >= 6000)  return 4.09; // (اعتبار 5,999-9,999 ضمن 6,000-9,999 للتسهيل)
-    if(s >= 3000)  return 4.19;
-    return 999;
-  }
+if(bank==="الرياض"){
+if(s>=40000) return 1.99;
+if(s>=25000) return 2.09;
+if(s>=20000) return 2.59;
+if(s>=10000) return 3.09;
+if(s>=6000) return 4.09;
+if(s>=3000) return 4.19;
+}
 
-  // ساب
-  if(bank === "ساب"){
-    if(s >= 30000) return 1.79;
-    if(s >= 15000) return 1.99;
-    if(s >= 10000) return 2.29;
-    return 999;
-  }
+// تعديل ساب هنا 👇
+if(bank==="ساب"){
+if(s>=30000) return 1.79;
+if(s>=15000) return 1.99;
+if(s>=3000)  return 2.29;
+}
 
-  // الراجحي
-  if(bank === "الراجحي"){
-    if(s >= 40000) return 2.09;
-    if(s >= 25000) return 2.19;
-    if(s >= 15000) return 2.29;
-    if(s >= 10000) return 2.75;
-    if(s >= 4000)  return 4.00;
-    return 999;
-  }
+if(bank==="الراجحي"){
+if(s>=40000) return 2.09;
+if(s>=25000) return 2.19;
+if(s>=15000) return 2.29;
+if(s>=10000) return 2.75;
+if(s>=4000) return 4.00;
+}
 
-  // العربي الوطني (anb)
-  if(bank === "العربي"){
-    if(s >= 70000) return 1.59;
-    if(s >= 40000) return 1.79;
-    if(s >= 25000) return 1.99;
-    if(s >= 15000) return 2.09;
-    if(s >= 10000) return 2.29;
-    if(s >= 5000)  return 3.29;
-    return 999;
-  }
+if(bank==="العربي"){
+if(s>=70000) return 1.59;
+if(s>=40000) return 1.79;
+if(s>=25000) return 1.99;
+if(s>=15000) return 2.09;
+if(s>=10000) return 2.29;
+if(s>=5000) return 3.29;
+}
 
-  // الجزيرة (تم حذف الشريحة غير الواضحة 2.75% بالكامل)
-  if(bank === "الجزيرة"){
-    // من الصورة الواضحة المتبقية:
-    // أقل من 10,000 = 3.50%
-    // 10,000 - 14,999 = 2.89%
-    // 15,000 - 29,999 = 1.89%
-    // 30,000 - 49,000 = 1.69%
-    // 50,000 فأكثر = 1.49%
-    if(s >= 50000) return 1.49;
-    if(s >= 30000) return 1.69;
-    if(s >= 15000) return 1.89;
-    if(s >= 10000) return 2.89;
-    if(s > 0)      return 3.50; // أقل من 10,000
-    return 999;
-  }
+if(bank==="الجزيرة"){
+if(s>=50000) return 1.49;
+if(s>=30000) return 1.69;
+if(s>=15000) return 1.89;
+if(s>=10000) return 2.89;
+if(s>0) return 3.50;
+}
 
-  return 999;
+return 999;
 }
 
 function recommend(){
-  const salary = parseFloat(document.getElementById("salary").value);
-  if(!salary || salary <= 0){
-    alert("ادخل الراتب الصافي بشكل صحيح");
-    return;
-  }
+let salary=parseFloat(document.getElementById("salary").value);
+if(!salary){alert("ادخل الراتب");return;}
 
-  const banks = ["الأهلي","الرياض","ساب","الراجحي","العربي","الجزيرة"];
-  const results = banks.map(name => ({name, rate: getRate(name, salary)}))
-                       .filter(x => x.rate !== 999);
+let banks=["الأهلي","الرياض","ساب","الراجحي","العربي","الجزيرة"];
+let results=banks.map(b=>({name:b,rate:getRate(b,salary)})).filter(b=>b.rate!==999);
 
-  if(results.length === 0){
-    document.getElementById("output").innerHTML =
-      '<div class="result" style="background:#7f1d1d">لا توجد شريحة مناسبة لهذا الراتب ضمن البنوك الحالية</div>';
-    return;
-  }
+results.sort((a,b)=>a.rate-b.rate);
 
-  results.sort((a,b)=>a.rate-b.rate);
+let best=results[0];
+let ranking=results.map((b,i)=> (i+1)+") "+b.name+" ("+b.rate+"%)").join("<br>");
 
-  const best = results[0];
-  const ranking = results.map((b,i)=> `${i+1}) ${b.name} <span style="color:#93c5fd;font-weight:800">(${b.rate}%)</span>`).join("<br>");
-
-  document.getElementById("output").innerHTML =
-    '<div class="result">البنك المرشح: <span style="font-weight:900">'+best.name+
-    '</span><br><br><span class="badge">'+best.rate+'%</span></div>' +
-    '<div class="small"><div class="hr"></div><b>ترتيب البنوك المنافسة من الأقل للأعلى:</b><br>'+ranking+'</div>';
+document.getElementById("output").innerHTML=
+'<div class="result">البنك المرشح:<br>'+best.name+
+'<br><br><span class="badge">'+best.rate+'%</span></div>'+
+'<div class="small"><br><b>ترتيب البنوك المنافسة:</b><br>'+ranking+'</div>';
 }
+
 </script>
 
 </body>
