@@ -324,8 +324,6 @@ font-size:15px;
 <div class="circle"></div>
 </div>
 
-<!-- تسجيل الدخول -->
-
 <div class="login-box" id="loginPage">
 
 <div class="hero">💸🏡🚗🛋️</div>
@@ -347,8 +345,6 @@ font-size:15px;
 </div>
 
 </div>
-
-<!-- الرئيسية -->
 
 <div id="mainPage">
 
@@ -384,8 +380,6 @@ font-size:15px;
 
 </div>
 
-<!-- شراء المديونية -->
-
 <div class="section" id="debtSection">
 
 <div class="box">
@@ -413,8 +407,6 @@ font-size:15px;
 </div>
 
 </div>
-
-<!-- التمويل الشخصي -->
 
 <div class="section" id="personalSection">
 
@@ -458,8 +450,6 @@ font-size:15px;
 
 <script>
 
-/* كلمة المرور */
-
 function login(){
 
 const pass = document.getElementById("password").value;
@@ -477,8 +467,6 @@ document.getElementById("error").style.display="block";
 
 }
 
-/* الوقت */
-
 function updateClock(){
 
 const now = new Date();
@@ -492,8 +480,6 @@ now.toLocaleTimeString('ar-SA');
 
 setInterval(updateClock,1000);
 updateClock();
-
-/* فتح الأقسام */
 
 function openDebt(){
 
@@ -522,34 +508,11 @@ document.getElementById("personalSection").style.display="none";
 
 }
 
-/* شراء المديونية */
-
 function calculateDebt(){
 
 const salary = parseInt(document.getElementById("salaryDebt").value);
 
 let banks = [];
-
-/* العربي */
-
-if(salary >= 5000 && salary <= 9999){
-banks.push({name:"البنك العربي", rate:3.49});
-}
-else if(salary >= 10000 && salary <= 14999){
-banks.push({name:"البنك العربي", rate:2.59});
-}
-else if(salary >= 15000 && salary <= 24999){
-banks.push({name:"البنك العربي", rate:2.39});
-}
-else if(salary >= 25000 && salary <= 39999){
-banks.push({name:"البنك العربي", rate:2.09});
-}
-else if(salary >= 40000 && salary <= 69000){
-banks.push({name:"البنك العربي", rate:1.89});
-}
-else if(salary >= 70000){
-banks.push({name:"البنك العربي", rate:1.59});
-}
 
 /* الأهلي */
 
@@ -578,19 +541,19 @@ banks.push({name:"البنك الأهلي", rate:0.99});
 /* ANB */
 
 if(salary >= 5000 && salary <= 9999){
-banks.push({name:"البنك العربي الوطني ANB", rate:3.29});
+banks.push({name:"البنك العربي الوطني ANB", rate:3.49});
 }
 else if(salary >= 10000 && salary <= 14999){
-banks.push({name:"البنك العربي الوطني ANB", rate:2.29});
+banks.push({name:"البنك العربي الوطني ANB", rate:2.59});
 }
 else if(salary >= 15000 && salary <= 24999){
-banks.push({name:"البنك العربي الوطني ANB", rate:2.09});
+banks.push({name:"البنك العربي الوطني ANB", rate:2.39});
 }
 else if(salary >= 25000 && salary <= 39999){
-banks.push({name:"البنك العربي الوطني ANB", rate:1.99});
+banks.push({name:"البنك العربي الوطني ANB", rate:2.09});
 }
 else if(salary >= 40000 && salary <= 69000){
-banks.push({name:"البنك العربي الوطني ANB", rate:1.79});
+banks.push({name:"البنك العربي الوطني ANB", rate:1.89});
 }
 else if(salary >= 70000){
 banks.push({name:"البنك العربي الوطني ANB", rate:1.59});
@@ -623,8 +586,6 @@ else if(salary >= 40000){
 banks.push({name:"الراجحي", rate:2.09});
 }
 
-/* الفرز */
-
 banks.sort((a,b)=>a.rate-b.rate);
 
 let html = "";
@@ -649,8 +610,6 @@ ${index===0 ? '🏆 الأفضل حالياً' : '📌 بنك منافس'}
 document.getElementById("debtResult").innerHTML = html;
 
 }
-
-/* التمويل الشخصي */
 
 function calculatePersonal(){
 
@@ -710,7 +669,6 @@ else if(salary >= 25000){rajhi = 2.41;}
 }
 
 const stcTransfer = 1.89;
-const stcNoTransfer = 2.99;
 
 let bestBank = "";
 
@@ -769,7 +727,6 @@ ${bestBank}
 إذا كان عليك تمويل حالي في الراجحي
 فيتم التحويل تلقائياً إلى
 <b>وطني 2</b>
-وتكون النسبة أعلى من وطني 1 حسب الفئة والراتب.
 
 <div class="expire">
 ⏰ انتهاء عرض الراجحي:
@@ -781,8 +738,6 @@ ${bestBank}
 `;
 
 }
-
-/* مشاركة واتساب */
 
 function shareWhats(id){
 
