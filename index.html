@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حلول تمويلية</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>سرعة تملك العقار | الحلول التمويلية</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -16,606 +18,782 @@ font-family:'Cairo',sans-serif;
 }
 
 body{
-background:#0f172a;
+background:#07131f;
 overflow-x:hidden;
-color:white;
+color:#fff;
 min-height:100vh;
 }
+
+/* الخلفية */
 
 .bg{
 position:fixed;
 width:100%;
 height:100%;
-background:
-linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.75)),
-url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1400');
-background-size:cover;
-background-position:center;
-z-index:-2;
-}
-
-.blur{
-position:fixed;
-width:100%;
-height:100%;
-backdrop-filter:blur(6px);
+top:0;
+left:0;
+overflow:hidden;
 z-index:-1;
+background:
+linear-gradient(180deg,#07131f,#0c2235,#07131f);
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
+.circle{
+position:absolute;
+border-radius:50%;
+background:rgba(0,255,180,0.08);
+animation:float 10s infinite ease-in-out;
 }
 
-.card{
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.15);
-backdrop-filter:blur(12px);
+.circle:nth-child(1){
+width:300px;
+height:300px;
+top:-100px;
+right:-80px;
+}
+
+.circle:nth-child(2){
+width:220px;
+height:220px;
+bottom:-80px;
+left:-60px;
+animation-duration:13s;
+}
+
+.circle:nth-child(3){
+width:140px;
+height:140px;
+top:40%;
+left:40%;
+animation-duration:8s;
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(30px);}
+100%{transform:translateY(0px);}
+}
+
+/* شاشة الدخول */
+
+.login-box{
+width:95%;
+max-width:420px;
+margin:50px auto;
+background:rgba(255,255,255,0.07);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.08);
 border-radius:30px;
 padding:30px;
-margin-top:25px;
-box-shadow:0 0 30px rgba(0,0,0,.35);
-animation:fade .7s ease;
-}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(25px);}
-to{opacity:1;transform:translateY(0);}
-}
-
-.title{
-font-size:38px;
-font-weight:900;
 text-align:center;
+box-shadow:0 0 40px rgba(0,0,0,0.4);
+}
+
+.hero{
+font-size:85px;
 margin-bottom:10px;
+animation:updown 3s infinite;
+}
+
+@keyframes updown{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+h1{
+font-size:32px;
+font-weight:900;
+margin-bottom:5px;
+color:#00ffc3;
 }
 
 .sub{
-text-align:center;
 opacity:.9;
-margin-bottom:30px;
+margin-bottom:25px;
+font-size:16px;
+}
+
+input{
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
 font-size:18px;
-}
-
-.input{
-width:100%;
-padding:18px;
-border:none;
+margin-bottom:15px;
 outline:none;
-border-radius:18px;
-font-size:20px;
-margin-bottom:20px;
-background:white;
+background:#fff;
+color:#111;
+font-weight:bold;
 }
 
-.btn{
+button{
 width:100%;
-padding:18px;
+padding:16px;
 border:none;
-border-radius:18px;
-font-size:22px;
+border-radius:16px;
+font-size:20px;
 font-weight:900;
 cursor:pointer;
-background:linear-gradient(45deg,#16a34a,#22c55e);
-color:white;
 transition:.3s;
 }
 
-.btn:hover{
-transform:scale(1.02);
+.login-btn{
+background:linear-gradient(45deg,#00ffb7,#00b3ff);
+color:#000;
 }
 
-.grid{
+.login-btn:hover{
+transform:scale(1.03);
+}
+
+.error{
+margin-top:15px;
+font-size:18px;
+font-weight:bold;
+color:#ff5f5f;
+display:none;
+}
+
+/* الرئيسية */
+
+#mainPage{
+display:none;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.logo{
+font-size:28px;
+font-weight:900;
+color:#00ffc3;
+}
+
+.clock{
+background:rgba(255,255,255,0.08);
+padding:10px 18px;
+border-radius:15px;
+font-weight:bold;
+font-size:16px;
+}
+
+.cards{
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
+margin-top:30px;
 }
 
-.box{
-background:rgba(255,255,255,.1);
+.card{
+background:rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.08);
+padding:30px 20px;
 border-radius:25px;
-padding:25px;
 text-align:center;
 cursor:pointer;
 transition:.3s;
-border:1px solid rgba(255,255,255,.15);
+backdrop-filter:blur(12px);
 }
 
-.box:hover{
-transform:translateY(-5px) scale(1.02);
-background:rgba(255,255,255,.14);
+.card:hover{
+transform:translateY(-8px) scale(1.02);
+box-shadow:0 0 30px rgba(0,255,180,0.2);
 }
 
-.icon{
-font-size:65px;
+.card-icon{
+font-size:70px;
+margin-bottom:15px;
+}
+
+.card h2{
+font-size:28px;
 margin-bottom:10px;
 }
 
-.box h2{
-font-size:25px;
+.card p{
+opacity:.85;
+line-height:1.8;
+}
+
+/* النوافذ */
+
+.section{
+display:none;
+max-width:900px;
+margin:auto;
+}
+
+.box{
+background:rgba(255,255,255,0.08);
+padding:25px;
+border-radius:25px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.title{
+font-size:35px;
+font-weight:900;
+margin-bottom:20px;
+color:#00ffc3;
+text-align:center;
 }
 
 .result{
 margin-top:25px;
-background:white;
-color:#111827;
-padding:25px;
-border-radius:25px;
-}
-
-.best{
-font-size:34px;
-font-weight:900;
-color:#16a34a;
-margin-bottom:15px;
 }
 
 .bank{
-background:#f3f4f6;
-padding:15px;
-border-radius:16px;
-margin-bottom:12px;
-font-size:22px;
-font-weight:700;
+background:#ffffff10;
+padding:18px;
+border-radius:18px;
+margin-bottom:15px;
+border:1px solid rgba(255,255,255,0.07);
+}
+
+.bank h3{
+font-size:28px;
+margin-bottom:8px;
+color:#00ffc3;
+}
+
+.bank p{
+font-size:20px;
+line-height:2;
+}
+
+.best{
+border:2px solid #00ffb7;
+box-shadow:0 0 20px rgba(0,255,180,0.3);
 }
 
 .note{
-background:#fef2f2;
-padding:18px;
-border-radius:18px;
 margin-top:20px;
-color:#991b1b;
+background:#ff000020;
+border:2px solid #ff2b2b;
+padding:18px;
+border-radius:16px;
 font-size:20px;
-font-weight:700;
+font-weight:bold;
 line-height:2;
 }
 
 .expire{
-margin-top:20px;
-background:#dc2626;
-color:white;
-padding:16px;
-border-radius:16px;
-font-size:23px;
+color:#ff4d4d;
+font-size:24px;
 font-weight:900;
-text-align:center;
+margin-top:10px;
+}
+
+.share-btn{
+background:linear-gradient(45deg,#25D366,#1ebe5d);
+color:#fff;
+margin-top:20px;
+font-size:22px;
+}
+
+.back-btn{
+margin-top:20px;
+background:#ffffff15;
+color:#fff;
 }
 
 .footer{
 text-align:center;
-margin-top:25px;
-font-size:20px;
-opacity:.9;
+margin-top:40px;
+opacity:.7;
+font-size:15px;
 }
 
-.share{
-margin-top:15px;
-background:#25D366;
-}
-
-.hidden{
-display:none;
-}
-
-@media(max-width:700px){
-.grid{
-grid-template-columns:1fr;
-}
-.title{
-font-size:30px;
-}
-}
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
-<div class="blur"></div>
+<div class="bg">
+<div class="circle"></div>
+<div class="circle"></div>
+<div class="circle"></div>
+</div>
 
-<div class="container">
+<!-- تسجيل الدخول -->
 
-<!-- LOGIN -->
-<div class="card" id="loginPage">
-<div class="title">🏦 حلول تمويلية</div>
+<div class="login-box" id="loginPage">
+
+<div class="hero">💸🏡🚗🛋️</div>
+
+<h1>سرعة تملك العقار</h1>
+
 <div class="sub">
-سرعة التملك العقاري والتمويل الشخصي
+الحلول التمويلية الذكية
 </div>
 
-<input type="password" id="password" class="input" placeholder="أدخل الرقم السري">
+<input type="password" id="password" placeholder="ادخل الرقم السري">
 
-<button class="btn" onclick="checkPassword()">دخول</button>
-
-<div id="error" style="margin-top:15px;color:#f87171;font-size:20px;text-align:center;"></div>
-</div>
-
-<!-- HOME -->
-<div class="card hidden" id="homePage">
-
-<div class="title">اختر الخدمة</div>
-
-<div class="grid">
-
-<div class="box" onclick="openDebt()">
-<div class="icon">🏠💸</div>
-<h2>نسبة شراء المديونية</h2>
-</div>
-
-<div class="box" onclick="openPersonal()">
-<div class="icon">💳🚗🛋️</div>
-<h2>التمويل الشخصي</h2>
-</div>
-
-</div>
-
-<div class="footer" id="datetime"></div>
-
-</div>
-
-<!-- DEBT -->
-<div class="card hidden" id="debtPage">
-
-<div class="title">🏠 شراء المديونية</div>
-
-<input type="number" id="salaryDebt" class="input" placeholder="أدخل الراتب الصافي">
-
-<button class="btn" onclick="calculateDebt()">
-عرض أفضل البنوك
+<button class="login-btn" onclick="login()">
+دخول
 </button>
 
-<div id="debtResult"></div>
+<div class="error" id="error">
+الرقم السري غير صحيح
+</div>
 
 </div>
 
-<!-- PERSONAL -->
-<div class="card hidden" id="personalPage">
+<!-- الرئيسية -->
 
-<div class="title">💳 التمويل الشخصي</div>
+<div id="mainPage">
 
-<select id="jobType" class="input">
+<div class="topbar">
+
+<div class="logo">
+💎 سرعة تملك العقار
+</div>
+
+<div class="clock" id="clock"></div>
+
+</div>
+
+<div class="cards">
+
+<div class="card" onclick="openDebt()">
+<div class="card-icon">🏦</div>
+<h2>شراء المديونية</h2>
+<p>
+ترشيح أفضل بنك حسب الراتب الصافي
+مع مقارنة جميع العروض
+</p>
+</div>
+
+<div class="card" onclick="openPersonal()">
+<div class="card-icon">💰</div>
+<h2>التمويل الشخصي</h2>
+<p>
+أفضل نسب التمويل الشخصي
+مع توصية مباشرة
+</p>
+</div>
+
+</div>
+
+<!-- شراء المديونية -->
+
+<div class="section" id="debtSection">
+
+<div class="box">
+
+<div class="title">
+🏦 شراء المديونية
+</div>
+
+<input type="number" id="salaryDebt" placeholder="ادخل الراتب الصافي">
+
+<button class="login-btn" onclick="calculateDebt()">
+ترشيح أفضل بنك
+</button>
+
+<div class="result" id="debtResult"></div>
+
+<button class="share-btn" onclick="shareWhats('debtResult')">
+مشاركة واتساب
+</button>
+
+<button class="back-btn" onclick="goHome()">
+رجوع
+</button>
+
+</div>
+
+</div>
+
+<!-- التمويل الشخصي -->
+
+<div class="section" id="personalSection">
+
+<div class="box">
+
+<div class="title">
+💰 التمويل الشخصي
+</div>
+
+<input type="number" id="salaryPersonal" placeholder="ادخل الراتب الصافي">
+
+<select id="jobType" style="width:100%;padding:16px;border:none;border-radius:16px;font-size:18px;margin-bottom:15px;font-weight:bold;">
 <option value="مدني">مدني</option>
 <option value="عسكري">عسكري</option>
 <option value="متقاعد">متقاعد</option>
 </select>
 
-<input type="number" id="salaryPersonal" class="input" placeholder="أدخل الراتب الصافي">
-
-<button class="btn" onclick="calculatePersonal()">
-عرض أفضل البنوك
+<button class="login-btn" onclick="calculatePersonal()">
+ترشيح أفضل بنك
 </button>
 
-<div id="personalResult"></div>
+<div class="result" id="personalResult"></div>
 
+<button class="share-btn" onclick="shareWhats('personalResult')">
+مشاركة واتساب
+</button>
+
+<button class="back-btn" onclick="goHome()">
+رجوع
+</button>
+
+</div>
+
+</div>
+
+<div class="footer">
+© سرعة تملك العقار - الحلول التمويلية
 </div>
 
 </div>
 
 <script>
 
-const PASSWORD = "11qq11qQ";
+/* كلمة المرور */
 
-function checkPassword(){
+function login(){
 
-let pass = document.getElementById("password").value;
+const pass = document.getElementById("password").value;
 
-if(pass === PASSWORD){
+if(pass === "11qq11qQ"){
 
-document.getElementById("loginPage").classList.add("hidden");
-document.getElementById("homePage").classList.remove("hidden");
+document.getElementById("loginPage").style.display="none";
+document.getElementById("mainPage").style.display="block";
 
 }else{
-document.getElementById("error").innerHTML="❌ الرقم السري غير صحيح";
+
+document.getElementById("error").style.display="block";
+
 }
 
 }
+
+/* الوقت */
+
+function updateClock(){
+
+const now = new Date();
+
+document.getElementById("clock").innerHTML =
+now.toLocaleDateString('ar-SA') +
+" | " +
+now.toLocaleTimeString('ar-SA');
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* فتح الأقسام */
 
 function openDebt(){
+
 hideAll();
-document.getElementById("debtPage").classList.remove("hidden");
+document.getElementById("debtSection").style.display="block";
+
 }
 
 function openPersonal(){
+
 hideAll();
-document.getElementById("personalPage").classList.remove("hidden");
+document.getElementById("personalSection").style.display="block";
+
+}
+
+function goHome(){
+
+hideAll();
+
 }
 
 function hideAll(){
-document.getElementById("homePage").classList.add("hidden");
-document.getElementById("debtPage").classList.add("hidden");
-document.getElementById("personalPage").classList.add("hidden");
-}
 
-function getDebtBanks(salary){
-
-let banks=[];
-
-/* العربي */
-if(salary <= 4999){
-banks.push({name:"البنك العربي",rate:4.89});
-}
-else if(salary <= 9999){
-banks.push({name:"البنك العربي",rate:3.49});
-}
-else if(salary <= 14999){
-banks.push({name:"البنك العربي",rate:2.59});
-}
-else if(salary <= 24999){
-banks.push({name:"البنك العربي",rate:2.39});
-}
-else if(salary <= 39999){
-banks.push({name:"البنك العربي",rate:2.09});
-}
-else if(salary <= 69000){
-banks.push({name:"البنك العربي",rate:1.89});
-}
-else{
-banks.push({name:"البنك العربي",rate:1.59});
-}
-
-/* الاهلي */
-if(salary >=3000 && salary <=3999){
-banks.push({name:"البنك الأهلي",rate:4.49});
-}
-else if(salary <=6999){
-banks.push({name:"البنك الأهلي",rate:3.99});
-}
-else if(salary <=9999){
-banks.push({name:"البنك الأهلي",rate:3.50});
-}
-else if(salary <=14999){
-banks.push({name:"البنك الأهلي",rate:2.99});
-}
-else if(salary <=24999){
-banks.push({name:"البنك الأهلي",rate:1.95});
-}
-else if(salary <=44999){
-banks.push({name:"البنك الأهلي",rate:1.59});
-}
-else{
-banks.push({name:"البنك الأهلي",rate:0.99});
-}
-
-/* الانماء */
-if(salary >=5000 && salary <=9999){
-banks.push({name:"الإنماء",rate:3.00});
-}
-else if(salary <=14999){
-banks.push({name:"الإنماء",rate:2.85});
-}
-else if(salary <=19999){
-banks.push({name:"الإنماء",rate:2.85});
-}
-else if(salary <=24999){
-banks.push({name:"الإنماء",rate:2.85});
-}
-else{
-banks.push({name:"الإنماء",rate:2.85});
-}
-
-/* الوطني */
-if(salary >=5000 && salary <=9999){
-banks.push({name:"البنك الوطني",rate:3.29});
-}
-else if(salary <=14999){
-banks.push({name:"البنك الوطني",rate:2.29});
-}
-else if(salary <=24999){
-banks.push({name:"البنك الوطني",rate:2.09});
-}
-else if(salary <=39999){
-banks.push({name:"البنك الوطني",rate:1.99});
-}
-else if(salary <=69000){
-banks.push({name:"البنك الوطني",rate:1.79});
-}
-else{
-banks.push({name:"البنك الوطني",rate:1.59});
-}
-
-/* الراجحي */
-if(salary >=4000 && salary <=9999){
-banks.push({name:"الراجحي",rate:4.00});
-}
-else if(salary <=14999){
-banks.push({name:"الراجحي",rate:2.75});
-}
-else if(salary <=24999){
-banks.push({name:"الراجحي",rate:2.29});
-}
-else if(salary <=39999){
-banks.push({name:"الراجحي",rate:2.19});
-}
-else{
-banks.push({name:"الراجحي",rate:2.09});
-}
-
-banks.sort((a,b)=>a.rate-b.rate);
-
-return banks;
+document.getElementById("debtSection").style.display="none";
+document.getElementById("personalSection").style.display="none";
 
 }
+
+/* شراء المديونية */
 
 function calculateDebt(){
 
-let salary = parseFloat(document.getElementById("salaryDebt").value);
+const salary = parseInt(document.getElementById("salaryDebt").value);
 
-let banks = getDebtBanks(salary);
+let banks = [];
 
-let html = `<div class="result">`;
+/* العربي */
 
-html += `<div class="best">
-🏆 الترشيح الأفضل: ${banks[0].name}
-<br>
-النسبة: ${banks[0].rate}%
-</div>`;
+if(salary >= 5000 && salary <= 9999){
+banks.push({name:"البنك العربي", rate:3.49});
+}
+else if(salary >= 10000 && salary <= 14999){
+banks.push({name:"البنك العربي", rate:2.59});
+}
+else if(salary >= 15000 && salary <= 24999){
+banks.push({name:"البنك العربي", rate:2.39});
+}
+else if(salary >= 25000 && salary <= 39999){
+banks.push({name:"البنك العربي", rate:2.09});
+}
+else if(salary >= 40000 && salary <= 69000){
+banks.push({name:"البنك العربي", rate:1.89});
+}
+else if(salary >= 70000){
+banks.push({name:"البنك العربي", rate:1.59});
+}
 
-html += `<h2 style="margin-bottom:15px;">ترتيب البنوك:</h2>`;
+/* الأهلي */
 
-banks.forEach((b,index)=>{
+if(salary >= 3000 && salary <= 3999){
+banks.push({name:"البنك الأهلي", rate:4.49});
+}
+else if(salary >= 4000 && salary <= 6999){
+banks.push({name:"البنك الأهلي", rate:3.99});
+}
+else if(salary >= 7000 && salary <= 9999){
+banks.push({name:"البنك الأهلي", rate:3.50});
+}
+else if(salary >= 10000 && salary <= 14999){
+banks.push({name:"البنك الأهلي", rate:2.99});
+}
+else if(salary >= 15000 && salary <= 24999){
+banks.push({name:"البنك الأهلي", rate:1.95});
+}
+else if(salary >= 25000 && salary <= 44999){
+banks.push({name:"البنك الأهلي", rate:1.59});
+}
+else if(salary >= 45000){
+banks.push({name:"البنك الأهلي", rate:0.99});
+}
+
+/* ANB */
+
+if(salary >= 5000 && salary <= 9999){
+banks.push({name:"البنك العربي الوطني ANB", rate:3.29});
+}
+else if(salary >= 10000 && salary <= 14999){
+banks.push({name:"البنك العربي الوطني ANB", rate:2.29});
+}
+else if(salary >= 15000 && salary <= 24999){
+banks.push({name:"البنك العربي الوطني ANB", rate:2.09});
+}
+else if(salary >= 25000 && salary <= 39999){
+banks.push({name:"البنك العربي الوطني ANB", rate:1.99});
+}
+else if(salary >= 40000 && salary <= 69000){
+banks.push({name:"البنك العربي الوطني ANB", rate:1.79});
+}
+else if(salary >= 70000){
+banks.push({name:"البنك العربي الوطني ANB", rate:1.59});
+}
+
+/* SAB */
+
+if(salary >= 15000 && salary <= 29999){
+banks.push({name:"SAB", rate:1.99});
+}
+else if(salary >= 30000){
+banks.push({name:"SAB", rate:1.79});
+}
+
+/* الراجحي */
+
+if(salary >= 4000 && salary <= 9999){
+banks.push({name:"الراجحي", rate:4.00});
+}
+else if(salary >= 10000 && salary <= 14999){
+banks.push({name:"الراجحي", rate:2.75});
+}
+else if(salary >= 15000 && salary <= 24999){
+banks.push({name:"الراجحي", rate:2.29});
+}
+else if(salary >= 25000 && salary <= 39999){
+banks.push({name:"الراجحي", rate:2.19});
+}
+else if(salary >= 40000){
+banks.push({name:"الراجحي", rate:2.09});
+}
+
+/* الفرز */
+
+banks.sort((a,b)=>a.rate-b.rate);
+
+let html = "";
+
+banks.forEach((bank,index)=>{
+
 html += `
-<div class="bank">
-${index+1}- ${b.name} — ${b.rate}%
+<div class="bank ${index===0 ? 'best':''}">
+<h3>
+${index===0 ? '🏆 الأفضل حالياً' : '📌 بنك منافس'}
+</h3>
+
+<p>
+<b>${bank.name}</b><br>
+النسبة: <b>${bank.rate}%</b>
+</p>
 </div>
 `;
+
 });
-
-html += `
-<div class="note">
-📌 النسب تقريبية حسب الراتب الحالي.<br>
-📌 قد تختلف الموافقة حسب الالتزامات والجهة الوظيفية.
-</div>
-`;
-
-html += `
-<button class="btn share" onclick="shareWhatsApp('${banks[0].name}','${banks[0].rate}','شراء مديونية')">
-مشاركة عبر واتساب
-</button>
-`;
-
-html += `</div>`;
 
 document.getElementById("debtResult").innerHTML = html;
 
 }
 
+/* التمويل الشخصي */
+
 function calculatePersonal(){
 
-let salary = parseFloat(document.getElementById("salaryPersonal").value);
-let job = document.getElementById("jobType").value;
+const salary = parseInt(document.getElementById("salaryPersonal").value);
+const job = document.getElementById("jobType").value;
 
-let banks=[];
-
-/* STC */
-banks.push({
-name:"STC BANK",
-rate:1.89,
-note:"بتحويل راتب"
-});
-
-banks.push({
-name:"STC BANK",
-rate:2.99,
-note:"بدون تحويل راتب"
-});
-
-/* الراجحي */
 let rajhi = 0;
-let note = "";
 
-if(job=="مدني") note="وطني 1";
-if(job=="عسكري") note="وطني 1";
-if(job=="متقاعد") note="وطني 1";
+if(job === "مدني"){
 
-if(salary >=2000 && salary <=2999) rajhi=3.92;
-else if(salary <=3999) rajhi=3.92;
-else if(salary <=4999) rajhi=3.92;
-else if(salary <=5999) rajhi=2.95;
-else if(salary <=6999) rajhi=2.94;
-else if(salary <=7999) rajhi=2.85;
-else if(salary <=8999) rajhi=2.78;
-else if(salary <=9999) rajhi=2.51;
-else if(salary <=11999) rajhi=2.47;
-else if(salary <=14999) rajhi=2.47;
-else if(salary <=19999) rajhi=2.47;
-else if(salary <=24999) rajhi=2.42;
-else rajhi=2.41;
+if(salary >= 2000 && salary <= 2999){rajhi = 3.92;}
+else if(salary >= 3000 && salary <= 3999){rajhi = 3.92;}
+else if(salary >= 4000 && salary <= 4999){rajhi = 3.92;}
+else if(salary >= 5000 && salary <= 5999){rajhi = 2.95;}
+else if(salary >= 6000 && salary <= 6999){rajhi = 2.94;}
+else if(salary >= 7000 && salary <= 7999){rajhi = 2.85;}
+else if(salary >= 8000 && salary <= 8999){rajhi = 2.78;}
+else if(salary >= 9000 && salary <= 9999){rajhi = 2.51;}
+else if(salary >= 10000 && salary <= 11999){rajhi = 2.47;}
+else if(salary >= 12000 && salary <= 14999){rajhi = 2.47;}
+else if(salary >= 15000 && salary <= 19999){rajhi = 2.47;}
+else if(salary >= 20000 && salary <= 24999){rajhi = 2.42;}
+else if(salary >= 25000){rajhi = 2.41;}
 
-banks.push({
-name:"الراجحي",
-rate:rajhi,
-note:note
-});
+}else if(job === "عسكري"){
 
-banks.sort((a,b)=>a.rate-b.rate);
+if(salary >= 2000 && salary <= 2999){rajhi = 3.99;}
+else if(salary >= 3000 && salary <= 3999){rajhi = 3.98;}
+else if(salary >= 4000 && salary <= 4999){rajhi = 3.98;}
+else if(salary >= 5000 && salary <= 5999){rajhi = 3.10;}
+else if(salary >= 6000 && salary <= 6999){rajhi = 3.09;}
+else if(salary >= 7000 && salary <= 7999){rajhi = 2.96;}
+else if(salary >= 8000 && salary <= 8999){rajhi = 2.94;}
+else if(salary >= 9000 && salary <= 9999){rajhi = 2.88;}
+else if(salary >= 10000 && salary <= 11999){rajhi = 2.81;}
+else if(salary >= 12000 && salary <= 14999){rajhi = 2.80;}
+else if(salary >= 15000 && salary <= 19999){rajhi = 2.73;}
+else if(salary >= 20000 && salary <= 24999){rajhi = 2.71;}
+else if(salary >= 25000){rajhi = 2.69;}
 
-let html = `<div class="result">`;
+}else{
 
-html += `
-<div class="best">
-🏆 الترشيح الأفضل: ${banks[0].name}
-<br>
-النسبة: ${banks[0].rate}%
-</div>
-`;
-
-banks.forEach((b,index)=>{
-
-html += `
-<div class="bank">
-${index+1}- ${b.name}
-<br>
-النسبة: ${b.rate}%
-<br>
-${b.note}
-</div>
-`;
-
-});
-
-html += `
-<div class="note">
-⚠️ ملاحظة مهمة:<br><br>
-
-إذا عليك تمويل حالي في الراجحي يتم الاحتساب على نسبة وطني 2.<br><br>
-
-🟢 المدني: يتم احتساب نسبة المدني.<br>
-🟢 العسكري: يتم احتساب نسبة العسكري.<br>
-🟢 المتقاعد: يتم احتساب نسبة المتقاعد.<br>
-</div>
-`;
-
-html += `
-<div class="expire">
-⛔ انتهاء عرض الراجحي بتاريخ 30 / 06 / 2026
-</div>
-`;
-
-html += `
-<button class="btn share" onclick="shareWhatsApp('${banks[0].name}','${banks[0].rate}','تمويل شخصي')">
-مشاركة عبر واتساب
-</button>
-`;
-
-html += `</div>`;
-
-document.getElementById("personalResult").innerHTML = html;
+if(salary >= 2000 && salary <= 2999){rajhi = 3.92;}
+else if(salary >= 3000 && salary <= 3999){rajhi = 3.92;}
+else if(salary >= 4000 && salary <= 4999){rajhi = 3.92;}
+else if(salary >= 5000 && salary <= 5999){rajhi = 2.95;}
+else if(salary >= 6000 && salary <= 6999){rajhi = 2.94;}
+else if(salary >= 7000 && salary <= 7999){rajhi = 2.85;}
+else if(salary >= 8000 && salary <= 8999){rajhi = 2.78;}
+else if(salary >= 9000 && salary <= 9999){rajhi = 2.66;}
+else if(salary >= 10000 && salary <= 11999){rajhi = 2.62;}
+else if(salary >= 12000 && salary <= 14999){rajhi = 2.62;}
+else if(salary >= 15000 && salary <= 19999){rajhi = 2.52;}
+else if(salary >= 20000 && salary <= 24999){rajhi = 2.42;}
+else if(salary >= 25000){rajhi = 2.41;}
 
 }
 
-function shareWhatsApp(bank,rate,type){
+const stcTransfer = 1.89;
+const stcNoTransfer = 2.99;
 
-let text =
-`🏦 ${type}
+let bestBank = "";
 
-أفضل بنك مرشح:
-${bank}
+if(rajhi < stcTransfer){
 
-النسبة:
-${rate}%
+bestBank = `
+<div class="bank best">
+<h3>🏆 الأفضل حالياً</h3>
+<p>
+<b>مصرف الراجحي - وطني 1</b><br>
+الفئة: ${job}<br>
+النسبة: <b>${rajhi}%</b>
+</p>
+</div>
+`;
 
-تم الإرسال من نظام الحلول التمويلية`;
+}else{
+
+bestBank = `
+<div class="bank best">
+<h3>🏆 الأفضل حالياً</h3>
+<p>
+<b>STC BANK</b><br>
+بتحويل راتب: <b>1.89%</b><br>
+بدون تحويل راتب: <b>2.99%</b>
+</p>
+</div>
+`;
+
+}
+
+document.getElementById("personalResult").innerHTML = `
+
+${bestBank}
+
+<div class="bank">
+<h3>📌 STC BANK</h3>
+<p>
+بتحويل راتب: <b>1.89%</b><br>
+بدون تحويل راتب: <b>2.99%</b>
+</p>
+</div>
+
+<div class="bank">
+<h3>📌 مصرف الراجحي - وطني 1</h3>
+<p>
+الفئة: ${job}<br>
+النسبة حسب الراتب: <b>${rajhi}%</b>
+</p>
+</div>
+
+<div class="note">
+
+⚠️ ملاحظة مهمة جداً<br><br>
+
+إذا كان عليك تمويل حالي في الراجحي
+فيتم التحويل تلقائياً إلى
+<b>وطني 2</b>
+وتكون النسبة أعلى من وطني 1 حسب الفئة والراتب.
+
+<div class="expire">
+⏰ انتهاء عرض الراجحي:
+30 / يونيو / 2026
+</div>
+
+</div>
+
+`;
+
+}
+
+/* مشاركة واتساب */
+
+function shareWhats(id){
+
+const text = document.getElementById(id).innerText;
 
 window.open(
-`https://wa.me/?text=${encodeURIComponent(text)}`
+"https://wa.me/?text=" + encodeURIComponent(text),
+"_blank"
 );
 
 }
-
-function updateDateTime(){
-
-let now = new Date();
-
-document.getElementById("datetime").innerHTML =
-"📅 " +
-now.toLocaleDateString('ar-SA') +
-" | ⏰ " +
-now.toLocaleTimeString('ar-SA');
-
-}
-
-setInterval(updateDateTime,1000);
-updateDateTime();
 
 </script>
 
