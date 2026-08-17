@@ -4,34 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>سرعة تملك العقار | FINO</title>
+<title>سرعة تملك العقار | ترشيح شراء المديونية</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-:root{
-    --bg:#06111d;
-    --bg2:#0a1b2c;
-    --card:rgba(255,255,255,.075);
-    --card2:rgba(255,255,255,.055);
-    --border:rgba(255,255,255,.11);
-    --white:#ffffff;
-    --muted:#9fb0c2;
-    --green:#00e6a7;
-    --green2:#00b98a;
-    --blue:#3ba7ff;
-    --gold:#ffd166;
-    --red:#ff5c67;
-    --shadow:0 25px 70px rgba(0,0,0,.35);
-    --radius:24px;
-}
 
 *{
     margin:0;
@@ -40,152 +19,150 @@
     font-family:'Cairo',sans-serif;
 }
 
+:root{
+    --bg:#06111f;
+    --bg2:#0b1d31;
+    --card:rgba(255,255,255,.075);
+    --card2:rgba(255,255,255,.11);
+    --border:rgba(255,255,255,.10);
+    --green:#00e6a7;
+    --green2:#00b98a;
+    --blue:#36a3ff;
+    --white:#ffffff;
+    --muted:#a9b7c7;
+    --danger:#ff5d6c;
+    --gold:#ffd166;
+}
+
 html{
     scroll-behavior:smooth;
 }
 
 body{
-    min-height:100vh;
     background:
-        radial-gradient(circle at 85% 10%,rgba(0,230,167,.10),transparent 30%),
-        radial-gradient(circle at 10% 90%,rgba(59,167,255,.09),transparent 30%),
-        linear-gradient(145deg,#040d17,#071827 45%,#06111d);
-    color:var(--white);
+        radial-gradient(circle at 10% 10%,rgba(0,230,167,.12),transparent 28%),
+        radial-gradient(circle at 90% 15%,rgba(54,163,255,.12),transparent 28%),
+        linear-gradient(145deg,#06111f,#0a1c30 50%,#06111f);
+    color:#fff;
+    min-height:100vh;
     overflow-x:hidden;
 }
 
-button,
-input,
-select{
-    font-family:'Cairo',sans-serif;
-}
+/* ================= BACKGROUND ================= */
 
-button{
-    cursor:pointer;
-}
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.bg-orb{
-    position:fixed;
-    border-radius:50%;
-    pointer-events:none;
-    z-index:-1;
-    filter:blur(2px);
-}
-
-.orb1{
-    width:360px;
-    height:360px;
-    top:-180px;
-    right:-120px;
-    background:rgba(0,230,167,.07);
-}
-
-.orb2{
-    width:300px;
-    height:300px;
-    bottom:-160px;
-    left:-120px;
-    background:rgba(59,167,255,.07);
-}
-
-.grid-bg{
+.background{
     position:fixed;
     inset:0;
+    overflow:hidden;
     pointer-events:none;
-    z-index:-2;
-    opacity:.20;
-    background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-    background-size:45px 45px;
+    z-index:-1;
 }
 
-/* =========================================================
-   LOGIN
-========================================================= */
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(3px);
+    opacity:.45;
+    animation:float 12s ease-in-out infinite;
+}
 
-.login-page{
+.orb.one{
+    width:360px;
+    height:360px;
+    background:rgba(0,230,167,.08);
+    top:-150px;
+    right:-100px;
+}
+
+.orb.two{
+    width:280px;
+    height:280px;
+    background:rgba(54,163,255,.08);
+    bottom:-120px;
+    left:-80px;
+    animation-duration:16s;
+}
+
+.orb.three{
+    width:160px;
+    height:160px;
+    background:rgba(255,209,102,.05);
+    top:45%;
+    left:45%;
+    animation-duration:10s;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translate3d(0,0,0);
+    }
+    50%{
+        transform:translate3d(0,35px,0);
+    }
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage{
     min-height:100vh;
     display:flex;
-    justify-content:center;
     align-items:center;
-    padding:22px;
+    justify-content:center;
+    padding:25px;
 }
 
 .login-card{
     width:100%;
-    max-width:470px;
+    max-width:460px;
     padding:38px 30px;
-    border-radius:32px;
-    background:rgba(255,255,255,.075);
     border:1px solid var(--border);
-    backdrop-filter:blur(25px);
-    box-shadow:var(--shadow);
+    border-radius:32px;
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.35),
+        inset 0 1px 0 rgba(255,255,255,.08);
     text-align:center;
-    animation:fadeUp .7s ease;
 }
 
-.logo-mark{
-    width:88px;
-    height:88px;
+.login-logo{
+    width:82px;
+    height:82px;
     margin:0 auto 18px;
-    border-radius:26px;
+    border-radius:25px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:44px;
-    background:
-        linear-gradient(145deg,rgba(0,230,167,.20),rgba(59,167,255,.12));
-    border:1px solid rgba(0,230,167,.25);
-    box-shadow:0 15px 40px rgba(0,230,167,.12);
+    font-size:43px;
+    background:linear-gradient(135deg,var(--green),var(--blue));
+    box-shadow:0 15px 40px rgba(0,230,167,.2);
 }
 
-.brand{
-    font-size:32px;
+.login-card h1{
+    font-size:30px;
     font-weight:900;
-    letter-spacing:-1px;
     color:#fff;
 }
 
-.brand span{
-    color:var(--green);
-}
-
-.login-sub{
-    color:var(--muted);
+.login-card .subtitle{
     margin:7px 0 28px;
+    color:var(--muted);
     font-size:15px;
 }
 
-.field-label{
-    display:block;
-    text-align:right;
-    margin-bottom:8px;
-    font-size:14px;
-    font-weight:700;
-    color:#d9e5ef;
-}
-
-.input-wrap{
-    position:relative;
-    margin-bottom:15px;
-}
-
-.input-wrap input{
+.input{
     width:100%;
     height:58px;
-    border-radius:17px;
-    border:1px solid rgba(255,255,255,.10);
+    border:none;
     outline:none;
+    border-radius:17px;
     padding:0 18px;
-    background:rgba(255,255,255,.95);
-    color:#101820;
     font-size:17px;
     font-weight:700;
+    background:#fff;
+    color:#111;
+    margin-bottom:14px;
 }
 
 .primary-btn{
@@ -193,775 +170,719 @@ button{
     min-height:58px;
     border:0;
     border-radius:17px;
-    background:linear-gradient(135deg,var(--green),#00bff2);
-    color:#02120e;
+    cursor:pointer;
     font-size:18px;
     font-weight:900;
-    box-shadow:0 15px 35px rgba(0,230,167,.18);
+    color:#00120d;
+    background:linear-gradient(135deg,#00e6a7,#00b98a);
+    box-shadow:0 12px 30px rgba(0,230,167,.15);
     transition:.25s;
 }
 
 .primary-btn:hover{
     transform:translateY(-2px);
-    box-shadow:0 20px 45px rgba(0,230,167,.25);
+    box-shadow:0 16px 35px rgba(0,230,167,.23);
 }
 
 .error{
     display:none;
-    color:#ff7880;
-    font-size:14px;
-    font-weight:700;
     margin-top:14px;
+    color:#ff7b86;
+    font-weight:800;
 }
 
-/* =========================================================
-   APP
-========================================================= */
+/* ================= MAIN ================= */
 
 #mainPage{
     display:none;
     min-height:100vh;
+    padding:20px;
 }
 
-.app{
-    width:min(1250px,94%);
+.container{
+    width:100%;
+    max-width:1180px;
     margin:auto;
-    padding:25px 0 45px;
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
+/* ================= TOPBAR ================= */
 
-.header{
+.topbar{
     display:flex;
-    align-items:center;
     justify-content:space-between;
-    gap:18px;
-    padding:18px 20px;
+    align-items:center;
+    gap:15px;
+    margin-bottom:28px;
+    padding:17px 20px;
+    border:1px solid var(--border);
     border-radius:24px;
     background:rgba(255,255,255,.055);
-    border:1px solid var(--border);
-    backdrop-filter:blur(20px);
-    margin-bottom:24px;
+    backdrop-filter:blur(18px);
 }
 
-.header-brand{
+.brand{
     display:flex;
     align-items:center;
-    gap:13px;
+    gap:12px;
 }
 
-.header-logo{
+.brand-icon{
     width:48px;
     height:48px;
     border-radius:15px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,var(--green),#00aeea);
-    color:#03130f;
+    background:linear-gradient(135deg,var(--green),var(--blue));
     font-size:25px;
-    font-weight:900;
 }
 
-.header-title{
+.brand-name{
     font-size:20px;
     font-weight:900;
 }
 
-.header-title small{
-    display:block;
+.brand-small{
     color:var(--muted);
-    font-size:11px;
-    font-weight:500;
-    margin-top:2px;
+    font-size:12px;
+    margin-top:1px;
 }
 
-.clock{
-    color:#d9e7f2;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:14px;
-    padding:9px 14px;
-    font-size:13px;
-    font-weight:700;
+.date-box{
+    text-align:left;
+    color:#dce8f4;
+    font-size:12px;
+    line-height:1.9;
 }
 
-/* =========================================================
-   HERO
-========================================================= */
+.date-box strong{
+    display:block;
+    font-size:14px;
+    color:#fff;
+}
+
+/* ================= HERO ================= */
 
 .hero-section{
-    position:relative;
-    overflow:hidden;
-    padding:40px;
-    border-radius:30px;
-    background:
-        linear-gradient(135deg,rgba(0,230,167,.10),rgba(59,167,255,.06)),
-        rgba(255,255,255,.055);
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-    margin-bottom:25px;
+    padding:28px 5px 12px;
+    text-align:center;
 }
 
-.hero-section:after{
-    content:"";
-    position:absolute;
-    width:280px;
-    height:280px;
-    border-radius:50%;
-    top:-150px;
-    left:-80px;
-    background:rgba(0,230,167,.08);
-}
-
-.hero-content{
-    position:relative;
-    z-index:2;
-    max-width:760px;
-}
-
-.hero-kicker{
+.hero-badge{
     display:inline-flex;
     align-items:center;
     gap:7px;
-    padding:7px 12px;
-    border-radius:30px;
-    background:rgba(0,230,167,.09);
-    border:1px solid rgba(0,230,167,.18);
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid rgba(0,230,167,.2);
+    background:rgba(0,230,167,.08);
     color:var(--green);
-    font-size:12px;
+    font-size:13px;
     font-weight:800;
     margin-bottom:14px;
 }
 
-.hero-title{
-    font-size:clamp(30px,5vw,50px);
-    line-height:1.2;
+.hero-section h2{
+    font-size:clamp(27px,5vw,45px);
     font-weight:900;
-    letter-spacing:-1.5px;
+    line-height:1.25;
 }
 
-.hero-title span{
+.hero-section h2 span{
     color:var(--green);
 }
 
-.hero-text{
+.hero-section p{
+    max-width:720px;
+    margin:12px auto 0;
     color:var(--muted);
     line-height:2;
-    margin-top:12px;
     font-size:15px;
-    max-width:680px;
 }
 
-/* =========================================================
-   HOME CARDS
-========================================================= */
+/* ================= HOME CARDS ================= */
 
-.home-grid{
+.home-cards{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:20px;
+    margin-top:30px;
 }
 
-.service-card{
+.home-card{
     position:relative;
     overflow:hidden;
-    min-height:235px;
-    padding:28px;
-    border-radius:27px;
-    background:rgba(255,255,255,.065);
+    padding:30px;
     border:1px solid var(--border);
-    transition:.3s;
+    border-radius:28px;
+    background:linear-gradient(
+        145deg,
+        rgba(255,255,255,.095),
+        rgba(255,255,255,.045)
+    );
     cursor:pointer;
+    transition:.3s;
 }
 
-.service-card:hover{
-    transform:translateY(-6px);
-    border-color:rgba(0,230,167,.28);
-    box-shadow:0 25px 55px rgba(0,0,0,.25);
+.home-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(0,230,167,.3);
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-.service-icon{
-    width:62px;
-    height:62px;
-    border-radius:19px;
+.home-card-icon{
+    width:65px;
+    height:65px;
+    border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:30px;
-    margin-bottom:22px;
-    background:rgba(0,230,167,.09);
-    border:1px solid rgba(0,230,167,.14);
+    font-size:32px;
+    margin-bottom:20px;
+    background:rgba(0,230,167,.10);
 }
 
-.service-card h2{
+.home-card h3{
     font-size:25px;
     font-weight:900;
     margin-bottom:8px;
 }
 
-.service-card p{
+.home-card p{
     color:var(--muted);
     line-height:1.9;
-    font-size:14px;
 }
 
-.service-arrow{
+.home-card .arrow{
     position:absolute;
-    bottom:25px;
-    left:25px;
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,.06);
+    left:24px;
+    bottom:23px;
     color:var(--green);
+    font-size:23px;
 }
 
-/* =========================================================
-   SECTION
-========================================================= */
+/* ================= SECTIONS ================= */
 
 .section{
     display:none;
-    animation:fadeUp .45s ease;
+    margin-top:28px;
+}
+
+.section-box{
+    padding:25px;
+    border:1px solid var(--border);
+    border-radius:28px;
+    background:rgba(255,255,255,.055);
+    backdrop-filter:blur(18px);
 }
 
 .section-head{
     display:flex;
     justify-content:space-between;
-    align-items:center;
+    align-items:flex-start;
     gap:15px;
-    margin-bottom:20px;
-}
-
-.section-title{
-    font-size:32px;
-    font-weight:900;
-}
-
-.section-title span{
-    color:var(--green);
-}
-
-.back-home{
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.055);
-    color:#fff;
-    padding:10px 17px;
-    border-radius:14px;
-    font-weight:800;
-}
-
-/* =========================================================
-   WIZARD
-========================================================= */
-
-.wizard{
-    padding:28px;
-    border-radius:28px;
-    background:rgba(255,255,255,.06);
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-}
-
-.step-label{
-    color:var(--muted);
-    font-size:13px;
-    font-weight:700;
-    margin-bottom:8px;
-}
-
-.salary-input{
-    width:100%;
-    height:68px;
-    border:1px solid rgba(255,255,255,.12);
-    outline:none;
-    border-radius:19px;
-    background:rgba(255,255,255,.96);
-    color:#07131f;
-    font-size:25px;
-    font-weight:900;
-    padding:0 20px;
     margin-bottom:24px;
 }
 
-.question{
-    font-size:19px;
+.section-title{
+    font-size:28px;
     font-weight:900;
-    margin-bottom:13px;
 }
 
-.option-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:11px;
-    margin-bottom:22px;
-}
-
-.option{
-    position:relative;
-}
-
-.option input{
-    position:absolute;
-    opacity:0;
-    pointer-events:none;
-}
-
-.option label{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:62px;
-    padding:10px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.10);
-    background:rgba(255,255,255,.045);
-    color:#dce7ef;
-    text-align:center;
-    font-size:14px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.22s;
-}
-
-.option input:checked + label{
-    background:rgba(0,230,167,.13);
-    border-color:var(--green);
-    color:var(--green);
-    box-shadow:0 8px 25px rgba(0,230,167,.10);
-}
-
-.private-extra{
-    display:none;
-    padding:18px;
-    border-radius:19px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.08);
-    margin-bottom:20px;
-}
-
-.private-extra.show{
-    display:block;
-    animation:fadeUp .25s ease;
-}
-
-.private-note{
+.section-subtitle{
     color:var(--muted);
-    font-size:12px;
-    line-height:1.8;
-    margin-top:8px;
-}
-
-.calculate-btn{
-    min-height:62px;
-}
-
-/* =========================================================
-   RESULTS
-========================================================= */
-
-.result-area{
-    margin-top:24px;
-    display:none;
-}
-
-.result-top{
-    padding:25px;
-    border-radius:27px;
-    background:
-        linear-gradient(135deg,rgba(0,230,167,.14),rgba(59,167,255,.07)),
-        rgba(255,255,255,.055);
-    border:1px solid rgba(0,230,167,.24);
-    margin-bottom:18px;
-}
-
-.result-top-label{
-    color:var(--green);
     font-size:13px;
-    font-weight:900;
-    margin-bottom:6px;
+    margin-top:4px;
 }
 
-.result-top-bank{
-    font-size:30px;
-    font-weight:900;
-}
-
-.result-rate{
-    font-size:44px;
-    font-weight:900;
-    color:var(--green);
-    line-height:1.1;
-    margin:8px 0;
-}
-
-.result-reason{
-    color:#c6d5e1;
-    line-height:1.9;
-    font-size:13px;
-}
-
-.result-meta{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:15px;
-}
-
-.badge{
-    padding:7px 11px;
-    border-radius:30px;
-    font-size:11px;
-    font-weight:800;
-    background:rgba(255,255,255,.07);
-    color:#d9e5ee;
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.badge.green{
-    background:rgba(0,230,167,.09);
-    color:var(--green);
-    border-color:rgba(0,230,167,.18);
-}
-
-.results-title{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin:20px 0 12px;
-}
-
-.results-title h3{
-    font-size:18px;
-    font-weight:900;
-}
-
-.results-title span{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.bank-list{
-    display:grid;
-    gap:12px;
-}
-
-.bank-card{
-    display:grid;
-    grid-template-columns:55px 1fr auto;
-    align-items:center;
-    gap:15px;
-    padding:18px;
-    border-radius:20px;
-    background:rgba(255,255,255,.045);
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.bank-rank{
-    width:48px;
-    height:48px;
-    border-radius:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,.06);
-    font-weight:900;
-    color:#c9d5df;
-}
-
-.bank-card:first-child{
-    border-color:rgba(0,230,167,.18);
-}
-
-.bank-card:first-child .bank-rank{
-    background:rgba(0,230,167,.10);
-    color:var(--green);
-}
-
-.bank-name{
-    font-size:17px;
-    font-weight:900;
-}
-
-.bank-condition{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:3px;
-}
-
-.bank-rate{
-    font-size:22px;
-    font-weight:900;
-    color:var(--green);
-    white-space:nowrap;
-}
-
-.equal-note{
-    margin-top:12px;
-    padding:13px 15px;
-    border-radius:15px;
-    background:rgba(255,209,102,.07);
-    border:1px solid rgba(255,209,102,.16);
-    color:#f8d77f;
-    font-size:12px;
-    line-height:1.8;
-}
-
-/* =========================================================
-   NOTICE
-========================================================= */
-
-.notice{
-    margin-top:18px;
-    padding:17px;
-    border-radius:18px;
-    background:rgba(255,193,7,.055);
-    border:1px solid rgba(255,193,7,.16);
-    color:#d9dfe5;
-    font-size:12px;
-    line-height:2;
-}
-
-.notice strong{
-    color:#ffd166;
-}
-
-.share-btn{
-    width:100%;
-    min-height:56px;
-    border:0;
-    border-radius:17px;
-    background:linear-gradient(135deg,#25d366,#1db954);
-    color:#fff;
-    font-size:17px;
-    font-weight:900;
-    margin-top:15px;
-}
-
-/* =========================================================
-   PERSONAL
-========================================================= */
-
-.personal-box{
-    padding:28px;
-    border-radius:28px;
-    background:rgba(255,255,255,.06);
+.close-btn{
     border:1px solid var(--border);
-    box-shadow:var(--shadow);
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    border-radius:13px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:800;
 }
 
-.personal-grid{
+/* ================= FORM ================= */
+
+.form-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:15px;
 }
 
-.personal-grid input,
-.personal-grid select{
+.form-group{
+    margin-bottom:3px;
+}
+
+.form-label{
+    display:block;
+    font-size:13px;
+    color:#c7d4e1;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.form-input,
+.form-select{
     width:100%;
-    height:58px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.10);
+    height:57px;
+    border:1px solid rgba(255,255,255,.08);
     outline:none;
-    background:rgba(255,255,255,.96);
-    color:#07131f;
+    border-radius:16px;
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    padding:0 16px;
     font-size:16px;
     font-weight:800;
-    padding:0 15px;
+}
+
+.form-input::placeholder{
+    color:#8293a5;
+}
+
+.form-select option{
+    color:#111;
 }
 
 .full{
     grid-column:1/-1;
 }
 
-/* =========================================================
-   EMPTY
-========================================================= */
+/* ================= SECTOR CHOICES ================= */
 
-.empty{
-    text-align:center;
-    padding:35px 20px;
-    border-radius:22px;
-    background:rgba(255,255,255,.04);
-    border:1px dashed rgba(255,255,255,.12);
+.sector-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
 }
 
-.empty-icon{
-    font-size:45px;
+.sector{
+    position:relative;
+}
+
+.sector input{
+    display:none;
+}
+
+.sector label{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:6px;
+    min-height:92px;
+    padding:12px 8px;
+    text-align:center;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:18px;
+    background:rgba(255,255,255,.045);
+    transition:.2s;
+    font-size:13px;
+    font-weight:800;
+    color:#d8e3ed;
+}
+
+.sector label span{
+    font-size:26px;
+}
+
+.sector input:checked + label{
+    border-color:var(--green);
+    background:rgba(0,230,167,.10);
+    color:var(--green);
+    box-shadow:0 0 0 2px rgba(0,230,167,.06);
+}
+
+/* ================= RESULT ================= */
+
+.result{
+    margin-top:25px;
+}
+
+.result-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
+}
+
+.result-header h3{
+    font-size:20px;
+    font-weight:900;
+}
+
+.result-count{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.recommendation{
+    border:1px solid rgba(0,230,167,.32);
+    border-radius:24px;
+    padding:22px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,230,167,.12),
+            rgba(255,255,255,.045)
+        );
+    box-shadow:0 15px 50px rgba(0,0,0,.18);
+    margin-bottom:15px;
+}
+
+.recommendation-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.best-badge{
+    background:rgba(0,230,167,.14);
+    color:var(--green);
+    border:1px solid rgba(0,230,167,.22);
+    padding:6px 11px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:900;
+}
+
+.bank-name{
+    font-size:25px;
+    font-weight:900;
+}
+
+.rate{
+    font-size:38px;
+    font-weight:900;
+    color:var(--green);
+    line-height:1.2;
+}
+
+.rate small{
+    font-size:13px;
+    color:var(--muted);
+    font-weight:700;
+}
+
+.bank-card{
+    padding:20px;
+    border-radius:22px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.045);
     margin-bottom:12px;
 }
 
-.empty h3{
-    font-size:19px;
-    margin-bottom:6px;
+.bank-card.second{
+    border-color:rgba(255,255,255,.08);
 }
 
-.empty p{
-    color:var(--muted);
-    font-size:13px;
+.bank-card-head{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+}
+
+.bank-card h4{
+    font-size:20px;
+    font-weight:900;
+}
+
+.bank-rate{
+    font-size:25px;
+    color:#fff;
+    font-weight:900;
+}
+
+.bank-info{
+    margin-top:12px;
+    color:#c8d4df;
     line-height:1.9;
+    font-size:13px;
 }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+.bank-info strong{
+    color:#fff;
+}
 
-.footer{
-    text-align:center;
-    margin-top:35px;
-    color:#738698;
+.meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:13px;
+}
+
+.meta{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:6px 9px;
+    border-radius:10px;
+    background:rgba(255,255,255,.06);
+    color:#cbd8e4;
     font-size:11px;
+    font-weight:700;
+}
+
+.meta.valid{
+    color:#72efc5;
+    background:rgba(0,230,167,.08);
+}
+
+.meta.warning{
+    color:#ffd166;
+    background:rgba(255,209,102,.08);
+}
+
+.meta.expired{
+    color:#ff8993;
+    background:rgba(255,93,108,.08);
+}
+
+.special-note{
+    margin-top:14px;
+    padding:15px;
+    border-radius:17px;
+    border:1px solid rgba(255,209,102,.22);
+    background:rgba(255,209,102,.065);
+    color:#ffe5a0;
+    font-size:13px;
     line-height:2;
 }
 
-.footer b{
-    color:#9cb0c0;
+.danger-note{
+    margin-top:14px;
+    padding:15px;
+    border-radius:17px;
+    border:1px solid rgba(255,93,108,.25);
+    background:rgba(255,93,108,.065);
+    color:#ffb0b8;
+    font-size:13px;
+    line-height:2;
 }
 
-/* =========================================================
-   ANIMATIONS
-========================================================= */
+/* ================= INFO ================= */
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(12px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.info-box{
+    margin-top:20px;
+    padding:18px;
+    border-radius:20px;
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.info-box h4{
+    font-size:16px;
+    margin-bottom:7px;
+}
 
-@media(max-width:850px){
+.info-box p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:2;
+}
 
-    .home-grid{
+/* ================= BUTTONS ================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:18px;
+}
+
+.whatsapp-btn{
+    min-height:55px;
+    border:0;
+    border-radius:16px;
+    background:#25D366;
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.back-btn{
+    min-height:55px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:rgba(255,255,255,.06);
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    padding:28px 20px;
+    border-radius:20px;
+    border:1px dashed rgba(255,255,255,.15);
+    text-align:center;
+    color:var(--muted);
+    line-height:2;
+}
+
+.empty strong{
+    display:block;
+    color:#fff;
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    color:#738496;
+    font-size:11px;
+    padding:35px 10px 20px;
+    line-height:2;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+    .home-cards{
         grid-template-columns:1fr;
     }
 
-    .option-grid{
+    .sector-grid{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .hero-section{
-        padding:30px 23px;
-    }
-
-    .wizard,
-    .personal-box{
-        padding:20px;
-    }
-}
-
-@media(max-width:600px){
-
-    .app{
-        width:92%;
-        padding-top:14px;
-    }
-
-    .header{
-        padding:13px;
-        border-radius:19px;
-    }
-
-    .header-title{
-        font-size:16px;
-    }
-
-    .header-logo{
-        width:42px;
-        height:42px;
-    }
-
-    .clock{
-        font-size:10px;
-        padding:7px 9px;
-    }
-
-    .hero-title{
-        font-size:30px;
-    }
-
-    .hero-text{
-        font-size:13px;
-    }
-
-    .service-card{
-        min-height:205px;
-        padding:22px;
-    }
-
-    .section-title{
-        font-size:25px;
-    }
-
-    .section-head{
-        align-items:flex-start;
-    }
-
-    .back-home{
-        font-size:11px;
-        padding:8px 11px;
-    }
-
-    .option-grid{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .option label{
-        min-height:56px;
-        font-size:12px;
-    }
-
-    .bank-card{
-        grid-template-columns:44px 1fr auto;
-        gap:10px;
-        padding:14px;
-    }
-
-    .bank-rank{
-        width:42px;
-        height:42px;
-    }
-
-    .bank-name{
-        font-size:14px;
-    }
-
-    .bank-rate{
-        font-size:18px;
-    }
-
-    .result-top{
-        padding:20px;
-    }
-
-    .result-top-bank{
-        font-size:24px;
-    }
-
-    .result-rate{
-        font-size:37px;
-    }
-
-    .personal-grid{
+    .form-grid{
         grid-template-columns:1fr;
     }
 
     .full{
         grid-column:auto;
     }
+
+    .topbar{
+        align-items:flex-start;
+    }
+
+    .date-box{
+        text-align:right;
+    }
+
+}
+
+@media(max-width:520px){
+
+    #mainPage{
+        padding:12px;
+    }
+
+    .section-box{
+        padding:17px;
+        border-radius:22px;
+    }
+
+    .topbar{
+        padding:13px;
+        border-radius:19px;
+    }
+
+    .brand-name{
+        font-size:17px;
+    }
+
+    .brand-icon{
+        width:43px;
+        height:43px;
+    }
+
+    .date-box{
+        font-size:10px;
+    }
+
+    .date-box strong{
+        font-size:11px;
+    }
+
+    .hero-section{
+        padding-top:15px;
+    }
+
+    .hero-section p{
+        font-size:13px;
+    }
+
+    .home-card{
+        padding:23px;
+    }
+
+    .section-title{
+        font-size:23px;
+    }
+
+    .bank-name{
+        font-size:21px;
+    }
+
+    .rate{
+        font-size:31px;
+    }
+
+    .bank-card-head{
+        align-items:flex-start;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ================= PRINT ================= */
+
+@media print{
+
+    body{
+        background:#fff;
+        color:#111;
+    }
+
+    .background,
+    #loginPage,
+    .topbar,
+    .home-cards,
+    .actions,
+    .footer,
+    .close-btn{
+        display:none !important;
+    }
+
+    #mainPage{
+        display:block !important;
+        padding:0;
+    }
+
+    .section{
+        display:block !important;
+    }
+
+    .section-box,
+    .recommendation,
+    .bank-card{
+        color:#111;
+        background:#fff;
+        border:1px solid #ddd;
+        box-shadow:none;
+    }
+
 }
 
 </style>
@@ -969,43 +890,40 @@ button{
 
 <body>
 
-<div class="grid-bg"></div>
-<div class="bg-orb orb1"></div>
-<div class="bg-orb orb2"></div>
+<!-- ================= BACKGROUND ================= -->
 
-<!-- =======================================================
-     LOGIN
-======================================================= -->
+<div class="background">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
+</div>
 
-<div class="login-page" id="loginPage">
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
 
     <div class="login-card">
 
-        <div class="logo-mark">💎</div>
-
-        <div class="brand">
-            سرعة <span>تملك</span> العقار
+        <div class="login-logo">
+            💎
         </div>
 
-        <div class="login-sub">
-            منصة الترشيح التمويلية الذكية FINO
+        <h1>سرعة تملك العقار</h1>
+
+        <div class="subtitle">
+            منصة الترشيح الذكي للحلول التمويلية
         </div>
 
-        <label class="field-label">
-            الرقم السري
-        </label>
-
-        <div class="input-wrap">
-            <input
-                type="password"
-                id="password"
-                placeholder="أدخل الرقم السري"
-                autocomplete="off"
-            >
-        </div>
+        <input
+            class="input"
+            type="password"
+            id="password"
+            placeholder="أدخل الرقم السري"
+            onkeydown="if(event.key==='Enter') login()"
+        >
 
         <button class="primary-btn" onclick="login()">
-            دخول إلى المنصة
+            دخول المنصة
         </button>
 
         <div class="error" id="error">
@@ -1016,110 +934,102 @@ button{
 
 </div>
 
-
-<!-- =======================================================
-     MAIN APP
-======================================================= -->
+<!-- ================= MAIN ================= -->
 
 <div id="mainPage">
 
-<div class="app">
+<div class="container">
 
-    <!-- HEADER -->
+    <!-- TOPBAR -->
 
-    <header class="header">
+    <div class="topbar">
 
-        <div class="header-brand">
+        <div class="brand">
 
-            <div class="header-logo">
-                F
+            <div class="brand-icon">
+                💎
             </div>
 
-            <div class="header-title">
-                سرعة تملك العقار
-                <small>FINO — Smart Finance Match</small>
+            <div>
+                <div class="brand-name">
+                    سرعة تملك العقار
+                </div>
+
+                <div class="brand-small">
+                    Smart Finance Match
+                </div>
             </div>
 
         </div>
 
-        <div class="clock" id="clock"></div>
+        <div class="date-box" id="dateBox"></div>
 
-    </header>
+    </div>
 
+    <!-- HERO -->
 
-    <!-- ===================================================
-         HOME
-    =================================================== -->
+    <div class="hero-section">
 
-    <div id="homeSection">
+        <div class="hero-badge">
+            ● الترشيح الذكي
+        </div>
 
-        <section class="hero-section">
+        <h2>
+            اكتب راتبك،
+            <span>ونرشح لك الأفضل</span>
+        </h2>
 
-            <div class="hero-content">
+        <p>
+            مقارنة مبدئية لعروض شراء المديونية حسب الراتب
+            ونوع جهة العمل، مع إظهار النسبة وتاريخ العرض
+            وحالة الصلاحية متى كان تاريخ الانتهاء محدداً.
+        </p>
 
-                <div class="hero-kicker">
-                    ⚡ ترشيح فوري
-                </div>
+    </div>
 
-                <h1 class="hero-title">
-                    التمويل المناسب يبدأ من
-                    <span>القرار الصحيح.</span>
-                </h1>
+    <!-- HOME -->
 
-                <p class="hero-text">
-                    أدخل راتب العميل وحدد جهة عمله، وستقوم المنصة
-                    بمقارنة النسب المدخلة وترشيح أفضل بنك مناسب
-                    للفئة والراتب بشكل مباشر.
-                </p>
+    <div class="home-cards" id="homeCards">
 
+        <div class="home-card" onclick="openDebt()">
+
+            <div class="home-card-icon">
+                🏦
             </div>
 
-        </section>
+            <h3>
+                شراء المديونية
+            </h3>
 
+            <p>
+                أدخل الراتب واختر جهة العمل،
+                وسيتم ترتيب أفضل خيارين من البنوك المتاحة.
+            </p>
 
-        <div class="home-grid">
-
-            <div class="service-card" onclick="openDebt()">
-
-                <div class="service-icon">
-                    🏦
-                </div>
-
-                <h2>
-                    شراء المديونية
-                </h2>
-
-                <p>
-                    ترشيح البنك الأقل نسبة حسب الراتب
-                    والقطاع ونوع جهة العمل.
-                </p>
-
-                <div class="service-arrow">
-                    ←
-                </div>
-
+            <div class="arrow">
+                ←
             </div>
 
+        </div>
 
-            <div class="service-card" onclick="openPersonal()">
 
-                <div class="service-icon">
-                    💰
-                </div>
+        <div class="home-card" onclick="openPersonal()">
 
-                <h2>
-                    التمويل الشخصي
-                </h2>
+            <div class="home-card-icon">
+                💰
+            </div>
 
-                <p>
-                    مقارنة النسب الحالية المدخلة
-                    للتمويل الشخصي حسب الفئة.
-                </p>
+            <h3>
+                التمويل الشخصي
+            </h3>
 
-                <div class="service-arrow">
-                    ←
-                </div>
+            <p>
+                ترشيح مبدئي للتمويل الشخصي حسب الراتب
+                والفئة الوظيفية.
+            </p>
 
+            <div class="arrow">
+                ←
             </div>
 
         </div>
@@ -1127,236 +1037,225 @@ button{
     </div>
 
 
-    <!-- ===================================================
-         DEBT
-    =================================================== -->
+    <!-- ================= DEBT SECTION ================= -->
 
     <section class="section" id="debtSection">
 
-        <div class="section-head">
+        <div class="section-box">
 
-            <div>
-                <div class="hero-kicker">
-                    🏦 شراء المديونية
+            <div class="section-head">
+
+                <div>
+                    <div class="section-title">
+                        🏦 شراء المديونية
+                    </div>
+
+                    <div class="section-subtitle">
+                        خطوتان فقط للوصول إلى الترشيح
+                    </div>
                 </div>
 
-                <h2 class="section-title">
-                    رشّح لي <span>أفضل بنك</span>
-                </h2>
+                <button class="close-btn" onclick="goHome()">
+                    الرئيسية
+                </button>
+
             </div>
 
-            <button class="back-home" onclick="goHome()">
-                الرئيسية
-            </button>
 
-        </div>
+            <div class="form-grid">
+
+                <!-- SALARY -->
+
+                <div class="form-group full">
+
+                    <label class="form-label">
+                        الراتب الشهري الصافي
+                    </label>
+
+                    <input
+                        class="form-input"
+                        type="number"
+                        id="salaryDebt"
+                        inputmode="numeric"
+                        placeholder="مثال: 7000"
+                    >
+
+                </div>
 
 
-        <div class="wizard">
+                <!-- SECTOR -->
 
-            <!-- STEP 1 -->
+                <div class="form-group full">
 
-            <div class="step-label">
-                الخطوة 1 من 2
+                    <label class="form-label">
+                        اختر جهة العمل
+                    </label>
+
+                    <div class="sector-grid">
+
+                        <div class="sector">
+
+                            <input
+                                type="radio"
+                                name="sector"
+                                id="military"
+                                value="military"
+                            >
+
+                            <label for="military">
+                                <span>🎖️</span>
+                                عسكري
+                            </label>
+
+                        </div>
+
+
+                        <div class="sector">
+
+                            <input
+                                type="radio"
+                                name="sector"
+                                id="government"
+                                value="government"
+                            >
+
+                            <label for="government">
+                                <span>🏛️</span>
+                                حكومي / شبه حكومي
+                            </label>
+
+                        </div>
+
+
+                        <div class="sector">
+
+                            <input
+                                type="radio"
+                                name="sector"
+                                id="private"
+                                value="private"
+                            >
+
+                            <label for="private">
+                                <span>🏢</span>
+                                قطاع خاص
+                            </label>
+
+                        </div>
+
+
+                        <div class="sector">
+
+                            <input
+                                type="radio"
+                                name="sector"
+                                id="retired"
+                                value="retired"
+                            >
+
+                            <label for="retired">
+                                <span>👤</span>
+                                متقاعد
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="question">
-                كم راتب العميل الصافي؟
-            </div>
 
-            <input
-                class="salary-input"
-                type="number"
-                id="salaryDebt"
-                inputmode="numeric"
-                min="1"
-                placeholder="مثال: 7000"
+            <button
+                class="primary-btn"
+                style="margin-top:18px"
+                onclick="calculateDebt()"
             >
-
-
-            <!-- STEP 2 -->
-
-            <div class="step-label">
-                الخطوة 2
-            </div>
-
-            <div class="question">
-                ما جهة عمل العميل؟
-            </div>
-
-            <div class="option-grid">
-
-                <div class="option">
-                    <input
-                        type="radio"
-                        name="sector"
-                        id="sectorGovernment"
-                        value="حكومي"
-                        onchange="sectorChanged()"
-                    >
-                    <label for="sectorGovernment">
-                        🏛️ حكومي مدني
-                    </label>
-                </div>
-
-                <div class="option">
-                    <input
-                        type="radio"
-                        name="sector"
-                        id="sectorMilitary"
-                        value="عسكري"
-                        onchange="sectorChanged()"
-                    >
-                    <label for="sectorMilitary">
-                        🎖️ عسكري
-                    </label>
-                </div>
-
-                <div class="option">
-                    <input
-                        type="radio"
-                        name="sector"
-                        id="sectorPrivate"
-                        value="خاص"
-                        onchange="sectorChanged()"
-                    >
-                    <label for="sectorPrivate">
-                        🏢 قطاع خاص
-                    </label>
-                </div>
-
-                <div class="option">
-                    <input
-                        type="radio"
-                        name="sector"
-                        id="sectorRetired"
-                        value="متقاعد"
-                        onchange="sectorChanged()"
-                    >
-                    <label for="sectorRetired">
-                        👤 متقاعد
-                    </label>
-                </div>
-
-            </div>
-
-
-            <!-- PRIVATE EXTRA -->
-
-            <div class="private-extra" id="privateExtra">
-
-                <div class="question">
-                    هل الشركة من الشركات الكبرى / Blue-Chip؟
-                </div>
-
-                <div class="option-grid" style="margin-bottom:0;">
-
-                    <div class="option">
-
-                        <input
-                            type="radio"
-                            name="privateClass"
-                            id="privateLarge"
-                            value="كبيرة"
-                        >
-
-                        <label for="privateLarge">
-                            ✅ نعم
-                        </label>
-
-                    </div>
-
-                    <div class="option">
-
-                        <input
-                            type="radio"
-                            name="privateClass"
-                            id="privateNormal"
-                            value="عادية"
-                        >
-
-                        <label for="privateNormal">
-                            لا
-                        </label>
-
-                    </div>
-
-                </div>
-
-                <div class="private-note">
-                    هذا السؤال مهم لأن بعض العروض الموجودة في البيانات
-                    مخصصة للحكومي أو الشركات الكبرى / الفئات المعتمدة.
-                </div>
-
-            </div>
-
-
-            <button class="primary-btn calculate-btn" onclick="calculateDebt()">
-                🔎 رشّح لي أفضل بنك الآن
+                🔎 رشّح لي أفضل بنك
             </button>
 
 
-            <!-- RESULTS -->
+            <div class="result" id="debtResult"></div>
 
-            <div class="result-area" id="debtResult"></div>
+
+            <div class="actions">
+
+                <button
+                    class="whatsapp-btn"
+                    onclick="shareWhats('debtResult')"
+                >
+                    📱 مشاركة النتيجة
+                </button>
+
+                <button
+                    class="back-btn"
+                    onclick="goHome()"
+                >
+                    ← رجوع
+                </button>
+
+            </div>
 
         </div>
 
     </section>
 
 
-    <!-- ===================================================
-         PERSONAL
-    =================================================== -->
+    <!-- ================= PERSONAL SECTION ================= -->
 
     <section class="section" id="personalSection">
 
-        <div class="section-head">
+        <div class="section-box">
 
-            <div>
-                <div class="hero-kicker">
-                    💰 التمويل الشخصي
+            <div class="section-head">
+
+                <div>
+                    <div class="section-title">
+                        💰 التمويل الشخصي
+                    </div>
+
+                    <div class="section-subtitle">
+                        ترشيح مبدئي حسب الراتب والفئة
+                    </div>
                 </div>
 
-                <h2 class="section-title">
-                    أفضل <span>نسبة</span>
-                </h2>
+                <button class="close-btn" onclick="goHome()">
+                    الرئيسية
+                </button>
+
             </div>
 
-            <button class="back-home" onclick="goHome()">
-                الرئيسية
-            </button>
 
-        </div>
+            <div class="form-grid">
 
+                <div class="form-group">
 
-        <div class="personal-box">
-
-            <div class="personal-grid">
-
-                <div class="full">
-
-                    <label class="field-label">
-                        الراتب الصافي
+                    <label class="form-label">
+                        الراتب الشهري الصافي
                     </label>
 
                     <input
+                        class="form-input"
                         type="number"
                         id="salaryPersonal"
-                        placeholder="مثال: 10000"
                         inputmode="numeric"
+                        placeholder="مثال: 10000"
                     >
 
                 </div>
 
 
-                <div>
+                <div class="form-group">
 
-                    <label class="field-label">
+                    <label class="form-label">
                         الفئة الوظيفية
                     </label>
 
-                    <select id="jobType">
+                    <select
+                        class="form-select"
+                        id="jobType"
+                    >
 
                         <option value="مدني">
                             مدني
@@ -1374,42 +1273,50 @@ button{
 
                 </div>
 
-
-                <div>
-
-                    <label class="field-label">
-                        الخدمة
-                    </label>
-
-                    <button
-                        class="primary-btn"
-                        onclick="calculatePersonal()"
-                    >
-                        🔎 ترشيح أفضل بنك
-                    </button>
-
-                </div>
-
             </div>
 
 
-            <div class="result-area" id="personalResult"></div>
+            <button
+                class="primary-btn"
+                style="margin-top:18px"
+                onclick="calculatePersonal()"
+            >
+                🔎 رشّح لي الأفضل
+            </button>
+
+
+            <div class="result" id="personalResult"></div>
+
+
+            <div class="actions">
+
+                <button
+                    class="whatsapp-btn"
+                    onclick="shareWhats('personalResult')"
+                >
+                    📱 مشاركة النتيجة
+                </button>
+
+                <button
+                    class="back-btn"
+                    onclick="goHome()"
+                >
+                    ← رجوع
+                </button>
+
+            </div>
 
         </div>
 
     </section>
 
 
-    <!-- FOOTER -->
-
     <div class="footer">
 
-        <b>سرعة تملك العقار</b> — الحلول التمويلية الذكية
-
+        © سرعة تملك العقار
         <br>
-
-        النسب المعروضة استرشادية حسب البيانات المدخلة
-        ولا تمثل موافقة نهائية من البنك.
+        هذه النتائج ترشيحية ومبنية على البيانات المدخلة والعروض المسجلة في المنصة،
+        ولا تمثل موافقة ائتمانية نهائية من البنك.
 
     </div>
 
@@ -1421,7 +1328,7 @@ button{
 <script>
 
 /* =========================================================
-   LOGIN
+   PASSWORD
 ========================================================= */
 
 function login(){
@@ -1439,44 +1346,59 @@ function login(){
         document.getElementById("error").style.display="block";
 
     }
+
 }
-
-
-/* ENTER LOGIN */
-
-document.getElementById("password").addEventListener("keydown",function(e){
-
-    if(e.key === "Enter"){
-        login();
-    }
-
-});
 
 
 /* =========================================================
-   CLOCK
+   DATE / TIME
 ========================================================= */
 
-function updateClock(){
+function updateDateTime(){
 
     const now = new Date();
 
-    const date =
-        now.toLocaleDateString("ar-SA");
+    const gregorian =
+        new Intl.DateTimeFormat(
+            "ar-SA",
+            {
+                weekday:"long",
+                year:"numeric",
+                month:"long",
+                day:"numeric"
+            }
+        ).format(now);
+
+    const hijri =
+        new Intl.DateTimeFormat(
+            "ar-SA-u-ca-islamic-umalqura",
+            {
+                year:"numeric",
+                month:"long",
+                day:"numeric"
+            }
+        ).format(now);
 
     const time =
-        now.toLocaleTimeString("ar-SA",{
-            hour:"2-digit",
-            minute:"2-digit",
-            second:"2-digit"
-        });
+        new Intl.DateTimeFormat(
+            "ar-SA",
+            {
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit"
+            }
+        ).format(now);
 
-    document.getElementById("clock").innerHTML =
-        date + " | " + time;
+    document.getElementById("dateBox").innerHTML = `
+        <strong>${gregorian}</strong>
+        ${hijri}
+        <br>
+        ${time}
+    `;
 }
 
-setInterval(updateClock,1000);
-updateClock();
+setInterval(updateDateTime,1000);
+updateDateTime();
 
 
 /* =========================================================
@@ -1485,8 +1407,10 @@ updateClock();
 
 function openDebt(){
 
-    document.getElementById("homeSection").style.display="none";
+    document.getElementById("homeCards").style.display="none";
+
     document.getElementById("personalSection").style.display="none";
+
     document.getElementById("debtSection").style.display="block";
 
     window.scrollTo({
@@ -1499,8 +1423,10 @@ function openDebt(){
 
 function openPersonal(){
 
-    document.getElementById("homeSection").style.display="none";
+    document.getElementById("homeCards").style.display="none";
+
     document.getElementById("debtSection").style.display="none";
+
     document.getElementById("personalSection").style.display="block";
 
     window.scrollTo({
@@ -1514,8 +1440,10 @@ function openPersonal(){
 function goHome(){
 
     document.getElementById("debtSection").style.display="none";
+
     document.getElementById("personalSection").style.display="none";
-    document.getElementById("homeSection").style.display="block";
+
+    document.getElementById("homeCards").style.display="grid";
 
     window.scrollTo({
         top:0,
@@ -1526,222 +1454,470 @@ function goHome(){
 
 
 /* =========================================================
-   PRIVATE SECTOR QUESTION
+   DATA
+   BUYOUT / DEBT PURCHASE
 ========================================================= */
 
-function sectorChanged(){
+/*
+    IMPORTANT:
 
-    const privateSelected =
-        document.getElementById("sectorPrivate").checked;
+    rates are based on the rate tables supplied by the user.
 
-    const box =
-        document.getElementById("privateExtra");
+    We do NOT invent an expiry date when it isn't shown.
 
-    if(privateSelected){
+    ANB:
+    expiry = 31/08/2026
 
-        box.classList.add("show");
+    SAB:
+    no explicit expiry shown in supplied image
 
-    }else{
+    SNB:
+    no explicit expiry shown in supplied image
 
-        box.classList.remove("show");
+    ALRAJHI:
+    no explicit expiry shown in supplied image
+*/
+
+
+const debtBanks = [
+
+    /* =====================================================
+       SAB / الأول
+    ===================================================== */
+
+    {
+        id:"sab",
+        name:"البنك الأول SAB",
+        shortName:"SAB",
+        type:"allSaudi",
+
+        sourceDate:"حسب الجدول المرفق",
+        expiry:null,
+
+        rates:[
+            {
+                min:0,
+                max:14999,
+                rate:2.69
+            },
+            {
+                min:15000,
+                max:29999,
+                rate:2.59
+            },
+            {
+                min:30000,
+                max:49999,
+                rate:1.99
+            },
+            {
+                min:50000,
+                max:Infinity,
+                rate:1.79
+            }
+        ],
+
+        /*
+          SAB military special handling:
+          user requested that the displayed rate for military
+          should start from salary > 10,000.
+        */
+
+        eligible:function(salary,sector){
+
+            if(sector === "military"){
+                return salary > 10000;
+            }
+
+            return true;
+        },
+
+        getRate:function(salary){
+
+            const row =
+                this.rates.find(
+                    r =>
+                        salary >= r.min &&
+                        salary <= r.max
+                );
+
+            return row ? row.rate : null;
+        },
+
+        note:function(salary,sector){
+
+            if(sector === "military"){
+
+                return `
+                <div class="special-note">
+
+                    🎖️ <strong>تنبيه خاص للعسكري:</strong><br>
+
+                    هذا العرض يتطلب تعامل خاص مع جهة العمل.
+                    قد يتم استبعاد بعض البدلات عند احتساب الراتب المعتمد،
+                    ويجب التأكد من الراتب والبدلات مع جهة عمل العسكري
+                    قبل اعتماد النسبة النهائية.
+
+                    <br><br>
+
+                    <strong>
+                    النسبة المذكورة لشراء المديونية للعسكري تبدأ
+                    للرواتب فوق 10,000 ريال حسب البيانات المعتمدة
+                    في هذه المنصة.
+                    </strong>
+
+                </div>
+                `;
+
+            }
+
+            return "";
+        }
+    },
+
+
+    /* =====================================================
+       ALRAJHI
+    ===================================================== */
+
+    {
+        id:"rajhi",
+        name:"مصرف الراجحي",
+        shortName:"الراجحي",
+
+        sourceDate:"حسب الجدول المرفق",
+        expiry:null,
+
+        /*
+          The supplied image refers to:
+          government sector + Class A
+        */
+
+        eligible:function(salary,sector){
+
+            return (
+                sector === "military" ||
+                sector === "government"
+            );
+        },
+
+        getRate:function(salary){
+
+            if(salary >= 4000 && salary <= 9999){
+                return 3.69;
+            }
+
+            if(salary >= 10000 && salary <= 14999){
+                return 2.49;
+            }
+
+            if(salary >= 15000 && salary <= 24999){
+                return 1.95;
+            }
+
+            if(salary >= 25000 && salary <= 39999){
+                return 1.59;
+            }
+
+            if(salary >= 40000){
+                return 1.49;
+            }
+
+            return null;
+        },
+
+        note:function(salary,sector){
+
+            return `
+            <div class="special-note">
+
+                🏛️ العرض المرفق مخصص للقطاع الحكومي
+                و<strong>Class A</strong> حسب الجدول المرسل.
+
+                <br>
+
+                الأهلية النهائية تعتمد على جهة العمل
+                وتصنيفها لدى المصرف.
+
+                <br><br>
+
+                ⚠️ <strong>تنبيه:</strong>
+                تاريخ انتهاء العرض غير ظاهر في الجدول المرفق،
+                لذلك لا يتم اعتبار النسبة ضماناً لاستمرار العرض
+                دون تأكيد من المصرف.
+
+            </div>
+            `;
+        }
+    },
+
+
+    /* =====================================================
+       ANB
+    ===================================================== */
+
+    {
+        id:"anb",
+        name:"البنك العربي الوطني ANB",
+        shortName:"ANB",
+
+        sourceDate:"حتى 31/08/2026",
+        expiry:"2026-08-31",
+
+        eligible:function(salary,sector){
+
+            /*
+              Supplied image:
+              government (civil/military)
+              semi-government
+              retirees
+              Blue-Chip
+            */
+
+            return (
+                sector === "military" ||
+                sector === "government" ||
+                sector === "retired"
+            );
+        },
+
+        getRate:function(salary){
+
+            if(salary < 5000){
+                return null;
+            }
+
+            if(salary >= 5000 && salary <= 9999){
+                return 3.49;
+            }
+
+            if(salary >= 10000 && salary <= 14999){
+                return 2.49;
+            }
+
+            if(salary >= 15000 && salary <= 24999){
+                return 2.39;
+            }
+
+            if(salary >= 25000 && salary <= 39999){
+                return 1.99;
+            }
+
+            if(salary >= 40000 && salary <= 69999){
+                return 1.79;
+            }
+
+            if(salary >= 70000){
+                return 1.49;
+            }
+
+            return null;
+        },
+
+        note:function(salary,sector){
+
+            return `
+            <div class="special-note">
+
+                📅 <strong>العرض المرفق مؤرخ حتى 31/08/2026.</strong>
+
+                <br>
+
+                الفئات الظاهرة في العرض:
+                القطاع الحكومي (مدني/عسكري)،
+                شبه الحكومي، المتقاعدون،
+                والشركات الكبرى المصنفة Blue-Chip.
+
+                <br><br>
+
+                النسبة النهائية تخضع للأهلية وجهة العمل
+                وشروط البنك.
+
+            </div>
+            `;
+        }
+    },
+
+
+    /* =====================================================
+       SNB
+    ===================================================== */
+
+    {
+        id:"snb",
+        name:"البنك الأهلي السعودي SNB",
+        shortName:"SNB",
+
+        sourceDate:"حسب الجدول المرفق",
+        expiry:null,
+
+        eligible:function(salary,sector){
+
+            return (
+                sector === "military" ||
+                sector === "government"
+            );
+        },
+
+        getRate:function(salary,sector){
+
+            if(salary >= 4000 && salary <= 6999){
+
+                if(sector === "military"){
+                    return 3.99;
+                }
+
+                return 3.75;
+            }
+
+            if(salary >= 7000 && salary <= 9999){
+
+                if(sector === "military"){
+                    return 3.75;
+                }
+
+                return 3.25;
+            }
+
+            if(salary >= 10000 && salary <= 14999){
+
+                if(sector === "military"){
+                    return 2.99;
+                }
+
+                return 2.75;
+            }
+
+            if(salary >= 15000 && salary <= 24999){
+
+                if(sector === "military"){
+                    return 2.49;
+                }
+
+                return 1.99;
+            }
+
+            if(salary >= 25000 && salary <= 44999){
+
+                if(sector === "military"){
+                    return 1.75;
+                }
+
+                return 1.59;
+            }
+
+            if(salary >= 45000 && salary <= 74999){
+
+                if(sector === "military"){
+                    return 1.75;
+                }
+
+                return 1.49;
+            }
+
+            if(salary >= 75000){
+
+                if(sector === "military"){
+                    return 1.75;
+                }
+
+                return 0.99;
+            }
+
+            return null;
+        },
+
+        note:function(salary,sector){
+
+            return `
+            <div class="special-note">
+
+                📊 تم تطبيق جدول SNB حسب الفرق بين
+                <strong>المدني والعسكري</strong>
+                الظاهر في البيانات المرفقة.
+
+                <br><br>
+
+                النسبة النهائية تعتمد على أهلية العميل
+                وجهة العمل والضوابط الائتمانية.
+
+            </div>
+            `;
+        }
+    }
+
+];
+
+
+/* =========================================================
+   EXPIRY CHECK
+========================================================= */
+
+function getExpiryStatus(expiry){
+
+    if(!expiry){
+
+        return {
+            className:"warning",
+            text:"تاريخ الانتهاء غير محدد"
+        };
 
     }
+
+    const today = new Date();
+    const end = new Date(expiry + "T23:59:59");
+
+    if(today > end){
+
+        return {
+            className:"expired",
+            text:"العرض منتهي"
+        };
+
+    }
+
+    return {
+        className:"valid",
+        text:"العرض ساري حتى " +
+             formatDate(end)
+    };
+
+}
+
+
+function formatDate(date){
+
+    return new Intl.DateTimeFormat(
+        "ar-SA",
+        {
+            year:"numeric",
+            month:"2-digit",
+            day:"2-digit"
+        }
+    ).format(date);
 
 }
 
 
 /* =========================================================
-   HELPERS
+   SECTOR NAME
 ========================================================= */
 
-function getSelectedSector(){
+function sectorName(sector){
 
-    const selected =
-        document.querySelector('input[name="sector"]:checked');
+    const names = {
 
-    return selected ? selected.value : null;
+        military:"عسكري",
 
-}
+        government:"حكومي / شبه حكومي",
 
+        private:"قطاع خاص",
 
-function getPrivateClass(){
+        retired:"متقاعد"
 
-    const selected =
-        document.querySelector('input[name="privateClass"]:checked');
+    };
 
-    return selected ? selected.value : null;
-
-}
-
-
-/* =========================================================
-   DEBT RATE ENGINE
-   البيانات مبنية على الجداول التي أرسلها المستخدم
-========================================================= */
-
-
-/* SAB
-   لا يفرق في الجدول المرسل بين عسكري / مدني / خاص.
-   النسبة حسب الراتب للسعوديين.
-*/
-
-function getSABRate(salary){
-
-    if(salary >= 50000){
-        return 1.79;
-    }
-
-    if(salary >= 30000){
-        return 1.99;
-    }
-
-    if(salary >= 15000){
-        return 2.59;
-    }
-
-    if(salary > 0){
-        return 2.69;
-    }
-
-    return null;
-}
-
-
-/* SNB CIVIL */
-
-function getSNBCivilRate(salary){
-
-    if(salary >= 75000){
-        return 0.99;
-    }
-
-    if(salary >= 45000){
-        return 1.49;
-    }
-
-    if(salary >= 25000){
-        return 1.59;
-    }
-
-    if(salary >= 15000){
-        return 1.99;
-    }
-
-    if(salary >= 10000){
-        return 2.75;
-    }
-
-    if(salary >= 7000){
-        return 3.25;
-    }
-
-    if(salary >= 4000){
-        return 3.75;
-    }
-
-    return null;
-}
-
-
-/* SNB MILITARY */
-
-function getSNBMilitaryRate(salary){
-
-    if(salary >= 75000){
-        return 1.75;
-    }
-
-    if(salary >= 45000){
-        return 1.75;
-    }
-
-    if(salary >= 25000){
-        return 1.75;
-    }
-
-    if(salary >= 15000){
-        return 2.49;
-    }
-
-    if(salary >= 10000){
-        return 2.99;
-    }
-
-    if(salary >= 7000){
-        return 3.75;
-    }
-
-    if(salary >= 4000){
-        return 3.99;
-    }
-
-    return null;
-}
-
-
-/* ANB
-   حسب الجدول المرسل:
-   حكومي / عسكري / متقاعدين / شركات كبرى.
-*/
-
-function getANBRate(salary){
-
-    if(salary >= 70000){
-        return 1.49;
-    }
-
-    if(salary >= 40000){
-        return 1.79;
-    }
-
-    if(salary >= 25000){
-        return 1.59;
-    }
-
-    if(salary >= 15000){
-        return 2.39;
-    }
-
-    if(salary >= 10000){
-        return 2.49;
-    }
-
-    if(salary >= 5000){
-        return 3.49;
-    }
-
-    return null;
-}
-
-
-/* ALRAJHI
-   حسب الصورة المرسلة:
-   القطاع الحكومي وكلاس A.
-*/
-
-function getRajhiRate(salary){
-
-    if(salary >= 40000){
-        return 1.49;
-    }
-
-    if(salary >= 25000){
-        return 1.59;
-    }
-
-    if(salary >= 15000){
-        return 1.95;
-    }
-
-    if(salary >= 10000){
-        return 2.49;
-    }
-
-    if(salary >= 4000){
-        return 3.69;
-    }
-
-    return null;
+    return names[sector] || "";
 }
 
 
@@ -1752,26 +1928,31 @@ function getRajhiRate(salary){
 function calculateDebt(){
 
     const salary =
-        Number(document.getElementById("salaryDebt").value);
+        Number(
+            document.getElementById("salaryDebt").value
+        );
 
-    const sector =
-        getSelectedSector();
+    const selected =
+        document.querySelector(
+            'input[name="sector"]:checked'
+        );
 
     const result =
         document.getElementById("debtResult");
 
+
+    /* ================= VALIDATION ================= */
+
     if(!salary || salary <= 0){
 
-        result.style.display="block";
-
         result.innerHTML = `
             <div class="empty">
-                <div class="empty-icon">💰</div>
-                <h3>أدخل الراتب أولاً</h3>
-                <p>
-                    اكتب الراتب الصافي للعميل حتى نتمكن من
-                    مطابقة شرائح النسب بشكل صحيح.
-                </p>
+
+                <strong>أدخل الراتب أولاً</strong>
+
+                مثال:
+                7000 ريال
+
             </div>
         `;
 
@@ -1779,18 +1960,16 @@ function calculateDebt(){
     }
 
 
-    if(!sector){
-
-        result.style.display="block";
+    if(!selected){
 
         result.innerHTML = `
             <div class="empty">
-                <div class="empty-icon">👤</div>
-                <h3>حدد جهة العمل</h3>
-                <p>
-                    اختر عسكري أو حكومي مدني أو قطاع خاص أو متقاعد
-                    حتى يكون الترشيح أدق.
-                </p>
+
+                <strong>اختر جهة العمل</strong>
+
+                اختر عسكري أو حكومي/شبه حكومي
+                أو قطاع خاص أو متقاعد.
+
             </div>
         `;
 
@@ -1798,489 +1977,339 @@ function calculateDebt(){
     }
 
 
-    /* -----------------------------------------------------
-       PRIVATE CLASS
-    ----------------------------------------------------- */
-
-    let privateClass = null;
-
-    if(sector === "خاص"){
-
-        privateClass = getPrivateClass();
-
-        if(!privateClass){
-
-            result.style.display="block";
-
-            result.innerHTML = `
-                <div class="empty">
-                    <div class="empty-icon">🏢</div>
-                    <h3>حدد نوع الشركة</h3>
-                    <p>
-                        اختر هل الشركة من الشركات الكبرى / Blue-Chip
-                        أو شركة عادية.
-                    </p>
-                </div>
-            `;
-
-            return;
-        }
-
-    }
+    const sector = selected.value;
 
 
-    let banks = [];
+    /* ================= FIND BANKS ================= */
+
+    let available = [];
 
 
-    /* -----------------------------------------------------
-       SAB
-       متاح في محرك النسب لجميع القطاعات لأن الجدول
-       المرسل لا يفرق بين القطاع.
-    ----------------------------------------------------- */
+    debtBanks.forEach(bank => {
 
-    const sabRate = getSABRate(salary);
+        if(
+            bank.eligible(salary,sector)
+        ){
 
-    if(sabRate !== null){
+            const rate =
+                bank.getRate(salary,sector);
 
-        banks.push({
+            if(rate !== null){
 
-            name:"الأول SAB",
+                const expiryStatus =
+                    getExpiryStatus(bank.expiry);
 
-            rate:sabRate,
+                available.push({
 
-            condition:"النسبة حسب الراتب ولا يفرق الجدول بين القطاعات",
+                    ...bank,
 
-            priority:1
+                    rate:rate,
 
-        });
+                    expiryStatus:expiryStatus
 
-    }
+                });
 
-
-    /* -----------------------------------------------------
-       SNB
-    ----------------------------------------------------- */
-
-    if(sector === "عسكري"){
-
-        const rate =
-            getSNBMilitaryRate(salary);
-
-        if(rate !== null){
-
-            banks.push({
-
-                name:"البنك الأهلي السعودي SNB",
-
-                rate:rate,
-
-                condition:"حسب شريحة العسكري",
-
-                priority:2
-
-            });
+            }
 
         }
-
-    }else if(
-        sector === "حكومي" ||
-        sector === "خاص"
-    ){
-
-        const rate =
-            getSNBCivilRate(salary);
-
-        if(rate !== null){
-
-            banks.push({
-
-                name:"البنك الأهلي السعودي SNB",
-
-                rate:rate,
-
-                condition:
-                    sector === "خاص"
-                    ? "حسب شريحة المدني والقطاع المعتمد"
-                    : "حسب شريحة المدني",
-
-                priority:2
-
-            });
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       ANB
-    ----------------------------------------------------- */
-
-    let anbAllowed = false;
-
-    if(
-        sector === "حكومي" ||
-        sector === "عسكري" ||
-        sector === "متقاعد"
-    ){
-
-        anbAllowed = true;
-
-    }
-
-    if(
-        sector === "خاص" &&
-        privateClass === "كبيرة"
-    ){
-
-        anbAllowed = true;
-
-    }
-
-
-    if(anbAllowed){
-
-        const rate =
-            getANBRate(salary);
-
-        if(rate !== null){
-
-            banks.push({
-
-                name:"البنك العربي الوطني ANB",
-
-                rate:rate,
-
-                condition:
-                    sector === "خاص"
-                    ? "للشركات الكبرى / Blue-Chip"
-                    : "حسب الفئة والجهة المعتمدة",
-
-                priority:3
-
-            });
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       ALRAJHI
-       حسب الجدول المرسل: حكومي وكلاس A
-    ----------------------------------------------------- */
-
-    let rajhiAllowed = false;
-
-    if(sector === "حكومي"){
-        rajhiAllowed = true;
-    }
-
-    if(
-        sector === "خاص" &&
-        privateClass === "كبيرة"
-    ){
-        rajhiAllowed = true;
-    }
-
-
-    if(rajhiAllowed){
-
-        const rate =
-            getRajhiRate(salary);
-
-        if(rate !== null){
-
-            banks.push({
-
-                name:"مصرف الراجحي",
-
-                rate:rate,
-
-                condition:
-                    sector === "خاص"
-                    ? "حسب الجدول: كلاس A"
-                    : "حسب الجدول: القطاع الحكومي",
-
-                priority:4
-
-            });
-
-        }
-
-    }
-
-
-    /* -----------------------------------------------------
-       SORT
-       الأقل نسبة أولاً.
-       إذا تساوت النسبة، نفضل البنك ذو الأولوية الأعلى
-       والأوسع في البيانات المدخلة.
-    ----------------------------------------------------- */
-
-    banks.sort(function(a,b){
-
-        if(a.rate !== b.rate){
-            return a.rate - b.rate;
-        }
-
-        return a.priority - b.priority;
 
     });
 
 
-    /* -----------------------------------------------------
-       NO RESULTS
-    ----------------------------------------------------- */
+    /* ================= REMOVE EXPIRED ================= */
 
-    if(banks.length === 0){
+    available =
+        available.filter(
+            bank =>
+                bank.expiryStatus.className !== "expired"
+        );
 
-        result.style.display="block";
+
+    /* ================= SORT ================= */
+
+    available.sort(
+        (a,b)=>{
+
+            if(a.rate !== b.rate){
+                return a.rate - b.rate;
+            }
+
+            return a.name.localeCompare(
+                b.name,
+                "ar"
+            );
+
+        }
+    );
+
+
+    /* ================= NO RESULT ================= */
+
+    if(available.length === 0){
+
+        let message = "";
+
+        if(sector === "private"){
+
+            message = `
+                البيانات الحالية لا تحتوي
+                على عرض مؤكد مناسب للقطاع الخاص
+                إلا إذا كان البنك يقدم العرض لهذه الفئة.
+                لذلك لا سنخترع نسبة غير موجودة.
+            `;
+
+        }else{
+
+            message = `
+                لا توجد نسبة مطابقة للراتب
+                والفئة المحددة في البيانات الحالية.
+            `;
+
+        }
 
         result.innerHTML = `
             <div class="empty">
-                <div class="empty-icon">🔍</div>
-                <h3>لا توجد نسبة مطابقة في البيانات الحالية</h3>
-                <p>
-                    لم نجد عرضًا مدخلًا ينطبق على هذه الفئة والراتب.
-                    راجع بيانات العروض أو شروط الأهلية البنكية.
-                </p>
+
+                <strong>لا يوجد ترشيح مؤكد</strong>
+
+                ${message}
+
+                <br>
+
+                جرّب مراجعة الراتب أو الفئة الوظيفية.
+
             </div>
         `;
 
         return;
-
     }
 
 
-    const best = banks[0];
+    /* ================= TOP TWO ================= */
 
+    const topTwo =
+        available.slice(0,2);
 
-    /* -----------------------------------------------------
-       TIE
-    ----------------------------------------------------- */
-
-    const sameRateBanks =
-        banks.filter(bank => bank.rate === best.rate);
-
-
-    let tieText = "";
-
-    if(sameRateBanks.length > 1){
-
-        tieText = `
-            <div class="equal-note">
-                ⚖️ يوجد تعادل في أقل نسبة بين:
-                <b>
-                    ${sameRateBanks.map(b => b.name).join(" — ")}
-                </b>
-                <br>
-                تم تقديم الخيار ذي الأولوية الأعلى في البيانات أولاً.
-            </div>
-        `;
-
-    }
-
-
-    /* -----------------------------------------------------
-       PROFILE LABEL
-    ----------------------------------------------------- */
-
-    let profileText = "";
-
-    if(sector === "حكومي"){
-        profileText = "حكومي مدني";
-    }
-
-    if(sector === "عسكري"){
-        profileText = "عسكري";
-    }
-
-    if(sector === "متقاعد"){
-        profileText = "متقاعد";
-    }
-
-    if(sector === "خاص"){
-        profileText =
-            privateClass === "كبيرة"
-            ? "قطاع خاص — شركة كبرى / Blue-Chip"
-            : "قطاع خاص — شركة عادية";
-    }
-
-
-    /* -----------------------------------------------------
-       RESULT HTML
-    ----------------------------------------------------- */
 
     let html = `
 
-        <div class="result-top">
-
-            <div class="result-top-label">
-                🏆 أفضل ترشيح حالي
-            </div>
-
-            <div class="result-top-bank">
-                ${best.name}
-            </div>
-
-            <div class="result-rate">
-                ${best.rate.toFixed(2)}%
-            </div>
-
-            <div class="result-reason">
-                أقل نسبة مطابقة من العروض المدخلة
-                للراتب والقطاع المحددين.
-            </div>
-
-            <div class="result-meta">
-
-                <div class="badge green">
-                    الراتب: ${salary.toLocaleString("ar-SA")} ريال
-                </div>
-
-                <div class="badge">
-                    ${profileText}
-                </div>
-
-                <div class="badge">
-                    ${best.condition}
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="results-title">
+        <div class="result-header">
 
             <h3>
-                مقارنة العروض
+                أفضل الخيارات
             </h3>
 
-            <span>
-                ${banks.length} عروض مطابقة
-            </span>
+            <div class="result-count">
+                راتب ${formatMoney(salary)}
+                · ${sectorName(sector)}
+            </div>
 
         </div>
 
-        <div class="bank-list">
     `;
 
 
-    banks.forEach(function(bank,index){
+    /* ================= FIRST ================= */
+
+    const best =
+        topTwo[0];
+
+
+    html += `
+
+        <div class="recommendation">
+
+            <div class="recommendation-top">
+
+                <div>
+                    <div class="best-badge">
+                        🏆 الأفضل مبدئياً
+                    </div>
+
+                    <div class="bank-name" style="margin-top:9px">
+                        ${best.name}
+                    </div>
+                </div>
+
+                <div style="text-align:left">
+
+                    <div class="rate">
+                        ${best.rate}%
+                    </div>
+
+                    <div style="
+                        color:#9fb0c1;
+                        font-size:11px;
+                    ">
+                        هامش الربح حسب البيانات
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="meta-row">
+
+                <div class="meta">
+                    👤 ${sectorName(sector)}
+                </div>
+
+                <div class="meta">
+                    💵 راتب ${formatMoney(salary)}
+                </div>
+
+                <div class="meta ${best.expiryStatus.className}">
+                    📅 ${best.expiryStatus.text}
+                </div>
+
+            </div>
+
+            ${best.note(salary,sector)}
+
+        </div>
+
+    `;
+
+
+    /* ================= SECOND ================= */
+
+    if(topTwo.length > 1){
+
+        const second =
+            topTwo[1];
 
         html += `
 
-            <div class="bank-card">
+            <div class="bank-card second">
 
-                <div class="bank-rank">
-                    ${index === 0 ? "🏆" : "#" + (index + 1)}
-                </div>
+                <div class="bank-card-head">
 
-                <div>
+                    <div>
 
-                    <div class="bank-name">
-                        ${bank.name}
+                        <div style="
+                            color:#8fa1b3;
+                            font-size:11px;
+                            margin-bottom:4px;
+                        ">
+                            البديل الثاني
+                        </div>
+
+                        <h4>
+                            ${second.name}
+                        </h4>
+
                     </div>
 
-                    <div class="bank-condition">
-                        ${bank.condition}
+                    <div class="bank-rate">
+                        ${second.rate}%
                     </div>
 
                 </div>
 
-                <div class="bank-rate">
-                    ${bank.rate.toFixed(2)}%
+
+                <div class="meta-row">
+
+                    <div class="meta">
+                        👤 ${sectorName(sector)}
+                    </div>
+
+                    <div class="meta">
+                        💵 راتب ${formatMoney(salary)}
+                    </div>
+
+                    <div class="meta ${second.expiryStatus.className}">
+                        📅 ${second.expiryStatus.text}
+                    </div>
+
+                </div>
+
+
+                <div class="bank-info">
+
+                    ${second.note(salary,sector)}
+
                 </div>
 
             </div>
 
         `;
 
-    });
+    }
 
+
+    /* ================= OTHER ELIGIBLE ================= */
+
+    if(available.length > 2){
+
+        html += `
+
+            <div class="info-box">
+
+                <h4>
+                    لماذا ظهر خياران فقط؟
+                </h4>
+
+                <p>
+                    تم عرض أفضل خيارين فقط حتى تكون النتيجة
+                    سريعة وواضحة. تم ترتيب البنوك المؤهلة
+                    حسب أقل نسبة مسجلة أولاً.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ================= DISCLAIMER ================= */
 
     html += `
-        </div>
 
-        ${tieText}
+        <div class="danger-note">
 
-        <div class="notice">
+            ⚠️ <strong>تنبيه مهم:</strong>
 
-            <strong>⚠️ تنبيه مهم</strong><br>
-
-            هذه النسب هي النسب المدخلة في منصة سرعة تملك العقار
-            بناءً على الجداول والعروض المرسلة، وليست وعدًا بالموافقة
-            أو سعرًا نهائيًا ملزمًا من البنك.
-            قد تختلف النسبة الفعلية حسب الجدارة الائتمانية،
-            الالتزامات، مدة التمويل، جهة العمل، مبلغ التمويل
-            وشروط البنك وقت التقديم.
+            هذه مقارنة ترشيحية وليست موافقة ائتمانية.
+            النسبة النهائية قد تختلف بعد التحقق من
+            جهة العمل، الراتب المعتمد، الالتزامات،
+            السجل الائتماني، مدة التمويل وشروط البنك.
 
         </div>
 
-        <button
-            class="share-btn"
-            onclick="shareDebtResult()"
-        >
-            📲 مشاركة الترشيح عبر واتساب
-        </button>
     `;
 
 
     result.innerHTML = html;
-    result.style.display="block";
-
-    result.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
 
 }
 
 
 /* =========================================================
-   WHATSAPP DEBT
+   MONEY
 ========================================================= */
 
-function shareDebtResult(){
+function formatMoney(number){
 
-    const salary =
-        document.getElementById("salaryDebt").value;
-
-    const sector =
-        getSelectedSector();
-
-    const result =
-        document.getElementById("debtResult");
-
-    if(!result.innerText){
-        return;
-    }
-
-    const text =
-        "ترشيح سرعة تملك العقار\n\n" +
-        "الراتب: " + salary + " ريال\n" +
-        "جهة العمل: " + sector + "\n\n" +
-        result.innerText;
-
-    window.open(
-        "https://wa.me/?text=" +
-        encodeURIComponent(text),
-        "_blank"
-    );
+    return new Intl.NumberFormat(
+        "ar-SA"
+    ).format(number) + " ريال";
 
 }
 
 
 /* =========================================================
    PERSONAL FINANCE
-   تم الإبقاء على منطق النسب الموجود في الموقع السابق
+   EXISTING PERSONAL RATES
 ========================================================= */
 
 function calculatePersonal(){
 
     const salary =
-        Number(document.getElementById("salaryPersonal").value);
+        Number(
+            document.getElementById("salaryPersonal").value
+        );
 
     const job =
         document.getElementById("jobType").value;
@@ -2288,17 +2317,13 @@ function calculatePersonal(){
     const result =
         document.getElementById("personalResult");
 
-    if(!salary || salary <= 0){
 
-        result.style.display="block";
+    if(!salary || salary <= 0){
 
         result.innerHTML = `
             <div class="empty">
-                <div class="empty-icon">💰</div>
-                <h3>أدخل الراتب</h3>
-                <p>
-                    أدخل الراتب الصافي أولاً.
-                </p>
+                <strong>أدخل الراتب أولاً</strong>
+                مثال: 10000 ريال
             </div>
         `;
 
@@ -2306,36 +2331,36 @@ function calculatePersonal(){
     }
 
 
-    let rajhi = 0;
+    let rajhi = null;
 
 
     if(job === "مدني"){
 
-        if(salary >= 2000 && salary <= 4999){
+        if(salary < 5000){
             rajhi = 3.92;
         }
-        else if(salary >= 5000 && salary <= 5999){
+        else if(salary < 6000){
             rajhi = 2.95;
         }
-        else if(salary >= 6000 && salary <= 6999){
+        else if(salary < 7000){
             rajhi = 2.94;
         }
-        else if(salary >= 7000 && salary <= 7999){
+        else if(salary < 8000){
             rajhi = 2.85;
         }
-        else if(salary >= 8000 && salary <= 8999){
+        else if(salary < 9000){
             rajhi = 2.78;
         }
-        else if(salary >= 9000 && salary <= 9999){
+        else if(salary < 10000){
             rajhi = 2.51;
         }
-        else if(salary >= 10000 && salary <= 19999){
+        else if(salary < 20000){
             rajhi = 2.47;
         }
-        else if(salary >= 20000 && salary <= 24999){
+        else if(salary < 25000){
             rajhi = 2.42;
         }
-        else if(salary >= 25000){
+        else{
             rajhi = 2.41;
         }
 
@@ -2344,40 +2369,37 @@ function calculatePersonal(){
 
     else if(job === "عسكري"){
 
-        if(salary >= 2000 && salary <= 2999){
+        if(salary < 5000){
             rajhi = 3.99;
         }
-        else if(salary >= 3000 && salary <= 4999){
-            rajhi = 3.98;
-        }
-        else if(salary >= 5000 && salary <= 5999){
+        else if(salary < 6000){
             rajhi = 3.10;
         }
-        else if(salary >= 6000 && salary <= 6999){
+        else if(salary < 7000){
             rajhi = 3.09;
         }
-        else if(salary >= 7000 && salary <= 7999){
+        else if(salary < 8000){
             rajhi = 2.96;
         }
-        else if(salary >= 8000 && salary <= 8999){
+        else if(salary < 9000){
             rajhi = 2.94;
         }
-        else if(salary >= 9000 && salary <= 9999){
+        else if(salary < 10000){
             rajhi = 2.88;
         }
-        else if(salary >= 10000 && salary <= 11999){
+        else if(salary < 12000){
             rajhi = 2.81;
         }
-        else if(salary >= 12000 && salary <= 14999){
+        else if(salary < 15000){
             rajhi = 2.80;
         }
-        else if(salary >= 15000 && salary <= 19999){
+        else if(salary < 20000){
             rajhi = 2.73;
         }
-        else if(salary >= 20000 && salary <= 24999){
+        else if(salary < 25000){
             rajhi = 2.71;
         }
-        else if(salary >= 25000){
+        else{
             rajhi = 2.69;
         }
 
@@ -2386,34 +2408,34 @@ function calculatePersonal(){
 
     else{
 
-        if(salary >= 2000 && salary <= 4999){
+        if(salary < 5000){
             rajhi = 3.92;
         }
-        else if(salary >= 5000 && salary <= 5999){
+        else if(salary < 6000){
             rajhi = 2.95;
         }
-        else if(salary >= 6000 && salary <= 6999){
+        else if(salary < 7000){
             rajhi = 2.94;
         }
-        else if(salary >= 7000 && salary <= 7999){
+        else if(salary < 8000){
             rajhi = 2.85;
         }
-        else if(salary >= 8000 && salary <= 8999){
+        else if(salary < 9000){
             rajhi = 2.78;
         }
-        else if(salary >= 9000 && salary <= 9999){
+        else if(salary < 10000){
             rajhi = 2.66;
         }
-        else if(salary >= 10000 && salary <= 14999){
+        else if(salary < 15000){
             rajhi = 2.62;
         }
-        else if(salary >= 15000 && salary <= 19999){
+        else if(salary < 20000){
             rajhi = 2.52;
         }
-        else if(salary >= 20000 && salary <= 24999){
+        else if(salary < 25000){
             rajhi = 2.42;
         }
-        else if(salary >= 25000){
+        else{
             rajhi = 2.41;
         }
 
@@ -2422,94 +2444,85 @@ function calculatePersonal(){
 
     const stcTransfer = 1.89;
 
+    let best;
 
-    let bestBank = "";
 
+    if(
+        rajhi !== null &&
+        rajhi < stcTransfer
+    ){
 
-    if(rajhi > 0 && rajhi < stcTransfer){
+        best = {
 
-        bestBank = `
+            name:"مصرف الراجحي - وطني 1",
 
-            <div class="result-top">
+            rate:rajhi,
 
-                <div class="result-top-label">
-                    🏆 أفضل ترشيح
-                </div>
+            note:`
+                الفئة: ${job}
+                <br>
+                النسبة حسب الراتب: ${rajhi}%
+            `
 
-                <div class="result-top-bank">
-                    مصرف الراجحي — وطني 1
-                </div>
-
-                <div class="result-rate">
-                    ${rajhi.toFixed(2)}%
-                </div>
-
-                <div class="result-reason">
-                    النسبة الحالية المدخلة لفئة
-                    ${job}
-                    أقل من النسبة المدخلة لـ STC BANK.
-                </div>
-
-            </div>
-
-        `;
+        };
 
     }else{
 
-        bestBank = `
+        best = {
 
-            <div class="result-top">
+            name:"STC BANK",
 
-                <div class="result-top-label">
-                    🏆 أفضل ترشيح
-                </div>
+            rate:stcTransfer,
 
-                <div class="result-top-bank">
-                    STC BANK
-                </div>
+            note:`
+                بتحويل راتب: 1.89%
+                <br>
+                بدون تحويل راتب: 2.99%
+            `
 
-                <div class="result-rate">
-                    1.89%
-                </div>
-
-                <div class="result-reason">
-                    بتحويل راتب حسب البيانات المدخلة.
-                </div>
-
-            </div>
-
-        `;
+        };
 
     }
 
 
     result.innerHTML = `
 
-        ${bestBank}
+        <div class="recommendation">
 
-        <div class="results-title">
-            <h3>تفاصيل الترشيح</h3>
-        </div>
-
-        <div class="bank-list">
-
-            <div class="bank-card">
-
-                <div class="bank-rank">
-                    🏆
-                </div>
+            <div class="recommendation-top">
 
                 <div>
 
-                    <div class="bank-name">
-                        STC BANK
+                    <div class="best-badge">
+                        🏆 الأفضل مبدئياً
                     </div>
 
-                    <div class="bank-condition">
-                        بتحويل راتب / بدون تحويل راتب
+                    <div class="bank-name" style="margin-top:9px">
+                        ${best.name}
                     </div>
 
                 </div>
+
+                <div class="rate">
+                    ${best.rate}%
+                </div>
+
+            </div>
+
+            <div class="bank-info">
+                ${best.note}
+            </div>
+
+        </div>
+
+
+        <div class="bank-card">
+
+            <div class="bank-card-head">
+
+                <h4>
+                    STC BANK
+                </h4>
 
                 <div class="bank-rate">
                     1.89%
@@ -2517,54 +2530,131 @@ function calculatePersonal(){
 
             </div>
 
+            <div class="bank-info">
 
-            <div class="bank-card">
+                بتحويل راتب:
+                <strong>1.89%</strong>
 
-                <div class="bank-rank">
-                    2
-                </div>
+                <br>
 
-                <div>
-
-                    <div class="bank-name">
-                        مصرف الراجحي — وطني 1
-                    </div>
-
-                    <div class="bank-condition">
-                        الفئة: ${job}
-                    </div>
-
-                </div>
-
-                <div class="bank-rate">
-                    ${rajhi > 0 ? rajhi.toFixed(2) : "—"}%
-                </div>
+                بدون تحويل راتب:
+                <strong>2.99%</strong>
 
             </div>
 
         </div>
 
 
-        <div class="notice">
+        <div class="bank-card">
 
-            <strong>ملاحظة</strong><br>
+            <div class="bank-card-head">
 
-            في حال وجود تمويل حالي لدى الراجحي،
-            قد تنطبق منتجات أو مسارات أخرى حسب سياسة البنك
-            وأهلية العميل.
+                <h4>
+                    مصرف الراجحي - وطني 1
+                </h4>
+
+                <div class="bank-rate">
+                    ${rajhi}%
+                </div>
+
+            </div>
+
+            <div class="bank-info">
+
+                الفئة:
+                <strong>${job}</strong>
+
+                <br>
+
+                النسبة حسب الراتب:
+                <strong>${rajhi}%</strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="special-note">
+
+            ⚠️ إذا كان لدى العميل تمويل قائم في الراجحي،
+            فقد يتم التعامل معه وفق برنامج/فئة مختلفة،
+            لذلك يجب التأكد من العرض الفعلي قبل التنفيذ.
+
+        </div>
+
+        <div class="danger-note">
+
+            ⚠️ النسبة الظاهرة ترشيحية وليست موافقة نهائية.
+            تعتمد الموافقة الفعلية على شروط البنك والعميل.
 
         </div>
 
     `;
 
-    result.style.display="block";
+}
 
-    result.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
+
+/* =========================================================
+   WHATSAPP SHARE
+========================================================= */
+
+function shareWhats(id){
+
+    const element =
+        document.getElementById(id);
+
+    if(!element){
+        return;
+    }
+
+    const text =
+        element.innerText.trim();
+
+    const url =
+        "https://wa.me/?text=" +
+        encodeURIComponent(
+            "نتيجة الترشيح من سرعة تملك العقار\n\n" +
+            text
+        );
+
+    window.open(
+        url,
+        "_blank"
+    );
 
 }
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+document
+    .getElementById("salaryDebt")
+    .addEventListener(
+        "keydown",
+        function(e){
+
+            if(e.key === "Enter"){
+                calculateDebt();
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("salaryPersonal")
+    .addEventListener(
+        "keydown",
+        function(e){
+
+            if(e.key === "Enter"){
+                calculatePersonal();
+            }
+
+        }
+    );
 
 </script>
 
