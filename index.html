@@ -6,10 +6,13 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+content="width=device-width,initial-scale=1.0">
+
+<meta name="theme-color"
+content="#071410">
 
 <title>
-سرعةالحلول التمويلية |   منصة التمويل والترشيح
+FINO | الترشيح الذكي الفوري
 </title>
 
 <link rel="preconnect"
@@ -26,33 +29,38 @@ rel="stylesheet">
 <style>
 
 /* =========================================================
-   ROOT
+   FINO
+   SMART FINANCE RECOMMENDATION PLATFORM
 ========================================================= */
 
 :root{
 
---bg:#04101b;
---bg2:#071a29;
+--bg:#05100d;
 
---card:rgba(255,255,255,.065);
---card2:rgba(255,255,255,.095);
+--bg2:#081813;
 
---line:rgba(255,255,255,.09);
+--panel:rgba(13,31,25,.80);
 
---text:#f7fbff;
---muted:#9db1c1;
+--panel-light:rgba(255,255,255,.055);
 
---green:#18e3b0;
---green2:#67f4d5;
+--border:rgba(255,255,255,.09);
 
---blue:#269dff;
+--border-green:rgba(89,239,184,.24);
 
---gold:#ffd166;
+--green:#55efb7;
 
---red:#ff6b6b;
+--green-soft:#b8ffe4;
+
+--white:#f8fffc;
+
+--muted:#91a99f;
+
+--warning:#f2cc72;
+
+--danger:#ff8585;
 
 --shadow:
-0 25px 80px rgba(0,0,0,.35);
+0 30px 90px rgba(0,0,0,.32);
 
 }
 
@@ -62,42 +70,45 @@ rel="stylesheet">
 ========================================================= */
 
 *{
+
 margin:0;
+
 padding:0;
+
 box-sizing:border-box;
+
 font-family:'Cairo',sans-serif;
+
 }
 
+
 html{
+
 scroll-behavior:smooth;
+
 }
+
 
 body{
 
 min-height:100vh;
 
-color:var(--text);
-
 background:
 
 radial-gradient(
-circle at 85% 5%,
-rgba(24,227,176,.15),
-transparent 28%
-),
-
-radial-gradient(
-circle at 10% 85%,
-rgba(38,157,255,.13),
-transparent 30%
+circle at 50% -10%,
+rgba(85,239,183,.13),
+transparent 34%
 ),
 
 linear-gradient(
 180deg,
-var(--bg),
-var(--bg2),
-var(--bg)
+#06110e 0%,
+#071713 55%,
+#05100d 100%
 );
+
+color:var(--white);
 
 overflow-x:hidden;
 
@@ -105,75 +116,241 @@ overflow-x:hidden;
 
 
 /* =========================================================
-   BACKGROUND
+   BACKGROUND GRID
 ========================================================= */
 
-.background{
+.ambient{
+
 position:fixed;
+
 inset:0;
-z-index:-1;
-overflow:hidden;
+
+z-index:-10;
+
 pointer-events:none;
+
+overflow:hidden;
+
 }
 
-.glow{
+
+.ambient::before{
+
+content:"";
+
 position:absolute;
-border-radius:50%;
-filter:blur(5px);
-animation:float 12s ease-in-out infinite;
+
+inset:0;
+
+background-image:
+
+linear-gradient(
+rgba(255,255,255,.018) 1px,
+transparent 1px
+),
+
+linear-gradient(
+90deg,
+rgba(255,255,255,.018) 1px,
+transparent 1px
+);
+
+background-size:
+50px 50px;
+
+mask-image:
+linear-gradient(
+to bottom,
+rgba(0,0,0,.7),
+transparent 95%
+);
+
 }
+
+
+.glow{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(25px);
+
+opacity:.28;
+
+animation:
+glowMove 12s ease-in-out infinite alternate;
+
+}
+
 
 .glow.one{
 
-width:420px;
-height:420px;
+width:440px;
 
-right:-200px;
-top:-210px;
+height:440px;
 
-background:
-rgba(24,227,176,.15);
+background:#22a978;
+
+top:-250px;
+
+right:-130px;
 
 }
+
 
 .glow.two{
 
-width:350px;
-height:350px;
+width:420px;
 
-left:-180px;
-bottom:-180px;
+height:420px;
 
-background:
-rgba(38,157,255,.14);
+background:#0f6c50;
 
-animation-delay:-4s;
+bottom:-260px;
+
+left:-160px;
+
+animation-delay:-6s;
 
 }
 
-.glow.three{
 
-width:180px;
-height:180px;
+@keyframes glowMove{
 
-left:45%;
-top:35%;
+from{
 
-background:
-rgba(255,209,102,.045);
+transform:
+translate3d(0,0,0)
+scale(1);
+
+}
+
+to{
+
+transform:
+translate3d(-30px,35px,0)
+scale(1.12);
+
+}
+
+}
+
+
+/* =========================================================
+   FLOATING NUMBERS
+========================================================= */
+
+.money-particle{
+
+position:fixed;
+
+z-index:-5;
+
+font-weight:900;
+
+color:rgba(132,255,207,.07);
+
+animation:
+moneyFloat linear infinite;
+
+pointer-events:none;
+
+user-select:none;
+
+}
+
+
+.money-particle:nth-child(1){
+
+font-size:42px;
+
+left:7%;
+
+top:86%;
+
+animation-duration:19s;
+
+}
+
+
+.money-particle:nth-child(2){
+
+font-size:29px;
+
+left:28%;
+
+top:102%;
+
+animation-duration:23s;
 
 animation-delay:-7s;
 
 }
 
-@keyframes float{
 
-0%,100%{
-transform:translateY(0);
+.money-particle:nth-child(3){
+
+font-size:38px;
+
+left:78%;
+
+top:95%;
+
+animation-duration:21s;
+
+animation-delay:-11s;
+
 }
 
-50%{
-transform:translateY(30px) translateX(-15px);
+
+.money-particle:nth-child(4){
+
+font-size:23px;
+
+left:91%;
+
+top:110%;
+
+animation-duration:25s;
+
+animation-delay:-5s;
+
+}
+
+
+@keyframes moneyFloat{
+
+0%{
+
+transform:
+translateY(0)
+rotate(-3deg);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:1;
+
+}
+
+90%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:
+translateY(-125vh)
+rotate(4deg);
+
+opacity:0;
+
 }
 
 }
@@ -187,193 +364,313 @@ transform:translateY(30px) translateX(-15px);
 
 min-height:100vh;
 
-display:grid;
+display:flex;
 
-place-items:center;
+align-items:center;
 
-padding:22px;
+justify-content:center;
+
+padding:24px;
+
+position:relative;
+
+overflow:hidden;
 
 }
 
+
 .login-card{
 
-width:min(450px,100%);
+position:relative;
 
-padding:38px 32px;
+width:min(470px,100%);
 
-border:
+padding:42px 34px;
 
-1px solid
-rgba(255,255,255,.11);
-
-border-radius:32px;
+border-radius:34px;
 
 background:
 
 linear-gradient(
 145deg,
-rgba(255,255,255,.105),
-rgba(255,255,255,.045)
+rgba(18,44,35,.93),
+rgba(7,23,18,.91)
 );
 
-backdrop-filter:blur(22px);
+border:
 
-box-shadow:var(--shadow);
+1px solid
+rgba(110,255,199,.15);
 
-text-align:center;
+box-shadow:
+
+0 40px 120px rgba(0,0,0,.42),
+
+inset
+0 1px 0
+rgba(255,255,255,.06);
+
+backdrop-filter:blur(26px);
+
+overflow:hidden;
+
+animation:
+loginEnter .8s
+cubic-bezier(.2,.8,.2,1);
 
 }
 
-.logo-symbol{
 
-width:82px;
-height:82px;
+.login-card::before{
 
-margin:0 auto 18px;
+content:"";
 
-border-radius:25px;
+position:absolute;
+
+width:240px;
+
+height:240px;
+
+border-radius:50%;
+
+top:-160px;
+
+left:-80px;
+
+background:
+rgba(85,239,183,.08);
+
+filter:blur(5px);
+
+}
+
+
+@keyframes loginEnter{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(25px)
+scale(.97);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0)
+scale(1);
+
+}
+
+}
+
+
+.fino-login-logo{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:9px;
+
+margin-bottom:15px;
+
+}
+
+
+.fino-symbol{
+
+width:59px;
+
+height:59px;
+
+border-radius:19px;
 
 display:grid;
 
 place-items:center;
 
-font-size:39px;
-
 background:
 
 linear-gradient(
-135deg,
-var(--green),
-var(--blue)
+145deg,
+#62f0bd,
+#32bd8a
 );
 
-box-shadow:
+color:#04130e;
 
-0 18px 45px
-rgba(24,227,176,.20);
-
-}
-
-.login-card h1{
-
-font-size:30px;
+font-size:25px;
 
 font-weight:900;
 
-}
+box-shadow:
 
-.login-sub{
-
-color:var(--muted);
-
-margin-top:6px;
-
-margin-bottom:28px;
-
-font-size:14px;
+0 15px 35px
+rgba(85,239,183,.18);
 
 }
 
-.input{
 
-width:100%;
+.fino-word{
 
-padding:16px;
+font-size:40px;
 
-border-radius:16px;
+font-weight:900;
 
-border:
+letter-spacing:2px;
 
-1px solid
-rgba(0,0,0,.08);
+}
 
-outline:none;
+
+.fino-word span{
+
+color:var(--green);
+
+}
+
+
+.login-title{
+
+text-align:center;
 
 font-size:17px;
-
-font-weight:700;
-
-background:#fff;
-
-color:#111;
-
-margin-bottom:13px;
-
-}
-
-.input:focus{
-
-border-color:
-var(--green);
-
-}
-
-.primary-btn{
-
-width:100%;
-
-padding:16px;
-
-border:0;
-
-border-radius:16px;
-
-cursor:pointer;
-
-font-size:18px;
-
-font-weight:900;
-
-color:#00150f;
-
-background:
-
-linear-gradient(
-135deg,
-var(--green),
-var(--green2)
-);
-
-box-shadow:
-
-0 14px 35px
-rgba(24,227,176,.15);
-
-transition:.2s;
-
-}
-
-.primary-btn:hover{
-
-transform:
-translateY(-2px);
-
-}
-
-.error{
-
-display:none;
-
-margin-top:12px;
-
-color:#ff9292;
 
 font-weight:800;
 
 }
 
 
+.login-sub{
+
+text-align:center;
+
+color:var(--muted);
+
+font-size:12px;
+
+line-height:2;
+
+margin:
+
+7px 0 26px;
+
+}
+
+
+.password{
+
+width:100%;
+
+height:58px;
+
+border:none;
+
+outline:none;
+
+border-radius:16px;
+
+padding:
+0 17px;
+
+font-size:17px;
+
+font-weight:800;
+
+background:#f8fffc;
+
+color:#07110e;
+
+text-align:center;
+
+}
+
+
+.login-button{
+
+width:100%;
+
+height:58px;
+
+border:0;
+
+border-radius:16px;
+
+margin-top:11px;
+
+cursor:pointer;
+
+background:
+linear-gradient(
+135deg,
+#58efb8,
+#72f3c3
+);
+
+color:#03140d;
+
+font-size:17px;
+
+font-weight:900;
+
+transition:.25s;
+
+}
+
+
+.login-button:hover{
+
+transform:
+translateY(-2px);
+
+box-shadow:
+
+0 13px 28px
+rgba(85,239,183,.15);
+
+}
+
+
+.login-error{
+
+display:none;
+
+text-align:center;
+
+color:#ff9d9d;
+
+font-size:13px;
+
+font-weight:800;
+
+margin-top:13px;
+
+}
+
+
 /* =========================================================
-   MAIN
+   MAIN PAGE
 ========================================================= */
 
 #mainPage{
+
 display:none;
+
+min-height:100vh;
+
 }
+
 
 .container{
 
-width:min(1180px,92%);
+width:min(1320px,95%);
 
 margin:auto;
 
@@ -381,22 +678,19 @@ margin:auto;
 
 
 /* =========================================================
-   TOP NAV
+   TOP BAR
 ========================================================= */
 
-.top-area{
+.topbar-wrap{
 
-padding-top:18px;
+padding-top:16px;
 
 }
 
-.navbar{
 
-position:sticky;
+.topbar{
 
-top:12px;
-
-z-index:50;
+position:relative;
 
 display:flex;
 
@@ -406,29 +700,28 @@ justify-content:space-between;
 
 gap:15px;
 
-padding:13px 16px;
-
 border-radius:22px;
 
-border:
-
-1px solid
-var(--line);
+padding:
+12px 17px;
 
 background:
+rgba(7,25,19,.78);
 
-rgba(5,22,35,.78);
+border:
+1px solid var(--border);
 
-backdrop-filter:blur(20px);
+backdrop-filter:
+blur(20px);
 
 box-shadow:
-
-0 15px 45px
-rgba(0,0,0,.20);
+0 15px 50px
+rgba(0,0,0,.18);
 
 }
 
-.brand{
+
+.platform-brand{
 
 display:flex;
 
@@ -438,70 +731,397 @@ gap:11px;
 
 }
 
-.brand-logo{
 
-width:48px;
-height:48px;
+.mini-fino{
 
-border-radius:15px;
+width:44px;
+
+height:44px;
+
+border-radius:14px;
 
 display:grid;
 
 place-items:center;
 
-font-size:23px;
+background:var(--green);
 
-background:
-
-linear-gradient(
-135deg,
-var(--green),
-var(--blue)
-);
-
-}
-
-.brand-name{
+color:#06130e;
 
 font-size:18px;
 
 font-weight:900;
 
-line-height:1.25;
+}
+
+
+.platform-name{
+
+font-size:19px;
+
+font-weight:900;
+
+line-height:1.15;
 
 }
 
-.brand-name span{
+
+.platform-name span{
 
 display:block;
 
-font-size:10px;
+font-size:9px;
+
+letter-spacing:1px;
+
+color:var(--muted);
 
 font-weight:600;
 
-color:var(--muted);
+margin-top:3px;
 
 }
 
-.date-time{
+
+.live-badge{
+
+display:flex;
+
+align-items:center;
+
+gap:7px;
+
+padding:
+7px 11px;
+
+border-radius:999px;
+
+background:
+rgba(85,239,183,.07);
+
+border:
+1px solid
+rgba(85,239,183,.14);
+
+font-size:10px;
+
+font-weight:800;
+
+color:var(--green);
+
+}
+
+
+.live-dot{
+
+width:7px;
+
+height:7px;
+
+background:var(--green);
+
+border-radius:50%;
+
+box-shadow:
+0 0 0 0
+rgba(85,239,183,.6);
+
+animation:
+livePulse 1.7s infinite;
+
+}
+
+
+@keyframes livePulse{
+
+70%{
+
+box-shadow:
+0 0 0 7px
+rgba(85,239,183,0);
+
+}
+
+100%{
+
+box-shadow:
+0 0 0 0
+rgba(85,239,183,0);
+
+}
+
+}
+
+
+.datetime{
 
 text-align:left;
 
-font-size:11px;
-
-line-height:1.8;
+font-size:10px;
 
 color:var(--muted);
 
+line-height:1.8;
+
 }
 
-.date-time strong{
+
+.datetime strong{
 
 display:block;
 
 font-size:12px;
 
 color:#fff;
+
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+.dashboard{
+
+display:grid;
+
+grid-template-columns:
+190px minmax(0,1fr) 190px;
+
+gap:17px;
+
+align-items:stretch;
+
+padding:
+20px 0 0;
+
+}
+
+
+/* =========================================================
+   VERTICAL TICKERS
+========================================================= */
+
+.side-ticker{
+
+height:730px;
+
+overflow:hidden;
+
+position:relative;
+
+border:
+
+1px solid
+var(--border);
+
+border-radius:26px;
+
+background:
+rgba(255,255,255,.025);
+
+}
+
+
+.side-ticker::before,
+.side-ticker::after{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+right:0;
+
+height:90px;
+
+z-index:5;
+
+pointer-events:none;
+
+}
+
+
+.side-ticker::before{
+
+top:0;
+
+background:
+
+linear-gradient(
+to bottom,
+#071612,
+transparent
+);
+
+}
+
+
+.side-ticker::after{
+
+bottom:0;
+
+background:
+
+linear-gradient(
+to top,
+#071612,
+transparent
+);
+
+}
+
+
+.ticker-track{
+
+display:flex;
+
+flex-direction:column;
+
+gap:11px;
+
+padding:14px;
+
+animation:
+tickerDown
+22s linear infinite;
+
+}
+
+
+.side-ticker.reverse
+.ticker-track{
+
+animation:
+tickerUp
+25s linear infinite;
+
+}
+
+
+@keyframes tickerDown{
+
+from{
+
+transform:
+translateY(-50%);
+
+}
+
+to{
+
+transform:
+translateY(0);
+
+}
+
+}
+
+
+@keyframes tickerUp{
+
+from{
+
+transform:
+translateY(0);
+
+}
+
+to{
+
+transform:
+translateY(-50%);
+
+}
+
+}
+
+
+.ticker-card{
+
+min-height:93px;
+
+padding:13px;
+
+border-radius:17px;
+
+background:
+rgba(255,255,255,.035);
+
+border:
+1px solid
+rgba(255,255,255,.055);
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+}
+
+
+.ticker-bank{
+
+font-size:11px;
+
+font-weight:800;
+
+color:#b2c7be;
+
+}
+
+
+.ticker-rate{
+
+font-size:25px;
+
+font-weight:900;
+
+color:var(--green);
+
+margin-top:3px;
+
+}
+
+
+.ticker-caption{
+
+font-size:8px;
+
+color:#71887e;
+
+}
+
+
+.amount{
+
+font-size:19px;
+
+font-weight:900;
+
+color:#dffcef;
+
+}
+
+
+.amount-caption{
+
+color:#739086;
+
+font-size:8px;
+
+}
+
+
+/* =========================================================
+   CENTER
+========================================================= */
+
+.center-dashboard{
+
+min-width:0;
 
 }
 
@@ -512,538 +1132,56 @@ color:#fff;
 
 .hero{
 
-display:grid;
-
-grid-template-columns:
-1.35fr .65fr;
-
-gap:20px;
-
-padding:42px 0 20px;
-
-}
-
-.hero-main{
-
 position:relative;
 
 overflow:hidden;
 
-padding:38px;
+padding:
+27px 30px;
 
-border-radius:32px;
-
-border:
-
-1px solid
-var(--line);
+border-radius:28px;
 
 background:
 
 linear-gradient(
 135deg,
-rgba(24,227,176,.11),
-rgba(255,255,255,.055)
+rgba(18,55,43,.91),
+rgba(8,27,21,.86)
 );
+
+border:
+
+1px solid
+rgba(85,239,183,.15);
 
 box-shadow:var(--shadow);
 
 }
 
-.hero-main:after{
+
+.hero::before{
 
 content:"";
 
 position:absolute;
 
-width:250px;
-height:250px;
+width:280px;
+
+height:280px;
 
 border-radius:50%;
 
-left:-110px;
-bottom:-140px;
+right:-170px;
+
+bottom:-190px;
 
 background:
-rgba(38,157,255,.09);
+rgba(85,239,183,.08);
 
 }
 
-.hero-label{
 
-display:inline-flex;
-
-padding:6px 12px;
-
-border-radius:999px;
-
-background:
-rgba(24,227,176,.10);
-
-border:
-1px solid
-rgba(24,227,176,.22);
-
-color:var(--green);
-
-font-size:11px;
-
-font-weight:900;
-
-}
-
-.hero-main h2{
-
-font-size:
-clamp(29px,5vw,49px);
-
-line-height:1.3;
-
-font-weight:900;
-
-margin:
-
-13px 0 12px;
-
-}
-
-.hero-main p{
-
-max-width:720px;
-
-color:var(--muted);
-
-font-size:14px;
-
-line-height:2;
-
-}
-
-.hero-contact{
-
-display:inline-flex;
-
-align-items:center;
-
-gap:9px;
-
-margin-top:20px;
-
-padding:10px 15px;
-
-border-radius:14px;
-
-background:
-rgba(255,255,255,.06);
-
-border:
-1px solid var(--line);
-
-color:#fff;
-
-font-size:13px;
-
-font-weight:800;
-
-text-decoration:none;
-
-}
-
-.hero-contact b{
-
-color:var(--green);
-
-}
-
-.hero-side{
-
-padding:24px;
-
-border-radius:32px;
-
-border:
-
-1px solid
-var(--line);
-
-background:
-
-rgba(255,255,255,.055);
-
-box-shadow:var(--shadow);
-
-}
-
-.side-title{
-
-font-size:14px;
-
-font-weight:900;
-
-color:var(--muted);
-
-margin-bottom:13px;
-
-}
-
-.stat{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:15px 0;
-
-border-bottom:
-
-1px solid var(--line);
-
-}
-
-.stat:last-child{
-
-border-bottom:0;
-
-}
-
-.stat small{
-
-color:var(--muted);
-
-font-size:11px;
-
-}
-
-.stat strong{
-
-font-size:21px;
-
-color:var(--green);
-
-}
-
-
-/* =========================================================
-   SELECTION
-========================================================= */
-
-.selector{
-
-padding:23px;
-
-border-radius:27px;
-
-border:
-
-1px solid
-var(--line);
-
-background:
-
-rgba(255,255,255,.055);
-
-box-shadow:var(--shadow);
-
-}
-
-.section-title{
-
-font-size:19px;
-
-font-weight:900;
-
-margin-bottom:14px;
-
-}
-
-.section-title span{
-
-color:var(--green);
-
-}
-
-.choices{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,1fr);
-
-gap:10px;
-
-}
-
-.choice{
-
-padding:15px 10px;
-
-border-radius:16px;
-
-border:
-
-1px solid
-var(--line);
-
-background:
-
-rgba(255,255,255,.035);
-
-color:#fff;
-
-cursor:pointer;
-
-font-size:14px;
-
-font-weight:800;
-
-transition:.2s;
-
-}
-
-.choice:hover{
-
-transform:
-translateY(-2px);
-
-border-color:
-rgba(24,227,176,.45);
-
-}
-
-.choice.active{
-
-background:
-rgba(24,227,176,.10);
-
-border-color:
-rgba(24,227,176,.65);
-
-color:var(--green);
-
-box-shadow:
-0 8px 25px
-rgba(24,227,176,.08);
-
-}
-
-.choice small{
-
-display:block;
-
-margin-top:3px;
-
-font-size:9px;
-
-font-weight:600;
-
-color:var(--muted);
-
-}
-
-.salary-title{
-
-margin-top:22px;
-
-}
-
-.salary-row{
-
-display:grid;
-
-grid-template-columns:
-1fr 210px;
-
-gap:10px;
-
-}
-
-.salary-row .input{
-
-margin:0;
-
-}
-
-.calculate-btn{
-
-border:0;
-
-border-radius:16px;
-
-background:
-
-linear-gradient(
-135deg,
-var(--green),
-var(--green2)
-);
-
-color:#00150f;
-
-font-size:16px;
-
-font-weight:900;
-
-cursor:pointer;
-
-}
-
-
-/* =========================================================
-   RESULT
-========================================================= */
-
-.results{
-
-margin-top:22px;
-
-}
-
-.summary{
-
-padding:19px;
-
-border-radius:21px;
-
-background:
-
-linear-gradient(
-135deg,
-rgba(24,227,176,.12),
-rgba(38,157,255,.07)
-);
-
-border:
-
-1px solid
-rgba(24,227,176,.22);
-
-margin-bottom:15px;
-
-line-height:2;
-
-}
-
-.summary b{
-
-color:var(--green);
-
-}
-
-.summary small{
-
-display:block;
-
-color:var(--muted);
-
-font-size:11px;
-
-}
-
-
-/* =========================================================
-   BANK CARD
-========================================================= */
-
-.bank{
-
-position:relative;
-
-padding:22px;
-
-margin-bottom:13px;
-
-border-radius:23px;
-
-border:
-
-1px solid
-var(--line);
-
-background:
-
-linear-gradient(
-145deg,
-rgba(255,255,255,.075),
-rgba(255,255,255,.035)
-);
-
-overflow:hidden;
-
-transition:.2s;
-
-}
-
-.bank:hover{
-
-transform:
-translateY(-2px);
-
-}
-
-.bank.best{
-
-border:
-
-1px solid
-rgba(24,227,176,.72);
-
-box-shadow:
-
-0 18px 55px
-rgba(24,227,176,.11);
-
-}
-
-.best-glow{
-
-position:absolute;
-
-top:-60px;
-
-left:-60px;
-
-width:150px;
-
-height:150px;
-
-border-radius:50%;
-
-background:
-rgba(24,227,176,.08);
-
-filter:blur(25px);
-
-}
-
-.badge{
-
-display:inline-flex;
-
-padding:5px 10px;
-
-border-radius:999px;
-
-background:
-rgba(24,227,176,.10);
-
-border:
-
-1px solid
-rgba(24,227,176,.18);
-
-color:var(--green);
-
-font-size:10px;
-
-font-weight:900;
-
-margin-bottom:10px;
-
-}
-
-.bank-head{
+.hero-top{
 
 display:flex;
 
@@ -1055,184 +1193,897 @@ gap:15px;
 
 }
 
-.bank-name{
 
-font-size:21px;
+.hero-tag{
 
-font-weight:900;
+display:inline-flex;
 
-}
+align-items:center;
 
-.bank-category{
+gap:6px;
 
-font-size:11px;
-
-color:var(--muted);
-
-margin-top:3px;
-
-}
-
-.rate{
-
-font-size:28px;
+font-size:10px;
 
 font-weight:900;
 
 color:var(--green);
 
-white-space:nowrap;
+}
 
-text-align:left;
+
+.hero h1{
+
+font-size:
+clamp(28px,4vw,46px);
+
+font-weight:900;
+
+line-height:1.3;
+
+margin:
+8px 0 7px;
+
+letter-spacing:-1px;
 
 }
 
-.rate span{
 
-display:block;
+.hero h1 span{
 
-font-size:9px;
+color:var(--green);
 
-font-weight:600;
+}
+
+
+.hero-text{
 
 color:var(--muted);
-
-}
-
-.details{
-
-margin-top:12px;
 
 font-size:12px;
 
-line-height:2;
+line-height:1.9;
 
-color:var(--muted);
+max-width:740px;
 
 }
 
-.details b{
+
+.phone-pill{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-top:15px;
+
+padding:
+8px 13px;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.045);
+
+border:
+1px solid
+rgba(255,255,255,.07);
+
+text-decoration:none;
 
 color:#fff;
 
-}
-
-.benefit{
-
-margin-top:13px;
-
-padding:13px 14px;
-
-border-radius:15px;
-
-background:
-rgba(255,209,102,.075);
-
-border:
-
-1px solid
-rgba(255,209,102,.20);
-
-color:#ffe7a4;
-
-font-size:12px;
-
-line-height:1.9;
-
-}
-
-.warning{
-
-margin-top:13px;
-
-padding:13px 14px;
-
-border-radius:15px;
-
-background:
-rgba(255,107,107,.07);
-
-border:
-
-1px solid
-rgba(255,107,107,.20);
-
-color:#ffd3d3;
-
-font-size:12px;
-
-line-height:1.9;
-
-}
-
-.date-note{
-
-margin-top:12px;
-
-padding:10px 13px;
-
-border-radius:13px;
-
-background:
-rgba(38,157,255,.065);
-
-border:
-
-1px solid
-rgba(38,157,255,.18);
-
 font-size:11px;
 
-color:#bcdcff;
+font-weight:700;
 
-line-height:1.9;
+}
+
+
+.phone-pill b{
+
+font-size:15px;
+
+color:var(--green);
 
 }
 
 
 /* =========================================================
-   ACTIONS
+   CALCULATOR
 ========================================================= */
 
-.actions{
+.calculator{
+
+margin-top:15px;
+
+padding:21px;
+
+border-radius:26px;
+
+background:
+rgba(255,255,255,.045);
+
+border:
+1px solid var(--border);
+
+}
+
+
+.step-title{
+
+display:flex;
+
+align-items:center;
+
+gap:9px;
+
+font-size:14px;
+
+font-weight:900;
+
+margin-bottom:11px;
+
+}
+
+
+.step-number{
+
+width:26px;
+
+height:26px;
+
+border-radius:9px;
+
+display:grid;
+
+place-items:center;
+
+background:
+rgba(85,239,183,.10);
+
+color:var(--green);
+
+font-size:11px;
+
+}
+
+
+/* =========================================================
+   SALARY BANK BUTTONS
+========================================================= */
+
+.salary-bank-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(5,1fr);
+
+gap:8px;
+
+margin-bottom:19px;
+
+}
+
+
+.bank-choice{
+
+border:
+1px solid
+rgba(255,255,255,.075);
+
+background:
+rgba(255,255,255,.025);
+
+border-radius:15px;
+
+height:67px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+color:#fff;
+
+transition:.2s;
+
+position:relative;
+
+}
+
+
+.bank-choice:hover{
+
+transform:
+translateY(-2px);
+
+border-color:
+rgba(85,239,183,.25);
+
+}
+
+
+.bank-choice.active{
+
+background:
+rgba(85,239,183,.10);
+
+border-color:
+rgba(85,239,183,.50);
+
+box-shadow:
+inset
+0 0 0 1px
+rgba(85,239,183,.08);
+
+}
+
+
+.bank-logo-text{
+
+font-size:15px;
+
+font-weight:900;
+
+letter-spacing:-.4px;
+
+}
+
+
+.bank-choice[data-bank="SNB"]
+.bank-logo-text{
+
+font-size:17px;
+
+}
+
+
+.bank-choice[data-bank="SAB"]
+.bank-logo-text{
+
+font-size:18px;
+
+}
+
+
+.bank-choice[data-bank="ANB"]
+.bank-logo-text{
+
+font-size:17px;
+
+}
+
+
+.bank-choice[data-bank="RAJHI"]
+.bank-logo-text{
+
+font-size:12px;
+
+}
+
+
+.bank-choice[data-bank="OTHER"]
+.bank-logo-text{
+
+font-size:12px;
+
+color:#b8cdc4;
+
+}
+
+
+.selected-check{
+
+position:absolute;
+
+width:16px;
+
+height:16px;
+
+border-radius:50%;
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+top:5px;
+
+left:5px;
+
+background:var(--green);
+
+color:#04130d;
+
+font-size:9px;
+
+font-weight:900;
+
+}
+
+
+.bank-choice.active
+.selected-check{
+
+display:flex;
+
+}
+
+
+/* =========================================================
+   CUSTOMER TYPE
+========================================================= */
+
+.type-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(4,1fr);
+
+gap:8px;
+
+margin-bottom:18px;
+
+}
+
+
+.type-button{
+
+border:
+1px solid
+rgba(255,255,255,.075);
+
+background:
+rgba(255,255,255,.025);
+
+border-radius:14px;
+
+padding:
+11px 7px;
+
+cursor:pointer;
+
+color:#d7e7e0;
+
+font-size:11px;
+
+font-weight:800;
+
+transition:.2s;
+
+}
+
+
+.type-button.active{
+
+border-color:
+rgba(85,239,183,.48);
+
+background:
+rgba(85,239,183,.09);
+
+color:var(--green);
+
+}
+
+
+/* =========================================================
+   SALARY
+========================================================= */
+
+.salary-area{
+
+display:grid;
+
+grid-template-columns:
+1fr 180px;
+
+gap:8px;
+
+}
+
+
+.salary-input-wrap{
+
+position:relative;
+
+}
+
+
+.salary-input{
+
+width:100%;
+
+height:61px;
+
+padding:
+0 18px 0 68px;
+
+border:0;
+
+outline:0;
+
+border-radius:16px;
+
+background:#f8fffc;
+
+color:#07130e;
+
+font-size:25px;
+
+font-weight:900;
+
+}
+
+
+.currency-label{
+
+position:absolute;
+
+left:16px;
+
+top:50%;
+
+transform:
+translateY(-50%);
+
+font-size:11px;
+
+font-weight:900;
+
+color:#5f786e;
+
+}
+
+
+.calculate{
+
+border:0;
+
+border-radius:16px;
+
+cursor:pointer;
+
+background:var(--green);
+
+color:#04130d;
+
+font-size:14px;
+
+font-weight:900;
+
+transition:.25s;
+
+}
+
+
+.calculate:hover{
+
+transform:
+translateY(-2px);
+
+box-shadow:
+0 13px 30px
+rgba(85,239,183,.13);
+
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.results{
+
+margin-top:15px;
+
+}
+
+
+.result-summary{
+
+padding:
+13px 16px;
+
+border-radius:16px;
+
+background:
+rgba(85,239,183,.07);
+
+border:
+1px solid
+rgba(85,239,183,.15);
+
+font-size:11px;
+
+color:#bfd2ca;
+
+line-height:1.8;
+
+}
+
+
+.result-summary b{
+
+color:var(--green);
+
+}
+
+
+.bank-result{
+
+position:relative;
+
+margin-top:9px;
+
+padding:
+15px 17px;
+
+border-radius:18px;
+
+border:
+1px solid
+rgba(255,255,255,.07);
+
+background:
+rgba(255,255,255,.028);
+
+overflow:hidden;
+
+animation:
+resultEnter .45s
+both;
+
+}
+
+
+.bank-result:nth-child(2){
+
+animation-delay:.04s;
+
+}
+
+
+.bank-result:nth-child(3){
+
+animation-delay:.08s;
+
+}
+
+
+.bank-result:nth-child(4){
+
+animation-delay:.12s;
+
+}
+
+
+.bank-result:nth-child(5){
+
+animation-delay:.16s;
+
+}
+
+
+@keyframes resultEnter{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(12px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+
+.bank-result.best{
+
+border-color:
+rgba(85,239,183,.53);
+
+background:
+
+linear-gradient(
+135deg,
+rgba(85,239,183,.095),
+rgba(255,255,255,.025)
+);
+
+box-shadow:
+0 14px 35px
+rgba(0,0,0,.13);
+
+}
+
+
+.bank-result-head{
+
+display:grid;
+
+grid-template-columns:
+42px 1fr auto;
+
+align-items:center;
+
+gap:11px;
+
+}
+
+
+.rank{
+
+width:38px;
+
+height:38px;
+
+display:grid;
+
+place-items:center;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.045);
+
+font-size:12px;
+
+font-weight:900;
+
+color:#c8dbd3;
+
+}
+
+
+.best .rank{
+
+background:var(--green);
+
+color:#05140d;
+
+}
+
+
+.result-name{
+
+font-size:15px;
+
+font-weight:900;
+
+}
+
+
+.result-sub{
+
+color:#758e84;
+
+font-size:8px;
+
+margin-top:1px;
+
+}
+
+
+.result-rate{
+
+font-size:25px;
+
+font-weight:900;
+
+color:var(--green);
+
+text-align:left;
+
+line-height:1.15;
+
+}
+
+
+.result-rate span{
+
+display:block;
+
+font-size:7px;
+
+color:#70887e;
+
+font-weight:500;
+
+}
+
+
+.result-note{
+
+margin-top:10px;
+
+padding-top:9px;
+
+border-top:
+1px solid
+rgba(255,255,255,.05);
+
+font-size:9px;
+
+line-height:1.8;
+
+color:#91aaa0;
+
+}
+
+
+.best-label{
+
+font-size:8px;
+
+font-weight:900;
+
+color:var(--green);
+
+margin-bottom:3px;
+
+}
+
+
+.feature{
+
+margin-top:9px;
+
+padding:
+8px 10px;
+
+border-radius:10px;
+
+background:
+rgba(242,204,114,.055);
+
+border:
+1px solid
+rgba(242,204,114,.12);
+
+color:#e8d093;
+
+font-size:9px;
+
+line-height:1.7;
+
+}
+
+
+.military-alert{
+
+margin-top:9px;
+
+padding:
+9px 10px;
+
+border-radius:10px;
+
+background:
+rgba(255,133,133,.045);
+
+border:
+1px solid
+rgba(255,133,133,.12);
+
+color:#daa5a5;
+
+font-size:9px;
+
+line-height:1.8;
+
+}
+
+
+.expiry{
+
+margin-top:8px;
+
+font-size:8px;
+
+color:#98afa5;
+
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+
+margin-top:15px;
+
+padding:22px;
+
+border-radius:17px;
+
+border:
+1px dashed
+rgba(255,255,255,.09);
+
+text-align:center;
+
+color:#799087;
+
+font-size:11px;
+
+}
+
+
+/* =========================================================
+   SHARE AREA
+========================================================= */
+
+.share-area{
 
 display:grid;
 
 grid-template-columns:
 1fr 1fr;
 
-gap:10px;
+gap:8px;
 
-margin-top:16px;
+margin-top:12px;
 
 }
 
-.action{
 
-padding:14px;
+.share-btn,
+.reset-btn{
 
-border-radius:15px;
+height:48px;
 
-border:
-
-1px solid var(--line);
-
-background:
-rgba(255,255,255,.065);
-
-color:#fff;
-
-font-weight:800;
+border-radius:14px;
 
 cursor:pointer;
 
+font-size:11px;
+
+font-weight:900;
+
 }
 
-.whatsapp{
 
-background:#159b56;
+.share-btn{
 
-border-color:#159b56;
+border:0;
+
+background:#1da75d;
+
+color:#fff;
+
+}
+
+
+.reset-btn{
+
+background:
+rgba(255,255,255,.04);
+
+border:
+1px solid
+var(--border);
+
+color:#c4d6cf;
 
 }
 
@@ -1244,72 +2095,53 @@ border-color:#159b56;
 .footer{
 
 margin:
+17px 0 22px;
 
-35px 0 25px;
+padding:
+14px 17px;
 
-padding:24px;
+border-radius:18px;
 
-border-radius:22px;
+display:flex;
 
-border:
+align-items:center;
 
-1px solid var(--line);
+justify-content:space-between;
+
+gap:10px;
 
 background:
+rgba(255,255,255,.025);
 
-rgba(255,255,255,.035);
+border:
+1px solid
+rgba(255,255,255,.05);
 
-text-align:center;
+color:#6d877c;
 
-color:var(--muted);
+font-size:8px;
 
-font-size:10px;
+line-height:1.8;
 
-line-height:2;
+}
+
+
+.footer strong{
+
+color:#a8bfb6;
 
 }
 
-.footer-brand{
-
-font-size:17px;
-
-font-weight:900;
-
-color:#fff;
-
-margin-bottom:4px;
-
-}
 
 .footer-phone{
 
-display:inline-block;
-
-margin:8px 0;
-
-color:var(--green);
-
-font-size:16px;
+font-size:12px;
 
 font-weight:900;
 
+color:var(--green);
+
 text-decoration:none;
-
-}
-
-.empty{
-
-padding:28px;
-
-text-align:center;
-
-border:
-
-1px dashed var(--line);
-
-border-radius:20px;
-
-color:var(--muted);
 
 }
 
@@ -1318,110 +2150,124 @@ color:var(--muted);
    RESPONSIVE
 ========================================================= */
 
+@media(max-width:1050px){
+
+.dashboard{
+
+grid-template-columns:
+145px minmax(0,1fr) 145px;
+
+}
+
+.side-ticker{
+
+height:720px;
+
+}
+
+}
+
+
 @media(max-width:850px){
 
-.hero{
+.dashboard{
 
 grid-template-columns:1fr;
 
 }
 
-.choices{
+.side-ticker{
+
+display:none;
+
+}
+
+.container{
+
+width:93%;
+
+}
+
+}
+
+
+@media(max-width:600px){
+
+.datetime{
+
+display:none;
+
+}
+
+.live-badge{
+
+display:none;
+
+}
+
+.hero{
+
+padding:
+23px 20px;
+
+}
+
+.hero h1{
+
+font-size:29px;
+
+}
+
+.salary-bank-grid{
+
+grid-template-columns:
+repeat(3,1fr);
+
+}
+
+.type-grid{
 
 grid-template-columns:
 repeat(2,1fr);
 
 }
 
-}
-
-@media(max-width:600px){
-
-.container{
-
-width:94%;
-
-}
-
-.date-time{
-
-display:none;
-
-}
-
-.navbar{
-
-padding:11px;
-
-}
-
-.brand-name{
-
-font-size:15px;
-
-}
-
-.hero{
-
-padding-top:25px;
-
-}
-
-.hero-main{
-
-padding:26px;
-
-}
-
-.hero-main h2{
-
-font-size:30px;
-
-}
-
-.hero-side{
-
-display:none;
-
-}
-
-.salary-row{
+.salary-area{
 
 grid-template-columns:1fr;
 
 }
 
-.calculate-btn{
+.calculate{
 
-height:53px;
-
-}
-
-.bank-head{
-
-align-items:flex-start;
+height:54px;
 
 }
 
-.bank-name{
+.calculator{
 
-font-size:18px;
-
-}
-
-.rate{
-
-font-size:23px;
+padding:16px;
 
 }
 
-.actions{
+.footer{
 
-grid-template-columns:1fr;
+display:block;
+
+text-align:center;
+
+}
+
+.footer-phone{
+
+display:block;
+
+margin-top:7px;
 
 }
 
 }
+
 
 </style>
 
@@ -1432,66 +2278,102 @@ grid-template-columns:1fr;
 
 
 <!-- =========================================================
-     BACKGROUND
+     AMBIENT
 ========================================================= -->
 
-<div class="background">
+<div class="ambient">
 
 <div class="glow one"></div>
 
 <div class="glow two"></div>
 
-<div class="glow three"></div>
+</div>
 
+
+<div class="money-particle">
+250,000
+</div>
+
+<div class="money-particle">
+89,500
+</div>
+
+<div class="money-particle">
+410,000
+</div>
+
+<div class="money-particle">
+137,000
 </div>
 
 
 
 <!-- =========================================================
-     LOGIN
+     LOGIN PAGE
 ========================================================= -->
 
 <section id="loginPage">
 
 <div class="login-card">
 
-<div class="logo-symbol">
-💎
+
+<div class="fino-login-logo">
+
+<div class="fino-symbol">
+F
 </div>
 
-<h1>
-سرعة تملك العقار
-</h1>
+<div class="fino-word">
+FI<span>NO</span>
+</div>
+
+</div>
+
+
+<div class="login-title">
+
+الترشيح الذكي الفوري
+
+</div>
+
 
 <div class="login-sub">
-منصة الترشيح الذكي للحلول التمويلية
+
+منصة عصرية لمقارنة عروض
+شراء مديونية التمويل الشخصي
+وترشيح الأفضل حسب حالة العميل.
+
 </div>
 
+
 <input
-class="input"
 type="password"
+class="password"
 id="password"
-placeholder="أدخل الرقم السري"
+placeholder="الرقم السري"
 autocomplete="off"
 >
 
+
 <button
-class="primary-btn"
+class="login-button"
 onclick="login()"
 >
 
-دخول المنصة
+دخول FINO
 
 </button>
 
+
 <div
-class="error"
-id="error"
+class="login-error"
+id="loginError"
 >
 
 الرقم السري غير صحيح
 
 </div>
+
 
 </div>
 
@@ -1500,32 +2382,30 @@ id="error"
 
 
 <!-- =========================================================
-     MAIN
+     MAIN PAGE
 ========================================================= -->
 
 <main id="mainPage">
 
 
-<div class="container top-area">
+<div class="container topbar-wrap">
 
 
-<!-- NAV -->
-
-<nav class="navbar">
+<header class="topbar">
 
 
-<div class="brand">
+<div class="platform-brand">
 
-<div class="brand-logo">
-💎
+<div class="mini-fino">
+F
 </div>
 
-<div class="brand-name">
+<div class="platform-name">
 
-سرعة تملك العقار
+FINO
 
 <span>
-Smart Finance Match
+SMART FINANCE MATCH
 </span>
 
 </div>
@@ -1533,19 +2413,203 @@ Smart Finance Match
 </div>
 
 
-<div class="date-time">
+<div class="live-badge">
 
-<strong id="dayDate">
+<div class="live-dot"></div>
+
+ترشيح مباشر
+
+</div>
+
+
+<div class="datetime">
+
+<strong id="fullDate">
 —
 </strong>
 
-<span id="liveTime">
+<div id="hijriDate">
 —
-</span>
+</div>
+
+<div id="liveClock">
+—
+</div>
 
 </div>
 
-</nav>
+
+</header>
+
+
+
+<!-- =========================================================
+     DASHBOARD
+========================================================= -->
+
+<div class="dashboard">
+
+
+
+<!-- =========================================================
+     LEFT TICKER - BANK RATES
+========================================================= -->
+
+<aside class="side-ticker">
+
+<div class="ticker-track">
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+SNB
+</div>
+
+<div class="ticker-rate">
+1.59%
+</div>
+
+<div class="ticker-caption">
+شريحة تمويلية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+SAB
+</div>
+
+<div class="ticker-rate">
+1.79%
+</div>
+
+<div class="ticker-caption">
+شراء مديونية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+ANB
+</div>
+
+<div class="ticker-rate">
+1.99%
+</div>
+
+<div class="ticker-caption">
+حسب الشريحة
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+الراجحي
+</div>
+
+<div class="ticker-rate">
+1.95%
+</div>
+
+<div class="ticker-caption">
+حسب الراتب
+</div>
+
+</div>
+
+
+<!-- DUPLICATE FOR LOOP -->
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+SNB
+</div>
+
+<div class="ticker-rate">
+1.59%
+</div>
+
+<div class="ticker-caption">
+شريحة تمويلية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+SAB
+</div>
+
+<div class="ticker-rate">
+1.79%
+</div>
+
+<div class="ticker-caption">
+شراء مديونية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+ANB
+</div>
+
+<div class="ticker-rate">
+1.99%
+</div>
+
+<div class="ticker-caption">
+حسب الشريحة
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="ticker-bank">
+الراجحي
+</div>
+
+<div class="ticker-rate">
+1.95%
+</div>
+
+<div class="ticker-caption">
+حسب الراتب
+</div>
+
+</div>
+
+
+</div>
+
+</aside>
+
+
+
+<!-- =========================================================
+     CENTER
+========================================================= -->
+
+<section class="center-dashboard">
 
 
 
@@ -1553,41 +2617,44 @@ Smart Finance Match
      HERO
 ========================================================= -->
 
-<section class="hero">
+<div class="hero">
 
 
-<div class="hero-main">
+<div class="hero-top">
 
-<div class="hero-label">
+<div class="hero-tag">
 
-🏦 شراء المديونية • ترشيح فوري
+● FINO LIVE MATCH
 
 </div>
 
-<h2>
+</div>
 
-راتبك يدخل...
-والبنوك تترتب لك مباشرة.
 
-</h2>
+<h1>
 
-<p>
+من راتبك...
+إلى <span>أفضل ترشيح</span> خلال ثوانٍ.
 
-أدخل الراتب واختر فئة العميل،
-وسيتم ترتيب البنوك المؤهلة حسب
-أقل نسبة مدخلة في المنصة،
-مع إظهار المزايا والتنبيهات وتاريخ العرض عند توفره.
+</h1>
 
-</p>
+
+<div class="hero-text">
+
+اكتب راتب العميل وحدد جهة عمله والبنك المحول عليه راتبه.
+FINO تستبعد بنك الراتب تلقائياً وتُرتب البنوك الأخرى
+من الأقل نسبة إلى الأعلى.
+
+</div>
 
 
 <a
-class="hero-contact"
+class="phone-pill"
 href="https://wa.me/966506214458"
 target="_blank"
 >
 
-📱 منصة سرعة تملك العقار:
+لإنجاز التمويل الشخصي
 
 <b>
 0506214458
@@ -1595,213 +2662,278 @@ target="_blank"
 
 </a>
 
-</div>
-
-
-
-<div class="hero-side">
-
-<div class="side-title">
-ملخص الترشيح
-</div>
-
-
-<div class="stat">
-
-<small>
-طريقة الترتيب
-</small>
-
-<strong>
-الأقل أولاً
-</strong>
 
 </div>
-
-
-<div class="stat">
-
-<small>
-الفئات
-</small>
-
-<strong>
-4
-</strong>
-
-</div>
-
-
-<div class="stat">
-
-<small>
-تاريخ اليوم
-</small>
-
-<strong id="todayHijri">
-—
-</strong>
-
-</div>
-
-</div>
-
-</section>
 
 
 
 <!-- =========================================================
-     SELECTOR
+     CALCULATOR
 ========================================================= -->
 
-<section class="selector">
+<div class="calculator">
 
 
-<div class="section-title">
 
-<span>01</span>
-اختر فئة العميل
+<!-- STEP 1 -->
+
+<div class="step-title">
+
+<div class="step-number">
+1
+</div>
+
+راتب العميل محول على أي بنك؟
 
 </div>
 
 
-<div class="choices">
+<div class="salary-bank-grid">
 
 
 <button
-class="choice active"
-data-job="حكومي"
-onclick="selectJob(this)"
+class="bank-choice"
+data-bank="SNB"
+onclick="selectSalaryBank(this)"
+title="البنك الأهلي السعودي"
+>
+
+<span class="selected-check">
+✓
+</span>
+
+<div class="bank-logo-text">
+SNB
+</div>
+
+</button>
+
+
+<button
+class="bank-choice"
+data-bank="RAJHI"
+onclick="selectSalaryBank(this)"
+title="مصرف الراجحي"
+>
+
+<span class="selected-check">
+✓
+</span>
+
+<div class="bank-logo-text">
+الراجحي
+</div>
+
+</button>
+
+
+<button
+class="bank-choice"
+data-bank="SAB"
+onclick="selectSalaryBank(this)"
+title="البنك السعودي الأول"
+>
+
+<span class="selected-check">
+✓
+</span>
+
+<div class="bank-logo-text">
+SAB
+</div>
+
+</button>
+
+
+<button
+class="bank-choice"
+data-bank="ANB"
+onclick="selectSalaryBank(this)"
+title="البنك العربي الوطني"
+>
+
+<span class="selected-check">
+✓
+</span>
+
+<div class="bank-logo-text">
+anb
+</div>
+
+</button>
+
+
+<button
+class="bank-choice active"
+data-bank="OTHER"
+onclick="selectSalaryBank(this)"
+title="بنك آخر"
+>
+
+<span class="selected-check">
+✓
+</span>
+
+<div class="bank-logo-text">
+＋ بنك آخر
+</div>
+
+</button>
+
+
+</div>
+
+
+
+<!-- STEP 2 -->
+
+<div class="step-title">
+
+<div class="step-number">
+2
+</div>
+
+فئة العميل
+
+</div>
+
+
+<div class="type-grid">
+
+
+<button
+class="type-button active"
+data-type="government"
+onclick="selectCustomerType(this)"
 >
 
 حكومي
 
-<small>
-حكومي / شبه حكومي
-</small>
-
 </button>
 
 
 <button
-class="choice"
-data-job="عسكري"
-onclick="selectJob(this)"
+class="type-button"
+data-type="military"
+onclick="selectCustomerType(this)"
 >
 
 عسكري
 
-<small>
-تنبيه خاص للأول
-</small>
-
 </button>
 
 
 <button
-class="choice"
-data-job="خاص"
-onclick="selectJob(this)"
+class="type-button"
+data-type="private"
+onclick="selectCustomerType(this)"
 >
 
 قطاع خاص
 
-<small>
-شركة معتمدة
-</small>
-
 </button>
 
 
 <button
-class="choice"
-data-job="متقاعد"
-onclick="selectJob(this)"
+class="type-button"
+data-type="retired"
+onclick="selectCustomerType(this)"
 >
 
 متقاعد
 
-<small>
-حسب أهلية البنك
-</small>
-
 </button>
 
-</div>
-
-
-
-<div class="section-title salary-title">
-
-<span>02</span>
-أدخل الراتب الشهري
 
 </div>
 
 
-<div class="salary-row">
 
+<!-- STEP 3 -->
+
+<div class="step-title">
+
+<div class="step-number">
+3
+</div>
+
+الراتب الصافي
+
+</div>
+
+
+<div class="salary-area">
+
+
+<div class="salary-input-wrap">
 
 <input
-class="input"
+class="salary-input"
 type="number"
-id="salaryDebt"
+id="salary"
 inputmode="numeric"
-placeholder="مثال: 7000"
-min="1"
+placeholder="مثال: 12000"
 >
 
 
-<button
-class="calculate-btn"
-onclick="calculateDebt()"
->
-
-🔎 ترشيح البنوك
-
-</button>
+<div class="currency-label">
+ريال
+</div>
 
 </div>
 
 
-</section>
+<button
+class="calculate"
+onclick="calculateRecommendation()"
+>
+
+ترشيح فوري ⚡
+
+</button>
+
+
+</div>
 
 
 
-<!-- =========================================================
-     RESULTS
-========================================================= -->
+<!-- RESULTS -->
 
-<section
+<div
 class="results"
-id="debtResult"
+id="results"
 >
-</section>
+</div>
 
 
 
-<!-- ACTIONS -->
+<!-- SHARE -->
 
-<div class="actions">
+<div class="share-area">
+
 
 <button
-class="action whatsapp"
-onclick="shareWhats()"
+class="share-btn"
+onclick="shareWhatsApp()"
 >
 
-📲 مشاركة النتيجة واتساب
+مشاركة النتيجة
 
 </button>
 
 
 <button
-class="action"
-onclick="resetForm()"
+class="reset-btn"
+onclick="resetCalculator()"
 >
 
-↻ مسح وإعادة
+حسبة جديدة
 
 </button>
+
+
+</div>
+
 
 </div>
 
@@ -1813,16 +2945,15 @@ onclick="resetForm()"
 
 <footer class="footer">
 
-<div class="footer-brand">
-
-سرعة تملك العقار
-
-</div>
-
 
 <div>
 
-الحلول التمويلية الذكية
+<strong>
+FINO
+</strong>
+
+— ترشيح استرشادي حسب جداول النسب المدخلة،
+والاعتماد النهائي حسب شروط البنك.
 
 </div>
 
@@ -1837,43 +2968,165 @@ href="tel:0506214458"
 </a>
 
 
-<div>
-
-واتساب المنصة متاح للتواصل والاستفسار
-
-</div>
-
-
-<br>
-
-
-<div>
-
-الأداة استرشادية،
-والنسب المعروضة تعتمد على جداول العروض
-المدخلة في المنصة.
-
-الموافقة النهائية والنسبة الفعلية
-تخضع لشروط البنك،
-والأهلية الائتمانية،
-والالتزامات،
-وجهة العمل،
-والمستندات المقدمة.
-
-</div>
-
-
-<br>
-
-
-<div id="footerDate">
-—
-</div>
-
 </footer>
 
 
+</section>
+
+
+
+<!-- =========================================================
+     RIGHT TICKER - AMOUNTS
+========================================================= -->
+
+<aside class="side-ticker reverse">
+
+<div class="ticker-track">
+
+
+<div class="ticker-card">
+
+<div class="amount">
+185,000
 </div>
+
+<div class="amount-caption">
+تمويل شخصي
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+96,500
+</div>
+
+<div class="amount-caption">
+صافي متوقع
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+320,000
+</div>
+
+<div class="amount-caption">
+شراء مديونية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+74,800
+</div>
+
+<div class="amount-caption">
+فائض كاش
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+247,000
+</div>
+
+<div class="amount-caption">
+تمويل
+</div>
+
+</div>
+
+
+<!-- DUPLICATE -->
+
+
+<div class="ticker-card">
+
+<div class="amount">
+185,000
+</div>
+
+<div class="amount-caption">
+تمويل شخصي
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+96,500
+</div>
+
+<div class="amount-caption">
+صافي متوقع
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+320,000
+</div>
+
+<div class="amount-caption">
+شراء مديونية
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+74,800
+</div>
+
+<div class="amount-caption">
+فائض كاش
+</div>
+
+</div>
+
+
+<div class="ticker-card">
+
+<div class="amount">
+247,000
+</div>
+
+<div class="amount-caption">
+تمويل
+</div>
+
+</div>
+
+
+</div>
+
+</aside>
+
+
+</div>
+
+
+</div>
+
 
 </main>
 
@@ -1883,30 +3136,83 @@ href="tel:0506214458"
 
 
 /* =========================================================
-   PASSWORD
+   SETTINGS
 ========================================================= */
 
-const PASSWORD="11qq11qQ";
+const PASSWORD =
+"11qq11qQ";
 
-let selectedJob="حكومي";
 
+const PHONE =
+"0506214458";
+
+
+const PHONE_INTL =
+"966506214458";
+
+
+const SERVICES_URL =
+"https://hlooleqrr.github.io/mwaqe3/#services";
+
+
+let salaryBank =
+"OTHER";
+
+
+let customerType =
+"government";
+
+
+const INF =
+Infinity;
+
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 function login(){
 
-const pass=
-document.getElementById("password").value;
 
-if(pass===PASSWORD){
+const password =
+document
+.getElementById("password")
+.value;
 
-document.getElementById("loginPage").style.display="none";
 
-document.getElementById("mainPage").style.display="block";
+if(
+password === PASSWORD
+){
+
+document
+.getElementById("loginPage")
+.style.display =
+"none";
+
+
+document
+.getElementById("mainPage")
+.style.display =
+"block";
+
 
 updateClock();
 
+
+document
+.getElementById("salary")
+.focus();
+
+
 }else{
 
-document.getElementById("error").style.display="block";
+
+document
+.getElementById("loginError")
+.style.display =
+"block";
+
 
 }
 
@@ -1917,81 +3223,97 @@ document
 .getElementById("password")
 .addEventListener(
 "keydown",
-function(e){
+function(event){
 
-if(e.key==="Enter"){
+if(
+event.key === "Enter"
+){
+
 login();
+
 }
 
 }
 );
 
 
+
 /* =========================================================
-   JOB
+   SALARY BANK
 ========================================================= */
 
-function selectJob(button){
+function selectSalaryBank(button){
+
 
 document
-.querySelectorAll(".choice")
-.forEach(function(item){
+.querySelectorAll(
+".bank-choice"
+)
+.forEach(
+function(item){
 
-item.classList.remove("active");
+item
+.classList
+.remove("active");
 
-});
+}
+);
 
 
-button.classList.add("active");
+button
+.classList
+.add("active");
 
-selectedJob=
-button.dataset.job;
+
+salaryBank =
+button.dataset.bank;
+
 
 }
 
 
 
 /* =========================================================
-   RATE HELPER
+   CUSTOMER TYPE
 ========================================================= */
 
-function rateBySalary(
-salary,
-table
-){
+function selectCustomerType(button){
 
-for(
-const row of table
-){
 
-if(
-salary>=row.min &&
-salary<=row.max
-){
+document
+.querySelectorAll(
+".type-button"
+)
+.forEach(
+function(item){
 
-return row.rate;
+item
+.classList
+.remove("active");
+
+}
+);
+
+
+button
+.classList
+.add("active");
+
+
+customerType =
+button.dataset.type;
+
 
 }
 
-}
-
-return null;
-
-}
-
-const INF=Infinity;
 
 
 /* =========================================================
-   RATES
+   RATE TABLES
 ========================================================= */
 
-const RATES={
+const RATES = {
 
-
-/* =========================================================
-   SAB
-========================================================= */
 
 SAB:[
 
@@ -2021,10 +3343,6 @@ rate:2.69
 
 ],
 
-
-/* =========================================================
-   RAJHI
-========================================================= */
 
 RAJHI:[
 
@@ -2060,10 +3378,6 @@ rate:3.69
 
 ],
 
-
-/* =========================================================
-   ANB
-========================================================= */
 
 ANB:[
 
@@ -2101,20 +3415,10 @@ rate:2.49
 min:5000,
 max:9999,
 rate:3.49
-},
-
-{
-min:0,
-max:4999,
-rate:4.99
 }
 
 ],
 
-
-/* =========================================================
-   SNB CIVIL
-========================================================= */
 
 SNB_CIV:[
 
@@ -2162,10 +3466,6 @@ rate:3.75
 
 ],
 
-
-/* =========================================================
-   SNB MILITARY
-========================================================= */
 
 SNB_MIL:[
 
@@ -2216,158 +3516,331 @@ rate:3.99
 };
 
 
+
 /* =========================================================
-   CALCULATE
+   RATE HELPER
 ========================================================= */
 
-function calculateDebt(){
+function findRate(
+salary,
+table
+){
 
-const salary=
+
+for(
+const row of table
+){
+
+
+if(
+salary >= row.min &&
+salary <= row.max
+){
+
+return row.rate;
+
+}
+
+
+}
+
+
+return null;
+
+
+}
+
+
+
+/* =========================================================
+   CATEGORY LABEL
+========================================================= */
+
+function categoryName(){
+
+
+if(
+customerType === "military"
+){
+
+return "عسكري";
+
+}
+
+
+if(
+customerType === "private"
+){
+
+return "قطاع خاص";
+
+}
+
+
+if(
+customerType === "retired"
+){
+
+return "متقاعد";
+
+}
+
+
+return "حكومي";
+
+
+}
+
+
+
+/* =========================================================
+   BANK SALARY LABEL
+========================================================= */
+
+function salaryBankName(){
+
+
+const names = {
+
+SNB:
+"البنك الأهلي السعودي",
+
+RAJHI:
+"مصرف الراجحي",
+
+SAB:
+"البنك السعودي الأول",
+
+ANB:
+"البنك العربي الوطني",
+
+OTHER:
+"بنك آخر"
+
+};
+
+
+return names[salaryBank];
+
+
+}
+
+
+
+/* =========================================================
+   CALCULATOR
+========================================================= */
+
+function calculateRecommendation(){
+
+
+const salary =
 Number(
-document.getElementById("salaryDebt").value
+document
+.getElementById("salary")
+.value
 );
 
-const result=
-document.getElementById("debtResult");
+
+const results =
+document
+.getElementById("results");
 
 
-if(!salary || salary<1){
+if(
+!salary ||
+salary < 1
+){
 
-result.innerHTML=`
+
+results.innerHTML = `
 
 <div class="empty">
 
-أدخل الراتب الشهري أولاً.
+أدخل الراتب الصافي أولاً.
 
 </div>
 
 `;
 
+
 return;
+
 
 }
 
 
-let banks=[];
+let banks = [];
+
 
 
 /* =========================================================
    SAB
 ========================================================= */
 
-if(salary>=10000){
+if(
+salary >= 10000 &&
+salaryBank !== "SAB"
+){
 
-const rate=
-rateBySalary(
+
+const rate =
+findRate(
 salary,
 RATES.SAB
 );
 
-if(rate!==null){
+
+if(
+rate !== null
+){
+
 
 banks.push({
 
 key:"SAB",
 
-name:"البنك السعودي الأول SAB",
+name:
+"البنك السعودي الأول SAB",
 
-rate:rate,
-
-extra:""
+rate:rate
 
 });
 
-}
 
 }
+
+
+}
+
 
 
 /* =========================================================
    RAJHI
 ========================================================= */
 
-const rajhi=
-rateBySalary(
+if(
+salaryBank !== "RAJHI"
+){
+
+
+const rate =
+findRate(
 salary,
 RATES.RAJHI
 );
 
-if(rajhi!==null){
+
+if(
+rate !== null
+){
+
 
 banks.push({
 
 key:"RAJHI",
 
-name:"مصرف الراجحي",
+name:
+"مصرف الراجحي",
 
-rate:rajhi,
-
-extra:""
+rate:rate
 
 });
 
+
 }
+
+
+}
+
 
 
 /* =========================================================
    ANB
 ========================================================= */
 
-const anb=
-rateBySalary(
+if(
+salaryBank !== "ANB"
+){
+
+
+const rate =
+findRate(
 salary,
 RATES.ANB
 );
 
-if(anb!==null){
+
+if(
+rate !== null
+){
+
 
 banks.push({
 
 key:"ANB",
 
-name:"البنك العربي الوطني ANB",
+name:
+"البنك العربي الوطني ANB",
 
-rate:anb,
-
-extra:""
+rate:rate
 
 });
 
+
 }
+
+
+}
+
 
 
 /* =========================================================
    SNB
 ========================================================= */
 
-const snbTable=
-selectedJob==="عسكري"
+if(
+salaryBank !== "SNB"
+){
+
+
+const table =
+customerType === "military"
 ?
 RATES.SNB_MIL
 :
 RATES.SNB_CIV;
 
-const snb=
-rateBySalary(
+
+const rate =
+findRate(
 salary,
-snbTable
+table
 );
 
-if(snb!==null){
+
+if(
+rate !== null
+){
+
 
 banks.push({
 
 key:"SNB",
 
-name:"البنك الأهلي السعودي SNB",
+name:
+"البنك الأهلي السعودي SNB",
 
-rate:snb,
-
-extra:""
+rate:rate
 
 });
 
+
 }
+
+
+}
+
 
 
 /* =========================================================
@@ -2375,57 +3848,56 @@ extra:""
 ========================================================= */
 
 banks.sort(
-
 function(a,b){
 
-return a.rate-b.rate;
+return a.rate - b.rate;
 
-});
+}
+);
+
 
 
 /* =========================================================
-   CATEGORY
+   EMPTY
 ========================================================= */
 
-let category="";
+if(
+banks.length === 0
+){
 
-if(selectedJob==="عسكري"){
 
-category="عسكري";
+results.innerHTML = `
 
-}
+<div class="empty">
 
-else if(selectedJob==="حكومي"){
+لا توجد نسبة مطابقة ضمن
+الجداول المدخلة لهذه الحالة.
 
-category="حكومي / شبه حكومي";
+</div>
 
-}
+`;
 
-else if(selectedJob==="خاص"){
 
-category="قطاع خاص";
+return;
 
-}
-
-else{
-
-category="متقاعد";
 
 }
+
 
 
 /* =========================================================
    SUMMARY
 ========================================================= */
 
-let html=`
+let html = `
 
-<div class="summary">
+<div class="result-summary">
 
-الراتب:
+راتب العميل:
 
 <b>
-${salary.toLocaleString("ar-SA")} ريال
+${salary.toLocaleString("ar-SA")}
+ريال
 </b>
 
 &nbsp; • &nbsp;
@@ -2433,101 +3905,61 @@ ${salary.toLocaleString("ar-SA")} ريال
 الفئة:
 
 <b>
-${category}
+${categoryName()}
 </b>
 
-<small>
+&nbsp; • &nbsp;
 
-تم ترتيب البنوك من الأقل نسبة إلى الأعلى.
-الترشيح استرشادي ولا يعني الموافقة النهائية.
+بنك الراتب:
 
-</small>
+<b>
+${salaryBankName()}
+</b>
 
-</div>
+<br>
 
-`;
-
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-if(!banks.length){
-
-html+=`
-
-<div class="empty">
-
-لا توجد نسبة مدخلة لهذه الفئة والراتب
-ضمن الجداول الحالية.
+تم استبعاد بنك الراتب من المقارنة،
+وترتيب البنوك المتاحة من الأقل نسبة إلى الأعلى.
 
 </div>
 
 `;
 
-result.innerHTML=html;
-
-return;
-
-}
 
 
 /* =========================================================
-   CARDS
+   RESULTS
 ========================================================= */
 
 banks.forEach(
-
 function(bank,index){
 
-let content="";
+
+let feature = "";
+
+let warning = "";
+
+let expiry = "";
 
 
-/* =========================================================
-   FIRST BANK
-========================================================= */
+/* SNB */
 
-if(index===0){
-
-content+=`
-
-<div class="best-glow"></div>
-
-`;
-
-}
+if(
+bank.key === "SNB"
+){
 
 
-/* =========================================================
-   SAB
-========================================================= */
+feature = `
 
-if(bank.key==="SAB"){
+<div class="feature">
 
-content+=`
+✦ البنك الأهلي:
 
-<div class="details">
+<b>
+إعفاء من أول شهرين من الأقساط
+</b>
 
-شراء المديونية حسب الجدول المدخل
-يبدأ من راتب
-<b>10,000 ريال فأعلى</b>.
-
-</div>
-
-
-<div class="warning">
-
-⚠️ <b>تنبيه مهم للعسكري</b>
-
-<br>
-
-الأول يتعامل مع العسكري بطريقة خاصة،
-وقد يتم حذف أو عدم احتساب بعض البدلات
-عند احتساب الدخل.
-
-ويجب التأكد من النسبة والأهلية
-بمراسلة جهة عمل العسكري
-قبل اعتماد الترشيح النهائي.
+وفق العرض المعتمد.
 
 </div>
 
@@ -2536,75 +3968,26 @@ content+=`
 }
 
 
-/* =========================================================
-   SNB
-========================================================= */
+/* RAJHI */
 
-if(bank.key==="SNB"){
-
-content+=`
-
-<div class="benefit">
-
-⭐ <b>ميزة البنك الأهلي:</b>
-
-إعفاء العميل من
-<b>أول شهرين من الأقساط</b>
-وفق العرض المشار إليه.
-
-</div>
-
-`;
-
-}
+if(
+bank.key === "RAJHI"
+){
 
 
-/* =========================================================
-   RAJHI
-========================================================= */
+feature = `
 
-if(bank.key==="RAJHI"){
+<div class="feature">
 
-content+=`
-
-<div class="benefit">
-
-⏳ <b>ميزة الراجحي:</b>
+✦ الراجحي:
 
 إمكانية
-<b>تأجيل شهرين من الأقساط</b>
-بحسب شروط العرض وأهلية العميل.
 
-<br>
+<b>
+تأجيل شهرين من الأقساط
+</b>
 
-التأجيل يختلف عن الإعفاء:
-القسط المؤجل لا يعني إسقاط قيمته.
-
-</div>
-
-`;
-
-}
-
-
-/* =========================================================
-   ANB
-========================================================= */
-
-if(bank.key==="ANB"){
-
-content+=`
-
-<div class="date-note">
-
-📅 <b>تاريخ العرض الظاهر:</b>
-
-31 / 08 / 2026
-
-<br>
-
-يجب التأكد من استمرار العرض وشروطه
-قبل تقديم الطلب.
+حسب شروط وأهلية العميل.
 
 </div>
 
@@ -2613,59 +3996,121 @@ content+=`
 }
 
 
-/* =========================================================
-   CARD
-========================================================= */
+/* SAB */
 
-html+=`
+if(
+bank.key === "SAB" &&
+customerType === "military"
+){
 
-<article
-class="bank ${index===0?"best":""}"
+
+warning = `
+
+<div class="military-alert">
+
+تنبيه للعسكري:
+
+قد يتعامل الأول مع بعض البدلات
+بشكل مختلف،
+ويتم التأكد من الراتب المعتمد
+عن طريق جهة العمل قبل اعتماد
+الحسبة النهائية.
+
+</div>
+
+`;
+
+}
+
+
+if(
+bank.key === "SAB"
+){
+
+expiry += `
+
+<div class="expiry">
+
+شراء المديونية في الجدول المدخل
+يبدأ من راتب 10,000 ريال فأعلى.
+
+</div>
+
+`;
+
+}
+
+
+if(
+bank.key === "ANB"
+){
+
+expiry += `
+
+<div class="expiry">
+
+العرض المدرج مؤرخ حتى
+31 / 08 / 2026.
+
+</div>
+
+`;
+
+}
+
+
+/* CARD */
+
+html += `
+
+<div
+class="bank-result
+${index === 0 ? "best" : ""}"
 >
 
 
-${index===0?`
+<div class="bank-result-head">
 
-<div class="badge">
 
-🏆 الترشيح الأول — أقل نسبة
+<div class="rank">
 
-</div>
-
-`:
-
-`
-
-<div class="badge">
-
-📌 الترتيب ${index+1}
+${index === 0 ? "1" : index + 1}
 
 </div>
-
-`}
-
-
-<div class="bank-head">
 
 
 <div>
 
-<div class="bank-name">
+
+${index === 0 ? `
+
+<div class="best-label">
+
+أفضل ترشيح حالياً
+
+</div>
+
+` : ""}
+
+
+<div class="result-name">
 
 ${bank.name}
 
 </div>
 
-<div class="bank-category">
 
-الفئة: ${category}
+<div class="result-sub">
+
+الترتيب حسب النسبة المدخلة
 
 </div>
 
+
 </div>
 
 
-<div class="rate">
+<div class="result-rate">
 
 ${formatRate(bank.rate)}%
 
@@ -2679,122 +4124,163 @@ ${formatRate(bank.rate)}%
 </div>
 
 
-${content}
+${feature}
 
+${warning}
 
-</article>
+${expiry}
 
-`;
-
-});
-
-
-/* =========================================================
-   FINAL NOTE
-========================================================= */
-
-html+=`
-
-<div class="details"
-style="text-align:center;margin-top:15px">
-
-📌 النتيجة مرتبة حسب أقل نسبة أولاً.
-<br>
-
-النسبة الفعلية قد تختلف بعد دراسة البنك
-لجهة العمل والالتزامات والسجل الائتماني
-والبدلات وشروط المنتج.
 
 </div>
 
 `;
 
 
-result.innerHTML=html;
+});
+
+
+results.innerHTML =
+html;
+
+
+results
+.scrollIntoView({
+
+behavior:"smooth",
+
+block:"nearest"
+
+});
+
 
 }
 
 
 
 /* =========================================================
-   FORMAT
+   RATE FORMAT
 ========================================================= */
 
 function formatRate(rate){
 
+
 return Number.isInteger(rate)
 
 ?
+
 rate.toString()
 
 :
+
 rate
 .toFixed(2)
 .replace(/0+$/,"")
 .replace(/\.$/,"");
 
+
 }
+
 
 
 /* =========================================================
    RESET
 ========================================================= */
 
-function resetForm(){
+function resetCalculator(){
+
 
 document
-.getElementById("salaryDebt")
-.value="";
+.getElementById("salary")
+.value =
+"";
+
 
 document
-.getElementById("debtResult")
-.innerHTML="";
+.getElementById("results")
+.innerHTML =
+"";
+
+
+document
+.getElementById("salary")
+.focus();
+
 
 }
 
 
+
 /* =========================================================
-   WHATSAPP
+   WHATSAPP SHARE
 ========================================================= */
 
-function shareWhats(){
+function shareWhatsApp(){
 
-const result=
+
+const salary =
+Number(
 document
-.getElementById("debtResult")
+.getElementById("salary")
+.value
+);
+
+
+const result =
+document
+.getElementById("results")
 .innerText
 .trim();
 
 
-if(!result){
+if(
+!salary ||
+!result
+){
+
 
 alert(
-"قم بإجراء الترشيح أولاً."
+"احسب الترشيح أولاً"
 );
 
+
 return;
+
 
 }
 
 
-const message=
+/*
+Short marketing message
+*/
 
-"نتيجة ترشيح شراء المديونية\n\n"+
-result+
-"\n\منصةFINOالذكية لسرعة الحلول التمويلية \n"+
-"0506214458";
+
+const message =
+
+`🏦 FINO | ترشيح التمويل الشخصي
+
+تمت مقارنة الخيارات وترشيح الأنسب حسب البيانات المدخلة ✅
+
+⚡ لإنجاز التمويل الشخصي بسرعة ومقارنة أفضل عروض البنوك:
+📞 ${PHONE}
+
+🔗 لمعرفة بعض خدماتنا:
+${SERVICES_URL}`;
 
 
 window.open(
 
-"https://wa.me/?text="+
-encodeURIComponent(message),
+"https://wa.me/?text=" +
+encodeURIComponent(
+message
+),
 
 "_blank"
 
 );
 
+
 }
+
 
 
 /* =========================================================
@@ -2803,68 +4289,75 @@ encodeURIComponent(message),
 
 function updateClock(){
 
-const now=new Date();
+
+const now =
+new Date();
 
 
-const day=
-
+const gregorian =
 now.toLocaleDateString(
 "ar-SA-u-ca-gregory",
 {
+
 weekday:"long",
-year:"numeric",
+
+day:"numeric",
+
 month:"long",
-day:"numeric"
+
+year:"numeric"
+
 }
 );
 
 
-const time=
-
-now.toLocaleTimeString(
-"ar-SA",
-{
-hour:"2-digit",
-minute:"2-digit",
-second:"2-digit"
-}
-);
-
-
-const hijri=
-
+const hijri =
 now.toLocaleDateString(
 "ar-SA-u-ca-islamic-umalqura",
 {
-year:"numeric",
+
+day:"numeric",
+
 month:"long",
-day:"numeric"
+
+year:"numeric"
+
+}
+);
+
+
+const time =
+now.toLocaleTimeString(
+"ar-SA",
+{
+
+hour:"2-digit",
+
+minute:"2-digit",
+
+second:"2-digit"
+
 }
 );
 
 
 document
-.getElementById("dayDate")
-.textContent=day;
+.getElementById("fullDate")
+.textContent =
+gregorian;
 
 
 document
-.getElementById("liveTime")
-.textContent=time;
+.getElementById("hijriDate")
+.textContent =
+hijri;
 
 
 document
-.getElementById("todayHijri")
-.textContent=hijri;
-
-
-document
-.getElementById("footerDate")
-.textContent=
-"اليوم: "+
-day+
-" • الساعة: "+
+.getElementById("liveClock")
+.textContent =
 time;
+
 
 }
 
@@ -2874,10 +4367,37 @@ updateClock,
 1000
 );
 
+
 updateClock();
 
 
+
+/* =========================================================
+   ENTER TO CALCULATE
+========================================================= */
+
+document
+.getElementById("salary")
+.addEventListener(
+"keydown",
+function(event){
+
+
+if(
+event.key === "Enter"
+){
+
+calculateRecommendation();
+
+}
+
+
+}
+);
+
+
 </script>
+
 
 </body>
 
