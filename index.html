@@ -5,75 +5,51 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<meta name="theme-color"
-content="#f7f8fa">
+<meta name="theme-color" content="#eef5f7">
 
 <title>
 FINO | الترشيح الذكي لشراء مديونية التمويل الشخصي
 </title>
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
-rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 
 <style>
 
 /* =========================================================
-   FINO 2026
-   WHITE FINTECH EXPERIENCE
+   FINO
 ========================================================= */
 
 :root{
 
---bg:#f6f7f8;
-
---bg-soft:#fbfcfd;
+--bg:#eef4f6;
+--bg2:#f7f9fa;
 
 --white:#ffffff;
+--ink:#172027;
+--muted:#74838c;
 
---ink:#101418;
+--line:rgba(25,45,55,.09);
 
---ink2:#29323a;
+--blue:#537b91;
+--blue-soft:#dceaf0;
 
---muted:#75818a;
+--teal:#5d948d;
+--teal-soft:#dfeeea;
 
---line:#e8ecef;
+--violet:#7b7194;
+--violet-soft:#e8e3ef;
 
---line2:#dfe4e8;
+--sand:#b0946c;
+--sand-soft:#eee7dc;
 
---soft:#f0f2f4;
-
---soft2:#f8f9fa;
-
---shadow:
-0 24px 70px rgba(17,24,39,.08);
-
---shadow-soft:
-0 12px 35px rgba(17,24,39,.06);
-
---black:#111418;
-
---warning:#8d6922;
-
---warning-bg:#fffaf0;
-
---warning-line:#f3e4bd;
-
---danger:#963f3f;
-
---danger-bg:#fff6f6;
-
---danger-line:#f0d5d5;
+--shadow:0 24px 70px rgba(32,55,65,.10);
 
 }
 
@@ -106,7 +82,26 @@ body{
 
 min-height:100vh;
 
-background:var(--bg);
+background:
+
+radial-gradient(
+circle at 10% 0%,
+rgba(117,165,187,.18),
+transparent 30%
+),
+
+radial-gradient(
+circle at 90% 15%,
+rgba(113,161,147,.17),
+transparent 32%
+),
+
+linear-gradient(
+180deg,
+#edf4f6,
+#f7f9fa 55%,
+#eef3f5
+);
 
 color:var(--ink);
 
@@ -124,18 +119,312 @@ font:inherit;
 
 
 /* =========================================================
-   SHARED
+   GLOBAL BACKGROUND MOTION
+========================================================= */
+
+.motion-bg{
+
+position:fixed;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+
+.blur-orb{
+
+position:absolute;
+
+border-radius:50%;
+
+filter:blur(25px);
+
+opacity:.33;
+
+animation:orbMove 13s ease-in-out infinite alternate;
+
+}
+
+
+.blur-orb.one{
+
+width:420px;
+height:420px;
+
+top:-220px;
+right:-150px;
+
+background:#b8d8e4;
+
+}
+
+
+.blur-orb.two{
+
+width:380px;
+height:380px;
+
+bottom:-200px;
+left:-150px;
+
+background:#c7ddd6;
+
+animation-delay:-5s;
+
+}
+
+
+.blur-orb.three{
+
+width:220px;
+height:220px;
+
+top:36%;
+left:44%;
+
+background:#ddd3e6;
+
+opacity:.20;
+
+animation-delay:-8s;
+
+}
+
+
+@keyframes orbMove{
+
+from{
+
+transform:
+translate3d(0,0,0)
+scale(1);
+
+}
+
+to{
+
+transform:
+translate3d(-30px,35px,0)
+scale(1.1);
+
+}
+
+}
+
+
+/* =========================================================
+   FALLING MONEY + RATES
+========================================================= */
+
+.finance-rain{
+
+position:fixed;
+
+inset:0;
+
+z-index:1;
+
+overflow:hidden;
+
+pointer-events:none;
+
+}
+
+
+.float-value{
+
+position:absolute;
+
+top:-100px;
+
+font-weight:900;
+
+white-space:nowrap;
+
+opacity:.08;
+
+animation:
+financeFall linear infinite;
+
+user-select:none;
+
+}
+
+
+.float-value.money{
+
+color:#557b72;
+
+}
+
+
+.float-value.rate{
+
+color:#536f86;
+
+}
+
+
+.float-value:nth-child(1){
+
+left:3%;
+
+font-size:22px;
+
+animation-duration:22s;
+
+animation-delay:-4s;
+
+}
+
+
+.float-value:nth-child(2){
+
+left:14%;
+
+font-size:34px;
+
+animation-duration:30s;
+
+animation-delay:-19s;
+
+}
+
+
+.float-value:nth-child(3){
+
+left:29%;
+
+font-size:20px;
+
+animation-duration:24s;
+
+animation-delay:-8s;
+
+}
+
+
+.float-value:nth-child(4){
+
+left:45%;
+
+font-size:38px;
+
+animation-duration:32s;
+
+animation-delay:-22s;
+
+}
+
+
+.float-value:nth-child(5){
+
+left:61%;
+
+font-size:23px;
+
+animation-duration:21s;
+
+animation-delay:-12s;
+
+}
+
+
+.float-value:nth-child(6){
+
+left:74%;
+
+font-size:31px;
+
+animation-duration:27s;
+
+animation-delay:-7s;
+
+}
+
+
+.float-value:nth-child(7){
+
+left:87%;
+
+font-size:20px;
+
+animation-duration:25s;
+
+animation-delay:-17s;
+
+}
+
+
+.float-value:nth-child(8){
+
+left:95%;
+
+font-size:32px;
+
+animation-duration:29s;
+
+animation-delay:-11s;
+
+}
+
+
+@keyframes financeFall{
+
+0%{
+
+transform:
+translate3d(0,-15vh,0)
+rotate(-3deg);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:.08;
+
+}
+
+90%{
+
+opacity:.08;
+
+}
+
+100%{
+
+transform:
+translate3d(15px,120vh,0)
+rotate(4deg);
+
+opacity:0;
+
+}
+
+}
+
+
+/* =========================================================
+   PAGE
 ========================================================= */
 
 .page{
 
-min-height:100vh;
-
 display:none;
+
+min-height:100vh;
 
 position:relative;
 
-overflow:hidden;
+z-index:3;
 
 }
 
@@ -145,20 +434,18 @@ overflow:hidden;
 display:block;
 
 animation:
-pageEnter .55s
-cubic-bezier(.2,.75,.25,1);
+pageIn .45s ease;
 
 }
 
 
-@keyframes pageEnter{
+@keyframes pageIn{
 
 from{
 
 opacity:0;
 
-transform:
-translateY(10px);
+transform:translateY(8px);
 
 }
 
@@ -166,8 +453,7 @@ to{
 
 opacity:1;
 
-transform:
-translateY(0);
+transform:translateY(0);
 
 }
 
@@ -176,200 +462,15 @@ translateY(0);
 
 .container{
 
-width:min(1280px,94%);
+width:min(1180px,93%);
 
 margin:auto;
 
-position:relative;
-
-z-index:10;
-
 }
 
 
 /* =========================================================
-   FLOATING FINANCE BACKGROUND
-========================================================= */
-
-.finance-rain{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-z-index:0;
-
-pointer-events:none;
-
-}
-
-
-.finance-item{
-
-position:absolute;
-
-top:-100px;
-
-font-weight:900;
-
-color:rgba(28,35,40,.055);
-
-white-space:nowrap;
-
-animation:
-fallFinance linear infinite;
-
-user-select:none;
-
-}
-
-
-.finance-item:nth-child(1){
-
-left:4%;
-
-font-size:25px;
-
-animation-duration:21s;
-
-animation-delay:-3s;
-
-}
-
-
-.finance-item:nth-child(2){
-
-left:16%;
-
-font-size:38px;
-
-animation-duration:27s;
-
-animation-delay:-14s;
-
-}
-
-
-.finance-item:nth-child(3){
-
-left:31%;
-
-font-size:20px;
-
-animation-duration:19s;
-
-animation-delay:-8s;
-
-}
-
-
-.finance-item:nth-child(4){
-
-left:48%;
-
-font-size:34px;
-
-animation-duration:25s;
-
-animation-delay:-18s;
-
-}
-
-
-.finance-item:nth-child(5){
-
-left:61%;
-
-font-size:22px;
-
-animation-duration:23s;
-
-animation-delay:-5s;
-
-}
-
-
-.finance-item:nth-child(6){
-
-left:74%;
-
-font-size:40px;
-
-animation-duration:29s;
-
-animation-delay:-20s;
-
-}
-
-
-.finance-item:nth-child(7){
-
-left:87%;
-
-font-size:24px;
-
-animation-duration:20s;
-
-animation-delay:-12s;
-
-}
-
-
-.finance-item:nth-child(8){
-
-left:94%;
-
-font-size:29px;
-
-animation-duration:26s;
-
-animation-delay:-2s;
-
-}
-
-
-@keyframes fallFinance{
-
-0%{
-
-transform:
-translate3d(0,-15vh,0)
-rotate(-4deg);
-
-opacity:0;
-
-}
-
-10%{
-
-opacity:1;
-
-}
-
-90%{
-
-opacity:1;
-
-}
-
-100%{
-
-transform:
-translate3d(20px,120vh,0)
-rotate(5deg);
-
-opacity:0;
-
-}
-
-}
-
-
-/* =========================================================
-   PAGE 1
-   LOGIN / MARKETING
+   LOGIN PAGE
 ========================================================= */
 
 #loginPage{
@@ -378,273 +479,12 @@ background:
 
 linear-gradient(
 180deg,
-#edf7ff 0%,
-#ffffff 46%,
-#f7f8f9 100%
+rgba(230,242,247,.72),
+rgba(248,250,251,.75)
 );
 
 }
 
-
-/* SKY */
-
-.sky{
-
-position:absolute;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-}
-
-
-.sun{
-
-position:absolute;
-
-width:170px;
-
-height:170px;
-
-border-radius:50%;
-
-top:10%;
-
-left:9%;
-
-background:
-
-radial-gradient(
-circle,
-rgba(255,255,255,.95),
-rgba(255,242,196,.38) 45%,
-rgba(255,255,255,0) 72%
-);
-
-animation:
-sunBreath 5s
-ease-in-out infinite;
-
-}
-
-
-@keyframes sunBreath{
-
-50%{
-
-transform:scale(1.08);
-
-}
-
-}
-
-
-/* CLOUDS */
-
-.cloud{
-
-position:absolute;
-
-width:210px;
-
-height:64px;
-
-border-radius:80px;
-
-background:
-rgba(255,255,255,.85);
-
-filter:
-drop-shadow(
-0 8px 16px
-rgba(89,125,144,.08)
-);
-
-}
-
-
-.cloud::before,
-.cloud::after{
-
-content:"";
-
-position:absolute;
-
-border-radius:50%;
-
-background:inherit;
-
-}
-
-
-.cloud::before{
-
-width:92px;
-
-height:92px;
-
-left:35px;
-
-bottom:12px;
-
-}
-
-
-.cloud::after{
-
-width:125px;
-
-height:125px;
-
-right:25px;
-
-bottom:5px;
-
-}
-
-
-.cloud.c1{
-
-top:14%;
-
-right:-220px;
-
-transform:scale(.7);
-
-animation:
-cloudAcross 39s
-linear infinite;
-
-}
-
-
-.cloud.c2{
-
-top:31%;
-
-right:-280px;
-
-transform:scale(.45);
-
-animation:
-cloudAcross 53s
-linear infinite;
-
-animation-delay:-22s;
-
-opacity:.65;
-
-}
-
-
-.cloud.c3{
-
-top:6%;
-
-right:-260px;
-
-transform:scale(.9);
-
-animation:
-cloudAcross 62s
-linear infinite;
-
-animation-delay:-37s;
-
-opacity:.72;
-
-}
-
-
-@keyframes cloudAcross{
-
-to{
-
-transform:
-translateX(calc(-100vw - 650px))
-scale(var(--scale,1));
-
-}
-
-}
-
-
-/* LANDSCAPE */
-
-.landscape{
-
-position:absolute;
-
-left:0;
-
-right:0;
-
-bottom:0;
-
-height:25vh;
-
-min-height:190px;
-
-background:
-
-linear-gradient(
-180deg,
-#e8f3ec,
-#dfeae2
-);
-
-clip-path:
-
-polygon(
-0 54%,
-9% 45%,
-18% 53%,
-29% 34%,
-39% 47%,
-52% 25%,
-63% 42%,
-73% 31%,
-86% 47%,
-100% 35%,
-100% 100%,
-0 100%
-);
-
-}
-
-
-.landscape.second{
-
-height:18vh;
-
-min-height:140px;
-
-background:#f0f5f1;
-
-opacity:.95;
-
-clip-path:
-
-polygon(
-0 55%,
-16% 35%,
-29% 51%,
-41% 22%,
-58% 50%,
-71% 28%,
-84% 45%,
-100% 27%,
-100% 100%,
-0 100%
-);
-
-}
-
-
-/* LOGIN LAYOUT */
 
 .login-layout{
 
@@ -653,69 +493,66 @@ min-height:100vh;
 display:grid;
 
 grid-template-columns:
-1.15fr .85fr;
+1.08fr .92fr;
+
+gap:52px;
 
 align-items:center;
 
-gap:55px;
-
-padding:
-60px 0 90px;
+padding:45px 0;
 
 }
 
 
-/* LOGIN MARKETING */
+/* =========================================================
+   BRAND
+========================================================= */
 
-.marketing-side{
-
-position:relative;
-
-z-index:5;
-
-}
-
-
-.fino-mark{
+.fino-brand{
 
 display:flex;
 
 align-items:center;
 
-gap:11px;
+gap:12px;
 
-margin-bottom:27px;
+margin-bottom:23px;
 
 }
 
 
-.fino-box{
+.fino-logo{
 
-width:57px;
+width:62px;
+height:62px;
 
-height:57px;
-
-border-radius:18px;
-
-background:#111418;
-
-color:#fff;
+border-radius:20px;
 
 display:grid;
 
 place-items:center;
 
+color:#fff;
+
+background:
+
+linear-gradient(
+145deg,
+#547b90,
+#5e958e
+);
+
+font-size:25px;
+
 font-weight:900;
 
-font-size:23px;
-
 box-shadow:
-0 10px 25px rgba(0,0,0,.13);
+0 15px 32px rgba(70,113,126,.18);
 
 }
 
 
-.fino-name{
+.fino-word{
 
 font-size:42px;
 
@@ -723,53 +560,56 @@ font-weight:900;
 
 letter-spacing:2px;
 
+line-height:1;
+
 }
 
 
-.fino-name small{
+.fino-word small{
 
 display:block;
 
-font-size:10px;
-
-letter-spacing:1px;
+font-size:9px;
 
 font-weight:700;
 
+letter-spacing:1.2px;
+
 color:var(--muted);
 
-margin-top:-5px;
+margin-top:6px;
 
 }
 
 
-.marketing-kicker{
+/* =========================================================
+   MARKETING HERO
+========================================================= */
 
-display:inline-block;
+.marketing-tag{
 
-padding:
-7px 13px;
+display:inline-flex;
+
+padding:7px 12px;
 
 border-radius:999px;
 
 background:
-rgba(255,255,255,.75);
+rgba(255,255,255,.65);
 
 border:
 1px solid
-rgba(255,255,255,.9);
+rgba(255,255,255,.85);
+
+font-size:10px;
+
+font-weight:900;
+
+color:#58717d;
 
 box-shadow:
 0 8px 22px
-rgba(73,103,119,.06);
-
-font-size:11px;
-
-font-weight:800;
-
-color:#53616b;
-
-margin-bottom:17px;
+rgba(61,91,103,.05);
 
 }
 
@@ -777,97 +617,95 @@ margin-bottom:17px;
 .marketing-title{
 
 font-size:
-clamp(38px,5vw,68px);
-
-line-height:1.24;
+clamp(35px,5vw,62px);
 
 font-weight:900;
 
-letter-spacing:-2px;
+line-height:1.26;
 
-max-width:720px;
+letter-spacing:-1.5px;
+
+margin-top:14px;
 
 }
 
 
 .marketing-title span{
 
-color:#7a858d;
+color:#65899b;
 
 }
 
 
 .marketing-text{
 
-margin-top:17px;
+max-width:650px;
 
-max-width:660px;
+margin-top:15px;
 
-font-size:14px;
+font-size:13px;
 
 line-height:2.1;
 
-color:#65727a;
+color:#687982;
 
 }
 
 
-/* ROTATING SLOGAN */
+.slogan-window{
 
-.rotating-line{
-
-height:33px;
+height:34px;
 
 overflow:hidden;
 
-margin-top:22px;
+margin-top:19px;
 
 }
 
 
-.rotating-track{
+.slogan-track{
 
 animation:
-sloganMove
-9s ease-in-out infinite;
+sloganSlide
+10s ease-in-out infinite;
 
 }
 
 
-.rotating-message{
+.slogan{
 
-height:33px;
+height:34px;
 
 display:flex;
 
 align-items:center;
 
-font-size:13px;
+font-size:12px;
 
 font-weight:800;
 
-color:#283239;
+color:#3e535d;
 
 }
 
 
-@keyframes sloganMove{
+@keyframes sloganSlide{
 
-0%,25%{
+0%,26%{
 
 transform:translateY(0);
 
 }
 
-32%,58%{
+34%,59%{
 
-transform:translateY(-33px);
+transform:translateY(-34px);
 
 }
 
-66%,92%{
+67%,92%{
 
-transform:translateY(-66px);
+transform:translateY(-68px);
 
 }
 
@@ -880,54 +718,31 @@ transform:translateY(0);
 }
 
 
-/* LOGIN CARD */
+/* =========================================================
+   LOGIN PANEL
+========================================================= */
 
 .login-panel{
 
-position:relative;
-
-z-index:6;
-
-padding:33px;
-
 background:
-rgba(255,255,255,.72);
+rgba(255,255,255,.78);
 
 border:
 1px solid
-rgba(255,255,255,.94);
-
-backdrop-filter:
-blur(26px);
+rgba(255,255,255,.92);
 
 border-radius:30px;
 
-box-shadow:
-0 32px 90px
-rgba(77,99,111,.12);
+padding:30px;
+
+box-shadow:var(--shadow);
+
+backdrop-filter:blur(24px);
 
 }
 
 
-.login-panel::before{
-
-content:"";
-
-position:absolute;
-
-inset:0;
-
-border-radius:inherit;
-
-box-shadow:
-inset 0 1px 0 #fff;
-
-pointer-events:none;
-
-}
-
-
-.login-status{
+.login-panel-head{
 
 display:flex;
 
@@ -935,23 +750,19 @@ align-items:center;
 
 justify-content:space-between;
 
-gap:10px;
-
-margin-bottom:27px;
+margin-bottom:20px;
 
 }
 
 
-.login-status-title{
+.login-panel-head b{
 
-font-size:14px;
-
-font-weight:900;
+font-size:15px;
 
 }
 
 
-.online{
+.status{
 
 display:flex;
 
@@ -963,64 +774,63 @@ font-size:9px;
 
 font-weight:800;
 
-color:#69757d;
+color:#6e818a;
 
 }
 
 
-.online-dot{
+.status-dot{
 
 width:7px;
-
 height:7px;
 
 border-radius:50%;
 
-background:#444d52;
+background:#669889;
 
-animation:
-onlinePulse 1.8s infinite;
+animation:statusPulse 1.8s infinite;
 
 }
 
 
-@keyframes onlinePulse{
+@keyframes statusPulse{
 
-70%{
+50%{
 
 box-shadow:
-0 0 0 7px
-rgba(62,70,75,0);
-
-}
-
-30%{
-
-box-shadow:
-0 0 0 3px
-rgba(62,70,75,.13);
+0 0 0 6px
+rgba(102,152,137,.12);
 
 }
 
 }
 
 
-.date-card{
+/* =========================================================
+   DATE BOX
+========================================================= */
 
-padding:16px;
+.date-panel{
 
-border-radius:18px;
+padding:15px;
 
-background:#f7f8f9;
+border-radius:17px;
 
-border:1px solid #eceff1;
+background:
+linear-gradient(
+135deg,
+#edf5f7,
+#f5f7f8
+);
 
-margin-bottom:19px;
+border:1px solid #e2e9ec;
+
+margin-bottom:18px;
 
 }
 
 
-.today-name{
+.day{
 
 font-size:17px;
 
@@ -1029,79 +839,77 @@ font-weight:900;
 }
 
 
-.today-details{
+.date-grid{
 
 display:grid;
 
 grid-template-columns:
 1fr 1fr;
 
-gap:8px;
+gap:7px;
 
 margin-top:9px;
 
 }
 
 
-.date-piece{
+.date-cell{
 
-padding:10px;
+padding:8px;
 
-background:#fff;
+border-radius:11px;
 
-border-radius:12px;
-
-border:1px solid #eceff1;
+background:rgba(255,255,255,.75);
 
 }
 
 
-.date-piece small{
+.date-cell small{
 
 display:block;
 
-color:#909ba2;
+font-size:7px;
 
-font-size:8px;
-
-margin-bottom:2px;
+color:#82929a;
 
 }
 
 
-.date-piece b{
+.date-cell b{
 
-font-size:11px;
+font-size:10px;
 
 }
 
 
-.big-clock{
+.clock{
 
-font-size:27px;
+font-size:25px;
 
 font-weight:900;
-
-margin-top:10px;
-
-letter-spacing:1px;
 
 direction:ltr;
 
 text-align:right;
 
+margin-top:9px;
+
 }
 
 
-.login-label{
+/* =========================================================
+   LOGIN INPUT
+========================================================= */
 
-font-size:11px;
+.field-label{
+
+font-size:10px;
 
 font-weight:800;
 
-margin-bottom:7px;
-
 display:block;
+
+margin-bottom:6px;
 
 }
 
@@ -1110,37 +918,34 @@ display:block;
 
 width:100%;
 
-height:57px;
+height:56px;
 
 border-radius:15px;
 
-border:1px solid #e2e6e9;
-
-background:#fff;
+border:1px solid #dce5e8;
 
 outline:none;
 
-padding:
-0 16px;
+background:#fff;
+
+padding:0 15px;
 
 font-size:16px;
 
 font-weight:800;
 
-color:#111;
-
-transition:.2s;
+text-align:center;
 
 }
 
 
 .password-input:focus{
 
-border-color:#aab1b6;
+border-color:#93afb9;
 
 box-shadow:
 0 0 0 4px
-rgba(17,20,24,.04);
+rgba(83,123,145,.06);
 
 }
 
@@ -1149,65 +954,61 @@ rgba(17,20,24,.04);
 
 width:100%;
 
-height:57px;
-
-margin-top:10px;
+height:55px;
 
 border:0;
 
 border-radius:15px;
 
-background:#111418;
+margin-top:10px;
+
+background:
+
+linear-gradient(
+135deg,
+#5b8194,
+#5f9189
+);
 
 color:#fff;
 
-font-size:14px;
+cursor:pointer;
+
+font-size:13px;
 
 font-weight:900;
 
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-
-.enter-btn:hover{
-
-transform:
-translateY(-2px);
-
 box-shadow:
-0 13px 25px
-rgba(0,0,0,.15);
+0 10px 25px
+rgba(75,119,129,.15);
 
 }
 
 
-.login-error{
+.error{
 
 display:none;
 
-font-size:10px;
-
-color:#a24a4a;
-
 text-align:center;
+
+margin-top:8px;
+
+font-size:9px;
 
 font-weight:800;
 
-margin-top:9px;
+color:#9b5555;
 
 }
 
 
 /* =========================================================
-   PAGE HEADER
+   APP HEADER
 ========================================================= */
 
 .app-header{
 
-height:78px;
+height:76px;
 
 display:flex;
 
@@ -1218,16 +1019,12 @@ justify-content:space-between;
 gap:15px;
 
 border-bottom:
-1px solid var(--line);
-
-position:relative;
-
-z-index:20;
+1px solid rgba(38,61,70,.08);
 
 }
 
 
-.header-brand{
+.app-brand{
 
 display:flex;
 
@@ -1238,10 +1035,9 @@ gap:9px;
 }
 
 
-.header-logo{
+.app-logo{
 
 width:40px;
-
 height:40px;
 
 border-radius:13px;
@@ -1250,87 +1046,82 @@ display:grid;
 
 place-items:center;
 
-background:#111418;
-
 color:#fff;
 
-font-size:16px;
+background:
+
+linear-gradient(
+145deg,
+#547c91,
+#65968e
+);
 
 font-weight:900;
 
 }
 
 
-.header-name{
+.app-title{
 
-font-size:20px;
+font-size:18px;
 
 font-weight:900;
 
 }
 
 
-.header-name small{
+.app-title small{
 
 display:block;
 
-font-size:8px;
+font-size:7px;
 
 letter-spacing:1px;
-
-font-weight:600;
 
 color:var(--muted);
 
 }
 
 
-.header-time{
+.app-time{
 
-font-size:10px;
+font-size:9px;
+
+line-height:1.8;
 
 color:var(--muted);
 
 text-align:left;
 
-line-height:1.8;
-
 }
 
 
-.header-time strong{
+.app-time b{
 
 display:block;
 
-font-size:11px;
+font-size:10px;
 
-color:#31383d;
+color:#40515a;
 
 }
 
 
 /* =========================================================
-   PAGE 2
-   CUSTOMER SELECTION
+   FORM PAGE
 ========================================================= */
 
 #formPage{
 
 background:
-
-linear-gradient(
-180deg,
-#fafbfc,
-#f3f5f6
-);
+rgba(244,248,249,.72);
 
 }
 
 
-.form-page-content{
+.form-content{
 
-padding:
-38px 0 55px;
+padding:31px 0 50px;
 
 }
 
@@ -1339,23 +1130,22 @@ padding:
 
 text-align:center;
 
-max-width:770px;
+max-width:720px;
 
-margin:
-0 auto 34px;
+margin:0 auto 25px;
 
 }
 
 
-.mini-caption{
+.overline{
 
-font-size:10px;
+font-size:8px;
+
+letter-spacing:1px;
 
 font-weight:900;
 
-color:#8a959c;
-
-letter-spacing:.7px;
+color:#7f9098;
 
 }
 
@@ -1363,191 +1153,158 @@ letter-spacing:.7px;
 .form-intro h1{
 
 font-size:
-clamp(30px,5vw,48px);
+clamp(27px,4vw,43px);
 
 font-weight:900;
 
-margin-top:7px;
-
-letter-spacing:-1.3px;
+margin-top:5px;
 
 }
 
 
 .form-intro p{
 
+font-size:10px;
+
+line-height:1.9;
+
 color:var(--muted);
 
-font-size:12px;
-
-line-height:2;
-
-margin-top:7px;
+margin-top:5px;
 
 }
 
 
-/* PROGRESS */
+/* =========================================================
+   FORM CARD
+========================================================= */
 
-.progress{
+.form-card{
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-gap:6px;
-
-margin-top:19px;
-
-}
-
-
-.progress-dot{
-
-height:5px;
-
-border-radius:999px;
-
-background:#dfe3e5;
-
-width:28px;
-
-}
-
-
-.progress-dot.active{
-
-background:#1b1e21;
-
-width:54px;
-
-}
-
-
-/* FORM PANEL */
-
-.form-panel{
-
-max-width:940px;
+max-width:900px;
 
 margin:auto;
 
-padding:29px;
+padding:25px;
 
-border-radius:28px;
+background:
+rgba(255,255,255,.87);
 
-background:#fff;
+border:1px solid rgba(225,234,237,.95);
 
-border:1px solid #e8ebed;
+border-radius:27px;
 
-box-shadow:var(--shadow-soft);
+box-shadow:var(--shadow);
 
-}
-
-
-.form-step{
-
-padding-bottom:25px;
-
-margin-bottom:25px;
-
-border-bottom:1px solid #eef0f1;
+backdrop-filter:blur(16px);
 
 }
 
 
-.form-step:last-of-type{
+.form-section{
 
-border-bottom:0;
+padding-bottom:22px;
 
-margin-bottom:4px;
+margin-bottom:21px;
+
+border-bottom:1px solid #edf1f2;
 
 }
 
 
-.step-header{
+.form-section:last-of-type{
+
+border:0;
+
+margin-bottom:0;
+
+padding-bottom:5px;
+
+}
+
+
+.step-head{
 
 display:flex;
 
 align-items:center;
 
-gap:10px;
+gap:9px;
 
-margin-bottom:14px;
+margin-bottom:13px;
 
 }
 
 
-.step-index{
+.step-number{
 
-width:30px;
+width:28px;
+height:28px;
 
-height:30px;
+border-radius:9px;
 
-border-radius:10px;
+background:#edf3f5;
 
 display:grid;
 
 place-items:center;
 
-background:#f0f2f3;
-
-font-size:11px;
+font-size:9px;
 
 font-weight:900;
 
+color:#607983;
+
 }
 
 
-.step-copy b{
+.step-title b{
 
 display:block;
 
-font-size:14px;
+font-size:12px;
 
 }
 
 
-.step-copy small{
+.step-title small{
 
-font-size:9px;
+font-size:8px;
 
 color:var(--muted);
 
 }
 
 
-/* BANK SALARY */
+/* =========================================================
+   BANK SELECTOR
+========================================================= */
 
-.bank-selector{
+.bank-grid{
 
 display:grid;
 
 grid-template-columns:
 repeat(5,1fr);
 
-gap:10px;
+gap:9px;
 
 }
 
 
-.salary-bank{
+.bank-option{
 
 position:relative;
 
-height:82px;
+height:78px;
 
-border-radius:17px;
+border-radius:16px;
 
-border:1px solid #e8ebed;
+border:1px solid #e3eaed;
 
-background:#fafbfb;
+background:#fbfcfc;
 
 cursor:pointer;
-
-transition:.2s;
 
 display:flex;
 
@@ -1555,52 +1312,116 @@ align-items:center;
 
 justify-content:center;
 
+transition:.2s;
+
+overflow:hidden;
+
 }
 
 
-.salary-bank:hover{
+.bank-option:hover{
 
-transform:
-translateY(-2px);
-
-border-color:#cfd5d9;
+transform:translateY(-2px);
 
 box-shadow:
-0 8px 20px
-rgba(0,0,0,.04);
+0 8px 20px rgba(40,64,74,.05);
 
 }
 
 
-.salary-bank.active{
+.bank-option.active{
 
-background:#111418;
+transform:translateY(-2px);
 
-border-color:#111418;
+box-shadow:
+0 9px 24px rgba(39,66,77,.10);
+
+}
+
+
+/* =========================================================
+   BANK BRAND COLORS
+========================================================= */
+
+.bank-option.snb.active{
+
+background:#00715d;
+
+border-color:#00715d;
 
 color:#fff;
 
-box-shadow:
-0 10px 23px
-rgba(17,20,24,.12);
+}
+
+
+.bank-option.rajhi.active{
+
+background:#005b8b;
+
+border-color:#005b8b;
+
+color:#fff;
 
 }
 
 
-.bank-mark{
+.bank-option.sab.active{
 
-font-size:17px;
+background:#b73b52;
+
+border-color:#b73b52;
+
+color:#fff;
+
+}
+
+
+.bank-option.anb.active{
+
+background:
+linear-gradient(
+135deg,
+#1386a8,
+#176c89
+);
+
+border-color:#1386a8;
+
+color:#fff;
+
+}
+
+
+.bank-option.other.active{
+
+background:
+linear-gradient(
+135deg,
+#657985,
+#82939b
+);
+
+border-color:#657985;
+
+color:#fff;
+
+}
+
+
+.bank-brand{
 
 font-weight:900;
 
+font-size:17px;
+
 text-align:center;
 
-line-height:1.2;
+line-height:1.15;
 
 }
 
 
-.bank-mark small{
+.bank-brand small{
 
 display:block;
 
@@ -1608,24 +1429,58 @@ font-size:7px;
 
 font-weight:600;
 
-opacity:.55;
-
 margin-top:3px;
+
+opacity:.70;
 
 }
 
 
-.bank-check{
+.snb:not(.active) .bank-brand{
+
+color:#00715d;
+
+}
+
+
+.rajhi:not(.active) .bank-brand{
+
+color:#005b8b;
+
+}
+
+
+.sab:not(.active) .bank-brand{
+
+color:#b73b52;
+
+}
+
+
+.anb:not(.active) .bank-brand{
+
+color:#117d9f;
+
+}
+
+
+.other:not(.active) .bank-brand{
+
+color:#71838b;
+
+}
+
+
+.check{
 
 position:absolute;
 
-top:7px;
+top:6px;
 
-left:7px;
+left:6px;
 
-width:17px;
-
-height:17px;
+width:16px;
+height:16px;
 
 border-radius:50%;
 
@@ -1635,72 +1490,79 @@ place-items:center;
 
 background:#fff;
 
-color:#111;
+color:#20282d;
 
-font-size:8px;
+font-size:7px;
 
 font-weight:900;
 
 }
 
 
-.salary-bank.active
-.bank-check{
+.bank-option.active .check{
 
 display:grid;
 
 }
 
 
-/* CUSTOMER TYPE */
+/* =========================================================
+   CUSTOMER TYPE
+========================================================= */
 
-.customer-grid{
+.type-grid{
 
 display:grid;
 
 grid-template-columns:
 repeat(4,1fr);
 
-gap:9px;
+gap:8px;
 
 }
 
 
-.customer-type{
+.type-btn{
 
-height:57px;
+height:52px;
 
-border-radius:15px;
+border-radius:14px;
 
-border:1px solid #e5e8ea;
+border:1px solid #e0e7e9;
 
-background:#fafbfb;
-
-font-size:11px;
-
-font-weight:800;
+background:#fafcfc;
 
 cursor:pointer;
 
-color:#313a40;
+font-size:10px;
 
-transition:.2s;
+font-weight:800;
+
+color:#4a5c65;
 
 }
 
 
-.customer-type.active{
+.type-btn.active{
 
-background:#111418;
+background:
+
+linear-gradient(
+135deg,
+#5f8394,
+#688f88
+);
+
+border-color:#5f8394;
 
 color:#fff;
 
-border-color:#111418;
-
 }
 
 
-/* SALARY */
+/* =========================================================
+   SALARY
+========================================================= */
 
 .salary-row{
 
@@ -1709,7 +1571,7 @@ display:grid;
 grid-template-columns:
 1fr 190px;
 
-gap:10px;
+gap:9px;
 
 }
 
@@ -1721,171 +1583,162 @@ position:relative;
 }
 
 
-.salary-input{
+.salary{
 
 width:100%;
 
-height:63px;
-
-border:1px solid #dfe4e7;
-
-background:#fff;
+height:61px;
 
 border-radius:16px;
 
+border:1px solid #dae4e7;
+
 outline:none;
 
-padding:
-0 18px 0 68px;
+background:#fff;
 
-font-size:24px;
+padding:
+0 17px 0 65px;
+
+font-size:23px;
 
 font-weight:900;
 
-color:#111418;
+color:#162027;
 
 }
 
 
-.salary-input:focus{
+.salary:focus{
 
-border-color:#afb7bc;
+border-color:#91adb7;
 
 box-shadow:
 0 0 0 4px
-rgba(17,20,24,.035);
+rgba(84,124,144,.05);
 
 }
 
 
-.riyals{
+.riyal{
 
 position:absolute;
 
-left:17px;
+left:15px;
 
 top:50%;
 
 transform:translateY(-50%);
 
-font-size:10px;
+font-size:9px;
 
 font-weight:800;
 
-color:#929ca2;
+color:#87969d;
 
 }
 
 
-.match-btn{
+.calculate-btn{
 
 border:0;
 
 border-radius:16px;
 
-background:#111418;
+background:
+
+linear-gradient(
+135deg,
+#557c91,
+#65958d
+);
 
 color:#fff;
 
-font-size:13px;
+cursor:pointer;
+
+font-size:12px;
 
 font-weight:900;
 
-cursor:pointer;
-
-transition:.2s;
-
-}
-
-
-.match-btn:hover{
-
-transform:
-translateY(-2px);
+box-shadow:
+0 9px 25px
+rgba(67,111,124,.14);
 
 }
 
 
 /* =========================================================
-   PAGE 3
-   FINAL RESULT
+   RESULTS PAGE
 ========================================================= */
 
 #resultPage{
 
 background:
-
-linear-gradient(
-180deg,
-#f8f9fa,
-#eef1f2
-);
+rgba(241,246,247,.75);
 
 }
 
 
 .result-content{
 
-padding:
-34px 0 55px;
+padding:30px 0 50px;
 
 }
 
 
-.result-heading{
+.result-top{
 
 display:flex;
 
-align-items:end;
+align-items:flex-end;
 
 justify-content:space-between;
 
-gap:25px;
+gap:15px;
 
-margin-bottom:25px;
+margin-bottom:19px;
 
 }
 
 
-.result-heading h1{
+.result-top h1{
 
 font-size:
-clamp(30px,5vw,48px);
+clamp(27px,4vw,42px);
 
 font-weight:900;
 
-letter-spacing:-1px;
-
 }
 
 
-.result-heading p{
+.result-top p{
 
-font-size:10px;
+font-size:9px;
+
+line-height:1.8;
 
 color:var(--muted);
 
-line-height:1.9;
-
-margin-top:5px;
+margin-top:4px;
 
 }
 
 
-.new-calculation{
+.edit-btn{
 
-border:1px solid #dfe3e5;
+height:42px;
 
-background:#fff;
+padding:0 14px;
 
-height:44px;
+border-radius:12px;
 
-padding:
-0 16px;
+border:1px solid #dce4e7;
 
-border-radius:13px;
+background:
+rgba(255,255,255,.8);
 
-font-size:10px;
+font-size:9px;
 
 font-weight:800;
 
@@ -1894,19 +1747,19 @@ cursor:pointer;
 }
 
 
-/* PROFILE */
+/* =========================================================
+   PROFILE
+========================================================= */
 
-.client-profile{
+.profile{
 
 display:flex;
 
-align-items:center;
+gap:6px;
 
 flex-wrap:wrap;
 
-gap:7px;
-
-margin-bottom:15px;
+margin-bottom:12px;
 
 }
 
@@ -1914,52 +1767,60 @@ margin-bottom:15px;
 .profile-pill{
 
 padding:
-7px 11px;
+6px 10px;
 
 border-radius:999px;
 
-background:#fff;
+background:
+rgba(255,255,255,.80);
 
-border:1px solid #e4e8ea;
+border:1px solid #e1e8ea;
 
-font-size:9px;
+font-size:8px;
 
 font-weight:700;
 
-color:#57646c;
+color:#5e6f77;
 
 }
 
 
-/* BEST */
+/* =========================================================
+   BEST CARD
+========================================================= */
 
 .best-card{
+
+position:relative;
+
+overflow:hidden;
 
 display:grid;
 
 grid-template-columns:
 1fr auto;
 
-gap:20px;
-
 align-items:center;
 
-background:#111418;
+gap:18px;
+
+padding:25px;
+
+border-radius:26px;
+
+background:
+
+linear-gradient(
+135deg,
+#50798c,
+#628f88
+);
 
 color:#fff;
 
-border-radius:29px;
-
-padding:
-29px 31px;
-
 box-shadow:
-0 25px 60px
-rgba(17,20,24,.15);
-
-position:relative;
-
-overflow:hidden;
+0 20px 50px
+rgba(63,103,113,.19);
 
 }
 
@@ -1970,71 +1831,67 @@ content:"";
 
 position:absolute;
 
-width:240px;
-
-height:240px;
+width:250px;
+height:250px;
 
 border-radius:50%;
 
-top:-140px;
-
-left:-100px;
+left:-120px;
+top:-150px;
 
 border:
 45px solid
-rgba(255,255,255,.025);
+rgba(255,255,255,.035);
 
 }
 
 
 .best-label{
 
-font-size:9px;
-
-font-weight:800;
-
-letter-spacing:.5px;
-
-color:#aab3b8;
-
-}
-
-
-.best-bank{
-
-font-size:27px;
+font-size:8px;
 
 font-weight:900;
 
-margin-top:5px;
+opacity:.75;
 
 }
 
 
-.best-copy{
+.best-bank-name{
 
-font-size:10px;
+font-size:24px;
 
-color:#aeb6ba;
+font-weight:900;
 
-margin-top:5px;
+margin-top:4px;
 
-line-height:1.9;
+}
+
+
+.best-description{
+
+font-size:9px;
+
+line-height:1.8;
+
+opacity:.76;
+
+margin-top:3px;
 
 }
 
 
 .best-rate{
 
-text-align:left;
-
-font-size:46px;
+font-size:43px;
 
 font-weight:900;
 
 line-height:1;
 
 direction:ltr;
+
+text-align:left;
 
 }
 
@@ -2043,116 +1900,110 @@ direction:ltr;
 
 display:block;
 
-font-size:8px;
+font-size:7px;
 
-color:#a9b2b7;
+font-weight:600;
 
-font-weight:500;
+opacity:.65;
 
-margin-top:7px;
+margin-top:6px;
 
 }
 
 
-/* BANK LIST */
+/* =========================================================
+   BANK RESULTS
+========================================================= */
 
-.results-label{
+.result-list-title{
 
 display:flex;
 
-justify-content:space-between;
-
 align-items:center;
 
+justify-content:space-between;
+
 margin:
-22px 0 11px;
+18px 0 9px;
 
 }
 
 
-.results-label b{
+.result-list-title b{
 
-font-size:14px;
+font-size:12px;
 
 }
 
 
-.results-label span{
+.result-list-title span{
 
-font-size:9px;
+font-size:8px;
 
 color:var(--muted);
 
 }
 
 
-.result-bank{
+.bank-result{
 
 display:grid;
 
 grid-template-columns:
-48px 1fr auto;
-
-gap:13px;
+45px 1fr auto;
 
 align-items:center;
 
-padding:17px;
+gap:11px;
 
-background:#fff;
-
-border:1px solid #e5e9eb;
-
-border-radius:19px;
+padding:15px;
 
 margin-bottom:8px;
 
+border-radius:18px;
+
+background:
+rgba(255,255,255,.88);
+
+border:1px solid #e0e8ea;
+
 box-shadow:
-0 5px 20px
-rgba(0,0,0,.025);
+0 5px 18px rgba(42,65,74,.03);
 
 animation:
-bankEnter .45s both;
+resultIn .4s both;
 
 }
 
 
-.result-bank:nth-child(2){
+.bank-result:nth-child(2){
 
-animation-delay:.06s;
-
-}
-
-
-.result-bank:nth-child(3){
-
-animation-delay:.12s;
+animation-delay:.05s;
 
 }
 
 
-.result-bank:nth-child(4){
+.bank-result:nth-child(3){
 
-animation-delay:.18s;
-
-}
-
-
-.result-bank:nth-child(5){
-
-animation-delay:.24s;
+animation-delay:.10s;
 
 }
 
 
-@keyframes bankEnter{
+.bank-result:nth-child(4){
+
+animation-delay:.15s;
+
+}
+
+
+@keyframes resultIn{
 
 from{
 
 opacity:0;
 
-transform:
-translateY(10px);
+transform:translateY(8px);
 
 }
 
@@ -2160,27 +2011,71 @@ to{
 
 opacity:1;
 
-transform:
-translateY(0);
+transform:translateY(0);
 
 }
 
 }
 
 
-.rank-circle{
+/* =========================================================
+   RESULT BRAND BLOCKS
+========================================================= */
 
-width:42px;
+.brand-box{
 
-height:42px;
+width:41px;
+height:41px;
 
-border-radius:13px;
+border-radius:12px;
 
 display:grid;
 
 place-items:center;
 
-background:#f1f3f4;
+color:#fff;
+
+font-size:10px;
+
+font-weight:900;
+
+}
+
+
+.brand-box.SNB{
+
+background:#00715d;
+
+}
+
+
+.brand-box.RAJHI{
+
+background:#005b8b;
+
+}
+
+
+.brand-box.SAB{
+
+background:#b73b52;
+
+}
+
+
+.brand-box.ANB{
+
+background:
+linear-gradient(
+135deg,
+#1386a8,
+#176c89
+);
+
+}
+
+
+.result-name{
 
 font-size:12px;
 
@@ -2189,29 +2084,20 @@ font-weight:900;
 }
 
 
-.result-bank-name{
+.result-sub{
 
-font-size:14px;
+font-size:7px;
 
-font-weight:900;
-
-}
-
-
-.result-bank-sub{
-
-font-size:8px;
-
-color:#8a959b;
+color:#89979e;
 
 margin-top:2px;
 
 }
 
 
-.result-bank-rate{
+.result-rate{
 
-font-size:24px;
+font-size:22px;
 
 font-weight:900;
 
@@ -2220,91 +2106,137 @@ direction:ltr;
 }
 
 
-/* BANK NOTES */
+/* =========================================================
+   NOTES
+========================================================= */
 
-.bank-notes{
+.notes{
 
 grid-column:
 2 / 4;
 
-margin-top:2px;
-
 }
 
 
-.info-note{
+.note{
 
 padding:
-8px 10px;
+7px 9px;
 
-border-radius:10px;
-
-font-size:8px;
-
-line-height:1.8;
+border-radius:9px;
 
 margin-top:6px;
 
-}
+font-size:7.5px;
 
-
-.info-note.feature{
-
-background:#f8f7f2;
-
-color:#776738;
-
-border:1px solid #ebe5d3;
+line-height:1.8;
 
 }
 
 
-.info-note.warning{
+.note.snb{
 
-background:#faf5f5;
+background:#eef8f5;
 
-color:#855555;
+border:1px solid #d9eee8;
 
-border:1px solid #eddcdc;
-
-}
-
-
-.info-note.date{
-
-background:#f4f6f7;
-
-color:#6c777d;
-
-border:1px solid #e6e9eb;
+color:#51786d;
 
 }
 
 
-/* RESULT ACTIONS */
+.note.rajhi{
 
-.result-actions{
+background:#eff5f9;
+
+border:1px solid #dbe9f1;
+
+color:#587284;
+
+}
+
+
+.note.sab{
+
+background:#fbf1f3;
+
+border:1px solid #f1dfe3;
+
+color:#8b6069;
+
+}
+
+
+.note.anb{
+
+background:#eef7fa;
+
+border:1px solid #dcecef;
+
+color:#557984;
+
+}
+
+
+/* =========================================================
+   LEGAL NOTE
+========================================================= */
+
+.legal{
+
+margin-top:15px;
+
+padding:12px 14px;
+
+border-radius:14px;
+
+background:
+rgba(255,255,255,.72);
+
+border:1px solid #dfe7e9;
+
+font-size:8px;
+
+line-height:1.9;
+
+color:#6c7c84;
+
+}
+
+
+.legal b{
+
+color:#4b5b63;
+
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions{
 
 display:grid;
 
 grid-template-columns:
 1fr 1fr;
 
-gap:9px;
+gap:8px;
 
-margin-top:18px;
+margin-top:12px;
 
 }
 
 
-.whatsapp-btn,
+.share-btn,
 .services-btn{
 
-height:54px;
+height:51px;
 
-border-radius:15px;
+border-radius:14px;
 
-font-size:11px;
+font-size:10px;
 
 font-weight:900;
 
@@ -2313,11 +2245,17 @@ cursor:pointer;
 }
 
 
-.whatsapp-btn{
+.share-btn{
 
 border:0;
 
-background:#111418;
+background:
+
+linear-gradient(
+135deg,
+#557c91,
+#65958d
+);
 
 color:#fff;
 
@@ -2326,43 +2264,48 @@ color:#fff;
 
 .services-btn{
 
-border:1px solid #dfe4e6;
+border:1px solid #dce5e7;
 
-background:#fff;
+background:
+rgba(255,255,255,.80);
 
-color:#313a40;
+color:#475a63;
 
 }
 
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 
-.site-footer{
-
-margin-top:24px;
-
-padding-top:17px;
-
-border-top:1px solid #dfe3e5;
+.footer{
 
 display:flex;
 
+align-items:center;
+
 justify-content:space-between;
 
-gap:15px;
+gap:12px;
 
-color:#89949a;
+margin-top:20px;
 
-font-size:8px;
+padding-top:15px;
+
+border-top:1px solid #dce4e7;
+
+font-size:7px;
+
+color:#7b8b92;
 
 line-height:1.8;
 
 }
 
 
-.site-footer b{
+.footer b{
 
-color:#4b565c;
+color:#4d6069;
 
 }
 
@@ -2371,13 +2314,11 @@ color:#4b565c;
    RESPONSIVE
 ========================================================= */
 
-@media(max-width:900px){
+@media(max-width:850px){
 
 .login-layout{
 
 grid-template-columns:1fr;
-
-padding-top:40px;
 
 }
 
@@ -2387,77 +2328,62 @@ text-align:center;
 
 }
 
-.fino-mark{
+.fino-brand{
 
 justify-content:center;
 
 }
 
-.marketing-title,
-.marketing-text{
-
-margin-left:auto;
-
-margin-right:auto;
-
-}
-
-.rotating-message{
+.slogan{
 
 justify-content:center;
 
 }
 
-.bank-selector{
+.bank-grid{
 
 grid-template-columns:
 repeat(3,1fr);
 
 }
 
-.customer-grid{
+}
+
+
+@media(max-width:600px){
+
+.marketing-title{
+
+font-size:36px;
+
+}
+
+.login-panel{
+
+padding:22px;
+
+}
+
+.app-time{
+
+display:none;
+
+}
+
+.form-card{
+
+padding:17px;
+
+}
+
+.bank-grid{
 
 grid-template-columns:
 repeat(2,1fr);
 
 }
 
-}
-
-
-@media(max-width:650px){
-
-.marketing-title{
-
-font-size:38px;
-
-}
-
-.login-panel{
-
-padding:23px;
-
-}
-
-.app-header{
-
-height:68px;
-
-}
-
-.header-time{
-
-display:none;
-
-}
-
-.form-panel{
-
-padding:19px;
-
-}
-
-.bank-selector{
+.type-grid{
 
 grid-template-columns:
 repeat(2,1fr);
@@ -2470,21 +2396,21 @@ grid-template-columns:1fr;
 
 }
 
-.match-btn{
+.calculate-btn{
 
-height:56px;
+height:53px;
 
 }
 
-.result-heading{
+.result-top{
 
 display:block;
 
 }
 
-.new-calculation{
+.edit-btn{
 
-margin-top:13px;
+margin-top:10px;
 
 }
 
@@ -2500,13 +2426,13 @@ text-align:right;
 
 }
 
-.result-actions{
+.actions{
 
 grid-template-columns:1fr;
 
 }
 
-.site-footer{
+.footer{
 
 display:block;
 
@@ -2518,18 +2444,16 @@ text-align:center;
 
 
 /* =========================================================
-   REDUCED MOTION
+   ACCESSIBILITY
 ========================================================= */
 
 @media(prefers-reduced-motion:reduce){
 
 *{
 
-animation-duration:.001ms !important;
+animation-duration:.01ms !important;
 
 animation-iteration-count:1 !important;
-
-scroll-behavior:auto !important;
 
 }
 
@@ -2545,41 +2469,52 @@ scroll-behavior:auto !important;
 
 
 <!-- =========================================================
-     FINANCIAL FALLING ELEMENTS
+     MOVING BACKGROUND
 ========================================================= -->
+
+<div class="motion-bg">
+
+<div class="blur-orb one"></div>
+
+<div class="blur-orb two"></div>
+
+<div class="blur-orb three"></div>
+
+</div>
+
 
 <div class="finance-rain">
 
-<div class="finance-item">
+<div class="float-value rate">
 1.49%
 </div>
 
-<div class="finance-item">
+<div class="float-value money">
 250,000 ريال
 </div>
 
-<div class="finance-item">
+<div class="float-value rate">
 2.39%
 </div>
 
-<div class="finance-item">
-85,000 ريال
+<div class="float-value money">
+96,500 ريال
 </div>
 
-<div class="finance-item">
+<div class="float-value rate">
 1.79%
 </div>
 
-<div class="finance-item">
+<div class="float-value money">
 320,000 ريال
 </div>
 
-<div class="finance-item">
+<div class="float-value rate">
 0.99%
 </div>
 
-<div class="finance-item">
-150,000 ريال
+<div class="float-value money">
+145,000 ريال
 </div>
 
 </div>
@@ -2587,8 +2522,7 @@ scroll-behavior:auto !important;
 
 
 <!-- =========================================================
-     PAGE 1
-     LOGIN / MARKETING
+     PAGE 1 — LOGIN
 ========================================================= -->
 
 <section
@@ -2597,50 +2531,22 @@ id="loginPage"
 >
 
 
-<div class="sky">
-
-<div class="sun"></div>
-
-<div
-class="cloud c1"
-style="--scale:.7"
-></div>
-
-<div
-class="cloud c2"
-style="--scale:.45"
-></div>
-
-<div
-class="cloud c3"
-style="--scale:.9"
-></div>
-
-<div class="landscape"></div>
-
-<div class="landscape second"></div>
-
-</div>
-
-
 <div class="container">
 
 
 <div class="login-layout">
 
 
-<!-- MARKETING -->
-
 <div class="marketing-side">
 
 
-<div class="fino-mark">
+<div class="fino-brand">
 
-<div class="fino-box">
+<div class="fino-logo">
 F
 </div>
 
-<div class="fino-name">
+<div class="fino-word">
 
 FINO
 
@@ -2653,104 +2559,103 @@ SMART FINANCE MATCH
 </div>
 
 
-<div class="marketing-kicker">
+<div class="marketing-tag">
 
-الترشيح الفوري لشراء مديونية التمويل الشخصي
+ترشيح ذكي وفوري لشراء مديونية التمويل الشخصي
 
 </div>
 
 
 <h1 class="marketing-title">
 
-قرارك المالي
-<span>أوضح.</span>
-وترشيحك أسرع.
+أفضل الخيارات
+تظهر أمامك
+<span>خلال ثوانٍ.</span>
 
 </h1>
 
 
 <p class="marketing-text">
 
-FINO تقارن عروض شراء مديونية التمويل الشخصي
-حسب راتب العميل وفئته وبنك الراتب،
-ثم ترتب البنوك المناسبة من الأقل نسبة إلى الأعلى
-في ثوانٍ.
+أدخل راتب العميل، فئته، وبنك الراتب.
+FINO تستبعد بنك الراتب ثم تقارن البنوك
+المناسبة وتعرضها بالترتيب من الأقل نسبة
+إلى الأعلى.
 
 </p>
 
 
-<div class="rotating-line">
+<div class="slogan-window">
 
-<div class="rotating-track">
+<div class="slogan-track">
 
-<div class="rotating-message">
+<div class="slogan">
 
-أدخل البيانات • وشاهد البنوك تترتب فورًا.
-
-</div>
-
-<div class="rotating-message">
-
-ترشيح أسرع • مقارنة أوضح • قرار أذكى.
+حسبة أسرع • مقارنة أوضح • قرار أدق
 
 </div>
 
-<div class="rotating-message">
+<div class="slogan">
 
-من الحسبة إلى الإنجاز... FINO تختصر الطريق.
+البنوك تترتب تلقائيًا أمام العميل
 
 </div>
+
+<div class="slogan">
+
+من الترشيح إلى الإنجاز... FINO تختصر الطريق
 
 </div>
 
 </div>
-
 
 </div>
 
 
+</div>
 
-<!-- LOGIN PANEL -->
+
 
 <div class="login-panel">
 
 
-<div class="login-status">
+<div class="login-panel-head">
 
-<div class="login-status-title">
-
+<b>
 منصة FINO
+</b>
+
+
+<div class="status">
+
+<div class="status-dot"></div>
+
+الترشيح متاح الآن
 
 </div>
 
-<div class="online">
-
-<div class="online-dot"></div>
-
-جاهزة للترشيح
-
-</div>
-
 </div>
 
 
-<div class="date-card">
+
+<div class="date-panel">
+
 
 <div
-class="today-name"
+class="day"
 id="loginDay"
 >
 —
 </div>
 
 
-<div class="today-details">
+<div class="date-grid">
 
 
-<div class="date-piece">
+<div class="date-cell">
 
 <small>
-الميلادي
+التاريخ الميلادي
 </small>
 
 <b id="loginGregorian">
@@ -2760,10 +2665,10 @@ id="loginDay"
 </div>
 
 
-<div class="date-piece">
+<div class="date-cell">
 
 <small>
-الهجري
+التاريخ الهجري
 </small>
 
 <b id="loginHijri">
@@ -2777,17 +2682,19 @@ id="loginDay"
 
 
 <div
-class="big-clock"
+class="clock"
 id="loginClock"
 >
 —
 </div>
 
+
 </div>
 
 
+
 <label
-class="login-label"
+class="field-label"
 for="password"
 >
 
@@ -2810,13 +2717,13 @@ class="enter-btn"
 onclick="login()"
 >
 
-الدخول إلى FINO ←
+دخول المنصة ←
 
 </button>
 
 
 <div
-class="login-error"
+class="error"
 id="loginError"
 >
 
@@ -2839,8 +2746,7 @@ id="loginError"
 
 
 <!-- =========================================================
-     PAGE 2
-     CUSTOMER DATA
+     PAGE 2 — INPUT
 ========================================================= -->
 
 <section
@@ -2855,13 +2761,13 @@ id="formPage"
 <header class="app-header">
 
 
-<div class="header-brand">
+<div class="app-brand">
 
-<div class="header-logo">
+<div class="app-logo">
 F
 </div>
 
-<div class="header-name">
+<div class="app-title">
 
 FINO
 
@@ -2874,11 +2780,11 @@ SMART FINANCE MATCH
 </div>
 
 
-<div class="header-time">
+<div class="app-time">
 
-<strong id="formDate">
+<b id="formDate">
 —
-</strong>
+</b>
 
 <div id="formClock">
 —
@@ -2891,67 +2797,53 @@ SMART FINANCE MATCH
 
 
 
-<div class="form-page-content">
+<div class="form-content">
 
 
 <div class="form-intro">
 
-<div class="mini-caption">
-
+<div class="overline">
 FINO MATCH ENGINE
-
 </div>
 
 <h1>
-
-ثلاث معلومات...
-والباقي علينا.
-
+بيانات بسيطة... وترشيح فوري.
 </h1>
 
 <p>
 
-حدد بنك الراتب والفئة والراتب الصافي.
-سنستبعد بنك الراتب من المنافسة،
-ثم نرتب الخيارات المناسبة فورًا.
+حدد بنك الراتب والفئة والراتب،
+وسيتم استبعاد بنك الراتب وترتيب
+البنوك المناسبة تلقائيًا.
 
 </p>
 
-
-<div class="progress">
-
-<div class="progress-dot active"></div>
-
-<div class="progress-dot"></div>
-
-</div>
-
 </div>
 
 
 
-<div class="form-panel">
+<div class="form-card">
 
 
 <!-- BANK -->
 
-<div class="form-step">
+<div class="form-section">
 
 
-<div class="step-header">
+<div class="step-head">
 
-<div class="step-index">
+<div class="step-number">
 01
 </div>
 
-<div class="step-copy">
+<div class="step-title">
 
 <b>
 راتب العميل على أي بنك؟
 </b>
 
 <small>
-سيتم استبعاد هذا البنك من الترشيح
+سيتم استبعاد البنك المختار من الترشيح
 </small>
 
 </div>
@@ -2959,25 +2851,26 @@ FINO MATCH ENGINE
 </div>
 
 
-<div class="bank-selector">
+
+<div class="bank-grid">
 
 
 <button
-class="salary-bank"
+class="bank-option snb"
 data-bank="SNB"
 onclick="selectSalaryBank(this)"
 >
 
-<div class="bank-check">
+<div class="check">
 ✓
 </div>
 
-<div class="bank-mark">
+<div class="bank-brand">
 
 SNB
 
 <small>
-الأهلي
+الأهلي السعودي
 </small>
 
 </div>
@@ -2986,18 +2879,22 @@ SNB
 
 
 <button
-class="salary-bank"
+class="bank-option rajhi"
 data-bank="RAJHI"
 onclick="selectSalaryBank(this)"
 >
 
-<div class="bank-check">
+<div class="check">
 ✓
 </div>
 
-<div class="bank-mark">
+<div class="bank-brand">
 
 الراجحي
+
+<small>
+Al Rajhi Bank
+</small>
 
 </div>
 
@@ -3005,16 +2902,16 @@ onclick="selectSalaryBank(this)"
 
 
 <button
-class="salary-bank"
+class="bank-option sab"
 data-bank="SAB"
 onclick="selectSalaryBank(this)"
 >
 
-<div class="bank-check">
+<div class="check">
 ✓
 </div>
 
-<div class="bank-mark">
+<div class="bank-brand">
 
 SAB
 
@@ -3028,18 +2925,22 @@ SAB
 
 
 <button
-class="salary-bank"
+class="bank-option anb"
 data-bank="ANB"
 onclick="selectSalaryBank(this)"
 >
 
-<div class="bank-check">
+<div class="check">
 ✓
 </div>
 
-<div class="bank-mark">
+<div class="bank-brand">
 
 anb
+
+<small>
+العربي الوطني
+</small>
 
 </div>
 
@@ -3047,16 +2948,16 @@ anb
 
 
 <button
-class="salary-bank active"
+class="bank-option other active"
 data-bank="OTHER"
 onclick="selectSalaryBank(this)"
 >
 
-<div class="bank-check">
+<div class="check">
 ✓
 </div>
 
-<div class="bank-mark">
+<div class="bank-brand">
 
 ＋
 
@@ -3076,25 +2977,25 @@ onclick="selectSalaryBank(this)"
 
 
 
-<!-- CATEGORY -->
+<!-- CUSTOMER TYPE -->
 
-<div class="form-step">
+<div class="form-section">
 
 
-<div class="step-header">
+<div class="step-head">
 
-<div class="step-index">
+<div class="step-number">
 02
 </div>
 
-<div class="step-copy">
+<div class="step-title">
 
 <b>
 فئة العميل
 </b>
 
 <small>
-لأن بعض العروض تختلف حسب جهة العمل
+بعض العروض تختلف حسب جهة العمل
 </small>
 
 </div>
@@ -3102,11 +3003,12 @@ onclick="selectSalaryBank(this)"
 </div>
 
 
-<div class="customer-grid">
+
+<div class="type-grid">
 
 
 <button
-class="customer-type active"
+class="type-btn active"
 data-type="government"
 onclick="selectCustomerType(this)"
 >
@@ -3117,7 +3019,7 @@ onclick="selectCustomerType(this)"
 
 
 <button
-class="customer-type"
+class="type-btn"
 data-type="military"
 onclick="selectCustomerType(this)"
 >
@@ -3128,7 +3030,7 @@ onclick="selectCustomerType(this)"
 
 
 <button
-class="customer-type"
+class="type-btn"
 data-type="private"
 onclick="selectCustomerType(this)"
 >
@@ -3139,7 +3041,7 @@ onclick="selectCustomerType(this)"
 
 
 <button
-class="customer-type"
+class="type-btn"
 data-type="retired"
 onclick="selectCustomerType(this)"
 >
@@ -3158,28 +3060,29 @@ onclick="selectCustomerType(this)"
 
 <!-- SALARY -->
 
-<div class="form-step">
+<div class="form-section">
 
 
-<div class="step-header">
+<div class="step-head">
 
-<div class="step-index">
+<div class="step-number">
 03
 </div>
 
-<div class="step-copy">
+<div class="step-title">
 
 <b>
 الراتب الصافي
 </b>
 
 <small>
-أدخل الراتب الشهري
+الراتب الشهري للعميل
 </small>
 
 </div>
 
 </div>
+
 
 
 <div class="salary-row">
@@ -3188,15 +3091,15 @@ onclick="selectCustomerType(this)"
 <div class="salary-wrap">
 
 <input
+class="salary"
 id="salary"
-class="salary-input"
 type="number"
 inputmode="numeric"
 placeholder="مثال: 12000"
 >
 
 
-<div class="riyals">
+<div class="riyal">
 ريال
 </div>
 
@@ -3204,7 +3107,7 @@ placeholder="مثال: 12000"
 
 
 <button
-class="match-btn"
+class="calculate-btn"
 onclick="calculateRecommendation()"
 >
 
@@ -3233,8 +3136,7 @@ onclick="calculateRecommendation()"
 
 
 <!-- =========================================================
-     PAGE 3
-     FINAL RESULTS
+     PAGE 3 — RESULT
 ========================================================= -->
 
 <section
@@ -3249,18 +3151,18 @@ id="resultPage"
 <header class="app-header">
 
 
-<div class="header-brand">
+<div class="app-brand">
 
-<div class="header-logo">
+<div class="app-logo">
 F
 </div>
 
-<div class="header-name">
+<div class="app-title">
 
 FINO
 
 <small>
-FINAL MATCH
+FINAL RECOMMENDATION
 </small>
 
 </div>
@@ -3268,11 +3170,11 @@ FINAL MATCH
 </div>
 
 
-<div class="header-time">
+<div class="app-time">
 
-<strong id="resultDate">
+<b id="resultDate">
 —
-</strong>
+</b>
 
 <div id="resultClock">
 —
@@ -3288,28 +3190,25 @@ FINAL MATCH
 <div class="result-content">
 
 
-<div class="result-heading">
+<div class="result-top">
 
 
 <div>
 
-<div class="mini-caption">
+<div class="overline">
 
-FINO FINAL RECOMMENDATION
+FINO • BUYOUT MATCH
 
 </div>
 
 <h1>
-
-نتيجة الترشيح.
-
+ترشيح شراء مديونية التمويل الشخصي
 </h1>
 
 <p>
 
-تم ترتيب البنوك المؤهلة
-من الأقل نسبة إلى الأعلى
-بعد استبعاد بنك الراتب.
+تم ترتيب البنوك المناسبة من الأقل نسبة
+إلى الأعلى بعد استبعاد بنك الراتب.
 
 </p>
 
@@ -3317,7 +3216,7 @@ FINO FINAL RECOMMENDATION
 
 
 <button
-class="new-calculation"
+class="edit-btn"
 onclick="goToForm()"
 >
 
@@ -3331,7 +3230,7 @@ onclick="goToForm()"
 
 
 <div
-class="client-profile"
+class="profile"
 id="clientProfile"
 >
 </div>
@@ -3345,15 +3244,33 @@ id="finalResults"
 
 
 
-<div class="result-actions">
+<div class="legal">
+
+<b>
+تنبيه:
+</b>
+
+هذه الحسبة والترشيحات استرشادية
+ومبنية على البيانات والجداول المدخلة،
+ولا تمثل عرضًا ملزمًا أو موافقة ائتمانية
+أو نسبة نهائية من البنك.
+تخضع النتيجة النهائية لأهلية العميل،
+جهة العمل، الالتزامات، السجل الائتماني
+وشروط البنك وقت التنفيذ.
+
+</div>
+
+
+
+<div class="actions">
 
 
 <button
-class="whatsapp-btn"
+class="share-btn"
 onclick="shareWhatsApp()"
 >
 
-مشاركة أفضل 3 عبر واتساب
+مشاركة أفضل 3 للعميل
 
 </button>
 
@@ -3363,7 +3280,7 @@ class="services-btn"
 onclick="openServices()"
 >
 
-معرفة بعض خدماتنا
+بعض خدماتنا
 
 </button>
 
@@ -3372,7 +3289,7 @@ onclick="openServices()"
 
 
 
-<footer class="site-footer">
+<footer class="footer">
 
 
 <div>
@@ -3381,15 +3298,14 @@ onclick="openServices()"
 FINO
 </b>
 
-— منصة ترشيح استرشادية
-لشراء مديونية التمويل الشخصي.
+— ترشيح سريع وواضح للحلول التمويلية.
 
 </div>
 
 
 <div>
 
-للاحتساب والتأكيد والإنجاز:
+للتأكيد والاحتساب والإنجاز:
 <b>0506214458</b>
 
 </div>
@@ -3449,7 +3365,7 @@ let latestSalary =
 
 
 /* =========================================================
-   NAVIGATION
+   PAGE NAVIGATION
 ========================================================= */
 
 function showPage(id){
@@ -3458,7 +3374,8 @@ function showPage(id){
 document
 .querySelectorAll(".page")
 .forEach(
-page => page.classList.remove("active")
+page =>
+page.classList.remove("active")
 );
 
 
@@ -3479,13 +3396,13 @@ behavior:"smooth"
 function login(){
 
 
-const value =
+const password =
 document
 .getElementById("password")
 .value;
 
 
-if(value === PASSWORD){
+if(password === PASSWORD){
 
 
 showPage("formPage");
@@ -3499,7 +3416,7 @@ document
 .focus();
 
 },
-350
+250
 );
 
 
@@ -3526,11 +3443,17 @@ showPage("formPage");
 }
 
 
+
+/* =========================================================
+   ENTER LOGIN
+========================================================= */
+
 document
 .getElementById("password")
 .addEventListener(
 "keydown",
 function(e){
+
 
 if(e.key === "Enter"){
 
@@ -3538,22 +3461,27 @@ login();
 
 }
 
+
 }
 );
 
 
+
 /* =========================================================
-   SELECTION
+   BANK SELECTION
 ========================================================= */
 
 function selectSalaryBank(button){
 
 
 document
-.querySelectorAll(".salary-bank")
+.querySelectorAll(".bank-option")
 .forEach(
-item =>
-item.classList.remove("active")
+function(item){
+
+item.classList.remove("active");
+
+}
 );
 
 
@@ -3567,14 +3495,22 @@ button.dataset.bank;
 }
 
 
+
+/* =========================================================
+   CUSTOMER TYPE
+========================================================= */
+
 function selectCustomerType(button){
 
 
 document
-.querySelectorAll(".customer-type")
+.querySelectorAll(".type-btn")
 .forEach(
-item =>
-item.classList.remove("active")
+function(item){
+
+item.classList.remove("active");
+
+}
 );
 
 
@@ -3590,15 +3526,11 @@ button.dataset.type;
 
 
 /* =========================================================
-   DATA
+   RATE TABLES
 ========================================================= */
 
 const RATES = {
 
-
-/* =========================================================
-   SAB
-========================================================= */
 
 SAB:[
 
@@ -3628,10 +3560,6 @@ rate:2.69
 
 ],
 
-
-/* =========================================================
-   RAJHI
-========================================================= */
 
 RAJHI:[
 
@@ -3667,10 +3595,6 @@ rate:3.69
 
 ],
 
-
-/* =========================================================
-   ANB
-========================================================= */
 
 ANB:[
 
@@ -3712,10 +3636,6 @@ rate:3.49
 
 ],
 
-
-/* =========================================================
-   SNB CIVIL
-========================================================= */
 
 SNB_CIV:[
 
@@ -3763,10 +3683,6 @@ rate:3.75
 
 ],
 
-
-/* =========================================================
-   SNB MILITARY
-========================================================= */
 
 SNB_MIL:[
 
@@ -3819,7 +3735,7 @@ rate:3.99
 
 
 /* =========================================================
-   RATE HELPER
+   FIND RATE
 ========================================================= */
 
 function findRate(
@@ -3828,9 +3744,7 @@ table
 ){
 
 
-for(
-const row of table
-){
+for(const row of table){
 
 
 if(
@@ -3924,15 +3838,6 @@ return names[salaryBank];
 function canUseRajhi(){
 
 
-/*
-الجدول المدخل للراجحي
-مرتبط بالحكومي / الفئات المعتمدة.
-
-بدون سؤال إضافي عن تصنيف الشركة،
-يتم عرضه للحكومي والعسكري فقط.
-*/
-
-
 return (
 
 customerType === "government" ||
@@ -3946,13 +3851,6 @@ customerType === "military"
 
 
 function canUseANB(){
-
-
-/*
-حسب العرض المدخل:
-الحكومي / العسكري /
-شبه الحكومي / المتقاعد.
-*/
 
 
 return (
@@ -3988,7 +3886,7 @@ customerType === "private"
 
 
 /* =========================================================
-   CALCULATE
+   CALCULATION
 ========================================================= */
 
 function calculateRecommendation(){
@@ -4020,9 +3918,7 @@ let banks = [];
 
 
 
-/* =========================================================
-   SAB
-========================================================= */
+/* SAB */
 
 if(
 salaryBank !== "SAB" &&
@@ -4059,9 +3955,7 @@ rate:rate
 
 
 
-/* =========================================================
-   RAJHI
-========================================================= */
+/* RAJHI */
 
 if(
 salaryBank !== "RAJHI" &&
@@ -4098,9 +3992,7 @@ rate:rate
 
 
 
-/* =========================================================
-   ANB
-========================================================= */
+/* ANB */
 
 if(
 salaryBank !== "ANB" &&
@@ -4137,9 +4029,7 @@ rate:rate
 
 
 
-/* =========================================================
-   SNB
-========================================================= */
+/* SNB */
 
 if(
 salaryBank !== "SNB" &&
@@ -4184,9 +4074,7 @@ rate:rate
 
 
 
-/* =========================================================
-   SORT
-========================================================= */
+/* SORT */
 
 banks.sort(
 function(a,b){
@@ -4221,7 +4109,7 @@ showPage(
 
 
 /* =========================================================
-   RESULT RENDERING
+   RENDER RESULTS
 ========================================================= */
 
 function renderResults(
@@ -4230,12 +4118,9 @@ banks
 ){
 
 
-const profile =
 document
-.getElementById("clientProfile");
-
-
-profile.innerHTML = `
+.getElementById("clientProfile")
+.innerHTML = `
 
 <div class="profile-pill">
 
@@ -4270,7 +4155,7 @@ ${salaryBankName()}
 `;
 
 
-const container =
+const final =
 document
 .getElementById("finalResults");
 
@@ -4278,21 +4163,21 @@ document
 if(!banks.length){
 
 
-container.innerHTML = `
+final.innerHTML = `
 
 <div
 style="
-background:#fff;
-padding:35px;
-border:1px solid #e4e8ea;
-border-radius:24px;
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,.85);
+border:1px solid #dfe8ea;
 text-align:center;
-color:#78848b;
-font-size:12px;
+color:#72838b;
+font-size:10px;
 "
 >
 
-لا يوجد عرض مطابق ضمن
+لا توجد نسبة مطابقة ضمن
 الجداول الحالية لهذه الحالة.
 
 </div>
@@ -4312,7 +4197,6 @@ banks[0];
 
 let html = `
 
-
 <div class="best-card">
 
 
@@ -4320,21 +4204,21 @@ let html = `
 
 <div class="best-label">
 
-FINO BEST MATCH • أفضل ترشيح
+🏆 أفضل ترشيح حالي
 
 </div>
 
 
-<div class="best-bank">
+<div class="best-bank-name">
 
 ${best.name}
 
 </div>
 
 
-<div class="best-copy">
+<div class="best-description">
 
-أقل نسبة مطابقة ضمن البنوك المؤهلة
+أقل نسبة مطابقة بين البنوك المؤهلة
 بعد استبعاد بنك الراتب.
 
 </div>
@@ -4347,7 +4231,7 @@ ${best.name}
 ${formatRate(best.rate)}%
 
 <small>
-النسبة حسب الجدول المدخل
+حسب الجدول المدخل
 </small>
 
 </div>
@@ -4356,18 +4240,15 @@ ${formatRate(best.rate)}%
 </div>
 
 
-
-<div class="results-label">
+<div class="result-list-title">
 
 <b>
-الترتيب الكامل
+جميع البنوك بالترتيب
 </b>
 
 <span>
-
 ${banks.length}
-بنوك مطابقة
-
+خيارات مطابقة
 </span>
 
 </div>
@@ -4389,11 +4270,11 @@ if(bank.key === "SNB"){
 
 notes += `
 
-<div class="info-note feature">
+<div class="note snb">
 
-ميزة الأهلي:
+ميزة البنك الأهلي:
 <b>
-إعفاء العميل من أول شهرين من الأقساط
+إعفاء من أول شهرين من الأقساط
 </b>
 وفق العرض المدخل.
 
@@ -4411,14 +4292,14 @@ if(bank.key === "RAJHI"){
 
 notes += `
 
-<div class="info-note feature">
+<div class="note rajhi">
 
 ميزة الراجحي:
 إمكانية
 <b>
-تأجيل شهرين من الأقساط
+تأجيل شهرين
 </b>
-حسب شروط وأهلية العميل.
+وفق شروط وأهلية العميل.
 
 </div>
 
@@ -4434,11 +4315,13 @@ if(bank.key === "SAB"){
 
 notes += `
 
-<div class="info-note date">
+<div class="note sab">
 
 شراء المديونية في جدول الأول
 يبدأ من راتب
-<b>10,000 ريال فأعلى</b>.
+<b>
+10,000 ريال فأعلى
+</b>.
 
 </div>
 
@@ -4450,12 +4333,11 @@ if(customerType === "military"){
 
 notes += `
 
-<div class="info-note warning">
+<div class="note sab">
 
-تنبيه للعسكري:
-قد يتم استبعاد بعض البدلات عند احتساب
-الراتب المعتمد،
-ويجب تأكيد البدلات والراتب مع جهة العمل
+للعسكري:
+قد لا تدخل بعض البدلات ضمن الراتب المعتمد،
+ويتم تأكيد الراتب والبدلات مع جهة العمل
 قبل اعتماد الحسبة النهائية.
 
 </div>
@@ -4475,11 +4357,13 @@ if(bank.key === "ANB"){
 
 notes += `
 
-<div class="info-note date">
+<div class="note anb">
 
-تاريخ العرض المدرج:
-<b>31 / 08 / 2026</b>.
-يجب تأكيد استمرار العرض وقت التنفيذ.
+العرض المدرج مؤرخ حتى
+<b>
+31 / 08 / 2026
+</b>
+ويتم تأكيد سريانه عند التنفيذ.
 
 </div>
 
@@ -4488,34 +4372,62 @@ notes += `
 }
 
 
-/* CARD */
+/* BANK SHORT */
+
+let short = "";
+
+if(bank.key === "SNB"){
+
+short = "SNB";
+
+}
+
+if(bank.key === "RAJHI"){
+
+short = "RJ";
+
+}
+
+if(bank.key === "SAB"){
+
+short = "SAB";
+
+}
+
+if(bank.key === "ANB"){
+
+short = "anb";
+
+}
+
 
 html += `
 
-<div class="result-bank">
+<div class="bank-result">
 
 
-<div class="rank-circle">
+<div class="brand-box ${bank.key}">
 
-${index + 1}
+${short}
 
 </div>
 
 
 <div>
 
-<div class="result-bank-name">
+<div class="result-name">
 
+${index + 1}.
 ${bank.name}
 
 </div>
 
 
-<div class="result-bank-sub">
+<div class="result-sub">
 
 ${index === 0
 ?
-"الترشيح الأول"
+"أفضل ترشيح"
 :
 "الخيار رقم " + (index + 1)
 }
@@ -4525,7 +4437,7 @@ ${index === 0
 </div>
 
 
-<div class="result-bank-rate">
+<div class="result-rate">
 
 ${formatRate(bank.rate)}%
 
@@ -4536,7 +4448,7 @@ ${notes
 ?
 `
 
-<div class="bank-notes">
+<div class="notes">
 
 ${notes}
 
@@ -4556,7 +4468,7 @@ ${notes}
 });
 
 
-container.innerHTML =
+final.innerHTML =
 html;
 
 
@@ -4565,7 +4477,7 @@ html;
 
 
 /* =========================================================
-   FORMAT
+   FORMAT RATE
 ========================================================= */
 
 function formatRate(rate){
@@ -4603,19 +4515,18 @@ return;
 
 
 const topThree =
-latestResults
-.slice(0,3);
+latestResults.slice(0,3);
 
 
-let ranking = "";
+let list = "";
 
 
 topThree.forEach(
 function(bank,index){
 
 
-ranking +=
-`${index + 1}- ${bank.name} | ${formatRate(bank.rate)}%\n`;
+list +=
+`${index + 1}️⃣ ${bank.name} — ${formatRate(bank.rate)}%\n`;
 
 
 }
@@ -4624,17 +4535,17 @@ ranking +=
 
 const message =
 
-`FINO | نتيجة الترشيح ✅
+`🏦 FINO | ترشيح شراء مديونية التمويل الشخصي
 
-الراتب: ${latestSalary.toLocaleString("ar-SA")} ريال
-الفئة: ${customerTypeName()}
+تمت مقارنة الخيارات حسب البيانات المدخلة، وأفضل الترشيحات:
 
-أفضل الخيارات:
-${ranking}
-للاحتساب الدقيق، تأكيد المعلومات وإنجاز التمويل الشخصي:
+${list}
+📌 للاحتساب الدقيق، تأكيد الأهلية والمعلومات وإنجاز الطلب:
 📞 ${PHONE}
 
-لمعرفة بعض خدماتنا:
+تنبيه: الترشيح والحسبة استرشادية وليست عرضًا ملزمًا أو موافقة ائتمانية نهائية، وتخضع النسبة النهائية لشروط البنك وأهلية العميل وقت التنفيذ.
+
+🔗 بعض خدماتنا:
 ${SERVICES_URL}
 
 شكرًا لاستخدام FINO 🤍`;
@@ -4674,7 +4585,7 @@ SERVICES_URL,
 
 
 /* =========================================================
-   DATE / TIME
+   CLOCK
 ========================================================= */
 
 function updateClock(){
@@ -4684,7 +4595,7 @@ const now =
 new Date();
 
 
-const weekday =
+const day =
 now.toLocaleDateString(
 "ar-SA-u-ca-gregory",
 {
@@ -4731,7 +4642,7 @@ second:"2-digit"
 document
 .getElementById("loginDay")
 .textContent =
-weekday;
+day;
 
 
 document
@@ -4757,7 +4668,7 @@ time;
 document
 .getElementById("formDate")
 .textContent =
-weekday + " • " + gregorian;
+day + " • " + gregorian;
 
 
 document
@@ -4771,7 +4682,7 @@ time;
 document
 .getElementById("resultDate")
 .textContent =
-weekday + " • " + gregorian;
+day + " • " + gregorian;
 
 
 document
@@ -4794,7 +4705,7 @@ updateClock();
 
 
 /* =========================================================
-   ENTER
+   ENTER SALARY
 ========================================================= */
 
 document
