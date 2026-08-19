@@ -39,6 +39,212 @@
 @media(max-width:820px){.viewport{width:min(94vw,610px)}.header{height:49px}.hero{grid-template-columns:1fr;gap:6px;padding:4px 0 7px;text-align:center}.hero-main{display:flex;flex-direction:column;align-items:center}.kicker{margin-top:6px}.hero h1{font-size:clamp(29px,8vw,44px);line-height:1.12}.hero-sub{font-size:clamp(8px,2.4vw,11px);line-height:1.55;margin-top:5px}.services{justify-content:center;margin-top:7px}.service{padding:4px 6px}.big-phone{margin-top:7px;padding:7px 10px}.big-phone .mobile{width:34px;height:34px}.tip-card{width:min(100%,520px);margin-top:6px;padding:7px 8px}.login-card{width:min(100%,480px);margin:auto;padding:11px 12px;border-radius:16px}.date-box{padding:6px;margin-bottom:5px}.clock{font-size:16px}.password{height:34px}.login-btn{height:33px}.form-card{padding:6px 7px;gap:4px}.bank-grid{grid-template-columns:repeat(3,1fr);gap:3px}.bank-card{height:52px;padding:3px 4px;gap:4px}.bank-logo{width:55px;height:40px;flex-basis:55px}.bank-logo img{max-height:36px}.bank-name{font-size:6px}.type-btn{height:27px}.salary{height:36px;font-size:15px}.calc{height:36px}.best{grid-template-columns:68px 1fr auto;padding:7px}.best-logo{width:64px;height:42px}.best-name{font-size:11px}.best-rate{font-size:23px}}
 @media(max-width:500px){.brand-name{font-size:17px}.contact-mini small{display:none}.hero h1{font-size:clamp(27px,8.6vw,37px)}.service small{display:none}.bank-grid{grid-template-columns:repeat(3,1fr)}.bank-card{height:48px}.bank-logo{width:44px;height:35px;flex-basis:44px}.bank-logo img{max-height:31px}.bank-name{font-size:5px}.salary-row{grid-template-columns:1fr 105px}.salary{height:33px}.calc{height:33px;font-size:6px}.type-btn{font-size:5px;height:25px}.best{grid-template-columns:56px 1fr auto;gap:4px}.best-logo{width:53px;height:35px}.best-name{font-size:9px}.best-rate{font-size:19px}}
 @media(max-height:700px){.header{height:45px}.hero h1{font-size:clamp(27px,4.5vw,45px)}.hero-sub{margin-top:4px;line-height:1.45}.services{margin-top:5px}.big-phone{margin-top:5px;padding:6px 9px}.tip-card{margin-top:4px;padding:5px 7px}.login-card{padding:8px 10px}.date-box{padding:5px;margin-bottom:4px}.password{height:31px}.login-btn{height:30px}.form-card{padding:5px 7px;gap:3px}.salary{height:32px}.calc{height:32px}.bank-card{height:46px}.bank-logo{height:37px}.type-btn{height:24px}.best{padding:6px}.result-bank{padding:3px 5px;margin-bottom:2px}.legal{padding:2px 4px}}
+
+/* =========================================================
+   FINO — PAGE 2 MARKETING / LIVE DATE / RESULT FEATURE PATCH
+   Targeted enhancement only; core layout and calculation unchanged.
+========================================================= */
+.live-date{
+  min-width:210px;
+  display:grid;
+  grid-template-columns:auto auto;
+  gap:3px 10px;
+  align-items:center;
+  justify-items:center;
+  padding:5px 10px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  background:rgba(255,255,255,.94);
+  box-shadow:0 5px 16px rgba(7,59,103,.04);
+}
+.live-date .date-day{
+  grid-column:1/-1;
+  font-size:7px;
+  font-weight:900;
+  color:var(--navy);
+}
+.live-date small{
+  display:block;
+  font-size:5px;
+  color:var(--muted);
+  line-height:1.2;
+}
+.live-date b{
+  display:block;
+  font-size:7px;
+  color:#38596b;
+  white-space:nowrap;
+}
+.live-date .live-time{
+  grid-column:1/-1;
+  direction:ltr;
+  font-size:10px;
+  font-weight:900;
+  color:var(--blue);
+  line-height:1.15;
+}
+
+.marketing-questions{
+  position:relative;
+  height:29px;
+  flex:0 0 29px;
+  margin:4px 0 5px;
+  overflow:hidden;
+  border:1px solid #dceaf4;
+  border-radius:10px;
+  background:linear-gradient(90deg,#ffffff,#f5faff,#ffffff);
+  box-shadow:0 5px 16px rgba(7,59,103,.035);
+}
+.marketing-track{
+  width:max-content;
+  height:100%;
+  display:flex;
+  align-items:center;
+  gap:30px;
+  padding-left:30px;
+  direction:ltr;
+  animation:marketingRun 31s linear infinite;
+}
+.marketing-q{
+  white-space:nowrap;
+  direction:rtl;
+  font-size:8px;
+  font-weight:900;
+  color:#35576a;
+}
+.marketing-q:nth-child(4n+1){color:#075488}
+.marketing-q:nth-child(4n+2){color:#a36212}
+.marketing-q:nth-child(4n+3){color:#7b3fa3}
+.marketing-q:nth-child(4n+4){color:#126f8f}
+.marketing-q strong{
+  font-size:9px;
+  font-weight:900;
+}
+@keyframes marketingRun{to{transform:translateX(-50%)}}
+
+.tip-bar{
+  min-height:31px!important;
+  overflow:hidden;
+  justify-content:flex-start!important;
+  font-size:7px!important;
+  padding:5px 8px!important;
+  position:relative;
+}
+.tip-moving{
+  width:max-content;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  white-space:nowrap;
+  direction:rtl;
+  animation:tipGlide 18s linear infinite;
+  font-size:8px;
+  font-weight:900;
+}
+.tip-moving b{
+  color:var(--blue);
+}
+@keyframes tipGlide{
+  from{transform:translateX(-8%)}
+  to{transform:translateX(18%)}
+}
+.tip-text{
+  font-size:12px!important;
+}
+
+.contact-mini{
+  min-width:185px;
+}
+.contact-mini small{
+  font-size:6px!important;
+}
+.contact-mini b{
+  font-size:14px!important;
+}
+
+.result-feature{
+  margin:5px 0;
+  display:grid;
+  grid-template-columns:36px 1fr;
+  gap:8px;
+  align-items:center;
+  padding:8px 10px;
+  border:1px solid #d9e9f3;
+  border-radius:12px;
+  background:linear-gradient(135deg,#ffffff,#f3f9fd);
+  box-shadow:0 7px 20px rgba(7,59,103,.045);
+}
+.result-feature .feature-icon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  background:#e9f5fd;
+  font-size:18px;
+}
+.result-feature .feature-label{
+  font-size:6px;
+  font-weight:900;
+  color:var(--blue);
+}
+.result-feature .feature-title{
+  margin-top:1px;
+  font-size:10px;
+  line-height:1.55;
+  font-weight:900;
+  color:var(--navy);
+}
+.result-feature .feature-copy{
+  margin-top:1px;
+  font-size:6px;
+  line-height:1.55;
+  color:var(--muted);
+}
+.capture-cta{
+  margin-top:5px;
+  display:grid;
+  grid-template-columns:40px 1fr auto;
+  gap:9px;
+  align-items:center;
+  padding:9px 11px;
+  border-radius:13px;
+  background:linear-gradient(100deg,#073b67,#0b5c96);
+  color:#fff;
+  box-shadow:0 10px 26px rgba(7,59,103,.14);
+}
+.capture-cta .capture-icon{
+  width:40px;height:40px;border-radius:11px;
+  display:grid;place-items:center;
+  background:rgba(255,255,255,.12);
+  font-size:20px;
+}
+.capture-cta b{font-size:9px}
+.capture-cta small{display:block;margin-top:1px;font-size:6px;opacity:.82}
+.capture-cta strong{font-size:18px;direction:ltr;white-space:nowrap}
+.contact-hint{
+  display:block;
+  margin-top:2px;
+  font-size:6px;
+  color:var(--muted);
+  text-align:center;
+  font-weight:700;
+}
+@media(max-width:820px){
+  .live-date{min-width:175px;padding:4px 7px}
+  .marketing-questions{height:27px;flex-basis:27px}
+  .marketing-q{font-size:7px}
+  .capture-cta{grid-template-columns:34px 1fr auto;padding:7px 8px}
+  .capture-cta .capture-icon{width:34px;height:34px}
+  .capture-cta strong{font-size:15px}
+}
+@media(max-width:580px){
+  .live-date{display:none}
+  .marketing-q{font-size:6.5px}
+  .capture-cta{grid-template-columns:32px 1fr}
+  .capture-cta strong{grid-column:1/-1;text-align:center}
+}
+
 </style>
 </head>
 <body>
@@ -57,17 +263,36 @@
 <div class="login-card"><div class="login-top"><h2>FINO LIVE</h2><span>● المنصة جاهزة</span></div><div class="date-box"><div class="today" id="today">—</div><div class="date-grid"><div class="date-cell"><small>الميلادي</small><b id="greg">—</b></div><div class="date-cell"><small>الهجري</small><b id="hijri">—</b></div></div><div class="clock" id="clock">—</div></div><label class="label">رمز الدخول</label><input class="password" id="password" type="password" placeholder="أدخل الرقم السري" autocomplete="off"><button class="login-btn" onclick="login()">دخول FINO ←</button><div class="error" id="loginError">الرقم السري غير صحيح</div></div></div>
 </div></section>
 <section class="page" id="page2"><div class="viewport">
-<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>LIVE MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب • تأكيد • إنجاز</small><b>0506214458</b></span></a></header>
-<div class="form-wrap"><div class="page-title"><div class="eyebrow">FINO LIVE MATCH</div><h1>3 خطوات فقط... <span>وترشيحك أمامك فورًا</span></h1><p>تحويل مديونية التمويل الشخصي بين البنوك</p></div><div class="tip-bar" id="tip2"></div>
+<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>LIVE MATCH</small></div></div>
+<div class="live-date"><div class="date-day" id="formDay">—</div><div><small>الميلادي</small><b id="formGreg">—</b></div><div><small>الهجري</small><b id="formHijri">—</b></div><div class="live-time" id="formTime">—</div></div>
+<a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لا تتردد • واتساب أو اتصال</small><b>0506214458</b></span></a></header>
+
+<div class="form-wrap"><div class="page-title"><div class="eyebrow">FINO LIVE MATCH</div><h1>3 خطوات فقط... <span>وترشيحك أمامك فورًا</span></h1><p>تحويل مديونية التمويل الشخصي بين البنوك • إنجاز بأسرع وقت وبدون تعقيدات</p></div>
+<div class="marketing-questions"><div class="marketing-track">
+<span class="marketing-q">💰 <strong>تبحث عن فائض كاش أعلى بعد سداد مديونيتك؟</strong></span>
+<span class="marketing-q">📈 <strong>نسبة إعادة التمويل الحالية عندك مرتفعة؟</strong></span>
+<span class="marketing-q">🏦 <strong>هل نقل المديونية لبنك آخر قد يكون أوفر لك ويزيد الصافي؟</strong></span>
+<span class="marketing-q">📅 <strong>تبحث عن مزايا أفضل على الأقساط مثل التأجيل حسب شروط العرض؟</strong></span>
+<span class="marketing-q">⚡ <strong>تبغى إنجاز بأسرع وقت وبدون تعقيدات؟</strong></span>
+<span class="marketing-q">🧮 <strong>قارن أولًا... قرار أفضل يبدأ بحسبة أوضح.</strong></span>
+<span class="marketing-q">💰 <strong>تبحث عن فائض كاش أعلى بعد سداد مديونيتك؟</strong></span>
+<span class="marketing-q">📈 <strong>نسبة إعادة التمويل الحالية عندك مرتفعة؟</strong></span>
+<span class="marketing-q">🏦 <strong>هل نقل المديونية لبنك آخر قد يكون أوفر لك ويزيد الصافي؟</strong></span>
+<span class="marketing-q">📅 <strong>تبحث عن مزايا أفضل على الأقساط مثل التأجيل حسب شروط العرض؟</strong></span>
+<span class="marketing-q">⚡ <strong>تبغى إنجاز بأسرع وقت وبدون تعقيدات؟</strong></span>
+<span class="marketing-q">🧮 <strong>قارن أولًا... قرار أفضل يبدأ بحسبة أوضح.</strong></span>
+</div></div>
+<div class="tip-bar" id="tip2"></div>
 <div class="form-card">
 <div class="section-label"><div class="num">01</div><div><b>أدخل راتبك الصافي</b><small>الراتب الشهري بالريال</small></div></div><div class="salary-row"><div class="salary-wrap"><input class="salary" id="salary" type="number" inputmode="numeric" placeholder="مثال: 12000"><span class="currency">ريال</span></div><button class="calc" onclick="calculate()">⚡ اعرض الترشيح</button></div>
 <div class="section-label"><div class="num">02</div><div><b>اختر فئتك</b><small>حدد نوع جهة العمل</small></div></div><div class="type-grid"><button class="type-btn active" data-type="government" onclick="selectType(this)">حكومي / شبه حكومي</button><button class="type-btn" data-type="military" onclick="selectType(this)">عسكري</button><button class="type-btn" data-type="private" onclick="selectType(this)">قطاع خاص</button><button class="type-btn" data-type="retired" onclick="selectType(this)">متقاعد</button></div>
 <div class="section-label"><div class="num">03</div><div><b>اختر البنك الذي ينزل عليه راتبك</b><small>اختر اسم البنك وشعاره</small></div></div><div class="bank-grid" id="bankGrid"></div>
-</div><footer class="form-footer"><span><b>FINO</b> • تحويل مديونية التمويل الشخصي</span><strong>0506214458</strong></footer></div>
+</div><footer class="form-footer"><span><b>FINO</b> • تحويل مديونية التمويل الشخصي • لا تتردد بالتواصل واتساب أو اتصال</span><strong>0506214458</strong></footer><span class="contact-hint">احتساب • تأكيد المعلومات • إنجاز بأسرع وقت وبدون تعقيدات</span></div>
 </div></section>
 <section class="page" id="page3"><div class="viewport">
-<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>FINAL MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب • تأكيد • إنجاز</small><b>0506214458</b></span></a></header>
-<div class="result-wrap"><div class="result-head"><div><div class="eyebrow">FINO BUYOUT MATCH</div><h1>أفضل ترشيح <span>لتحويل مديونيتك</span></h1><p>النتيجة حسب البيانات والعروض المسجلة.</p></div><button class="edit" onclick="showPage('page2')">← تعديل البيانات</button></div><div class="sales-banner"><div><b>تبغى نتأكد من الحسبة وننجز الطلب؟</b><small>احتساب دقيق • تأكيد المعلومات • إنجاز تحويل المديونية</small></div><strong>0506214458</strong></div><div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="legal"><b>تنبيه:</b> النتيجة ترشيح وحسبة استرشادية مبنية على البيانات والعروض المسجلة في FINO، وليست موافقة ائتمانية أو عرضًا ملزمًا. يتم تأكيد الأهلية والنسبة النهائية وفق بيانات العميل وشروط البنك وقت التنفيذ.</div><div class="actions"><button class="action wa" onclick="shareWhats()">📲 إرسال عبر واتساب</button><button class="action svc" onclick="window.open(SERVICE_URL,'_blank')">معرفة بعض خدماتنا</button></div><footer class="form-footer"><span><b>FINO</b> • للاحتساب والتأكيد والإنجاز</span><strong>0506214458</strong></footer></div>
+<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>FINAL MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لتأكيد الحسبة والإنجاز</small><b>0506214458</b></span></a></header>
+<div class="result-wrap"><div class="result-head"><div><div class="eyebrow">FINO BUYOUT MATCH</div><h1>أفضل ترشيح <span>لتحويل مديونيتك</span></h1><p>النتيجة حسب البيانات والعروض المسجلة.</p></div><button class="edit" onclick="showPage('page2')">← تعديل البيانات</button></div><div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجزها لك</b><small>تأكيد المعلومات • مراجعة الحسبة • إنجاز بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div><div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="legal"><b>تنبيه:</b> النتيجة ترشيح وحسبة استرشادية مبنية على البيانات والعروض المسجلة في FINO، وليست موافقة ائتمانية أو عرضًا ملزمًا. يتم تأكيد الأهلية والنسبة النهائية وفق بيانات العميل وشروط البنك وقت التنفيذ.</div><div class="capture-cta"><div class="capture-icon">📸</div><div><b>خذ لقطة لهذه الشاشة وتواصل معنا</b><small>نؤكد لك الحسبة والمعلومات ونكمل معك الإنجاز بأسرع وقت وبدون تعقيدات.</small></div><strong>0506214458</strong></div>
+<div class="actions"><button class="action wa" onclick="shareWhats()">📲 إرسال عبر واتساب</button><button class="action svc" onclick="window.open(SERVICE_URL,'_blank')">معرفة بعض خدماتنا</button></div><footer class="form-footer"><span><b>FINO</b> • لتأكيد الحسبة والإنجاز تواصل معنا الآن</span><strong>0506214458</strong></footer></div>
 </div></section>
 </div>
 <script>
@@ -95,8 +320,14 @@ if(selectedBank!=='RAJHI'&&(customerType==='government'||customerType==='militar
 if(selectedBank!=='ANB'&&(customerType==='government'||customerType==='military'||customerType==='retired')){const r=findRate(salary,RATES.ANB);if(r!==null)out.push({key:'ANB',name:'البنك العربي الوطني ANB',rate:r})}
 if(selectedBank!=='SNB'&&(customerType==='government'||customerType==='military'||customerType==='private')){const table=customerType==='military'?RATES.SNB_MIL:RATES.SNB_CIV;const r=findRate(salary,table);if(r!==null)out.push({key:'SNB',name:'البنك الأهلي السعودي SNB',rate:r})}
 out.sort((a,b)=>a.rate-b.rate);latestResults=out;renderResults(salary,out);showPage('page3')}
-function renderResults(salary,out){document.getElementById('profile').innerHTML=`<div class="pill">الراتب: <b>${salary.toLocaleString('ar-SA')} ريال</b></div><div class="pill">الفئة: <b>${typeName()}</b></div><div class="pill">بنك الراتب: <b>${selectedBankName}</b></div>`;const c=document.getElementById('results');if(!out.length){c.innerHTML='<div class="legal" style="padding:15px;font-size:8px;text-align:center">لا توجد نسبة مطابقة ضمن الجداول الحالية لهذه الحالة.</div>';return}const best=out[0];let h=`<div class="best"><div class="best-logo">${logo(best.key)}</div><div><div class="best-tag">🏆 الترشيح الأول</div><div class="best-name">${best.name}</div><div class="best-copy">أفضل نسبة مطابقة ضمن الخيارات المتاحة حاليًا.</div></div><div class="best-rate">${fmt(best.rate)}%<small>النسبة المسجلة</small></div></div><div class="list-title"><b>بقية الخيارات بالترتيب</b><span>${out.length} خيارات مطابقة</span></div>`;
-out.slice(1).forEach((b,i)=>{let notes='';if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>إعفاء من أول شهرين من الأقساط</b> وفق العرض المسجل.</div>`;if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل شهرين</b> حسب شروط وأهلية العميل.</div>`;if(b.key==='SAB'){notes+=`<div class="note">شراء المديونية يبدأ من راتب <b>10,000 ريال فأعلى.</b></div>`;if(customerType==='military')notes+=`<div class="note">🎖️ للعسكري: قد يتم استبعاد بعض البدلات، ويتم التأكد من الراتب والبدلات المعتمدة مع جهة العمل قبل اعتماد الحسبة النهائية.</div>`}if(b.key==='ANB')notes+=`<div class="note">📅 العرض المسجل مؤرخ حتى <b>31 / 08 / 2026</b> ويتم تأكيد سريانه وقت التنفيذ.</div>`;h+=`<div class="result-bank"><div class="result-logo">${logo(b.key)}</div><div><div class="result-name">${i+2}. ${b.name}</div><div class="result-order">الخيار رقم ${i+2}</div></div><div class="result-rate">${fmt(b.rate)}%</div>${notes?`<div class="notes">${notes}</div>`:''}</div>`});c.innerHTML=h}
+function renderResults(salary,out){document.getElementById('profile').innerHTML=`<div class="pill">الراتب: <b>${salary.toLocaleString('ar-SA')} ريال</b></div><div class="pill">الفئة: <b>${typeName()}</b></div><div class="pill">بنك الراتب: <b>${selectedBankName}</b></div>`;const c=document.getElementById('results');if(!out.length){c.innerHTML='<div class="legal" style="padding:15px;font-size:8px;text-align:center">لا توجد نسبة مطابقة ضمن الجداول الحالية لهذه الحالة.</div>';return}const best=out[0];
+let bestFeature='';
+if(best.key==='RAJHI')bestFeature=`<div class="result-feature"><div class="feature-icon">📅</div><div><div class="feature-label">ميزة العرض المسجل</div><div class="feature-title">إمكانية تأجيل قسطين (شهرين)</div><div class="feature-copy">تأجيل وليس إعفاء، ويخضع لشروط وأهلية العميل والعرض وقت التنفيذ.</div></div></div>`;
+if(best.key==='SNB')bestFeature=`<div class="result-feature"><div class="feature-icon">⭐</div><div><div class="feature-label">ميزة برنامج تحويل المديونية</div><div class="feature-title">تأجيل أول قسطين حسب خصائص ومزايا البرنامج</div><div class="feature-copy">يتم تأكيد الميزة النهائية وشروطها وقت التنفيذ.</div></div></div>`;
+if(best.key==='SAB')bestFeature=`<div class="result-feature"><div class="feature-icon">🏦</div><div><div class="feature-label">ملاحظة مهمة</div><div class="feature-title">شراء المديونية في الجدول المسجل يبدأ من راتب 10,000 ريال فأعلى</div><div class="feature-copy">${customerType==='military'?'للعسكري: قد يتم استبعاد بعض البدلات ويتم التأكد منها مع جهة العمل قبل الحسبة النهائية.':'تخضع الأهلية النهائية لشروط البنك وقت التنفيذ.'}</div></div></div>`;
+if(best.key==='ANB')bestFeature=`<div class="result-feature"><div class="feature-icon">⏱️</div><div><div class="feature-label">تاريخ العرض المسجل</div><div class="feature-title">العرض مؤرخ حتى 31 / 08 / 2026</div><div class="feature-copy">يتم تأكيد استمرار العرض والنسبة وقت التنفيذ.</div></div></div>`;
+let h=`<div class="best"><div class="best-logo">${logo(best.key)}</div><div><div class="best-tag">🏆 الترشيح الأول</div><div class="best-name">${best.name}</div><div class="best-copy">أفضل نسبة مطابقة ضمن الخيارات المتاحة حاليًا.</div></div><div class="best-rate">${fmt(best.rate)}%<small>النسبة المسجلة</small></div></div>${bestFeature}<div class="list-title"><b>بقية الخيارات بالترتيب</b><span>${out.length} خيارات مطابقة</span></div>`;
+out.slice(1).forEach((b,i)=>{let notes='';if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>تأجيل أول قسطين</b> حسب خصائص ومزايا برنامج تحويل المديونية.</div>`;if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل شهرين</b> حسب شروط وأهلية العميل.</div>`;if(b.key==='SAB'){notes+=`<div class="note">شراء المديونية يبدأ من راتب <b>10,000 ريال فأعلى.</b></div>`;if(customerType==='military')notes+=`<div class="note">🎖️ للعسكري: قد يتم استبعاد بعض البدلات، ويتم التأكد من الراتب والبدلات المعتمدة مع جهة العمل قبل اعتماد الحسبة النهائية.</div>`}if(b.key==='ANB')notes+=`<div class="note">📅 العرض المسجل مؤرخ حتى <b>31 / 08 / 2026</b> ويتم تأكيد سريانه وقت التنفيذ.</div>`;h+=`<div class="result-bank"><div class="result-logo">${logo(b.key)}</div><div><div class="result-name">${i+2}. ${b.name}</div><div class="result-order">الخيار رقم ${i+2}</div></div><div class="result-rate">${fmt(b.rate)}%</div>${notes?`<div class="notes">${notes}</div>`:''}</div>`});c.innerHTML=h}
 function shareWhats(){if(!latestResults.length){alert('لا توجد نتيجة لمشاركتها');return}const medals=['🥇','🥈','🥉'];const ranking=latestResults.slice(0,3).map((b,i)=>`${medals[i]} ${b.name} — ${fmt(b.rate)}%`).join('\n');const msg=`🏦 FINO | تحويل مديونية التمويل الشخصي
 
 حسب البيانات المدخلة، أفضل الترشيحات حاليًا:
@@ -114,6 +345,18 @@ ${SERVICE_URL}
 function updateTip(){const t=TIPS[tipIndex];document.getElementById('tip1').textContent=t;document.getElementById('tip2').innerHTML='<b>💡 نصيحة FINO:</b> '+t;document.getElementById('tip3').innerHTML='<b>💡 قبل القرار:</b> '+t;document.getElementById('tipCount').textContent=`${tipIndex+1} / ${TIPS.length}`;tipIndex=(tipIndex+1)%TIPS.length}
 function updateDate(){const n=new Date();document.getElementById('today').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{weekday:'long'});document.getElementById('greg').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{year:'numeric',month:'long',day:'numeric'});document.getElementById('hijri').textContent=n.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{year:'numeric',month:'long',day:'numeric'});document.getElementById('clock').textContent=n.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});renderBanks();updateTip();updateDate();setInterval(updateTip,6000);setInterval(updateDate,1000);
+
+function updateFormDate(){
+ const n=new Date();
+ const day=n.toLocaleDateString('ar-SA-u-ca-gregory',{weekday:'long'});
+ const greg=n.toLocaleDateString('ar-SA-u-ca-gregory',{year:'numeric',month:'long',day:'numeric'});
+ const hijri=n.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{year:'numeric',month:'long',day:'numeric'});
+ const time=n.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ const fd=document.getElementById('formDay'),fg=document.getElementById('formGreg'),fh=document.getElementById('formHijri'),ft=document.getElementById('formTime');
+ if(fd)fd.textContent=day;if(fg)fg.textContent=greg;if(fh)fh.textContent=hijri;if(ft)ft.textContent=time;
+}
+updateFormDate();setInterval(updateFormDate,1000);
+
 </script>
 </body>
 </html>
