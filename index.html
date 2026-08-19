@@ -245,6 +245,212 @@
   .capture-cta strong{grid-column:1/-1;text-align:center}
 }
 
+
+/* =========================================================
+   FINO — REQUESTED TARGETED PATCH
+   No core layout/calculation changes.
+========================================================= */
+
+/* Strong phone contrast on dark backgrounds */
+.sales-banner strong,
+.capture-cta strong,
+.result-contact-number{
+  color:#ffffff !important;
+}
+
+/* Eligibility / scope strip */
+.eligibility-strip{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:29px;
+  padding:5px 9px;
+  margin:4px 0;
+  border:1px solid #d9e8f2;
+  border-radius:10px;
+  background:#ffffff;
+  box-shadow:0 5px 16px rgba(7,59,103,.035);
+  color:#425f70;
+  font-size:7px;
+  font-weight:800;
+  text-align:center;
+}
+.eligibility-strip b{
+  color:var(--navy);
+}
+.eligibility-strip .elig-icon{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  display:grid;
+  place-items:center;
+  border-radius:7px;
+  background:#eaf5fd;
+  font-size:11px;
+}
+
+/* Result-page animated marketing board */
+.result-marketing-board{
+  position:relative;
+  min-height:65px;
+  margin:5px 0;
+  padding:8px 10px;
+  overflow:hidden;
+  border:1px solid #d9e9f3;
+  border-radius:13px;
+  background:linear-gradient(135deg,#ffffff,#f5faff);
+  box-shadow:0 7px 22px rgba(7,59,103,.045);
+}
+.result-marketing-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:5px;
+}
+.result-marketing-head b{
+  font-size:8px;
+  color:var(--navy);
+}
+.result-marketing-head span{
+  padding:3px 7px;
+  border-radius:999px;
+  background:#eaf5fd;
+  color:var(--blue);
+  font-size:6px;
+  font-weight:900;
+}
+.result-marquee{
+  overflow:hidden;
+  white-space:nowrap;
+}
+.result-marquee-track{
+  width:max-content;
+  display:inline-flex;
+  align-items:center;
+  gap:26px;
+  padding-left:26px;
+  direction:ltr;
+  animation:resultMarquee 27s linear infinite;
+}
+.result-message{
+  direction:rtl;
+  white-space:nowrap;
+  font-size:9px;
+  font-weight:900;
+  color:#35576a;
+}
+.result-message:nth-child(4n+1){color:#075488}
+.result-message:nth-child(4n+2){color:#9a5e13}
+.result-message:nth-child(4n+3){color:#7a3f9b}
+.result-message:nth-child(4n+4){color:#126f8f}
+@keyframes resultMarquee{
+  to{transform:translateX(-50%)}
+}
+
+/* Distinct result contact card */
+.result-contact{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:10px;
+  margin:6px 0 5px;
+  padding:9px 11px;
+  border-radius:13px;
+  background:linear-gradient(100deg,#082f50,#0b5188);
+  color:#ffffff;
+  box-shadow:0 10px 27px rgba(7,59,103,.15);
+}
+.result-contact-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:11px;
+  background:rgba(255,255,255,.12);
+  font-size:21px;
+}
+.result-contact b{
+  display:block;
+  font-size:9px;
+}
+.result-contact small{
+  display:block;
+  margin-top:1px;
+  font-size:6px;
+  opacity:.84;
+}
+.result-contact-number{
+  direction:ltr;
+  white-space:nowrap;
+  font-size:20px;
+  font-weight:900;
+}
+
+/* Larger bank feature card when selected as best */
+.result-feature{
+  padding:10px 11px !important;
+  grid-template-columns:42px 1fr !important;
+}
+.result-feature .feature-icon{
+  width:42px !important;
+  height:42px !important;
+  font-size:20px !important;
+}
+.result-feature .feature-label{
+  font-size:7px !important;
+}
+.result-feature .feature-title{
+  font-size:11px !important;
+  line-height:1.55 !important;
+}
+.result-feature .feature-copy{
+  font-size:6.5px !important;
+}
+
+/* Retitle back/recalculate button */
+.edit{
+  font-weight:900 !important;
+}
+
+/* Page-2 top phone: clearer contrast */
+.contact-mini{
+  background:#ffffff !important;
+}
+.contact-mini b{
+  color:var(--navy) !important;
+}
+
+/* Page 2 footer emphasis */
+.form-footer strong{
+  color:var(--navy);
+}
+
+/* Page 3 dark CTAs */
+.capture-cta b,
+.capture-cta small,
+.capture-cta strong{
+  color:#ffffff;
+}
+
+@media(max-width:580px){
+  .result-contact{
+    grid-template-columns:34px 1fr;
+  }
+  .result-contact-icon{
+    width:34px;height:34px;
+  }
+  .result-contact-number{
+    grid-column:1/-1;
+    text-align:center;
+    font-size:17px;
+  }
+  .result-message{
+    font-size:7px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -282,6 +488,7 @@
 <span class="marketing-q">⚡ <strong>تبغى إنجاز بأسرع وقت وبدون تعقيدات؟</strong></span>
 <span class="marketing-q">🧮 <strong>قارن أولًا... قرار أفضل يبدأ بحسبة أوضح.</strong></span>
 </div></div>
+<div class="eligibility-strip"><span class="elig-icon">✓</span><span><b>شرط هذه الحسبة:</b> لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
 <div class="tip-bar" id="tip2"></div>
 <div class="form-card">
 <div class="section-label"><div class="num">01</div><div><b>أدخل راتبك الصافي</b><small>الراتب الشهري بالريال</small></div></div><div class="salary-row"><div class="salary-wrap"><input class="salary" id="salary" type="number" inputmode="numeric" placeholder="مثال: 12000"><span class="currency">ريال</span></div><button class="calc" onclick="calculate()">⚡ اعرض الترشيح</button></div>
@@ -291,7 +498,29 @@
 </div></section>
 <section class="page" id="page3"><div class="viewport">
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>FINAL MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لتأكيد الحسبة والإنجاز</small><b>0506214458</b></span></a></header>
-<div class="result-wrap"><div class="result-head"><div><div class="eyebrow">FINO BUYOUT MATCH</div><h1>أفضل ترشيح <span>لتحويل مديونيتك</span></h1><p>النتيجة حسب البيانات والعروض المسجلة.</p></div><button class="edit" onclick="showPage('page2')">← تعديل البيانات</button></div><div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجزها لك</b><small>تأكيد المعلومات • مراجعة الحسبة • إنجاز بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div><div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="legal"><b>تنبيه:</b> النتيجة ترشيح وحسبة استرشادية مبنية على البيانات والعروض المسجلة في FINO، وليست موافقة ائتمانية أو عرضًا ملزمًا. يتم تأكيد الأهلية والنسبة النهائية وفق بيانات العميل وشروط البنك وقت التنفيذ.</div><div class="capture-cta"><div class="capture-icon">📸</div><div><b>خذ لقطة لهذه الشاشة وتواصل معنا</b><small>نؤكد لك الحسبة والمعلومات ونكمل معك الإنجاز بأسرع وقت وبدون تعقيدات.</small></div><strong>0506214458</strong></div>
+<div class="result-wrap"><div class="result-head"><div><div class="eyebrow">FINO BUYOUT MATCH</div><h1>أفضل ترشيح <span>لتحويل مديونيتك</span></h1><p>النتيجة حسب البيانات والعروض المسجلة.</p></div><button class="edit" onclick="showPage('page2')">↻ أعد الترشيح</button></div>
+<div class="result-marketing-board">
+  <div class="result-marketing-head"><b>هل يناسبك تحويل المديونية لبنك آخر؟</b><span>FINO LIVE</span></div>
+  <div class="result-marquee"><div class="result-marquee-track">
+    <span class="result-message">💰 تريد فائضًا أعلى بعد سداد مديونيتك؟</span>
+    <span class="result-message">📈 نسبة إعادة التمويل عندك مرتفعة وتبحث عن عرض أفضل؟</span>
+    <span class="result-message">🏦 تبحث عن تمويل بنسبة أقل من عرض بنكك الحالي؟</span>
+    <span class="result-message">⚡ تريد إنجازًا بأسرع وقت وبدون تعقيدات؟</span>
+    <span class="result-message">🧮 تريد تأكيد الحسبة قبل البدء بالإجراءات؟</span>
+    <span class="result-message">💰 تريد فائضًا أعلى بعد سداد مديونيتك؟</span>
+    <span class="result-message">📈 نسبة إعادة التمويل عندك مرتفعة وتبحث عن عرض أفضل؟</span>
+    <span class="result-message">🏦 تبحث عن تمويل بنسبة أقل من عرض بنكك الحالي؟</span>
+    <span class="result-message">⚡ تريد إنجازًا بأسرع وقت وبدون تعقيدات؟</span>
+    <span class="result-message">🧮 تريد تأكيد الحسبة قبل البدء بالإجراءات؟</span>
+  </div></div>
+</div>
+<div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجزها لك</b><small>تأكيد المعلومات • مراجعة الحسبة • إنجاز بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div>
+<div class="result-contact">
+  <div class="result-contact-icon">📱</div>
+  <div><b>تواصل معنا الآن لتأكيد الحسبة والإنجاز</b><small>واتساب أو اتصال • سرعة إنجاز بدون تعقيدات • للاستفسارات والحلول الأخرى تواصل معنا.</small></div>
+  <div class="result-contact-number">0506214458</div>
+</div><div class="eligibility-strip"><span class="elig-icon">✓</span><span><b>مهم:</b> هذه الحسبة لعميل لا يوجد لديه تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
+<div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="legal"><b>تنبيه:</b> النتيجة ترشيح وحسبة استرشادية مبنية على البيانات والعروض المسجلة في FINO، وليست موافقة ائتمانية أو عرضًا ملزمًا. يتم تأكيد الأهلية والنسبة النهائية وفق بيانات العميل وشروط البنك وقت التنفيذ.</div><div class="capture-cta"><div class="capture-icon">📸</div><div><b>خذ لقطة لهذه الشاشة وتواصل معنا</b><small>لتأكيد الحسبة والمعلومات والإنجاز بأسرع وقت وبدون تعقيدات. ولجميع الاستفسارات والحلول الأخرى تواصل معنا.</small></div><strong>0506214458</strong></div>
 <div class="actions"><button class="action wa" onclick="shareWhats()">📲 إرسال عبر واتساب</button><button class="action svc" onclick="window.open(SERVICE_URL,'_blank')">معرفة بعض خدماتنا</button></div><footer class="form-footer"><span><b>FINO</b> • لتأكيد الحسبة والإنجاز تواصل معنا الآن</span><strong>0506214458</strong></footer></div>
 </div></section>
 </div>
@@ -322,12 +551,12 @@ if(selectedBank!=='SNB'&&(customerType==='government'||customerType==='military'
 out.sort((a,b)=>a.rate-b.rate);latestResults=out;renderResults(salary,out);showPage('page3')}
 function renderResults(salary,out){document.getElementById('profile').innerHTML=`<div class="pill">الراتب: <b>${salary.toLocaleString('ar-SA')} ريال</b></div><div class="pill">الفئة: <b>${typeName()}</b></div><div class="pill">بنك الراتب: <b>${selectedBankName}</b></div>`;const c=document.getElementById('results');if(!out.length){c.innerHTML='<div class="legal" style="padding:15px;font-size:8px;text-align:center">لا توجد نسبة مطابقة ضمن الجداول الحالية لهذه الحالة.</div>';return}const best=out[0];
 let bestFeature='';
-if(best.key==='RAJHI')bestFeature=`<div class="result-feature"><div class="feature-icon">📅</div><div><div class="feature-label">ميزة العرض المسجل</div><div class="feature-title">إمكانية تأجيل قسطين (شهرين)</div><div class="feature-copy">تأجيل وليس إعفاء، ويخضع لشروط وأهلية العميل والعرض وقت التنفيذ.</div></div></div>`;
-if(best.key==='SNB')bestFeature=`<div class="result-feature"><div class="feature-icon">⭐</div><div><div class="feature-label">ميزة برنامج تحويل المديونية</div><div class="feature-title">تأجيل أول قسطين حسب خصائص ومزايا البرنامج</div><div class="feature-copy">يتم تأكيد الميزة النهائية وشروطها وقت التنفيذ.</div></div></div>`;
+if(best.key==='RAJHI')bestFeature=`<div class="result-feature"><div class="feature-icon">📅</div><div><div class="feature-label">ميزة العرض المسجل</div><div class="feature-title">إمكانية تأجيل قسطين (شهرين)</div><div class="feature-copy">تأجيل وليس إعفاء، وتبقى الأقساط مستحقة لاحقًا حسب شروط وأهلية العميل والعرض وقت التنفيذ.</div></div></div>`;
+if(best.key==='SNB')bestFeature=`<div class="result-feature"><div class="feature-icon">⭐</div><div><div class="feature-label">ميزة العرض المسجل</div><div class="feature-title">إعفاء من أول قسطين</div><div class="feature-copy">إعفاء وليس تأجيلًا، وفق بيانات العرض المسجل في FINO، ويتم تأكيد استحقاق الميزة وقت التنفيذ.</div></div></div>`;
 if(best.key==='SAB')bestFeature=`<div class="result-feature"><div class="feature-icon">🏦</div><div><div class="feature-label">ملاحظة مهمة</div><div class="feature-title">شراء المديونية في الجدول المسجل يبدأ من راتب 10,000 ريال فأعلى</div><div class="feature-copy">${customerType==='military'?'للعسكري: قد يتم استبعاد بعض البدلات ويتم التأكد منها مع جهة العمل قبل الحسبة النهائية.':'تخضع الأهلية النهائية لشروط البنك وقت التنفيذ.'}</div></div></div>`;
-if(best.key==='ANB')bestFeature=`<div class="result-feature"><div class="feature-icon">⏱️</div><div><div class="feature-label">تاريخ العرض المسجل</div><div class="feature-title">العرض مؤرخ حتى 31 / 08 / 2026</div><div class="feature-copy">يتم تأكيد استمرار العرض والنسبة وقت التنفيذ.</div></div></div>`;
+if(best.key==='ANB')bestFeature=`<div class="result-feature"><div class="feature-icon">📅</div><div><div class="feature-label">ميزة العرض المسجل</div><div class="feature-title">إمكانية تأجيل قسط أو قسطين حسب اختيار العميل</div><div class="feature-copy">ويتم تأكيد الميزة وشروطها وقت التنفيذ. العرض المسجل مؤرخ حتى 31 / 08 / 2026.</div></div></div>`;
 let h=`<div class="best"><div class="best-logo">${logo(best.key)}</div><div><div class="best-tag">🏆 الترشيح الأول</div><div class="best-name">${best.name}</div><div class="best-copy">أفضل نسبة مطابقة ضمن الخيارات المتاحة حاليًا.</div></div><div class="best-rate">${fmt(best.rate)}%<small>النسبة المسجلة</small></div></div>${bestFeature}<div class="list-title"><b>بقية الخيارات بالترتيب</b><span>${out.length} خيارات مطابقة</span></div>`;
-out.slice(1).forEach((b,i)=>{let notes='';if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>تأجيل أول قسطين</b> حسب خصائص ومزايا برنامج تحويل المديونية.</div>`;if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل شهرين</b> حسب شروط وأهلية العميل.</div>`;if(b.key==='SAB'){notes+=`<div class="note">شراء المديونية يبدأ من راتب <b>10,000 ريال فأعلى.</b></div>`;if(customerType==='military')notes+=`<div class="note">🎖️ للعسكري: قد يتم استبعاد بعض البدلات، ويتم التأكد من الراتب والبدلات المعتمدة مع جهة العمل قبل اعتماد الحسبة النهائية.</div>`}if(b.key==='ANB')notes+=`<div class="note">📅 العرض المسجل مؤرخ حتى <b>31 / 08 / 2026</b> ويتم تأكيد سريانه وقت التنفيذ.</div>`;h+=`<div class="result-bank"><div class="result-logo">${logo(b.key)}</div><div><div class="result-name">${i+2}. ${b.name}</div><div class="result-order">الخيار رقم ${i+2}</div></div><div class="result-rate">${fmt(b.rate)}%</div>${notes?`<div class="notes">${notes}</div>`:''}</div>`});c.innerHTML=h}
+out.slice(1).forEach((b,i)=>{let notes='';if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>إعفاء من أول قسطين</b> وفق بيانات العرض المسجل في FINO، ويتم تأكيد استحقاق الميزة وقت التنفيذ.</div>`;if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل قسطين (شهرين)</b> — تأجيل وليس إعفاء — حسب شروط وأهلية العميل.</div>`;if(b.key==='SAB'){notes+=`<div class="note">شراء المديونية يبدأ من راتب <b>10,000 ريال فأعلى.</b></div>`;if(customerType==='military')notes+=`<div class="note">🎖️ للعسكري: قد يتم استبعاد بعض البدلات، ويتم التأكد من الراتب والبدلات المعتمدة مع جهة العمل قبل اعتماد الحسبة النهائية.</div>`}if(b.key==='ANB')notes+=`<div class="note">📅 العربي الوطني: إمكانية <b>تأجيل قسط أو قسطين حسب اختيار العميل</b> وفق العرض المسجل، ويُؤكد وقت التنفيذ. العرض مؤرخ حتى <b>31 / 08 / 2026</b>.</div>`;h+=`<div class="result-bank"><div class="result-logo">${logo(b.key)}</div><div><div class="result-name">${i+2}. ${b.name}</div><div class="result-order">الخيار رقم ${i+2}</div></div><div class="result-rate">${fmt(b.rate)}%</div>${notes?`<div class="notes">${notes}</div>`:''}</div>`});c.innerHTML=h}
 function shareWhats(){if(!latestResults.length){alert('لا توجد نتيجة لمشاركتها');return}const medals=['🥇','🥈','🥉'];const ranking=latestResults.slice(0,3).map((b,i)=>`${medals[i]} ${b.name} — ${fmt(b.rate)}%`).join('\n');const msg=`🏦 FINO | تحويل مديونية التمويل الشخصي
 
 حسب البيانات المدخلة، أفضل الترشيحات حاليًا:
