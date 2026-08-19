@@ -2199,6 +2199,260 @@
   margin-top:0;
 }
 
+
+/* =========================================================
+   FINO — FINAL POLISH PATCH
+   WhatsApp button, larger typography, stronger cash result,
+   clearer work-sector buttons, bigger bank logos.
+========================================================= */
+
+/* Global typography slightly larger */
+body{
+  font-size:15px;
+}
+
+#page2 .page-title h1,
+#page3 .result-head h1{
+  font-weight:900!important;
+}
+
+#page2 .section-label b{
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+#page2 .section-label small{
+  font-size:7px!important;
+  font-weight:700!important;
+}
+
+/* Work type buttons larger/clearer */
+#page2 .type-grid{
+  gap:7px!important;
+}
+
+#page2 .type-btn{
+  min-height:42px!important;
+  padding:7px 8px!important;
+  border-radius:11px!important;
+  font-size:9px!important;
+  font-weight:900!important;
+}
+
+#page2 .type-btn.active{
+  box-shadow:0 7px 17px rgba(7,59,103,.12);
+}
+
+/* Salary icon/card larger */
+#page2 .primary-input-card .input-icon{
+  width:34px!important;
+  height:34px!important;
+  flex-basis:34px!important;
+  font-size:17px!important;
+}
+
+#page2 .primary-input-card b{
+  font-size:9px!important;
+}
+
+#page2 .primary-input-card small{
+  font-size:6.5px!important;
+}
+
+#page2 .primary-input{
+  height:48px!important;
+  font-size:20px!important;
+  font-weight:900!important;
+}
+
+/* Bank logos larger */
+#page2 .bank-card{
+  min-height:74px!important;
+  padding:7px 9px!important;
+  gap:9px!important;
+}
+
+#page2 .bank-logo-wrap{
+  width:88px!important;
+  height:56px!important;
+  flex-basis:88px!important;
+}
+
+#page2 .bank-logo-wrap img{
+  max-height:50px!important;
+  max-width:100%!important;
+}
+
+#page2 .bank-name{
+  font-size:8px!important;
+  font-weight:900!important;
+}
+
+#page2 .bank-name small{
+  font-size:6px!important;
+}
+
+/* Result typography larger */
+#page3 .best-name{
+  font-size:25px!important;
+}
+
+#page3 .best-rate{
+  font-size:44px!important;
+}
+
+#page3 .cash-hero{
+  padding:18px 20px!important;
+  border-radius:18px!important;
+  background:linear-gradient(135deg,#ffffff,#f3f9fd)!important;
+  border:2px solid #bcdceb!important;
+}
+
+#page3 .cash-label{
+  font-size:9px!important;
+  font-weight:900!important;
+  color:#5f7787!important;
+}
+
+#page3 .cash-title{
+  font-size:18px!important;
+  line-height:1.5!important;
+  font-weight:900!important;
+  color:#0a4f82!important;
+}
+
+#page3 .cash-value{
+  margin-top:5px!important;
+  font-size:46px!important;
+  line-height:1.05!important;
+  color:#0b6fa8!important;
+  font-weight:900!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.7);
+}
+
+/* Remove installment from cash hero */
+#page3 .cash-hero .installment{
+  display:none!important;
+}
+
+/* Detail grid larger */
+#page3 .finance-detail{
+  min-height:68px!important;
+  padding:10px 11px!important;
+}
+
+#page3 .finance-detail small{
+  font-size:8px!important;
+  line-height:1.4!important;
+}
+
+#page3 .finance-detail b{
+  font-size:14px!important;
+}
+
+#page3 .finance-detail.key b,
+#page3 .finance-detail.cash b{
+  font-size:17px!important;
+}
+
+/* Notes more readable */
+#page3 .final-notice,
+#page3 .commodity-note{
+  font-size:9px!important;
+  line-height:1.8!important;
+  padding:11px 13px!important;
+}
+
+/* Keep other-bank notes compact */
+#page3 .result-bank .note{
+  font-size:6.5px!important;
+}
+
+/* Visible share actions */
+#page3 .actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  margin-top:9px!important;
+}
+
+#page3 .action{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-height:48px!important;
+  border-radius:12px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+}
+
+#page3 .wa{
+  background:#ffffff!important;
+  color:#073b67!important;
+  border:2px solid #cfe0eb!important;
+}
+
+#page3 .share-image{
+  background:#ffffff!important;
+  color:#073b67!important;
+  border:2px solid #cfe0eb!important;
+}
+
+/* Final screenshot CTA */
+#page3 .capture-cta{
+  margin-top:9px!important;
+  background:#ffffff!important;
+  border:2px solid #d7e7f1!important;
+}
+
+#page3 .capture-cta b{
+  font-size:12px!important;
+}
+
+#page3 .capture-cta small{
+  font-size:8px!important;
+}
+
+#page3 .capture-cta strong{
+  font-size:24px!important;
+}
+
+/* Keep all white cards */
+#page3 .best,
+#page3 .result-bank,
+#page3 .finance-detail,
+#page3 .final-notice,
+#page3 .commodity-note,
+#page3 .capture-cta{
+  background:#ffffff!important;
+}
+
+/* Mobile */
+@media(max-width:600px){
+  #page2 .bank-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  #page2 .bank-card{
+    min-height:72px!important;
+  }
+
+  #page2 .bank-logo-wrap{
+    width:92px!important;
+    flex-basis:92px!important;
+  }
+
+  #page3 .cash-value{
+    font-size:36px!important;
+  }
+
+  #page3 .actions{
+    grid-template-columns:1fr!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2277,6 +2531,7 @@
 <div class="type-grid">
   <button class="type-btn active" data-type="government" onclick="selectType(this)">حكومي</button>
   <button class="type-btn" data-type="semiGovernment" onclick="selectType(this)">شبه حكومي</button>
+  <button class="type-btn" data-type="military" onclick="selectType(this)">عسكري</button>
   <button class="type-btn" data-type="private" onclick="selectType(this)">قطاع خاص</button>
   <button class="type-btn" data-type="retired" onclick="selectType(this)">متقاعد</button>
 </div>
@@ -2378,7 +2633,7 @@ const LOGOS={"BILAD": "data:image/webp;base64,UklGRoYIAABXRUJQVlA4IHoIAADQKgCdAS
 const BANKS=[
 {id:'SNB',name:'البنك الأهلي السعودي',short:'SNB',logo:LOGOS.SNB},{id:'RAJHI',name:'مصرف الراجحي',short:'Al Rajhi Bank',logo:LOGOS.RAJHI},{id:'RIYAD',name:'بنك الرياض',short:'Riyad Bank',logo:LOGOS.RIYAD},{id:'SAB',name:'البنك السعودي الأول',short:'SAB',logo:LOGOS.SAB},{id:'ANB',name:'البنك العربي الوطني',short:'ANB',logo:LOGOS.ANB},{id:'ALINMA',name:'مصرف الإنماء',short:'Alinma Bank',logo:LOGOS.ALINMA},{id:'BSF',name:'البنك السعودي الفرنسي',short:'BSF',logo:LOGOS.BSF},{id:'SAIB',name:'البنك السعودي للاستثمار',short:'SAIB',logo:LOGOS.SAIB},{id:'JAZIRA',name:'بنك الجزيرة',short:'Bank AlJazira',logo:LOGOS.JAZIRA},{id:'BILAD',name:'بنك البلاد',short:'Bank Albilad',logo:LOGOS.BILAD},{id:'GIB',name:'بنك الخليج الدولي - السعودية',short:'GIB',logo:LOGOS.GIB},{id:'OTHER',name:'بنك آخر',short:'أخرى',logo:''}
 ];
-const TIPS=['قارن أكثر من عرض قبل نقل مديونيتك من بنك إلى بنك.','لا تنظر إلى القسط وحده؛ قارن تكلفة التمويل كاملة.','اطلب مبلغ السداد المبكر المحدث لتمويلك الحالي.','اعرف كم سيبقى لك فعليًا بعد سداد المديونية القديمة.','فرق بسيط في النسبة قد يصنع فرقًا كبيرًا في إجمالي التكلفة.','كلما طالت مدة التمويل قد ينخفض القسط وتزداد التكلفة الإجمالية.','احسب المبلغ المتبقي من راتبك بعد القسط قبل اتخاذ القرار.','لا تستخدم كامل قدرتك التمويلية لمجرد أن البنك يسمح بذلك.','تأكد من جهة العمل المعتمدة لدى البنك قبل بدء الإجراءات.','للعسكري: تأكد من البدلات التي يعتمدها البنك في احتساب الراتب.','راجع سجلك الائتماني قبل طلب تحويل المديونية.','تأكد من عدم وجود معلومات أو التزامات غير محدثة في السجل الائتماني.','قارن مبلغ القسط الجديد مع القسط الحالي.','قارن المدة المتبقية حاليًا مع مدة التمويل الجديدة.','اعرف الرسوم الإدارية قبل الموافقة على العرض.','لا تعتبر الموافقة المبدئية موافقة نهائية.','اسأل بوضوح عن إجمالي مبلغ التمويل الجديد.','اسأل عن المبلغ الذي سيذهب لسداد التمويل القديم.','احسب الصافي الذي سيتبقى لك بعد سداد المديونية.','إذا كان هدفك كاش إضافي فاحسب تكلفة هذا الكاش جيدًا.','تأكد من الفرق بين إعفاء القسط وتأجيل القسط.','الإعفاء يختلف ماليًا عن التأجيل؛ لا تخلط بينهما.','تحقق من تاريخ انتهاء أي عرض تمويلي مؤقت.','العروض قد تختلف حسب الراتب وجهة العمل.','القطاع الخاص قد تختلف أهليته حسب تصنيف الشركة لدى البنك.','لا توقف سداد أقساط تمويلك الحالي أثناء إجراءات التحويل.','احتفظ بنسخة من العرض الذي بنيت عليه قرارك.','اقرأ العقد قبل التوقيع مهما كانت سرعة الإنجاز.','تأكد أن القسط في العقد يطابق القسط الذي وافقت عليه.','تأكد أن مدة العقد مطابقة للعرض.','تأكد من مبلغ التمويل النهائي قبل التوقيع.','راجع جدول السداد كاملًا.','اطلب مبلغ السداد المبكر الرسمي وليس تقديرًا شفهيًا.','قد تكون إعادة التمويل لدى بنكك الحالي خيارًا يستحق المقارنة.','لا تغير البنك إذا كان الفرق المالي النهائي لا يستحق ذلك.','إذا تساوت النسب فقارن المزايا والقسط والمدة.','تأكد من شروط تحويل الراتب إلى البنك الجديد.','تأكد من تحديث التمويل القديم بعد سداده.','تابع إخلاء الطرف بعد سداد المديونية القديمة.','احتفظ بمخالصة السداد القديمة.','لا تبدأ التزامات جديدة أثناء إجراءات تحويل المديونية دون حاجة.','التزامات البطاقات الائتمانية قد تؤثر على القدرة التمويلية.','خدمات الشراء الآن والدفع لاحقًا قد تؤثر على التقييم الائتماني.','أي تأخرات ائتمانية قد تؤثر على العرض النهائي.','تأكد من صحة راتبك الصافي قبل إجراء الحسبة.','لا تعتمد على نسبة قديمة؛ عروض البنوك تتغير.','النسبة المنشورة ليست ضمانًا للموافقة.','الموافقة النهائية تعتمد على دراسة البنك للعميل.','اترك هامشًا مريحًا من راتبك لمصاريف الحياة والطوارئ.','إذا كنت قريبًا من التقاعد فاحسب أثر التقاعد على التمويل.','للمتقاعد: قارن القسط بالدخل الفعلي بعد التقاعد.','لا تشارك رموز التحقق البنكية مع أي شخص.','لا تدفع مقابل وعد بموافقة مصرفية مضمونة.','أفضل تمويل ليس دائمًا أكبر مبلغ؛ الأفضل ما يخدم حاجتك بقسط مناسب.','FINO للترشيح والمقارنة؛ التأكيد النهائي يتم بعد مطابقة بيانات العميل.'];
+const TIPS=["قارن أكثر من عرض قبل نقل مديونيتك من بنك إلى بنك.", "لا تنظر إلى القسط وحده؛ قارن تكلفة التمويل كاملة.", "اطلب مبلغ السداد المبكر المحدث قبل بدء إجراءات التحويل.", "احسب صافي الكاش المتبقي بعد سداد المديونية والرسوم.", "فرق بسيط في النسبة قد يصنع فرقًا كبيرًا في إجمالي التكلفة.", "كلما طالت مدة التمويل قد ينخفض القسط وتزداد التكلفة الإجمالية.", "اترك جزءًا مريحًا من راتبك للمصاريف والطوارئ.", "لا تستخدم كامل قدرتك التمويلية لمجرد أن البنك يسمح بذلك.", "تأكد من اعتماد جهة عملك لدى البنك قبل بدء الإجراءات.", "للعسكري: تأكد من البدلات التي يعتمدها البنك في احتساب الراتب.", "راجع سجلك الائتماني قبل طلب تحويل المديونية.", "تأكد من تحديث جميع الالتزامات في السجل الائتماني.", "قارن مبلغ القسط الجديد بالقسط الحالي.", "قارن المدة المتبقية حاليًا بمدة التمويل الجديدة.", "اعرف الرسوم الإدارية قبل الموافقة على العرض.", "لا تعتبر الموافقة المبدئية موافقة نهائية.", "اسأل بوضوح عن إجمالي مبلغ التمويل الجديد.", "اعرف كم سيذهب لسداد التمويل القديم وكم سيبقى لك.", "إذا كان هدفك كاش إضافي فاحسب تكلفة هذا الكاش.", "فرّق بين إعفاء القسط وتأجيل القسط.", "الإعفاء يختلف ماليًا عن التأجيل.", "تحقق من تاريخ انتهاء أي عرض تمويلي مؤقت.", "العروض قد تختلف حسب الراتب وجهة العمل.", "القطاع الخاص قد تختلف أهليته حسب تصنيف الشركة لدى البنك.", "لا توقف سداد أقساط تمويلك الحالي أثناء إجراءات التحويل.", "احتفظ بنسخة من العرض الذي بنيت عليه قرارك.", "اقرأ العقد كاملًا قبل التوقيع.", "تأكد أن القسط في العقد يطابق القسط المتفق عليه.", "تأكد أن مدة العقد مطابقة للعرض.", "تأكد من مبلغ التمويل النهائي قبل التوقيع.", "راجع جدول السداد كاملًا.", "اطلب مبلغ السداد المبكر الرسمي وليس تقديرًا شفهيًا.", "قد تكون إعادة التمويل لدى بنكك الحالي خيارًا يستحق المقارنة.", "لا تغيّر البنك إذا كان الفرق المالي النهائي لا يستحق ذلك.", "إذا تساوت النسب فقارن المزايا والقسط والمدة.", "تأكد من شروط تحويل الراتب إلى البنك الجديد.", "تأكد من تحديث التمويل القديم بعد سداده.", "تابع إخلاء الطرف بعد سداد المديونية القديمة.", "احتفظ بمخالصة السداد القديمة.", "لا تبدأ التزامات جديدة أثناء إجراءات تحويل المديونية دون حاجة.", "التزامات البطاقات الائتمانية قد تؤثر على القدرة التمويلية.", "خدمات الشراء الآن والدفع لاحقًا قد تؤثر على التقييم الائتماني.", "أي تأخرات ائتمانية قد تؤثر على العرض النهائي.", "تأكد من صحة راتبك الصافي قبل إجراء الحسبة.", "لا تعتمد على نسبة قديمة؛ عروض البنوك تتغير.", "النسبة المنشورة ليست ضمانًا للموافقة.", "الموافقة النهائية تعتمد على دراسة البنك للعميل.", "إذا كنت قريبًا من التقاعد فاحسب أثر التقاعد على التمويل.", "للمتقاعد: قارن القسط بالدخل الفعلي بعد التقاعد.", "لا تشارك رموز التحقق البنكية مع أي شخص.", "لا تدفع مقابل وعد بموافقة مصرفية مضمونة.", "أفضل تمويل ليس دائمًا أكبر مبلغ.", "الحسبة الجيدة تبدأ من هدف واضح: سداد، فائض، أو خفض نسبة.", "لا تقارن النسبة فقط؛ قارن الصافي الذي يصل لحسابك.", "إذا كان الصافي قليلًا فقد يكون الانتظار أفضل.", "إذا كان الصافي جيدًا فقارن تكلفة الانتقال بين البنوك.", "إذا كان الصافي مرتفعًا فراجع إجمالي الأرباح قبل اتخاذ القرار.", "اسأل هل رسوم فرق السلعة موجودة على العرض أم لا.", "رسوم فرق السلعة قد تختلف حسب نوع السلعة.", "رسوم فرق السلعة قد تختلف من بنك لآخر.", "بعض البنوك قد لا يكون لديها فرق سلعة في بعض الحالات.", "تأكد من أن السداد المبكر يشمل التحديث الأخير للتمويل.", "اعرف متى يصدر خطاب المديونية ومدة صلاحيته.", "تأكد من عدم انتهاء خطاب المديونية قبل إكمال الإجراءات.", "احتفظ بصورة من خطاب المديونية.", "اسأل عن أي شروط مرتبطة بتحويل الراتب.", "تأكد من وجود حساب فعال في البنك الجديد.", "لا تقارن عروضًا بمدد مختلفة دون حساب إجمالي التكلفة.", "تأكد من أن الراتب المستخدم في الحسبة هو الصافي الفعلي.", "إذا لديك التزامات أخرى فأدخلها بدقة.", "أي التزام شهري قد يخفض القسط المتاح للتمويل الشخصي.", "مجموع الالتزامات مهم بقدر أهمية نسبة القسط الشخصي.", "تأكد من عدم وجود تمويل عقاري إذا كانت الحسبة لا تسمح به.", "اسأل عن أثر البطاقات الائتمانية على الاستقطاع.", "أغلق البطاقات غير المستخدمة إذا كانت تؤثر على أهليتك.", "لا تطلب تمويلًا إضافيًا قبل اكتمال تحويل المديونية.", "احسب الفرق بين صافي الكاش الحالي وصافي الكاش من العرض الجديد.", "احسب كم تدفع مقابل كل ريال فائض إضافي.", "إذا كان الفرق بسيطًا فقد لا يستحق نقل المديونية.", "إذا كان الفرق كبيرًا قد يكون التحويل مجديًا.", "راجع كل بند يتعلق بالتأجيل قبل الاعتماد عليه.", "التأجيل لا يعني إسقاط القسط.", "الإعفاء الحقيقي يغيّر عدد الأقساط الفعلية.", "اسأل عن المزايا المرتبطة بالراتب فقط.", "بعض العروض مرتبطة بفئات وظيفية محددة.", "قد يختلف العرض العسكري عن المدني.", "قد يختلف عرض القطاع الخاص حسب الشركة.", "قد تختلف النسبة للمتقاعد عن الموظف.", "اعرف الحد الأعلى للقسط قبل طلب أي تمويل.", "تأكد أن التمويل الجديد لا يضغط ميزانيتك الشهرية.", "ضع مصروف الطوارئ قبل التفكير في أقصى استقطاع.", "قارن العرض على 60 شهرًا بعرض أقصر إن كان القسط مناسبًا.", "المدة الأقصر غالبًا تقلل إجمالي الأرباح.", "المدة الأطول قد ترفع إجمالي الأرباح رغم انخفاض القسط.", "اسأل عن طريقة احتساب السداد المبكر في العقد الجديد.", "اعرف هل هناك رسوم إدارية كاملة أم مخفضة.", "راجع ضريبة الرسوم الإدارية ضمن الحسبة.", "تأكد أن الرسوم التي تظهر لك تخص التمويل نفسه.", "لا تعتمد على كلام شفهي دون عرض مكتوب.", "احتفظ بتاريخ ووقت كل عرض تتم مقارنته.", "العرض الجيد اليوم قد يتغير لاحقًا.", "إذا كانت النسبة ممتازة تأكد أنها تنطبق على حالتك.", "لا تفترض أن كل مزايا البنك تنطبق على كل العملاء.", "اسأل هل الميزة مرتبطة بجهة عمل معينة.", "اسأل هل الحد الأدنى للراتب يختلف حسب جهة العمل.", "إذا كان لديك التزام خارجي بسيط فقد لا يؤثر على القسط.", "إذا كان التزامك الخارجي مرتفعًا فقد يخفض القسط المتاح.", "احسب التمويل بعد الالتزامات وليس قبلها.", "الهدف من التحويل يجب أن يكون واضحًا قبل التوقيع.", "لا تجعل الفائض وحده سبب قرارك.", "وازن بين الفائض والقسط وإجمالي الأرباح.", "قارن البنك المرشح ببنكك الحالي قبل القرار.", "إذا كنت غير مستعجل راقب العروض الموسمية.", "بعض العروض المؤقتة قد تكون أفضل من العرض الدائم.", "التوقيت قد يؤثر على جدوى تحويل المديونية.", "استفسر عن مدة تنفيذ شراء المديونية.", "تأكد من المطلوب منك من مستندات قبل بدء الطلب.", "جهز تعريف الراتب والهوية وخطاب المديونية مبكرًا.", "أي نقص في المستندات قد يؤخر الإنجاز.", "التأكد من الأرقام قبل التنفيذ يوفر وقتًا كبيرًا.", "الحسبة المبدئية ليست بديلًا عن الموافقة النهائية.", "الاعتماد النهائي دائمًا حسب سياسة البنك وقت التقديم.", "FINO للترشيح والمقارنة والمتابعة، والقرار النهائي حسب البنك."];
 const RATES={SAB:[{min:50000,max:INF,rate:1.79},{min:30000,max:49999,rate:1.99},{min:15000,max:29999,rate:2.59},{min:10000,max:14999,rate:2.69}],RAJHI:[{min:40000,max:INF,rate:1.49},{min:25000,max:39999,rate:1.59},{min:15000,max:24999,rate:1.95},{min:10000,max:14999,rate:2.49},{min:4000,max:9999,rate:3.69}],ANB:[{min:70000,max:INF,rate:1.49},{min:40000,max:69999,rate:1.79},{min:25000,max:39999,rate:1.99},{min:15000,max:24999,rate:2.39},{min:10000,max:14999,rate:2.49},{min:5000,max:9999,rate:3.49}],SNB_CIV:[{min:75000,max:INF,rate:.99},{min:45000,max:74999,rate:1.49},{min:25000,max:44999,rate:1.59},{min:15000,max:24999,rate:1.99},{min:10000,max:14999,rate:2.75},{min:7000,max:9999,rate:3.25},{min:4000,max:6999,rate:3.75}],SNB_MIL:[{min:75000,max:INF,rate:1.75},{min:45000,max:74999,rate:1.75},{min:25000,max:44999,rate:1.75},{min:15000,max:24999,rate:2.49},{min:10000,max:14999,rate:2.99},{min:7000,max:9999,rate:3.75},{min:4000,max:6999,rate:3.99}]};
 
 const BANK_TERMS={
@@ -2420,6 +2675,7 @@ function login(){if(document.getElementById('password').value===PASSWORD){showPa
 function findRate(s,t){for(const r of t)if(s>=r.min&&s<=r.max)return r.rate;return null}
 function typeName(){
   if(customerType==='semiGovernment')return 'شبه حكومي';
+  if(customerType==='military')return 'عسكري';
   if(customerType==='private')return 'قطاع خاص';
   if(customerType==='retired')return 'متقاعد';
   return 'حكومي';
@@ -2522,18 +2778,19 @@ function calculate(){
     if(r!==null)candidates.push({key:'SAB',name:'البنك السعودي الأول SAB',rate:r});
   }
 
-  if(selectedBank!=='RAJHI'&&(customerType==='government'||customerType==='semiGovernment')){
+  if(selectedBank!=='RAJHI'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='military')){
     const r=findRate(salary,RATES.RAJHI);
     if(r!==null)candidates.push({key:'RAJHI',name:'مصرف الراجحي',rate:r});
   }
 
-  if(selectedBank!=='ANB'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='retired')){
+  if(selectedBank!=='ANB'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='military'||customerType==='retired')){
     const r=findRate(salary,RATES.ANB);
     if(r!==null)candidates.push({key:'ANB',name:'البنك العربي الوطني ANB',rate:r});
   }
 
-  if(selectedBank!=='SNB'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='private')){
-    const r=findRate(salary,RATES.SNB_CIV);
+  if(selectedBank!=='SNB'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='military'||customerType==='private')){
+    const snbTable=customerType==='military'?RATES.SNB_MIL:RATES.SNB_CIV;
+    const r=findRate(salary,snbTable);
     if(r!==null)candidates.push({key:'SNB',name:'البنك الأهلي السعودي SNB',rate:r});
   }
 
@@ -2581,19 +2838,12 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div>
         <div class="cash-label">النتيجة الأهم للعميل</div>
         <div class="cash-title">صافي الكاش المتوقع بعد سداد مديونيتك</div>
-        <div class="installment">القسط الشهري المتوقع: <strong>${money(best.installment)}</strong></div>
+        
       </div>
       <div class="cash-value">${money(best.cashAfterDebt)}</div>
     </div>
 
-    <div class="obligation-impact${best.installmentAffected?' adjusted':''}">
-      <div class="impact-title">${best.installmentAffected?'⚠️ الالتزامات الشهرية خفّضت القسط المتاح للتمويل الشخصي':'✅ الالتزامات الشهرية لا تؤثر على الحد الأعلى للقسط الشخصي'}</div>
-      <div class="impact-grid">
-        <div class="impact-item"><small>حد التمويل الشخصي</small><b>${money(best.personalCap)}</b></div>
-        <div class="impact-item"><small>سقف إجمالي الالتزامات 45%</small><b>${money(best.totalObligationCap)}</b></div>
-        <div class="impact-item"><small>الالتزامات الشهرية الأخرى</small><b>${money(best.externalObligations)}</b></div>
-        <div class="impact-item"><small>القسط الشخصي المحتسب فعليًا</small><b>${money(best.installment)}</b></div>
-      </div>
+    
       <div class="impact-note">${best.installmentAffected
         ? `الحسبة: ${money(best.totalObligationCap)} سقف 45% − ${money(best.externalObligations)} التزامات أخرى = ${money(best.availableAfterOther)} متاح، ولذلك تم اعتماد ${money(best.installment)} كقسط شخصي.`
         : `المتاح بعد الالتزامات الأخرى ${money(best.availableAfterOther)}، وهو أعلى من حد التمويل الشخصي ${money(best.personalCap)}؛ لذلك تم اعتماد الحد الشخصي كاملًا ${money(best.installment)}.`}
@@ -2628,14 +2878,7 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div class="finance-detail cash"><small>صافي الكاش المتبقي للعميل</small><b>${money(best.cashAfterDebt)}</b></div>
     </div>
 
-    <div class="formula-note">
-      <b>طريقة احتساب القسط:</b>
-      القسط الشخصي لا يتجاوز ${customerType==='retired'?'25%':'33.33%'} من الراتب، ومجموع الالتزامات لا يتجاوز 45%.
-      القسط الفعلي = الأقل بين حد التمويل الشخصي وبين (45% من الراتب − الالتزامات الشهرية الأخرى).
-      ثم إجمالي التمويل مع الأرباح = القسط × ${best.actualPayments}،
-      ثم صافي التمويل = الإجمالي ÷ (1 + 5 × ${fmt(best.rate)}%).
-      بعد ذلك تُخصم الرسوم الإدارية 0.5%، وضريبة 15% على الرسوم الإدارية، ورسوم فرق السلعة المحتسبة 1% من التمويل، ثم مبلغ السداد المبكر.
-    </div>
+    
 
     <div class="commodity-note"><b>⚠️ تنويه رسوم فرق السلعة:</b> تم احتسابها بنسبة 1% من التمويل، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد أصلًا لدى بعض البنوك.</div>
 
@@ -2707,14 +2950,19 @@ function saudiTimeEnglish(){
   }).format(now);
 }
 
-function cashAdvice(best, earlySettlement){
+function cashAdvice(best,earlySettlement){
   const debt=Math.max(Number(earlySettlement||0),1);
   const cash=Number(best.cashAfterDebt||0);
   const ratio=cash/debt;
 
   if(cash<=0 || ratio<0.20){
-    return 'النصيحة: الصافي المتبقي منخفض مقارنةً بمديونيتك الحالية؛ إذا لم تكن بحاجة عاجلة للسيولة، قد يكون الأفضل الانتظار ومراقبة عرض أقل نسبة أو فائض أعلى.';
+    return 'النصيحة: الصافي المتبقي منخفض مقارنةً بمديونيتك الحالية؛ إذا لم تكن بحاجة عاجلة للسيولة فقد يكون الأفضل الانتظار ومراقبة عرض أفضل أو نسبة أقل.';
   }
+  if(ratio<0.60){
+    return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن القسط وإجمالي الأرباح والمزايا قبل اتخاذ القرار النهائي.';
+  }
+  return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. تأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
+}
   if(ratio<0.60){
     return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن فرق الأرباح والقسط والمزايا قبل اتخاذ القرار النهائي.';
   }
@@ -2816,7 +3064,7 @@ ${advice}
 📞 للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:
 *${PHONE}*
 
-⚡ متابعة وإنجاز بأسرع وقت وبدون تعقيدات.
+💳 أتعاب المتابعة والإنجاز لتحويل المديونية: *2,800 ريال*\n\n⚡ متابعة وإنجاز بأسرع وقت وبدون تعقيدات.
 
 🔗 بعض خدماتنا:
 ${SERVICE_URL}`;
