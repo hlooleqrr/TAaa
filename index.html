@@ -451,6 +451,273 @@
   }
 }
 
+
+/* =========================================================
+   FINO — FINAL REQUESTED VISUAL PATCH
+   Marketing copy / tips / result contact cards only.
+========================================================= */
+
+/* Page 1 marketing hierarchy */
+.kicker{
+  font-size:clamp(11px,1.2vw,15px) !important;
+  font-weight:900 !important;
+  color:var(--blue) !important;
+}
+.hero-main h1{
+  font-size:clamp(39px,5.35vw,68px) !important;
+  line-height:1.13 !important;
+  letter-spacing:-1.7px !important;
+}
+.hero-main h1 .accent{
+  color:var(--navy) !important;
+  position:relative;
+  display:inline-block;
+}
+.hero-main h1 .accent::after{
+  content:"";
+  position:absolute;
+  right:0;
+  left:0;
+  bottom:1px;
+  height:9px;
+  border-radius:8px;
+  z-index:-1;
+  background:rgba(24,129,194,.10);
+}
+.hero-sub{
+  font-size:clamp(10px,1.12vw,13px) !important;
+  font-weight:700;
+  line-height:1.9 !important;
+}
+
+/* Bigger "Tip of the day" everywhere */
+.tip-card{
+  padding:12px 14px !important;
+  border-radius:15px !important;
+  box-shadow:0 8px 24px rgba(7,59,103,.055);
+}
+.tip-head b{
+  font-size:10px !important;
+  color:var(--navy) !important;
+}
+.tip-head span{
+  font-size:7px !important;
+}
+.tip-text{
+  min-height:38px !important;
+  font-size:clamp(11px,1.15vw,14px) !important;
+  line-height:1.8 !important;
+  font-weight:900 !important;
+}
+.tip-bar{
+  min-height:40px !important;
+  padding:8px 11px !important;
+  border-radius:11px !important;
+  background:#ffffff !important;
+  box-shadow:0 6px 18px rgba(7,59,103,.04);
+}
+.tip-moving{
+  font-size:10px !important;
+  font-weight:900 !important;
+}
+.tip-moving b{
+  font-size:10px !important;
+  color:var(--navy) !important;
+}
+
+/* Page 2: larger, clearer rotating sales questions */
+.page-title{
+  margin-bottom:5px !important;
+}
+.page-title h1{
+  font-size:clamp(22px,3.1vw,37px) !important;
+  font-weight:900 !important;
+}
+.page-title p{
+  font-size:8px !important;
+  font-weight:800;
+  color:#566f7f !important;
+}
+.marketing-questions{
+  height:43px !important;
+  flex-basis:43px !important;
+  margin:6px 0 7px !important;
+  border-radius:12px !important;
+  border:1px solid #d8e8f2 !important;
+  background:#ffffff !important;
+  box-shadow:0 7px 20px rgba(7,59,103,.05) !important;
+}
+.marketing-track{
+  gap:38px !important;
+  padding-left:38px !important;
+}
+.marketing-q{
+  font-size:11px !important;
+  line-height:1 !important;
+  font-weight:900 !important;
+}
+.marketing-q strong{
+  font-size:12px !important;
+}
+
+/* Page 3 marketing/contact blocks: WHITE, high contrast, easy to read */
+.sales-banner{
+  background:#ffffff !important;
+  color:var(--ink) !important;
+  border:1px solid #d8e8f2 !important;
+  box-shadow:0 8px 22px rgba(7,59,103,.05) !important;
+  padding:9px 11px !important;
+  border-radius:12px !important;
+}
+.sales-banner b{
+  color:var(--navy) !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+}
+.sales-banner small{
+  color:#5f7888 !important;
+  opacity:1 !important;
+  font-size:7px !important;
+  font-weight:700 !important;
+}
+.sales-banner strong{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:142px;
+  padding:7px 11px;
+  border-radius:10px;
+  background:var(--navy) !important;
+  color:#ffffff !important;
+  font-size:18px !important;
+  font-weight:900 !important;
+  box-shadow:0 6px 16px rgba(7,59,103,.12);
+}
+
+/* Contact under result */
+.result-contact{
+  background:#ffffff !important;
+  color:var(--ink) !important;
+  border:1px solid #d8e8f2 !important;
+  box-shadow:0 8px 22px rgba(7,59,103,.05) !important;
+}
+.result-contact-icon{
+  background:#edf6fc !important;
+  color:var(--navy) !important;
+}
+.result-contact b{
+  color:var(--navy) !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+}
+.result-contact small{
+  color:#607989 !important;
+  opacity:1 !important;
+  font-size:7px !important;
+  font-weight:700 !important;
+}
+.result-contact-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 11px;
+  border-radius:10px;
+  background:#101820 !important;
+  color:#ffffff !important;
+  font-size:19px !important;
+  font-weight:900 !important;
+  box-shadow:0 6px 16px rgba(16,24,32,.12);
+}
+
+/* Screenshot CTA */
+.capture-cta{
+  background:#ffffff !important;
+  color:var(--ink) !important;
+  border:1px solid #d8e8f2 !important;
+  box-shadow:0 8px 22px rgba(7,59,103,.05) !important;
+}
+.capture-cta .capture-icon{
+  background:#edf6fc !important;
+  color:var(--navy) !important;
+}
+.capture-cta b{
+  color:var(--navy) !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+}
+.capture-cta small{
+  color:#607989 !important;
+  opacity:1 !important;
+  font-size:7px !important;
+  font-weight:700 !important;
+}
+.capture-cta strong{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 11px;
+  border-radius:10px;
+  background:var(--navy) !important;
+  color:#ffffff !important;
+  font-size:19px !important;
+  font-weight:900 !important;
+  box-shadow:0 6px 16px rgba(7,59,103,.12);
+}
+
+/* Result moving questions larger */
+.result-marketing-board{
+  min-height:74px !important;
+  background:#ffffff !important;
+}
+.result-marketing-head b{
+  font-size:10px !important;
+}
+.result-message{
+  font-size:11px !important;
+}
+
+/* Keep page fit on shorter screens */
+@media(max-height:760px){
+  .marketing-questions{
+    height:37px !important;
+    flex-basis:37px !important;
+    margin:4px 0 5px !important;
+  }
+  .marketing-q,
+  .marketing-q strong{
+    font-size:9px !important;
+  }
+  .tip-bar{
+    min-height:33px !important;
+    padding:5px 8px !important;
+  }
+  .tip-moving{
+    font-size:8px !important;
+  }
+  .result-marketing-board{
+    min-height:62px !important;
+    padding:6px 8px !important;
+  }
+  .result-message{
+    font-size:9px !important;
+  }
+}
+@media(max-width:580px){
+  .hero-main h1{
+    font-size:clamp(29px,8.5vw,39px) !important;
+  }
+  .marketing-q,
+  .marketing-q strong{
+    font-size:8px !important;
+  }
+  .sales-banner strong,
+  .result-contact-number,
+  .capture-cta strong{
+    font-size:16px !important;
+    min-width:auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -462,10 +729,10 @@
 </div></div>
 <section class="page active" id="page1"><div class="viewport">
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SMART FINANCE MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب • تأكيد • إنجاز</small><b>0506214458</b></span></a></header>
-<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>تحويل مديونية التمويل الشخصي • ترشيح مباشر</div><div class="kicker">خلّ قرارك المالي يبدأ بالمقارنة الصح</div><h1>نقارن عروض البنوك<br>ونرشّح لك <span class="accent">الأفضل لتحويل مديونيتك</span></h1><p class="hero-sub">احتساب وترشيح فوري لتحويل مديونية التمويل الشخصي بين البنوك، حسب راتبك وفئتك وبنك الراتب، ثم تأكيد المعلومات وإنجاز الطلب.</p>
+<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>تحويل مديونية التمويل الشخصي • ترشيح مباشر</div><div class="kicker">احتساب وترشيح فوري لتحويل مديونية التمويل الشخصي</div><h1>نقارن عروض البنوك<br>ونرشّح لك <span class="accent">الأفضل لتحويل مديونيتك</span></h1><p class="hero-sub">حسب راتبك وفئتك وبنك الراتب، مع مراجعة وتأكيد المعلومات ثم إنجاز الطلب بأسرع وقت وبدون تعقيدات.</p>
 <div class="services"><div class="service"><i>🧮</i><div><b>احتساب فوري</b><small>ترشيح خلال ثوانٍ</small></div></div><div class="service"><i>✓</i><div><b>تأكيد المعلومات</b><small>مطابقة قبل التنفيذ</small></div></div><div class="service"><i>⚡</i><div><b>إنجاز الطلب</b><small>إجراءات أسرع</small></div></div></div>
 <a class="big-phone" href="https://wa.me/966506214458" target="_blank"><div class="mobile">📱</div><div><small>للاحتساب الدقيق • تأكيد المعلومات • وإنجاز تحويل المديونية</small><b>0506214458</b></div></a>
-<div class="tip-card"><div class="tip-head"><b>💡 نصيحة FINO</b><span id="tipCount">1 / 55</span></div><div class="tip-text" id="tip1"></div></div></div>
+<div class="tip-card"><div class="tip-head"><b>💡 نصيحة اليوم</b><span id="tipCount">1 / 55</span></div><div class="tip-text" id="tip1"></div></div></div>
 <div class="login-card"><div class="login-top"><h2>FINO LIVE</h2><span>● المنصة جاهزة</span></div><div class="date-box"><div class="today" id="today">—</div><div class="date-grid"><div class="date-cell"><small>الميلادي</small><b id="greg">—</b></div><div class="date-cell"><small>الهجري</small><b id="hijri">—</b></div></div><div class="clock" id="clock">—</div></div><label class="label">رمز الدخول</label><input class="password" id="password" type="password" placeholder="أدخل الرقم السري" autocomplete="off"><button class="login-btn" onclick="login()">دخول FINO ←</button><div class="error" id="loginError">الرقم السري غير صحيح</div></div></div>
 </div></section>
 <section class="page" id="page2"><div class="viewport">
@@ -473,20 +740,22 @@
 <div class="live-date"><div class="date-day" id="formDay">—</div><div><small>الميلادي</small><b id="formGreg">—</b></div><div><small>الهجري</small><b id="formHijri">—</b></div><div class="live-time" id="formTime">—</div></div>
 <a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لا تتردد • واتساب أو اتصال</small><b>0506214458</b></span></a></header>
 
-<div class="form-wrap"><div class="page-title"><div class="eyebrow">FINO LIVE MATCH</div><h1>3 خطوات فقط... <span>وترشيحك أمامك فورًا</span></h1><p>تحويل مديونية التمويل الشخصي بين البنوك • إنجاز بأسرع وقت وبدون تعقيدات</p></div>
+<div class="form-wrap"><div class="page-title"><div class="eyebrow">تحويل مديونية التمويل الشخصي</div><h1>هل هدفك <span>سيولة أفضل ونسبة أقل؟</span></h1><p>قرارك يبدأ بحسبة واضحة • نرشّح لك الأنسب وننجزك مع الأفضل</p></div>
 <div class="marketing-questions"><div class="marketing-track">
-<span class="marketing-q">💰 <strong>تبحث عن فائض كاش أعلى بعد سداد مديونيتك؟</strong></span>
-<span class="marketing-q">📈 <strong>نسبة إعادة التمويل الحالية عندك مرتفعة؟</strong></span>
-<span class="marketing-q">🏦 <strong>هل نقل المديونية لبنك آخر قد يكون أوفر لك ويزيد الصافي؟</strong></span>
-<span class="marketing-q">📅 <strong>تبحث عن مزايا أفضل على الأقساط مثل التأجيل حسب شروط العرض؟</strong></span>
-<span class="marketing-q">⚡ <strong>تبغى إنجاز بأسرع وقت وبدون تعقيدات؟</strong></span>
-<span class="marketing-q">🧮 <strong>قارن أولًا... قرار أفضل يبدأ بحسبة أوضح.</strong></span>
-<span class="marketing-q">💰 <strong>تبحث عن فائض كاش أعلى بعد سداد مديونيتك؟</strong></span>
-<span class="marketing-q">📈 <strong>نسبة إعادة التمويل الحالية عندك مرتفعة؟</strong></span>
-<span class="marketing-q">🏦 <strong>هل نقل المديونية لبنك آخر قد يكون أوفر لك ويزيد الصافي؟</strong></span>
-<span class="marketing-q">📅 <strong>تبحث عن مزايا أفضل على الأقساط مثل التأجيل حسب شروط العرض؟</strong></span>
-<span class="marketing-q">⚡ <strong>تبغى إنجاز بأسرع وقت وبدون تعقيدات؟</strong></span>
-<span class="marketing-q">🧮 <strong>قارن أولًا... قرار أفضل يبدأ بحسبة أوضح.</strong></span>
+<span class="marketing-q">💰 <strong>هل تريد سيولة وفائضًا أعلى بعد سداد مديونيتك؟</strong></span>
+<span class="marketing-q">📈 <strong>هل نسبة إعادة التمويل عندك مرتفعة؟</strong></span>
+<span class="marketing-q">➕ <strong>هل تريد تمويلًا إضافيًا مع تحويل المديونية؟</strong></span>
+<span class="marketing-q">🏦 <strong>هل تبحث عن نسبة أقل من عرض بنكك الحالي؟</strong></span>
+<span class="marketing-q">⚡ <strong>نرشّح لك الأفضل وننجزك بأسرع وقت وبدون تعقيدات.</strong></span>
+<span class="marketing-q">🧮 <strong>قرارك المالي الأفضل يبدأ بحسبة واضحة.</strong></span>
+<span class="marketing-q">💰 <strong>إذا هدفك كاش أعلى... قارن قبل ما تعيد التمويل.</strong></span>
+<span class="marketing-q">💰 <strong>هل تريد سيولة وفائضًا أعلى بعد سداد مديونيتك؟</strong></span>
+<span class="marketing-q">📈 <strong>هل نسبة إعادة التمويل عندك مرتفعة؟</strong></span>
+<span class="marketing-q">➕ <strong>هل تريد تمويلًا إضافيًا مع تحويل المديونية؟</strong></span>
+<span class="marketing-q">🏦 <strong>هل تبحث عن نسبة أقل من عرض بنكك الحالي؟</strong></span>
+<span class="marketing-q">⚡ <strong>نرشّح لك الأفضل وننجزك بأسرع وقت وبدون تعقيدات.</strong></span>
+<span class="marketing-q">🧮 <strong>قرارك المالي الأفضل يبدأ بحسبة واضحة.</strong></span>
+<span class="marketing-q">💰 <strong>إذا هدفك كاش أعلى... قارن قبل ما تعيد التمويل.</strong></span>
 </div></div>
 <div class="eligibility-strip"><span class="elig-icon">✓</span><span><b>شرط هذه الحسبة:</b> لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
 <div class="tip-bar" id="tip2"></div>
@@ -500,7 +769,7 @@
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>FINAL MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لتأكيد الحسبة والإنجاز</small><b>0506214458</b></span></a></header>
 <div class="result-wrap"><div class="result-head"><div><div class="eyebrow">FINO BUYOUT MATCH</div><h1>أفضل ترشيح <span>لتحويل مديونيتك</span></h1><p>النتيجة حسب البيانات والعروض المسجلة.</p></div><button class="edit" onclick="showPage('page2')">↻ أعد الترشيح</button></div>
 <div class="result-marketing-board">
-  <div class="result-marketing-head"><b>هل يناسبك تحويل المديونية لبنك آخر؟</b><span>FINO LIVE</span></div>
+  <div class="result-marketing-head"><b>هل تبحث عن سيولة أفضل أو نسبة أقل من بنكك الحالي؟</b><span>FINO LIVE</span></div>
   <div class="result-marquee"><div class="result-marquee-track">
     <span class="result-message">💰 تريد فائضًا أعلى بعد سداد مديونيتك؟</span>
     <span class="result-message">📈 نسبة إعادة التمويل عندك مرتفعة وتبحث عن عرض أفضل؟</span>
@@ -514,7 +783,7 @@
     <span class="result-message">🧮 تريد تأكيد الحسبة قبل البدء بالإجراءات؟</span>
   </div></div>
 </div>
-<div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجزها لك</b><small>تأكيد المعلومات • مراجعة الحسبة • إنجاز بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div>
+<div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة ونكمل الإنجاز</b><small>مراجعة الحسبة • تأكيد المعلومات • إنجاز بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div>
 <div class="result-contact">
   <div class="result-contact-icon">📱</div>
   <div><b>تواصل معنا الآن لتأكيد الحسبة والإنجاز</b><small>واتساب أو اتصال • سرعة إنجاز بدون تعقيدات • للاستفسارات والحلول الأخرى تواصل معنا.</small></div>
@@ -571,7 +840,7 @@ ${PHONE}
 ${SERVICE_URL}
 
 شكرًا لاستخدام FINO 🤍`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank')}
-function updateTip(){const t=TIPS[tipIndex];document.getElementById('tip1').textContent=t;document.getElementById('tip2').innerHTML='<b>💡 نصيحة FINO:</b> '+t;document.getElementById('tip3').innerHTML='<b>💡 قبل القرار:</b> '+t;document.getElementById('tipCount').textContent=`${tipIndex+1} / ${TIPS.length}`;tipIndex=(tipIndex+1)%TIPS.length}
+function updateTip(){const t=TIPS[tipIndex];document.getElementById('tip1').textContent=t;document.getElementById('tip2').innerHTML='<b>💡 نصيحة اليوم:</b> '+t;document.getElementById('tip3').innerHTML='<b>💡 نصيحة اليوم:</b> '+t;document.getElementById('tipCount').textContent=`${tipIndex+1} / ${TIPS.length}`;tipIndex=(tipIndex+1)%TIPS.length}
 function updateDate(){const n=new Date();document.getElementById('today').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{weekday:'long'});document.getElementById('greg').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{year:'numeric',month:'long',day:'numeric'});document.getElementById('hijri').textContent=n.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{year:'numeric',month:'long',day:'numeric'});document.getElementById('clock').textContent=n.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});renderBanks();updateTip();updateDate();setInterval(updateTip,6000);setInterval(updateDate,1000);
 
