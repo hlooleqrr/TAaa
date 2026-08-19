@@ -3016,6 +3016,66 @@ button{
   .image-preview-actions{grid-template-columns:1fr}
 }
 
+
+/* =========================================================
+   FINO — OPTIONAL NOTE + COMPACT DETAIL IMAGE
+========================================================= */
+.client-note-editor{
+  margin-top:7px;
+  padding:9px 10px;
+  border:1px solid #efcaca;
+  border-radius:10px;
+  background:#fffafa;
+}
+.client-note-editor label{
+  display:block;
+  color:#9b2626;
+  font-size:8px;
+  line-height:1.45;
+  font-weight:900;
+}
+.client-note-editor small{
+  display:block;
+  margin-top:2px;
+  color:#8f6767;
+  font-size:6px;
+  line-height:1.45;
+  font-weight:700;
+}
+.client-note-input{
+  width:100%;
+  min-height:42px;
+  margin-top:6px;
+  padding:8px 10px;
+  border:1px solid #e8caca;
+  border-radius:9px;
+  outline:none;
+  resize:vertical;
+  background:#fff;
+  color:#8f2929;
+  font-size:9px;
+  line-height:1.6;
+  font-weight:900;
+}
+.client-note-input:focus{
+  border-color:#d79b9b;
+  box-shadow:0 0 0 3px rgba(161,38,38,.045);
+}
+.custom-note-preview{
+  display:none;
+  margin-top:6px;
+  padding:8px 10px;
+  border:1px solid #efcaca;
+  border-radius:10px;
+  background:#fffafa;
+  color:#9b2626;
+  font-size:8px;
+  line-height:1.65;
+  font-weight:900;
+}
+.custom-note-preview.show{display:block}
+.custom-note-preview b{color:#8e1d1d}
+
 </style>
 </head>
 <body>
@@ -3571,6 +3631,13 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div class="finance-detail cash"><small>صافي الكاش المتوقع بعد السداد</small><b>${money(best.cashAfterDebt)}</b></div>
     </div>
 
+    <div class="client-note-editor">
+      <label for="clientCustomNote">ملاحظة للعميل (اختياري)</label>
+      <small>مثال: تثبيت راتب، تحويل راتب، أو أي ملاحظة تريد ظهورها للعميل. اتركها فارغة إذا لا توجد ملاحظة.</small>
+      <textarea id="clientCustomNote" class="client-note-input" placeholder="اكتب الملاحظة هنا..." oninput="updateClientCustomNote()"></textarea>
+      <div id="clientCustomNotePreview" class="custom-note-preview"></div>
+    </div>
+
     <div class="commodity-note">
       <b>رسوم فرق السلعة:</b> محسوبة في هذه الحسبة بنسبة 1%، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد في بعض البنوك أو بعض السلع.
     </div>
@@ -3601,6 +3668,32 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   });
 
   c.innerHTML=h;
+}
+
+
+function getClientCustomNote(){
+  const el=document.getElementById('clientCustomNote');
+  return el ? String(el.value||'').trim() : '';
+}
+function escapeHtml(value){
+  return String(value||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+}
+function updateClientCustomNote(){
+  const note=getClientCustomNote();
+  const box=document.getElementById('clientCustomNotePreview');
+  if(!box)return;
+  if(note){
+    box.classList.add('show');
+    box.innerHTML=`<b>ملاحظة:</b> ${escapeHtml(note)}`;
+  }else{
+    box.classList.remove('show');
+    box.innerHTML='';
+  }
 }
 
 function englishNumber(value, decimals=0){
@@ -3825,7 +3918,7 @@ ${lowSurplus?'⚠️ معليش تنبيه: الصافي منخفض وقد يت�
 • الرسوم الإدارية: ${englishMoneyExact(best.adminFee)}
 • ضريبة الرسوم الإدارية: ${englishMoneyExact(best.adminVat)}
 • رسوم فرق السلعة: ${englishMoneyExact(best.commodityFee)} (قد لا توجد في بعض البنوك أو بعض السلع)
-${externalObligations>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}\n`:''}
+${externalObligations>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}\n`:''}${getClientCustomNote()?`🔴 ملاحظة: ${getClientCustomNote()}\n`:''}
 ⚠️ هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ.
 
 🔺 تنويه:
@@ -3862,77 +3955,93 @@ async function createDetailedResultPngBlob(){
 
   const best=latestResults[0];
   const earlySettlement=Number(document.getElementById('earlySettlement').value);
+  const externalObligations=Number(document.getElementById('externalObligations').value||0);
+  const customNote=getClientCustomNote();
   const advice=cashAdvice(best,earlySettlement).replace(/^النصيحة:\s*/,'');
   const durationText=best.actualPayments===58?'58 شهر (4 سنوات و10 أشهر)':`${best.actualPayments} شهر`;
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=2380;
+  canvas.height=1880;
   const ctx=canvas.getContext('2d');
 
   ctx.fillStyle='#ffffff';
-  ctx.fillRect(0,0,1080,2380);
+  ctx.fillRect(0,0,1080,1880);
   ctx.direction='rtl';
   ctx.textAlign='right';
   ctx.textBaseline='alphabetic';
 
   // Header
   ctx.fillStyle='#073b67';
-  ctx.font='900 48px Cairo, Arial, sans-serif';
-  ctx.fillText('FINO',1010,78);
+  ctx.font='900 44px Cairo, Arial, sans-serif';
+  ctx.fillText('FINO',1010,70);
 
   ctx.fillStyle='#718694';
-  ctx.font='700 21px Arial, sans-serif';
-  ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()} | ${saudiTimeEnglish()}`,1010,116);
+  ctx.font='700 19px Arial, sans-serif';
+  ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()} | ${saudiTimeEnglish()}`,1010,104);
 
   ctx.strokeStyle='#e1ebf2';
   ctx.lineWidth=3;
-  ctx.beginPath();ctx.moveTo(70,148);ctx.lineTo(1010,148);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(70,130);ctx.lineTo(1010,130);ctx.stroke();
 
   ctx.fillStyle='#073b67';
-  ctx.font='900 38px Cairo, Arial, sans-serif';
-  ctx.fillText('بطاقة تفاصيل شراء مديونية التمويل الشخصي',1010,210);
+  ctx.font='900 34px Cairo, Arial, sans-serif';
+  ctx.fillText('بطاقة تفاصيل شراء مديونية التمويل الشخصي',1010,182);
 
-  // Bank card
-  canvasRoundRect(ctx,70,245,940,150,24,'#ffffff','#dce8f0');
+  // Bank
+  canvasRoundRect(ctx,70,210,940,130,22,'#ffffff','#dce8f0');
   const bankDataObj=BANKS.find(x=>x.id===best.key);
   if(bankDataObj&&bankDataObj.logo){
     try{
       const img=await loadImageForCanvas(bankDataObj.logo);
-      const scale=Math.min(210/img.width,105/img.height,1);
-      ctx.drawImage(img,100,268,img.width*scale,img.height*scale);
+      const scale=Math.min(175/img.width,82/img.height,1);
+      ctx.drawImage(img,100,232,img.width*scale,img.height*scale);
     }catch(e){}
   }
-
   ctx.fillStyle='#073b67';
-  ctx.font='900 31px Cairo, Arial, sans-serif';
-  ctx.fillText(best.name,980,305);
+  ctx.font='900 29px Cairo, Arial, sans-serif';
+  ctx.fillText(best.name,980,260);
 
   ctx.fillStyle='#4f6c7d';
-  ctx.font='800 23px Cairo, Arial, sans-serif';
-  ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,350);
+  ctx.font='800 20px Cairo, Arial, sans-serif';
+  ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,300);
+
+  // Work category + external obligations near the top
+  const infoY=365;
+  canvasRoundRect(ctx,70,infoY,450,78,16,'#f8fbfd','#dce8f0');
+  canvasRoundRect(ctx,560,infoY,450,78,16,'#f8fbfd','#dce8f0');
+
+  ctx.fillStyle='#718694';
+  ctx.font='700 16px Cairo, Arial, sans-serif';
+  ctx.fillText('جهة العمل',490,infoY+29);
+  ctx.fillText('الالتزامات الشهرية الأخرى',980,infoY+29);
+
+  ctx.fillStyle='#173042';
+  ctx.font='900 23px Cairo, Arial, sans-serif';
+  ctx.fillText(typeName(),490,infoY+61);
+  ctx.fillText(externalObligations>0?englishMoney(externalObligations):'لا يوجد',980,infoY+61);
 
   // Bank feature
-  canvasRoundRect(ctx,70,420,940,120,20,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,465,940,92,18,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#1881c2';
-  ctx.font='900 20px Cairo, Arial, sans-serif';
-  ctx.fillText('ميزة البنك المرشح',980,458);
+  ctx.font='900 17px Cairo, Arial, sans-serif';
+  ctx.fillText('ميزة البنك المرشح',980,497);
 
   ctx.fillStyle='#073b67';
-  ctx.font='900 27px Cairo, Arial, sans-serif';
-  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,500);
+  ctx.font='900 24px Cairo, Arial, sans-serif';
+  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,532);
 
   // Cash
-  canvasRoundRect(ctx,70,570,940,210,26,'#eef8fd','#b9dce9');
+  canvasRoundRect(ctx,70,580,940,170,24,'#eef8fd','#b9dce9');
   ctx.fillStyle='#607a8a';
-  ctx.font='800 23px Cairo, Arial, sans-serif';
+  ctx.font='800 20px Cairo, Arial, sans-serif';
   ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,625);
 
   ctx.fillStyle='#0b78b7';
-  ctx.font='900 62px Cairo, Arial, sans-serif';
-  ctx.fillText(englishMoney(best.cashAfterDebt),980,710);
+  ctx.font='900 54px Cairo, Arial, sans-serif';
+  ctx.fillText(englishMoney(best.cashAfterDebt),980,700);
 
-  // Details grid
+  // Details
   const boxes=[
     ['القسط الشهري',englishMoney(best.installment),false],
     ['السداد المبكر',englishMoney(earlySettlement),false],
@@ -3946,96 +4055,107 @@ async function createDetailedResultPngBlob(){
     ['مدة الحسبة',durationText,false]
   ];
 
-  const startY=830,bw=450,bh=112,gap=18;
+  const startY=790,bw=450,bh=86,gap=14;
   boxes.forEach((box,i)=>{
     const col=i%2,row=Math.floor(i/2);
     const x=col===0?70:560;
     const y=startY+row*(bh+gap);
 
     canvasRoundRect(
-      ctx,x,y,bw,bh,17,
+      ctx,x,y,bw,bh,15,
       box[2]?'#fffafa':'#ffffff',
       box[2]?'#efcaca':'#e1ebf2'
     );
 
     ctx.fillStyle=box[2]?'#a12626':'#6b8190';
-    ctx.font='700 18px Cairo, Arial, sans-serif';
-    ctx.fillText(box[0],x+bw-20,y+38);
+    ctx.font='700 15px Cairo, Arial, sans-serif';
+    ctx.fillText(box[0],x+bw-18,y+30);
 
     ctx.fillStyle=box[2]?'#a12626':'#173042';
-    ctx.font='900 27px Cairo, Arial, sans-serif';
-    ctx.fillText(box[1],x+bw-20,y+82);
+    ctx.font='900 23px Cairo, Arial, sans-serif';
+    ctx.fillText(box[1],x+bw-18,y+65);
   });
 
-  let y=startY+5*(bh+gap)+18;
+  let y=startY+5*(bh+gap)+6;
+
+  // Optional note above commodity-fee note
+  if(customNote){
+    canvasRoundRect(ctx,70,y,940,82,15,'#fffafa','#efcaca');
+    ctx.fillStyle='#a12626';
+    ctx.font='900 17px Cairo, Arial, sans-serif';
+    ctx.fillText('ملاحظة:',980,y+29);
+
+    ctx.font='900 17px Cairo, Arial, sans-serif';
+    drawWrappedArabic(ctx,customNote,860,y+29,745,27,2);
+    y+=98;
+  }
 
   // Commodity fee note
-  canvasRoundRect(ctx,70,y,940,92,16,'#fffafa','#efcaca');
+  canvasRoundRect(ctx,70,y,940,78,15,'#fffafa','#efcaca');
   ctx.fillStyle='#a12626';
-  ctx.font='900 18px Cairo, Arial, sans-serif';
+  ctx.font='900 16px Cairo, Arial, sans-serif';
   drawWrappedArabic(
     ctx,
-    'ملاحظة رسوم فرق السلعة: قد لا توجد في بعض البنوك أو بعض السلع، وقد تختلف حسب البنك ونوع السلعة.',
-    980,y+34,850,29,2
+    'رسوم فرق السلعة: قد لا توجد في بعض البنوك أو بعض السلع، وقد تختلف حسب البنك ونوع السلعة.',
+    980,y+29,850,26,2
   );
-  y+=122;
+  y+=94;
 
   // Advice
-  canvasRoundRect(ctx,70,y,940,180,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,116,16,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
-  ctx.font='900 23px Cairo, Arial, sans-serif';
-  ctx.fillText('إرشاد',980,y+40);
+  ctx.font='900 19px Cairo, Arial, sans-serif';
+  ctx.fillText('إرشاد',980,y+31);
 
   ctx.fillStyle='#35576a';
-  ctx.font='800 20px Cairo, Arial, sans-serif';
-  drawWrappedArabic(ctx,advice,980,y+80,850,33,4);
-  y+=210;
+  ctx.font='800 16px Cairo, Arial, sans-serif';
+  drawWrappedArabic(ctx,advice,980,y+59,850,25,3);
+  y+=132;
 
   // Disclaimer
-  canvasRoundRect(ctx,70,y,940,175,18,'#fffafa','#efd1d1');
+  canvasRoundRect(ctx,70,y,940,112,16,'#fffafa','#efd1d1');
   ctx.fillStyle='#8f2929';
-  ctx.font='900 19px Cairo, Arial, sans-serif';
+  ctx.font='900 15px Cairo, Arial, sans-serif';
   drawWrappedArabic(
     ctx,
     'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.',
-    980,y+42,850,32,5
+    980,y+28,850,24,4
   );
-  y+=205;
+  y+=128;
 
   // Fees
-  canvasRoundRect(ctx,70,y,940,125,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,90,16,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
-  ctx.font='900 21px Cairo, Arial, sans-serif';
-  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+42);
+  ctx.font='900 17px Cairo, Arial, sans-serif';
+  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+30);
 
   ctx.fillStyle='#111111';
-  ctx.font='900 38px Cairo, Arial, sans-serif';
-  ctx.fillText('2,800 ريال',980,y+94);
-  y+=160;
+  ctx.font='900 30px Cairo, Arial, sans-serif';
+  ctx.fillText('2,800 ريال',980,y+68);
+  y+=108;
 
-  // Contact
+  // Contact + QR
   ctx.fillStyle='#073b67';
-  ctx.font='900 23px Cairo, Arial, sans-serif';
-  ctx.fillText('للتأكيد على الحسبة والإجراءات والاستفسارات:',980,y+34);
+  ctx.font='900 19px Cairo, Arial, sans-serif';
+  ctx.fillText('للتأكيد على الحسبة والإجراءات والاستفسارات:',980,y+27);
 
   ctx.fillStyle='#111111';
-  ctx.font='900 42px Arial, sans-serif';
-  ctx.fillText('0506214458',980,y+88);
+  ctx.font='900 34px Arial, sans-serif';
+  ctx.fillText('0506214458',980,y+69);
 
   ctx.fillStyle='#5f7888';
-  ctx.font='800 19px Cairo, Arial, sans-serif';
-  ctx.fillText('اتصال أو واتساب',980,y+128);
+  ctx.font='800 16px Cairo, Arial, sans-serif';
+  ctx.fillText('اتصال أو واتساب',980,y+98);
 
-  // QR in corner
   try{
     const qr=await loadImageForCanvas(SERVICES_QR_DATA);
-    const qx=70,qy=y-8,qsize=205;
-    canvasRoundRect(ctx,qx,qy,qsize,qsize,18,'#ffffff','#dce8f0');
-    ctx.drawImage(qr,qx+10,qy+10,qsize-20,qsize-20);
+    const qx=70,qy=y-6,qsize=155;
+    canvasRoundRect(ctx,qx,qy,qsize,qsize,15,'#ffffff','#dce8f0');
+    ctx.drawImage(qr,qx+8,qy+8,qsize-16,qsize-16);
 
     ctx.fillStyle='#5f7888';
-    ctx.font='800 18px Cairo, Arial, sans-serif';
-    ctx.fillText('امسح الباركود لمعرفة بعض خدماتنا',980,qy+180);
+    ctx.font='800 15px Cairo, Arial, sans-serif';
+    ctx.fillText('باركود بعض خدماتنا',980,qy+135);
   }catch(e){}
 
   return await new Promise((resolve,reject)=>{
