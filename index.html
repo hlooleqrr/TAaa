@@ -2820,6 +2820,75 @@ button{
   }
 }
 
+
+/* =========================================================
+   FINO — BANK SURPLUS POLICY + PNG SHARE FIX
+========================================================= */
+
+.bank-policy-warning{
+  margin-top:6px;
+  padding:8px 10px;
+  border:1px solid #efcaca;
+  border-radius:10px;
+  background:#fffafa;
+  color:#9b2626;
+  font-size:7px;
+  line-height:1.65;
+  font-weight:900;
+}
+
+.bank-policy-warning b{
+  color:#8e1d1d;
+}
+
+.no-bank-card{
+  margin:10px 0;
+  padding:22px 18px;
+  border:2px solid #efd1d1;
+  border-radius:16px;
+  background:#fffafa;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(143,38,38,.05);
+}
+
+.no-bank-card .no-bank-icon{
+  font-size:34px;
+}
+
+.no-bank-card h3{
+  margin-top:6px;
+  color:#9b2626;
+  font-size:18px;
+  font-weight:900;
+}
+
+.no-bank-card p{
+  max-width:720px;
+  margin:7px auto 0;
+  color:#6c5050;
+  font-size:10px;
+  line-height:1.8;
+  font-weight:800;
+}
+
+.no-bank-card strong{
+  display:block;
+  margin-top:10px;
+  color:#111;
+  font-size:22px;
+  font-weight:900;
+  direction:ltr;
+}
+
+.share-status{
+  min-height:18px;
+  margin-top:6px;
+  color:#5f7888;
+  font-size:8px;
+  font-weight:800;
+  text-align:center;
+}
+
 </style>
 </head>
 <body>
@@ -3139,6 +3208,48 @@ function buildFinance(bank,salary,earlySettlement,externalObligations){
   };
 }
 
+function assessBankEligibility(finance,earlySettlement){
+  const cash=Number(finance.cashAfterDebt||0);
+  const debt=Number(earlySettlement||0);
+
+  if(cash<=0){
+    return {
+      eligible:false,
+      warning:'',
+      reason:'المديونية الحالية والرسوم أعلى من صافي التمويل المتاح.'
+    };
+  }
+
+  if(finance.key==='RAJHI'){
+    const minCash=debt*0.05;
+    if(cash<=minCash){
+      return {
+        eligible:false,
+        warning:'',
+        reason:'صافي الكاش بعد السداد أقل من 5% من مبلغ السداد المبكر، ولذلك لا يحقق الحد المطلوب لهذا العرض.'
+      };
+    }
+  }
+
+  if(finance.key==='SNB'){
+    if(cash<=6000){
+      return {
+        eligible:false,
+        warning:'',
+        reason:'صافي الكاش بعد السداد لا يتجاوز 6,000 ريال، ولذلك لا يحقق الحد المطلوب لهذا العرض.'
+      };
+    }
+  }
+
+  let warning='';
+  if(finance.key!=='RAJHI' && finance.key!=='SNB' && cash<10000){
+    warning='⚠️ قد يرفض البنك الطلب بسبب انخفاض الفائض بعد السداد إلى أقل من 10,000 ريال، وذلك حسب سياسة كل بنك. تواصل معنا للاستفسار.';
+  }
+
+  return {eligible:true,warning,reason:''};
+}
+
+
 function bankData(id){return BANKS.find(b=>b.id===id)}
 function logo(id){const b=bankData(id);return b&&b.logo?`<img src="${b.logo}" alt="${b.name}">`:`<b>${id}</b>`}
 function calculate(){
@@ -3193,13 +3304,20 @@ function calculate(){
     if(r!==null)candidates.push({key:'SNB',name:'البنك الأهلي السعودي SNB',rate:r});
   }
 
-  const out=candidates.map(bank=>buildFinance(bank,salary,earlySettlement,externalObligations));
+  const evaluated=candidates.map(bank=>{
+    const finance=buildFinance(bank,salary,earlySettlement,externalObligations);
+    const policy=assessBankEligibility(finance,earlySettlement);
+    return {...finance,policyWarning:policy.warning,policyReason:policy.reason,policyEligible:policy.eligible};
+  });
+
+  const out=evaluated.filter(bank=>bank.policyEligible);
 
   /* نحافظ على منطق الترشيح السابق: الأقل هامش ربح أولًا،
      وعند تساوي النسبة يُقدّم الأعلى صافي كاش. */
   out.sort((a,b)=>(a.rate-b.rate)||(b.cashAfterDebt-a.cashAfterDebt));
 
   latestResults=out;
+  window.__FINO_LAST_REJECTIONS=evaluated.filter(bank=>!bank.policyEligible);
   renderResults(salary,earlySettlement,externalObligations,out);
   showPage('page3');
 }
@@ -3215,7 +3333,13 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   const c=document.getElementById('results');
 
   if(!out.length){
-    c.innerHTML='<div class="final-notice" style="padding:16px;text-align:center">لا توجد نسبة مطابقة ضمن جداول العروض الحالية لهذه الحالة. تواصل معنا لمراجعة الخيارات الأخرى.</div>';
+    c.innerHTML=`
+      <div class="no-bank-card">
+        <div class="no-bank-icon">🤝</div>
+        <h3>معليش، حاليًا لا يوجد بنك مناسب لشراء مديونيتك</h3>
+        <p>حسب البيانات المدخلة، إما أن الالتزامات الحالية لا تسمح بتمويل مناسب، أو أن مبلغ المديونية أعلى من التمويل المتاح، أو أن الفائض بعد السداد لا يحقق الحد المطلوب لبعض البنوك. انتظر وجرّب معنا من فترة لفترة؛ لعل يظهر لك عرض أفضل.</p>
+        <strong>0506214458</strong>
+      </div>`;
     return;
   }
 
@@ -3252,6 +3376,8 @@ function renderResults(salary,earlySettlement,externalObligations,out){
         <div class="adv-copy">${best.featureCopy||'تخضع الميزة النهائية لشروط البنك وقت التنفيذ.'}</div>
       </div>
     </div>
+
+    ${best.policyWarning?`<div class="bank-policy-warning">${best.policyWarning}</div>`:''}
 
     <div class="finance-details">
       <div class="finance-detail key"><small>القسط الشهري المحتسب</small><b>${money(best.installment)}</b></div>
@@ -3295,6 +3421,7 @@ function renderResults(salary,earlySettlement,externalObligations,out){
         </div>
         <div class="result-rate">${fmt(b.rate)}%</div>
         ${notes?`<div class="notes">${notes}</div>`:''}
+        ${b.policyWarning?`<div class="notes"><div class="bank-policy-warning">${b.policyWarning}</div></div>`:''}
       </div>
     `;
   });
@@ -3514,22 +3641,153 @@ ${SERVICE_URL}`;
 }
 
 
-function fillShareCard(){
-  if(!latestResults.length)return;
+function loadImageForCanvas(src){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src=src;
+  });
+}
+
+function canvasRoundRect(ctx,x,y,w,h,r,fill,stroke){
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+  if(fill){ctx.fillStyle=fill;ctx.fill();}
+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}
+}
+
+function drawWrappedArabic(ctx,text,x,y,maxWidth,lineHeight,maxLines=4){
+  const words=String(text||'').split(' ');
+  let line='';
+  let lines=[];
+  for(const word of words){
+    const test=line?line+' '+word:word;
+    if(ctx.measureText(test).width>maxWidth && line){
+      lines.push(line);
+      line=word;
+      if(lines.length>=maxLines-1)break;
+    }else{
+      line=test;
+    }
+  }
+  if(line && lines.length<maxLines)lines.push(line);
+  lines.forEach((ln,i)=>ctx.fillText(ln,x,y+i*lineHeight));
+  return y+lines.length*lineHeight;
+}
+
+async function createResultPngBlob(){
+  if(!latestResults.length)throw new Error('NO_RESULT');
+
   const best=latestResults[0];
   const earlySettlement=Number(document.getElementById('earlySettlement').value);
   const externalObligations=Number(document.getElementById('externalObligations').value||0);
+  const advice=cashAdvice(best,earlySettlement);
 
-  document.getElementById('scDate').textContent=`${saudiGregorianDate()} م | ${saudiHijriDate()} هـ`;
-  document.getElementById('scLogo').innerHTML=logo(best.key);
-  document.getElementById('scBankName').textContent=best.name;
-  document.getElementById('scRate').textContent=`هامش الربح: ${englishNumber(best.rate,2)}%`;
-  document.getElementById('scCash').textContent=englishMoney(best.cashAfterDebt);
-  document.getElementById('scInstallment').textContent=englishMoney(best.installment);
-  document.getElementById('scDebt').textContent=englishMoney(earlySettlement);
-  document.getElementById('scExternal').textContent=englishMoney(externalObligations);
-  document.getElementById('scTotalCap').textContent=englishMoney(best.totalObligationCap);
-  document.getElementById('scAdvice').textContent=cashAdvice(best,earlySettlement);
+  const canvas=document.createElement('canvas');
+  canvas.width=1080;
+  canvas.height=1350;
+  const ctx=canvas.getContext('2d');
+
+  ctx.fillStyle='#ffffff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.direction='rtl';
+  ctx.textAlign='right';
+  ctx.textBaseline='alphabetic';
+
+  // Header
+  ctx.fillStyle='#073b67';
+  ctx.font='900 44px Cairo, Arial, sans-serif';
+  ctx.fillText('FINO',1010,72);
+
+  ctx.fillStyle='#718694';
+  ctx.font='700 22px Cairo, Arial, sans-serif';
+  ctx.fillText(`${saudiGregorianDate()} م  |  ${saudiHijriDate()} هـ`,1010,110);
+
+  ctx.strokeStyle='#e1ebf2';
+  ctx.lineWidth=3;
+  ctx.beginPath(); ctx.moveTo(70,140); ctx.lineTo(1010,140); ctx.stroke();
+
+  ctx.fillStyle='#073b67';
+  ctx.font='900 38px Cairo, Arial, sans-serif';
+  ctx.fillText('ترشيح شراء مديونية التمويل الشخصي',1010,205);
+
+  // Bank
+  canvasRoundRect(ctx,70,240,940,150,24,'#ffffff','#dce8f0');
+  const bankDataObj=BANKS.find(x=>x.id===best.key);
+  if(bankDataObj && bankDataObj.logo){
+    try{
+      const img=await loadImageForCanvas(bankDataObj.logo);
+      const maxW=210,maxH=105;
+      const scale=Math.min(maxW/img.width,maxH/img.height,1);
+      const w=img.width*scale,h=img.height*scale;
+      ctx.drawImage(img,100,262,w,h);
+    }catch(e){}
+  }
+  ctx.fillStyle='#073b67';
+  ctx.font='900 31px Cairo, Arial, sans-serif';
+  ctx.fillText(best.name,980,300);
+  ctx.fillStyle='#4f6c7d';
+  ctx.font='800 23px Cairo, Arial, sans-serif';
+  ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,345);
+
+  // Cash
+  canvasRoundRect(ctx,70,425,940,215,26,'#f3f9fd','#bcddea');
+  ctx.fillStyle='#607a8a';
+  ctx.font='800 24px Cairo, Arial, sans-serif';
+  ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,480);
+  ctx.fillStyle='#0b78b7';
+  ctx.font='900 62px Cairo, Arial, sans-serif';
+  ctx.fillText(englishMoney(best.cashAfterDebt),980,565);
+
+  // Details
+  const boxY=680, boxW=450, boxH=118;
+  canvasRoundRect(ctx,70,boxY,boxW,boxH,18,'#ffffff','#e1ebf2');
+  canvasRoundRect(ctx,560,boxY,boxW,boxH,18,'#ffffff','#e1ebf2');
+  ctx.fillStyle='#6b8190'; ctx.font='700 20px Cairo, Arial, sans-serif';
+  ctx.fillText('القسط الشهري',490,720);
+  ctx.fillText('السداد المبكر',980,720);
+  ctx.fillStyle='#173042'; ctx.font='900 31px Cairo, Arial, sans-serif';
+  ctx.fillText(englishMoney(best.installment),490,770);
+  ctx.fillText(englishMoney(earlySettlement),980,770);
+
+  canvasRoundRect(ctx,70,825,940,195,20,'#f7fbfe','#d7e7f1');
+  ctx.fillStyle='#073b67'; ctx.font='900 25px Cairo, Arial, sans-serif';
+  ctx.fillText('نصيحتنا لك',980,870);
+  ctx.fillStyle='#35576a'; ctx.font='800 22px Cairo, Arial, sans-serif';
+  drawWrappedArabic(ctx,advice.replace(/^النصيحة:\s*/,''),
+    980,915,850,38,3);
+
+  // Footer/service
+  ctx.strokeStyle='#e1ebf2'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.moveTo(70,1050); ctx.lineTo(1010,1050); ctx.stroke();
+
+  ctx.fillStyle='#073b67'; ctx.font='900 25px Cairo, Arial, sans-serif';
+  ctx.fillText('احتساب دقيق • ترشيح البنك الأنسب • متابعة وإنجاز التمويل',1010,1100);
+
+  ctx.fillStyle='#5f7888'; ctx.font='700 21px Cairo, Arial, sans-serif';
+  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1150);
+
+  ctx.fillStyle='#111111'; ctx.font='900 40px Arial, sans-serif';
+  ctx.textAlign='left';
+  ctx.fillText('0506214458',70,1210);
+
+  ctx.textAlign='right';
+  ctx.fillStyle='#5f7888'; ctx.font='700 19px Arial, sans-serif';
+  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1260);
+
+  return await new Promise((resolve,reject)=>{
+    canvas.toBlob(blob=>{
+      if(blob)resolve(blob);
+      else reject(new Error('PNG_FAILED'));
+    },'image/png',0.95);
+  });
 }
 
 async function shareResultImageDirect(clientPhone){
@@ -3538,51 +3796,56 @@ async function shareResultImageDirect(clientPhone){
     return;
   }
 
-  fillShareCard();
+  const modalError=document.getElementById('clientPhoneError');
+  if(modalError)modalError.textContent='جاري تجهيز صورة PNG...';
 
-  const card=document.getElementById('shareCardPreview');
-  const clone=card.cloneNode(true);
-  clone.style.position='static';
-  clone.style.left='0';
-  clone.style.top='0';
-  clone.style.width='1080px';
+  try{
+    if(document.fonts && document.fonts.ready){
+      try{await document.fonts.ready;}catch(e){}
+    }
 
-  const xml=new XMLSerializer().serializeToString(clone);
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350">
-    <foreignObject width="100%" height="100%">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="width:1080px;height:1350px;background:white">${xml}</div>
-    </foreignObject>
-  </svg>`;
+    const blob=await createResultPngBlob();
+    const file=new File([blob],'FINO-result.png',{type:'image/png'});
+    let shared=false;
 
-  const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
-  const file=new File([blob],'FINO-result.svg',{type:'image/svg+xml'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      try{
+        await navigator.share({
+          files:[file],
+          title:'FINO - نتيجة الحسبة',
+          text:'نتيجة حسبة شراء مديونية التمويل الشخصي'
+        });
+        shared=true;
+      }catch(e){}
+    }
 
-  let shared=false;
-  if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
-    try{
-      await navigator.share({files:[file],title:'FINO - نتيجة الحسبة'});
-      shared=true;
-    }catch(e){}
-  }
+    if(!shared){
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download='FINO-result.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),5000);
+    }
 
-  if(!shared){
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;
-    a.download='FINO-result.svg';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),1500);
-  }
-
-  const best=latestResults[0];
-  const caption=`FINO | نتيجة حسبة شراء مديونية التمويل الشخصي
+    const best=latestResults[0];
+    const caption=`FINO | نتيجة حسبة شراء مديونية التمويل الشخصي
 البنك المرشح: ${best.name}
 صافي الكاش المتوقع: ${englishMoney(best.cashAfterDebt)}
 للتأكيد والإنجاز: ${PHONE}`;
-  window.open(`https://wa.me/${clientPhone}?text=${encodeURIComponent(caption)}`,'_blank');
+
+    setTimeout(()=>{
+      window.open(`https://wa.me/${clientPhone}?text=${encodeURIComponent(caption)}`,'_blank');
+    },300);
+
+  }catch(err){
+    console.error('FINO PNG share error:',err);
+    alert('تعذر إنشاء الصورة على هذا المتصفح. جرّب من Chrome أو Safari المحدث.');
+  }
 }
+
 
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape')closePhoneModal();
