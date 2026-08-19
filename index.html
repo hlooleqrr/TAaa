@@ -1550,6 +1550,307 @@
   #page3 .best-name{font-size:17px!important}
 }
 
+
+/* =========================================================
+   FINO — FINAL CLIENT-SHARE / RESULT CLEANUP
+========================================================= */
+
+/* Larger, cleaner result typography */
+#page3 .result-head h1{
+  font-size:clamp(28px,3.3vw,42px)!important;
+  font-weight:900!important;
+}
+#page3 .result-head p{
+  font-size:9px!important;
+  font-weight:800!important;
+}
+
+/* Single top contact area only */
+.sales-banner{
+  padding:12px 14px!important;
+  border-radius:14px!important;
+  background:#fff!important;
+}
+.sales-banner b{
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+.sales-banner small{
+  font-size:9px!important;
+  line-height:1.6!important;
+}
+.sales-banner strong{
+  color:#111!important;
+  font-size:27px!important;
+  font-weight:900!important;
+  background:transparent!important;
+}
+
+/* colored service chips */
+.service-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:5px;
+}
+.service-chip{
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:7.5px;
+  font-weight:900;
+}
+.service-chip.calc{background:#eaf5fd;color:#075488}
+.service-chip.verify{background:#f4edfb;color:#723e9b}
+.service-chip.finish{background:#eef8f1;color:#2f7550}
+
+/* Input page: early-settlement box closer and bigger */
+.debt-input{
+  height:48px!important;
+  font-size:20px!important;
+}
+.section-label b{
+  font-size:10px!important;
+}
+.section-label small{
+  font-size:7px!important;
+}
+
+/* cash dominant, installment secondary directly below */
+.cash-hero{
+  grid-template-columns:1fr!important;
+  text-align:right!important;
+}
+.cash-hero .cash-value{
+  order:1;
+  font-size:44px!important;
+  line-height:1.1!important;
+  text-align:right!important;
+  margin-top:3px;
+}
+.cash-hero .cash-title{
+  font-size:16px!important;
+}
+.cash-hero .installment{
+  font-size:10px!important;
+  margin-top:7px!important;
+}
+.cash-hero .installment strong{
+  font-size:18px!important;
+}
+
+/* Larger detail grid */
+.finance-detail{
+  min-height:64px!important;
+  padding:9px 10px!important;
+}
+.finance-detail small{
+  font-size:7.5px!important;
+}
+.finance-detail b{
+  font-size:13px!important;
+}
+
+/* Fee note in same table: stronger red label */
+.finance-detail.commodity-fee{
+  background:#fffafa!important;
+  border:2px solid #efcaca!important;
+}
+.finance-detail.commodity-fee small,
+.finance-detail.commodity-fee b{
+  color:#a12626!important;
+  font-weight:900!important;
+}
+.finance-detail.commodity-fee small::after{
+  content:" • محسوبة 1% وقد تختلف حسب البنك والسلعة وقد لا توجد";
+  color:#a12626;
+  font-weight:900;
+}
+
+/* Remove extra contact blocks visually when hidden */
+.result-contact,
+.final-contact-white{
+  display:none!important;
+}
+
+/* keep last screenshot block only */
+.capture-cta{
+  margin-top:8px!important;
+  padding:12px 14px!important;
+}
+.capture-cta b{
+  font-size:12px!important;
+}
+.capture-cta small{
+  font-size:8px!important;
+  line-height:1.6!important;
+}
+.capture-cta strong{
+  font-size:24px!important;
+  color:#111!important;
+}
+
+/* final notice bigger */
+.final-notice{
+  font-size:9px!important;
+  line-height:1.8!important;
+  padding:11px 13px!important;
+}
+
+/* alternative banks: smaller notes only */
+.result-bank .note{
+  font-size:6px!important;
+  padding:3px 5px!important;
+  line-height:1.45!important;
+}
+.result-bank .alt-cash{
+  font-size:6.5px!important;
+}
+.result-bank .alt-cash b{
+  font-size:9px!important;
+}
+
+/* commodity note short and no duplicated amount */
+.commodity-note{
+  font-size:7.5px!important;
+  padding:8px 10px!important;
+}
+.commodity-note .fee-amount-repeat{
+  display:none!important;
+}
+
+/* action buttons: text / image */
+.actions{
+  grid-template-columns:1fr 1fr!important;
+}
+.action{
+  height:44px!important;
+  font-size:9px!important;
+}
+.share-image{
+  border:1px solid #d8e6ee;
+  background:#fff;
+  color:#3f6172;
+}
+
+/* share preview canvas area */
+.share-card-preview{
+  position:fixed;
+  left:-99999px;
+  top:0;
+  width:1080px;
+  background:#fff;
+  color:#173042;
+  padding:54px;
+  font-family:'Cairo',sans-serif;
+}
+.share-card-preview .sc-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:3px solid #e1ebf2;
+  padding-bottom:24px;
+}
+.share-card-preview .sc-brand{
+  font-size:34px;
+  font-weight:900;
+  color:#073b67;
+}
+.share-card-preview .sc-title{
+  margin-top:30px;
+  font-size:40px;
+  font-weight:900;
+  color:#073b67;
+}
+.share-card-preview .sc-bank{
+  margin-top:24px;
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+.share-card-preview .sc-logo{
+  width:180px;
+  height:110px;
+  display:grid;
+  place-items:center;
+  border:2px solid #dce8f0;
+  border-radius:22px;
+  padding:12px;
+}
+.share-card-preview .sc-logo img{
+  max-width:100%;
+  max-height:90px;
+}
+.share-card-preview .sc-bank-name{
+  font-size:32px;
+  font-weight:900;
+}
+.share-card-preview .sc-cash{
+  margin-top:30px;
+  padding:26px;
+  border:3px solid #cfe3f0;
+  border-radius:24px;
+}
+.share-card-preview .sc-cash small{
+  display:block;
+  font-size:22px;
+  color:#637d8d;
+  font-weight:800;
+}
+.share-card-preview .sc-cash b{
+  display:block;
+  margin-top:5px;
+  font-size:54px;
+  color:#0a5187;
+}
+.share-card-preview .sc-row{
+  margin-top:24px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.share-card-preview .sc-box{
+  border:2px solid #e1ebf2;
+  border-radius:18px;
+  padding:20px;
+}
+.share-card-preview .sc-box small{
+  display:block;
+  font-size:18px;
+  color:#6b8190;
+}
+.share-card-preview .sc-box b{
+  display:block;
+  margin-top:4px;
+  font-size:28px;
+}
+.share-card-preview .sc-advice{
+  margin-top:28px;
+  padding:22px;
+  border-radius:18px;
+  background:#f7fbfe;
+  border:2px solid #d7e7f1;
+  font-size:24px;
+  line-height:1.7;
+  font-weight:900;
+}
+.share-card-preview .sc-footer{
+  margin-top:28px;
+  padding-top:22px;
+  border-top:3px solid #e1ebf2;
+  font-size:22px;
+  line-height:1.7;
+}
+.share-card-preview .sc-phone{
+  font-size:34px;
+  font-weight:900;
+  color:#111;
+}
+
+@media(max-width:580px){
+  .cash-hero .cash-value{font-size:34px!important}
+  .service-chip{font-size:6.5px}
+}
+
 </style>
 </head>
 <body>
@@ -1618,20 +1919,13 @@
     <span class="result-message">🧮 تريد تأكيد الحسبة قبل البدء بالإجراءات؟</span>
   </div></div>
 </div>
-<div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجز التمويل</b><small>احتساب دقيق • تأكيد المعلومات • إنجاز التمويل بأسرع وقت وبدون تعقيدات</small></div><strong>0506214458</strong></div>
-<div class="result-contact">
-  <div class="result-contact-icon">📱</div>
-  <div><b>تواصل معنا لتأكيد الحسبة وإنجاز التمويل</b><small>واتساب أو اتصال • للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل بأسرع وقت وبدون تعقيدات.</small></div>
-  <div class="result-contact-number">0506214458</div>
-</div><div class="eligibility-strip"><span class="elig-icon">⚠️</span><span><b>مهم:</b> هذه الحسبة لعميل لا يوجد لديه تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
+<div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجز تمويلك</b><small>تواصل معنا لمراجعة الحسبة وبدء الإجراءات.</small><div class="service-chips"><span class="service-chip calc">احتساب دقيق</span><span class="service-chip verify">تأكيد المعلومات</span><span class="service-chip finish">إنجاز التمويل</span></div></div><strong>0506214458</strong></div>
+<div class="eligibility-strip"><span class="elig-icon">⚠️</span><span><b>مهم:</b> هذه الحسبة لعميل لا يوجد لديه تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
 <div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="final-notice"><b>تنويه مهم:</b> هذه حسبة مبدئية حسب البيانات المدخلة والعرض المتاح، وقد تختلف الحسبة النهائية حسب جهة العمل وسياسة البنك ونتيجة دراسة الطلب.</div>
-<div class="final-contact-white"><div class="phone-icon">📱</div><div><b>للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل مع البنك الأنسب</b><small>تواصل معنا اتصال أو واتساب • سرعة إنجاز بدون تعقيدات.</small></div><strong>0506214458</strong></div><div class="capture-cta"><div class="capture-icon">📸</div><div><b>خذ لقطة لهذه الشاشة وتواصل معنا</b><small>للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل بأسرع وقت وبدون تعقيدات. ولجميع الاستفسارات والحلول الأخرى تواصل معنا.</small></div><strong>0506214458</strong></div>
-<div class="actions"><button class="action wa" onclick="shareWhats()">📲 إرسال عبر واتساب</button><button class="action svc" onclick="window.open(SERVICE_URL,'_blank')">معرفة بعض خدماتنا</button></div><footer class="form-footer"><span><b>FINO</b> • لتأكيد الحسبة والإنجاز تواصل معنا الآن</span><strong>0506214458</strong></footer></div>
-</div>
+
 <div class="live-footer">
   <span class="footer-brand">FINO • لتأكيد الحسبة وإنجاز التمويل</span>
   <span class="footer-date"><b id="f3Day">—</b><b id="f3Greg">—</b><b id="f3Hijri">—</b><span class="footer-time" id="f3Time">—</span></span>
-  <span class="footer-phone">0506214458</span>
 </div>
 </section>
 </div>
@@ -1845,7 +2139,7 @@ function renderResults(salary,earlySettlement,out){
 
       <div class="finance-detail"><small>الرسوم الإدارية 0.5%</small><b>${moneyExact(best.adminFee)}</b></div>
       <div class="finance-detail"><small>ضريبة القيمة المضافة على الرسوم 15%</small><b>${moneyExact(best.adminVat)}</b></div>
-      <div class="finance-detail"><small>رسوم فرق السلعة المحتسبة 1%</small><b>${moneyExact(best.commodityFee)}</b></div>
+      <div class="finance-detail commodity-fee"><small>رسوم فرق السلعة</small><b>${moneyExact(best.commodityFee)}</b></div>
 
       <div class="finance-detail"><small>صافي التمويل بعد الرسوم وقبل السداد</small><b>${money(best.netBeforeDebt)}</b></div>
       <div class="finance-detail debt"><small>مبلغ السداد المبكر للمديونية</small><b>${money(earlySettlement)}</b></div>
@@ -1859,12 +2153,7 @@ function renderResults(salary,earlySettlement,out){
       بعد ذلك تُخصم الرسوم الإدارية 0.5%، وضريبة 15% على الرسوم الإدارية، ورسوم فرق السلعة المحتسبة 1% من التمويل، ثم مبلغ السداد المبكر.
     </div>
 
-    <div class="commodity-note">
-      <b>⚠️ رسوم فرق السلعة:</b>
-      تم احتسابها مبدئيًا بنسبة <b>1%</b> من مبلغ التمويل، وتُخصم من صافي التمويل.
-      قد تختلف رسوم فرق السلعة باختلاف البنك وباختلاف نوع السلعة نفسها، وقد لا تكون موجودة أصلًا لدى بعض البنوك حسب السلعة.
-      المبلغ المحتسب في هذه الحسبة: <b>${moneyExact(best.commodityFee)}</b>.
-    </div>
+    <div class="commodity-note"><b>⚠️ تنويه رسوم فرق السلعة:</b> تم احتسابها بنسبة 1% من التمويل، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد أصلًا لدى بعض البنوك.</div>
 
     <div class="list-title"><b>بقية الخيارات بالترتيب</b><span>${out.length} خيارات مطابقة</span></div>
   `;
@@ -1874,7 +2163,7 @@ function renderResults(salary,earlySettlement,out){
     if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>إعفاء من أول قسطين</b>؛ لذلك حسبة إجمالي التمويل تكون على 58 قسطًا فعليًا.</div>`;
     if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل قسطين</b> — تأجيل وليس إعفاء — لذلك الحسبة تبقى على 60 قسطًا.</div>`;
     if(b.key==='ANB')notes+=`<div class="note">📅 العربي الوطني: إمكانية <b>تأجيل قسط أو قسطين</b> حسب اختيار العميل وشروط العرض؛ الحسبة تبقى على 60 قسطًا.</div>`;
-    if(b.key==='SAB')notes+=`<div class="note">شراء المديونية في الجدول المسجل يبدأ من راتب <b>10,000 ريال فأعلى.</b></div>`;
+    if(b.key==='SAB')notes+=`<div class="note">شراء المديونية في هذا البنك قد يبدأ لبعض الجهات من راتب <b>10,000 ريال فأعلى.</b></div>`;
 
     h+=`
       <div class="result-bank">
@@ -1892,6 +2181,62 @@ function renderResults(salary,earlySettlement,out){
 
   c.innerHTML=h;
 }
+
+function englishNumber(value, decimals=0){
+  const n=Number(value||0);
+  return new Intl.NumberFormat('en-US',{
+    minimumFractionDigits:decimals,
+    maximumFractionDigits:decimals
+  }).format(n);
+}
+
+function englishMoney(value){
+  return englishNumber(value,0)+' ريال';
+}
+
+function englishMoneyExact(value){
+  return englishNumber(value,2)+' ريال';
+}
+
+function saudiHijriDate(){
+  const now=new Date();
+  return new Intl.DateTimeFormat('en-SA-u-ca-islamic-umalqura',{
+    timeZone:'Asia/Riyadh',
+    year:'numeric',month:'2-digit',day:'2-digit'
+  }).format(now);
+}
+
+function saudiGregorianDate(){
+  const now=new Date();
+  return new Intl.DateTimeFormat('en-GB',{
+    timeZone:'Asia/Riyadh',
+    year:'numeric',month:'2-digit',day:'2-digit'
+  }).format(now);
+}
+
+function saudiTimeEnglish(){
+  const now=new Date();
+  return new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Riyadh',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',
+    hour12:true
+  }).format(now);
+}
+
+function cashAdvice(best, earlySettlement){
+  const debt=Math.max(Number(earlySettlement||0),1);
+  const cash=Number(best.cashAfterDebt||0);
+  const ratio=cash/debt;
+
+  if(cash<=0 || ratio<0.20){
+    return 'النصيحة: الصافي المتبقي منخفض مقارنةً بمديونيتك الحالية؛ إذا لم تكن بحاجة عاجلة للسيولة، قد يكون الأفضل الانتظار ومراقبة عرض أقل نسبة أو فائض أعلى.';
+  }
+  if(ratio<0.60){
+    return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن فرق الأرباح والقسط والمزايا قبل اتخاذ القرار النهائي.';
+  }
+  return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. يبقى التأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
+}
+
 function shareWhats(){
   if(!latestResults.length){
     alert('لا توجد نتيجة لمشاركتها');
@@ -1962,83 +2307,93 @@ function sendWhatsToClient(){
 
   const best=latestResults[0];
   const earlySettlement=Number(document.getElementById('earlySettlement').value);
-  const profitAndFees=best.totalProfit+best.adminFee+best.adminVat+best.commodityFee;
-  const offerNote=best.featureTitle
-    ? `${best.featureTitle}. ${best.featureCopy}`
-    : 'عرض شراء مديونية التمويل الشخصي.';
+  const advice=cashAdvice(best,earlySettlement);
 
   const msg=`${greetingSaudi()}
 
-🎉 تمت الحسبة لك على عرض شراء مديونية التمويل الشخصي
+🎉 تمت حسبة شراء مديونية التمويل الشخصي
 
-📅 تاريخ ووقت الحسبة:
-${arabicSaudiDateTime()}
+📅 ${saudiGregorianDate()} م
+🕌 ${saudiHijriDate()} هـ
+🕒 ${saudiTimeEnglish()}
 
-👤 جهة العمل: ${typeName()}
-⏳ مدة التمويل: 60 شهر (5 سنوات)
-${best.waiverMonths>0?`🎁 الأقساط الفعلية المحتسبة: ${best.actualPayments} قسط بسبب الإعفاء\n`:''}
-🏦 البنك المرشّح: ${best.name}
+🏦 البنك المرشح: ${best.name}
+📈 هامش الربح: ${englishNumber(best.rate,2)}%
+💵 صافي الكاش المتوقع: *${englishMoney(best.cashAfterDebt)}*
+💳 القسط الشهري: ${englishMoney(best.installment)}
+📌 السداد المبكر: ${englishMoney(earlySettlement)}
 
-📈 نسبة هامش الربح: ${fmt(best.rate)}%
+${advice}
 
-📌 ميزة / ملاحظة البنك:
-${offerNote}
+⚠️ الحسبة مبدئية، ورسوم فرق السلعة محسوبة 1% وقد تختلف حسب البنك والسلعة وقد لا توجد.
 
-⸻
-
-💵 صافي الكاش المتوقع بعد سداد التمويل القائم
-
-*${money(best.cashAfterDebt)}*
-
-⸻
-
-📌 ملخص الحسبة
-
-• التمويل الصافي قبل السداد والرسوم: ${money(best.principalBeforeFees)}
-• صافي التمويل بعد الرسوم وقبل سداد المديونية: ${money(best.netBeforeDebt)}
-• مبلغ السداد المبكر: ${money(earlySettlement)}
-• الصافي بعد السداد: ${money(best.cashAfterDebt)}
-
-⸻
-
-💰 القسط الشهري
-
-*${money(best.installment)}* لمدة ${best.actualPayments} قسط فعلي
-
-⸻
-
-📊 ملخص الأرباح والرسوم
-
-• إجمالي الأرباح: ${money(best.totalProfit)}
-• الربح مع الرسوم: ${money(profitAndFees)}
-• الرسوم الإدارية 0.5%: ${moneyExact(best.adminFee)}
-• ضريبة الرسوم الإدارية 15%: ${moneyExact(best.adminVat)}
-• رسوم فرق السلعة المحتسبة 1%: ${moneyExact(best.commodityFee)}
-• إجمالي التمويل مع الأرباح: ${money(best.grossWithProfit)}
-
-⚠️ رسوم فرق السلعة محتسبة مبدئيًا بنسبة 1% من التمويل، وقد تختلف باختلاف البنك ونوع السلعة، وقد لا توجد أصلًا في بعض البنوك حسب السلعة.
-
-⸻
-
-⚠️ هذه الحسبة مبدئية حسب البيانات المدخلة والعرض المتاح، وقد تختلف الحسبة النهائية حسب جهة العمل وسياسة البنك ونتيجة دراسة الطلب.
-
-🔺 تنويه:
-نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.
-
-💳 *أتعاب المتابعة والإنجاز*
-*لإنجاز تحويل مديونية التمويل الشخصي:*
-*2,800 ريال*
-
-📞 للاستفسار، تأكيد الحسبة وبدء الإجراءات:
+📞 للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:
 *${PHONE}*
 
 ⚡ متابعة وإنجاز بأسرع وقت وبدون تعقيدات.
 
-🔗 لمعرفة بعض خدماتنا:
+🔗 بعض خدماتنا:
 ${SERVICE_URL}`;
 
   closePhoneModal();
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+
+function fillShareCard(){
+  if(!latestResults.length)return;
+  const best=latestResults[0];
+  const earlySettlement=Number(document.getElementById('earlySettlement').value);
+
+  document.getElementById('scDate').textContent=`${saudiGregorianDate()} م | ${saudiHijriDate()} هـ`;
+  document.getElementById('scLogo').innerHTML=logo(best.key);
+  document.getElementById('scBankName').textContent=best.name;
+  document.getElementById('scRate').textContent=`هامش الربح: ${englishNumber(best.rate,2)}%`;
+  document.getElementById('scCash').textContent=englishMoney(best.cashAfterDebt);
+  document.getElementById('scInstallment').textContent=englishMoney(best.installment);
+  document.getElementById('scDebt').textContent=englishMoney(earlySettlement);
+  document.getElementById('scAdvice').textContent=cashAdvice(best,earlySettlement);
+}
+
+async function shareResultImage(){
+  if(!latestResults.length){
+    alert('لا توجد نتيجة لمشاركتها');
+    return;
+  }
+  fillShareCard();
+
+  const card=document.getElementById('shareCardPreview');
+  const clone=card.cloneNode(true);
+  clone.style.position='static';
+  clone.style.left='0';
+  clone.style.top='0';
+  clone.style.width='1080px';
+
+  const xml=new XMLSerializer().serializeToString(clone);
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350">
+    <foreignObject width="100%" height="100%">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:1080px;height:1350px;background:white">${xml}</div>
+    </foreignObject>
+  </svg>`;
+
+  const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
+  const file=new File([blob],'FINO-result.svg',{type:'image/svg+xml'});
+
+  if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file],title:'FINO - نتيجة الحسبة'});
+      return;
+    }catch(e){}
+  }
+
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='FINO-result.svg';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 document.addEventListener('keydown',function(e){
@@ -2085,6 +2440,17 @@ updateAllFooters();
 setInterval(updateAllFooters,1000);
 
 </script>
+
+
+<div class="share-card-preview" id="shareCardPreview">
+  <div class="sc-head"><div class="sc-brand">FINO</div><div id="scDate"></div></div>
+  <div class="sc-title">ترشيح شراء مديونية التمويل الشخصي</div>
+  <div class="sc-bank"><div class="sc-logo" id="scLogo"></div><div><div class="sc-bank-name" id="scBankName"></div><div id="scRate"></div></div></div>
+  <div class="sc-cash"><small>صافي الكاش المتوقع بعد سداد المديونية</small><b id="scCash"></b></div>
+  <div class="sc-row"><div class="sc-box"><small>القسط الشهري</small><b id="scInstallment"></b></div><div class="sc-box"><small>السداد المبكر</small><b id="scDebt"></b></div></div>
+  <div class="sc-advice" id="scAdvice"></div>
+  <div class="sc-footer">للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:<br><span class="sc-phone">0506214458</span><br>بعض خدماتنا: hlooleqrr.github.io/mwaqe3/#services</div>
+</div>
 
 <div class="phone-modal" id="phoneModal">
   <div class="phone-modal-card">
