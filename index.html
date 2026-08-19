@@ -2074,6 +2074,131 @@
   }
 }
 
+
+/* =========================================================
+   FINO — FULL RESPONSIVE / SCROLL FIX
+   يسمح بالسحب على الجوال والكمبيوتر عند زيادة المحتوى
+========================================================= */
+
+.page{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+}
+
+.viewport{
+  height:auto !important;
+  min-height:100% !important;
+  padding-bottom:14px;
+}
+
+.form-wrap,
+.result-wrap{
+  flex:0 0 auto !important;
+  min-height:auto !important;
+}
+
+#page1 .viewport{
+  min-height:100% !important;
+}
+
+#page2 .form-card{
+  flex:0 0 auto !important;
+  min-height:auto !important;
+}
+
+#page3 .result-wrap{
+  overflow:visible !important;
+}
+
+@media(max-width:820px){
+  .viewport{
+    width:min(95vw,720px) !important;
+    padding-bottom:22px;
+  }
+
+  .page{
+    padding-bottom:max(14px,env(safe-area-inset-bottom));
+  }
+
+  .header{
+    position:relative;
+    flex-wrap:wrap;
+    height:auto !important;
+    min-height:52px;
+    padding:7px 0;
+  }
+
+  .form-wrap,
+  .result-wrap{
+    width:100%;
+  }
+}
+
+@media(max-width:600px){
+  .viewport{
+    width:94vw !important;
+  }
+
+  .form-card{
+    padding:9px !important;
+  }
+
+  .bank-grid{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+}
+
+@media(min-width:821px){
+  .page{
+    scrollbar-width:thin;
+  }
+
+  .page::-webkit-scrollbar{
+    width:6px;
+  }
+
+  .page::-webkit-scrollbar-thumb{
+    background:#d5e4ee;
+    border-radius:999px;
+  }
+}
+
+/* =========================================================
+   PAGE 2 — REQUESTED INPUT ORDER
+========================================================= */
+
+.salary-single{
+  width:100%;
+  margin-top:2px;
+}
+
+.salary-single .primary-input-card{
+  max-width:100%;
+}
+
+.two-finance-inputs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:2px;
+}
+
+@media(max-width:600px){
+  .two-finance-inputs{
+    grid-template-columns:1fr;
+  }
+}
+
+.form-card .section-label{
+  margin-top:4px;
+}
+
+.form-card .section-label:first-child{
+  margin-top:0;
+}
+
 </style>
 </head>
 <body>
@@ -2116,28 +2241,106 @@
 <div class="eligibility-strip"><span class="elig-icon">⚠️</span><span><b>شرط هذه الحسبة:</b> لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
 <div class="tip-bar" id="tip2"></div>
 <div class="form-card">
-<div class="section-label"><div class="num">01</div><div><b>البيانات المالية الأساسية</b><small>أدخل الراتب والسداد المبكر والالتزامات الشهرية الأخرى</small></div></div>
-<div class="primary-finance-inputs">
-  <div class="primary-input-card">
-    <div class="input-head"><span class="input-icon">💵</span><div><b>صافي الراتب الشهري</b><small>الراتب الذي يتم بناء الحسبة عليه</small></div></div>
-    <div class="primary-input-wrap"><input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="مثال: 10000"><span class="primary-currency">ريال</span></div>
-  </div>
 
-  <div class="primary-input-card">
-    <div class="input-head"><span class="input-icon">🏦</span><div><b>مبلغ السداد المبكر للمديونية</b><small>مبلغ سداد التمويل الشخصي الحالي</small></div></div>
-    <div class="primary-input-wrap"><input class="primary-input" id="earlySettlement" type="number" inputmode="numeric" placeholder="مثال: 50000"><span class="primary-currency">ريال</span></div>
-  </div>
-
-  <div class="primary-input-card">
-    <div class="input-head"><span class="input-icon">📌</span><div><b>الالتزامات الشهرية الأخرى</b><small>غير التمويل الشخصي المراد شراؤه • اكتب 0 إذا لا يوجد</small></div></div>
-    <div class="primary-input-wrap"><input class="primary-input" id="externalObligations" type="number" inputmode="numeric" value="0" min="0" placeholder="0"><span class="primary-currency">ريال</span></div>
+<div class="section-label">
+  <div class="num">01</div>
+  <div>
+    <b>صافي الراتب الشهري</b>
+    <small>أدخل الراتب الصافي الذي سيتم بناء الحسبة عليه</small>
   </div>
 </div>
-<div class="obligation-rule">🧮 <span>القسط الشخصي الأعلى = <strong>33.33%</strong> من الراتب، وللمتقاعد <strong>25%</strong>. ومع وجود التزامات أخرى لا يتجاوز مجموع الالتزامات <strong>45%</strong> من صافي الراتب.</span></div>
-<div class="section-label"><div class="num">02</div><div><b>اختر فئتك</b><small>حدد نوع جهة العمل</small></div></div><div class="type-grid"><button class="type-btn active" data-type="government" onclick="selectType(this)">حكومي</button><button class="type-btn" data-type="semiGovernment" onclick="selectType(this)">شبه حكومي</button><button class="type-btn" data-type="private" onclick="selectType(this)">قطاع خاص</button><button class="type-btn" data-type="retired" onclick="selectType(this)">متقاعد</button></div>
-<div class="section-label"><div class="num">03</div><div><b>اختر البنك الذي ينزل عليه راتبك</b><small>اختر اسم البنك وشعاره</small></div></div><div class="bank-grid" id="bankGrid"></div>
+
+<div class="salary-single">
+  <div class="primary-input-card">
+    <div class="input-head">
+      <span class="input-icon">💵</span>
+      <div>
+        <b>أدخل صافي الراتب</b>
+        <small>مثال: 10000 ريال</small>
+      </div>
+    </div>
+    <div class="primary-input-wrap">
+      <input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="مثال: 10000">
+      <span class="primary-currency">ريال</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-label">
+  <div class="num">02</div>
+  <div>
+    <b>جهة العمل</b>
+    <small>اختر فئة جهة العمل</small>
+  </div>
+</div>
+
+<div class="type-grid">
+  <button class="type-btn active" data-type="government" onclick="selectType(this)">حكومي</button>
+  <button class="type-btn" data-type="semiGovernment" onclick="selectType(this)">شبه حكومي</button>
+  <button class="type-btn" data-type="private" onclick="selectType(this)">قطاع خاص</button>
+  <button class="type-btn" data-type="retired" onclick="selectType(this)">متقاعد</button>
+</div>
+
+<div class="section-label">
+  <div class="num">03</div>
+  <div>
+    <b>السداد المبكر والالتزامات الشهرية الأخرى</b>
+    <small>أدخل القيم المطلوبة للحسبة</small>
+  </div>
+</div>
+
+<div class="two-finance-inputs">
+
+  <div class="primary-input-card">
+    <div class="input-head">
+      <span class="input-icon">🏦</span>
+      <div>
+        <b>مبلغ السداد المبكر للمديونية الحالية</b>
+        <small>مبلغ سداد التمويل الشخصي الحالي</small>
+      </div>
+    </div>
+    <div class="primary-input-wrap">
+      <input class="primary-input" id="earlySettlement" type="number" inputmode="numeric" placeholder="مثال: 50000">
+      <span class="primary-currency">ريال</span>
+    </div>
+  </div>
+
+  <div class="primary-input-card">
+    <div class="input-head">
+      <span class="input-icon">📌</span>
+      <div>
+        <b>الالتزامات الشهرية الأخرى</b>
+        <small>غير التمويل الشخصي المراد شراؤه • اكتب 0 إذا لا يوجد</small>
+      </div>
+    </div>
+    <div class="primary-input-wrap">
+      <input class="primary-input" id="externalObligations" type="number" inputmode="numeric" value="0" min="0" placeholder="0">
+      <span class="primary-currency">ريال</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-label">
+  <div class="num">04</div>
+  <div>
+    <b>اختر البنك الذي ينزل عليه راتبك</b>
+    <small>اختر اسم البنك وشعاره</small>
+  </div>
+</div>
+
+<div class="bank-grid" id="bankGrid"></div>
+
 <button class="calc-full" onclick="calculate()">⚡ احتساب التمويل وترشيح البنك الأنسب</button>
-<div class="calc-flow"><span>القسط المتاح</span><i>←</i><span>التمويل</span><i>←</i><span>الرسوم</span><i>←</i><span>سداد المديونية</span><i>←</i><span>صافي الكاش</span></div>
+
+<div class="calc-flow">
+  <span>القسط المتاح</span><i>←</i>
+  <span>التمويل</span><i>←</i>
+  <span>الرسوم</span><i>←</i>
+  <span>سداد المديونية</span><i>←</i>
+  <span>صافي الكاش</span>
+</div>
+
 </div><footer class="form-footer"><span><b>FINO</b> • تحويل مديونية التمويل الشخصي • لا تتردد بالتواصل واتساب أو اتصال</span><strong>0506214458</strong></footer><span class="contact-hint">احتساب دقيق • تأكيد المعلومات • إنجاز التمويل بأسرع وقت وبدون تعقيدات</span></div>
 </div></section>
 <section class="page" id="page3"><div class="viewport">
