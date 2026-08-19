@@ -2453,6 +2453,121 @@ body{
   }
 }
 
+
+/* =========================================================
+   FINO — TECHNICAL STABILITY PATCH
+========================================================= */
+
+button{
+  touch-action:manipulation;
+}
+
+.page{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch;
+}
+
+.viewport{
+  height:auto!important;
+  min-height:100%!important;
+}
+
+#page3 .actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  margin-top:10px!important;
+}
+
+#page3 .action{
+  min-height:48px!important;
+  border-radius:12px!important;
+  font-size:10px!important;
+  font-weight:900!important;
+}
+
+#page3 .wa{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#ffffff!important;
+  color:#073b67!important;
+  border:2px solid #cfe0eb!important;
+}
+
+#page3 .share-image{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#ffffff!important;
+  color:#073b67!important;
+  border:2px solid #cfe0eb!important;
+}
+
+#page3 .capture-cta{
+  display:grid!important;
+  grid-template-columns:42px 1fr auto!important;
+  gap:10px!important;
+  align-items:center!important;
+  margin-top:10px!important;
+  padding:12px 14px!important;
+  border:2px solid #d7e7f1!important;
+  border-radius:13px!important;
+  background:#ffffff!important;
+}
+
+#page3 .capture-cta .capture-icon{
+  width:42px;height:42px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:#edf6fc;
+  font-size:21px;
+}
+
+#page3 .capture-cta b{
+  display:block;
+  color:#073b67!important;
+  font-size:11px!important;
+  font-weight:900!important;
+}
+
+#page3 .capture-cta small{
+  display:block;
+  margin-top:2px;
+  color:#607989!important;
+  font-size:8px!important;
+  line-height:1.6!important;
+  font-weight:800!important;
+}
+
+#page3 .capture-cta strong{
+  color:#111!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  padding:0!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  direction:ltr;
+}
+
+@media(max-width:600px){
+  #page3 .actions{
+    grid-template-columns:1fr!important;
+  }
+
+  #page3 .capture-cta{
+    grid-template-columns:36px 1fr!important;
+  }
+
+  #page3 .capture-cta strong{
+    grid-column:1/-1;
+    text-align:center;
+    font-size:21px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2619,6 +2734,20 @@ body{
 <div class="sales-banner"><div><b>نتيجتك أمامك الآن... خلنا نؤكد الحسبة وننجز تمويلك</b><small>تواصل معنا لمراجعة الحسبة وبدء الإجراءات.</small><div class="service-chips"><span class="service-chip calc">احتساب دقيق</span><span class="service-chip verify">تأكيد المعلومات</span><span class="service-chip finish">إنجاز التمويل</span></div></div><strong>0506214458</strong></div>
 <div class="eligibility-strip"><span class="elig-icon">⚠️</span><span><b>مهم:</b> هذه الحسبة لعميل لا يوجد لديه تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.</span></div>
 <div class="tip-bar" id="tip3"></div><div class="profile" id="profile"></div><div id="results"></div><div class="final-notice"><b>تنويه مهم:</b> هذه حسبة مبدئية حسب البيانات المدخلة والعرض المتاح، وقد تختلف الحسبة النهائية حسب جهة العمل وسياسة البنك ونتيجة دراسة الطلب.</div>
+<div class="actions">
+  <button class="action wa" type="button" onclick="shareWhats()">📲 إرسال نص عبر واتساب</button>
+  <button class="action share-image" type="button" onclick="shareResultImage()">🖼️ مشاركة صورة الحسبة</button>
+</div>
+
+<div class="capture-cta">
+  <div class="capture-icon">📸</div>
+  <div>
+    <b>خذ لقطة لهذه الشاشة وتواصل معنا</b>
+    <small>نراجع الحسبة، نؤكد المعلومات، ونكمل إجراءات التمويل بأسرع وقت وبدون تعقيدات.</small>
+  </div>
+  <strong>0506214458</strong>
+</div>
+
 
 <div class="live-footer">
   <span class="footer-brand">FINO • لتأكيد الحسبة وإنجاز التمويل</span>
@@ -2670,8 +2799,29 @@ const BANK_TERMS={
 function renderBanks(){document.getElementById('bankGrid').innerHTML=BANKS.map(b=>b.id==='OTHER'?`<button class="bank-card ${selectedBank===b.id?'active':''}" onclick="selectBank('${b.id}')"><span class="sel">✓</span><div class="bank-logo"><div class="other-logo">+</div></div><div class="bank-name">بنك آخر<small>إذا لم تجد بنكك</small></div></button>`:`<button class="bank-card ${selectedBank===b.id?'active':''}" onclick="selectBank('${b.id}')"><span class="sel">✓</span><div class="bank-logo"><img src="${b.logo}" alt="${b.name}"></div><div class="bank-name">${b.name}<small>${b.short}</small></div></button>`).join('')}
 function selectBank(id){const b=BANKS.find(x=>x.id===id);selectedBank=id;selectedBankName=b?b.name:'بنك آخر';renderBanks()}
 function selectType(btn){document.querySelectorAll('.type-btn').forEach(x=>x.classList.remove('active'));btn.classList.add('active');customerType=btn.dataset.type}
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function login(){if(document.getElementById('password').value===PASSWORD){showPage('page2');setTimeout(()=>document.getElementById('salary').focus(),160)}else document.getElementById('loginError').style.display='block'}
+function showPage(id){
+  const target=document.getElementById(id);
+  if(!target)return;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  target.classList.add('active');
+  target.scrollTop=0;
+}
+function login(){
+  const input=document.getElementById('password');
+  const error=document.getElementById('loginError');
+  if(!input||!error)return;
+  const value=String(input.value||'').trim();
+  if(value===PASSWORD){
+    error.style.display='none';
+    showPage('page2');
+    setTimeout(()=>{
+      const salary=document.getElementById('salary');
+      if(salary)salary.focus();
+    },160);
+  }else{
+    error.style.display='block';
+  }
+}
 function findRate(s,t){for(const r of t)if(s>=r.min&&s<=r.max)return r.rate;return null}
 function typeName(){
   if(customerType==='semiGovernment')return 'شبه حكومي';
@@ -2962,11 +3112,6 @@ function cashAdvice(best,earlySettlement){
     return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن القسط وإجمالي الأرباح والمزايا قبل اتخاذ القرار النهائي.';
   }
   return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. تأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
-}
-  if(ratio<0.60){
-    return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن فرق الأرباح والقسط والمزايا قبل اتخاذ القرار النهائي.';
-  }
-  return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. يبقى التأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
 }
 
 function shareWhats(){
