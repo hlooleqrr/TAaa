@@ -2922,6 +2922,100 @@ button{
   #page3 .actions{grid-template-columns:1fr!important}
 }
 
+
+/* =========================================================
+   FINO — IMAGE PREVIEW / SHARE RELIABILITY PATCH
+========================================================= */
+.image-preview-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10050;
+  background:rgba(15,32,44,.46);
+  backdrop-filter:blur(8px);
+  padding:18px;
+  align-items:center;
+  justify-content:center;
+}
+.image-preview-modal.open{display:flex}
+.image-preview-card{
+  width:min(620px,96vw);
+  max-height:94vh;
+  overflow:auto;
+  background:#fff;
+  border:1px solid #d9e7ef;
+  border-radius:20px;
+  box-shadow:0 24px 80px rgba(7,59,103,.22);
+  padding:14px;
+}
+.image-preview-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:3px 2px 10px;
+}
+.image-preview-head h3{
+  color:#073b67;
+  font-size:16px;
+  font-weight:900;
+}
+.image-preview-head button{
+  width:34px;
+  height:34px;
+  border:1px solid #d9e7ef;
+  border-radius:9px;
+  background:#fff;
+  color:#476575;
+  font-size:16px;
+  cursor:pointer;
+}
+.image-preview-img{
+  display:block;
+  width:100%;
+  height:auto;
+  border:1px solid #dce8f0;
+  border-radius:14px;
+  background:#fff;
+}
+.image-preview-note{
+  margin-top:9px;
+  padding:8px 10px;
+  border-radius:10px;
+  background:#f7fbfe;
+  color:#5f7888;
+  font-size:8px;
+  line-height:1.7;
+  font-weight:800;
+}
+.image-preview-actions{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:9px;
+}
+.image-preview-actions button{
+  min-height:44px;
+  border-radius:11px;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+.preview-share{
+  border:0;
+  background:#073b67;
+  color:#fff;
+}
+.preview-download,
+.preview-whatsapp{
+  border:1px solid #d6e5ee;
+  background:#fff;
+  color:#073b67;
+}
+@media(max-width:600px){
+  .image-preview-actions{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -3509,14 +3603,15 @@ function cashAdvice(best,earlySettlement){
   const debt=Math.max(Number(earlySettlement||0),1);
   const cash=Number(best.cashAfterDebt||0);
   const ratio=cash/debt;
+  const contact=' للتأكيد على الحسبة والإجراءات والاستفسارات، تواصل معنا اتصال 📱 '+PHONE+'.';
 
   if(cash<=0 || ratio<0.20){
-    return 'النصيحة: الصافي المتبقي منخفض مقارنةً بمديونيتك الحالية؛ إذا لم تكن بحاجة عاجلة للسيولة فقد يكون الأفضل الانتظار ومراقبة عرض أفضل أو نسبة أقل.';
+    return 'النصيحة: الصافي المتبقي منخفض مقارنةً بمديونيتك الحالية؛ إذا لم تكن بحاجة عاجلة للسيولة فقد يكون الأفضل الانتظار ومراقبة عرض أفضل أو نسبة أقل.'+contact;
   }
   if(ratio<0.60){
-    return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن القسط وإجمالي الأرباح والمزايا قبل اتخاذ القرار النهائي.';
+    return 'النصيحة: الصافي المتبقي جيد مقارنةً بمديونيتك الحالية. قارن القسط وإجمالي الأرباح والمزايا قبل اتخاذ القرار النهائي.'+contact;
   }
-  return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. تأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
+  return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض.'+contact;
 }
 
 
@@ -3544,7 +3639,7 @@ function openSharePhone(mode){
   if(note){
     note.textContent=mode==='text'
       ? 'سيتم فتح محادثة واتساب للرقم المدخل بالرسالة الجاهزة.'
-      : 'سيتم إنشاء صورة PNG فعلية، ثم فتح محادثة العميل على الرقم المدخل. سيحاول الموقع نسخ الصورة إلى الحافظة أيضًا؛ إذا لم يسمح المتصفح بالإرفاق التلقائي، الصق الصورة داخل محادثة العميل.';
+      : 'سيتم إنشاء صورة PNG فعلية وإظهارها لك أولًا. بعدها استخدم «مشاركة الصورة» لإرسال الملف من الجوال، أو «فتح واتساب العميل» لفتح محادثة الرقم الذي أدخلته.';
   }
 
   document.getElementById('clientPhoneError').textContent='';
@@ -3726,33 +3821,33 @@ async function createDetailedResultPngBlob(){
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=1760;
+  canvas.height=2240;
   const ctx=canvas.getContext('2d');
 
   ctx.fillStyle='#ffffff';
-  ctx.fillRect(0,0,1080,1760);
+  ctx.fillRect(0,0,1080,2240);
   ctx.direction='rtl';
   ctx.textAlign='right';
   ctx.textBaseline='alphabetic';
 
-  // FINO header
+  // Header
   ctx.fillStyle='#073b67';
   ctx.font='900 48px Cairo, Arial, sans-serif';
-  ctx.fillText('FINO',1010,75);
+  ctx.fillText('FINO',1010,78);
 
   ctx.fillStyle='#718694';
   ctx.font='700 21px Arial, sans-serif';
-  ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()} | ${saudiTimeEnglish()}`,1010,112);
+  ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()} | ${saudiTimeEnglish()}`,1010,116);
 
   ctx.strokeStyle='#e1ebf2';
   ctx.lineWidth=3;
-  ctx.beginPath();ctx.moveTo(70,145);ctx.lineTo(1010,145);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(70,148);ctx.lineTo(1010,148);ctx.stroke();
 
   ctx.fillStyle='#073b67';
   ctx.font='900 38px Cairo, Arial, sans-serif';
-  ctx.fillText('بطاقة تفاصيل شراء مديونية التمويل الشخصي',1010,208);
+  ctx.fillText('بطاقة تفاصيل شراء مديونية التمويل الشخصي',1010,210);
 
-  // Bank
+  // Bank card
   canvasRoundRect(ctx,70,245,940,150,24,'#ffffff','#dce8f0');
   const bankDataObj=BANKS.find(x=>x.id===best.key);
   if(bankDataObj&&bankDataObj.logo){
@@ -3762,23 +3857,26 @@ async function createDetailedResultPngBlob(){
       ctx.drawImage(img,100,268,img.width*scale,img.height*scale);
     }catch(e){}
   }
+
   ctx.fillStyle='#073b67';
   ctx.font='900 31px Cairo, Arial, sans-serif';
   ctx.fillText(best.name,980,305);
+
   ctx.fillStyle='#4f6c7d';
   ctx.font='800 23px Cairo, Arial, sans-serif';
   ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,350);
 
-  // Main cash
-  canvasRoundRect(ctx,70,430,940,205,26,'#eef8fd','#b9dce9');
+  // Cash
+  canvasRoundRect(ctx,70,430,940,210,26,'#eef8fd','#b9dce9');
   ctx.fillStyle='#607a8a';
   ctx.font='800 23px Cairo, Arial, sans-serif';
   ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,485);
+
   ctx.fillStyle='#0b78b7';
   ctx.font='900 62px Cairo, Arial, sans-serif';
   ctx.fillText(englishMoney(best.cashAfterDebt),980,570);
 
-  // Details
+  // Details grid
   const boxes=[
     ['القسط الشهري',englishMoney(best.installment),false],
     ['السداد المبكر',englishMoney(earlySettlement),false],
@@ -3792,72 +3890,93 @@ async function createDetailedResultPngBlob(){
     ['مدة التمويل','60 شهر (5 سنوات)',false]
   ];
 
-  const startY=680,bw=450,bh=105,gap=18;
+  const startY=690,bw=450,bh=112,gap=18;
   boxes.forEach((box,i)=>{
     const col=i%2,row=Math.floor(i/2);
     const x=col===0?70:560;
     const y=startY+row*(bh+gap);
-    canvasRoundRect(ctx,x,y,bw,bh,17,box[2]?'#fffafa':'#ffffff',box[2]?'#efcaca':'#e1ebf2');
+
+    canvasRoundRect(
+      ctx,x,y,bw,bh,17,
+      box[2]?'#fffafa':'#ffffff',
+      box[2]?'#efcaca':'#e1ebf2'
+    );
+
     ctx.fillStyle=box[2]?'#a12626':'#6b8190';
     ctx.font='700 18px Cairo, Arial, sans-serif';
-    ctx.fillText(box[0],x+bw-20,y+36);
+    ctx.fillText(box[0],x+bw-20,y+38);
+
     ctx.fillStyle=box[2]?'#a12626':'#173042';
     ctx.font='900 27px Cairo, Arial, sans-serif';
-    ctx.fillText(box[1],x+bw-20,y+77);
+    ctx.fillText(box[1],x+bw-20,y+82);
   });
 
-  let y=startY+5*(bh+gap)+15;
+  let y=startY+5*(bh+gap)+20;
 
   // Advice
-  canvasRoundRect(ctx,70,y,940,145,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,175,18,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
   ctx.font='900 23px Cairo, Arial, sans-serif';
-  ctx.fillText('نصيحتنا لك',980,y+38);
+  ctx.fillText('إرشاد',980,y+40);
+
   ctx.fillStyle='#35576a';
   ctx.font='800 20px Cairo, Arial, sans-serif';
-  drawWrappedArabic(ctx,advice,980,y+78,850,33,3);
-  y+=175;
+  drawWrappedArabic(ctx,advice,980,y+80,850,33,4);
+  y+=205;
 
   // Disclaimer
-  canvasRoundRect(ctx,70,y,940,155,18,'#fffafa','#efd1d1');
+  canvasRoundRect(ctx,70,y,940,175,18,'#fffafa','#efd1d1');
   ctx.fillStyle='#8f2929';
   ctx.font='900 19px Cairo, Arial, sans-serif';
   drawWrappedArabic(
     ctx,
     'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.',
-    980,y+40,850,32,4
+    980,y+42,850,32,5
   );
-  y+=185;
+  y+=205;
 
   // Fees
-  canvasRoundRect(ctx,70,y,940,112,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,125,18,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
   ctx.font='900 21px Cairo, Arial, sans-serif';
-  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+40);
-  ctx.fillStyle='#111111';
-  ctx.font='900 36px Cairo, Arial, sans-serif';
-  ctx.fillText('2,800 ريال',980,y+88);
-  y+=145;
+  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+42);
 
-  // Contact + QR
+  ctx.fillStyle='#111111';
+  ctx.font='900 38px Cairo, Arial, sans-serif';
+  ctx.fillText('2,800 ريال',980,y+94);
+  y+=160;
+
+  // Contact section
   ctx.fillStyle='#073b67';
   ctx.font='900 23px Cairo, Arial, sans-serif';
-  ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات:',980,y+35);
+  ctx.fillText('للتأكيد على الحسبة والإجراءات والاستفسارات:',980,y+34);
+
   ctx.fillStyle='#111111';
-  ctx.font='900 40px Arial, sans-serif';
+  ctx.font='900 42px Arial, sans-serif';
   ctx.fillText('0506214458',980,y+88);
 
+  ctx.fillStyle='#5f7888';
+  ctx.font='800 19px Cairo, Arial, sans-serif';
+  ctx.fillText('اتصال أو واتساب',980,y+128);
+
+  // QR in lower-left corner, small but readable
   try{
     const qr=await loadImageForCanvas(SERVICES_QR_DATA);
-    canvasRoundRect(ctx,70,y,210,210,18,'#ffffff','#dce8f0');
-    ctx.drawImage(qr,80,y+10,190,190);
+    const qx=70,qy=y-10,qsize=205;
+    canvasRoundRect(ctx,qx,qy,qsize,qsize,18,'#ffffff','#dce8f0');
+    ctx.drawImage(qr,qx+10,qy+10,qsize-20,qsize-20);
+
     ctx.fillStyle='#5f7888';
-    ctx.font='800 19px Cairo, Arial, sans-serif';
-    ctx.fillText('امسح الباركود لمعرفة بعض خدماتنا',980,y+155);
+    ctx.font='800 18px Cairo, Arial, sans-serif';
+    ctx.fillText('امسح الباركود لمعرفة بعض خدماتنا',980,qy+180);
   }catch(e){}
 
   return await new Promise((resolve,reject)=>{
-    canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('PNG_FAILED')),'image/png',0.95);
+    canvas.toBlob(
+      blob=>blob?resolve(blob):reject(new Error('PNG_FAILED')),
+      'image/png',
+      0.95
+    );
   });
 }
 
@@ -3873,30 +3992,103 @@ async function shareDetailedResultImageDirect(clientPhone){
     }
 
     const blob=await createDetailedResultPngBlob();
-    const copied=await copyPngBlobToClipboard(blob);
-
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;
-    a.download='FINO-finance-details.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),5000);
-
     const best=latestResults[0];
+
     const caption=`FINO | بطاقة تفاصيل شراء مديونية التمويل الشخصي
 البنك المرشح: ${best.name}
 صافي الكاش المتوقع: ${englishMoney(best.cashAfterDebt)}
-${copied?'تم نسخ البطاقة إلى الحافظة؛ الصقها هنا في المحادثة.':'تم تنزيل البطاقة؛ أرفقها في هذه المحادثة.'}
-للتأكيد والإنجاز: ${PHONE}`;
+أتعاب المتابعة والإنجاز: 2,800 ريال
+للتأكيد على الحسبة والإجراءات والاستفسارات:
+${PHONE}`;
 
-    setTimeout(()=>openWhatsappToClient(clientPhone,caption),350);
+    showPreparedImage(
+      blob,
+      'FINO-finance-details.png',
+      clientPhone,
+      caption,
+      'بطاقة تفاصيل التمويل'
+    );
 
   }catch(err){
     console.error('FINO detailed image error:',err);
     alert('تعذر إنشاء بطاقة التفاصيل على هذا المتصفح.');
   }
+}
+
+
+let preparedImageBlob=null;
+let preparedImageUrl='';
+let preparedImageFilename='FINO-result.png';
+let preparedClientPhone='';
+let preparedCaption='';
+
+function closeImagePreview(){
+  const modal=document.getElementById('imagePreviewModal');
+  if(modal)modal.classList.remove('open');
+}
+
+function showPreparedImage(blob,filename,clientPhone,caption,title){
+  if(preparedImageUrl){
+    try{URL.revokeObjectURL(preparedImageUrl);}catch(e){}
+  }
+
+  preparedImageBlob=blob;
+  preparedImageFilename=filename||'FINO-result.png';
+  preparedClientPhone=clientPhone||'';
+  preparedCaption=caption||'';
+  preparedImageUrl=URL.createObjectURL(blob);
+
+  const img=document.getElementById('imagePreviewImg');
+  const modal=document.getElementById('imagePreviewModal');
+  const head=document.getElementById('imagePreviewTitle');
+
+  if(img)img.src=preparedImageUrl;
+  if(head)head.textContent=title||'صورة الحسبة';
+  if(modal)modal.classList.add('open');
+}
+
+async function nativeSharePreparedImage(){
+  if(!preparedImageBlob)return;
+
+  const file=new File(
+    [preparedImageBlob],
+    preparedImageFilename,
+    {type:'image/png'}
+  );
+
+  if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+    try{
+      await navigator.share({
+        files:[file],
+        title:'FINO - نتيجة الحسبة',
+        text:preparedCaption||'نتيجة حسبة شراء مديونية التمويل الشخصي'
+      });
+      return;
+    }catch(e){}
+  }
+
+  alert('مشاركة الملفات غير مدعومة مباشرة في هذا المتصفح. استخدم «حفظ الصورة» ثم أرفقها في واتساب العميل.');
+}
+
+function downloadPreparedImage(){
+  if(!preparedImageBlob)return;
+
+  const url=URL.createObjectURL(preparedImageBlob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=preparedImageFilename||'FINO-result.png';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),5000);
+}
+
+function openPreparedClientWhatsapp(){
+  if(!preparedClientPhone){
+    alert('رقم العميل غير متوفر.');
+    return;
+  }
+  openWhatsappToClient(preparedClientPhone,preparedCaption||'');
 }
 
 function loadImageForCanvas(src){
@@ -4060,26 +4252,21 @@ async function shareResultImageDirect(clientPhone){
     }
 
     const blob=await createResultPngBlob();
-    const copied=await copyPngBlobToClipboard(blob);
-
-    /* Always also download a real PNG as a fallback. */
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
-    a.href=url;
-    a.download='FINO-result.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(()=>URL.revokeObjectURL(url),5000);
-
     const best=latestResults[0];
+
     const caption=`FINO | نتيجة حسبة شراء مديونية التمويل الشخصي
 البنك المرشح: ${best.name}
 صافي الكاش المتوقع: ${englishMoney(best.cashAfterDebt)}
-${copied?'تم نسخ الصورة إلى الحافظة؛ الصقها هنا في المحادثة.':'تم تنزيل صورة الحسبة؛ أرفقها في هذه المحادثة.'}
-للتأكيد والإنجاز: ${PHONE}`;
+للتأكيد على الحسبة والإجراءات والاستفسارات:
+${PHONE}`;
 
-    setTimeout(()=>openWhatsappToClient(clientPhone,caption),350);
+    showPreparedImage(
+      blob,
+      'FINO-result.png',
+      clientPhone,
+      caption,
+      'الصورة المختصرة للحسبة'
+    );
 
   }catch(err){
     console.error('FINO short image error:',err);
@@ -4154,6 +4341,28 @@ setInterval(updateAllFooters,1000);
     <div class="phone-modal-actions">
       <button class="phone-modal-send" onclick="handleShareToClient()">متابعة</button>
       <button class="phone-modal-cancel" onclick="closePhoneModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="image-preview-modal" id="imagePreviewModal">
+  <div class="image-preview-card">
+    <div class="image-preview-head">
+      <h3 id="imagePreviewTitle">صورة الحسبة</h3>
+      <button type="button" onclick="closeImagePreview()">✕</button>
+    </div>
+
+    <img class="image-preview-img" id="imagePreviewImg" alt="صورة الحسبة">
+
+    <div class="image-preview-note" id="imagePreviewNote">
+      الصورة جاهزة. على الجوال استخدم «مشاركة الصورة» لإرسال ملف PNG عبر قائمة المشاركة، أو افتح واتساب العميل على الرقم الذي أدخلته.
+    </div>
+
+    <div class="image-preview-actions">
+      <button class="preview-share" type="button" onclick="nativeSharePreparedImage()">📤 مشاركة الصورة</button>
+      <button class="preview-download" type="button" onclick="downloadPreparedImage()">⬇️ حفظ الصورة</button>
+      <button class="preview-whatsapp" type="button" onclick="openPreparedClientWhatsapp()">📲 فتح واتساب العميل</button>
     </div>
   </div>
 </div>
