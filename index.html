@@ -3954,19 +3954,24 @@ async function createDetailedResultPngBlob(){
   if(!latestResults.length)throw new Error('NO_RESULT');
 
   const best=latestResults[0];
+  const salary=Number(document.getElementById('salary').value||0);
   const earlySettlement=Number(document.getElementById('earlySettlement').value);
   const externalObligations=Number(document.getElementById('externalObligations').value||0);
   const customNote=getClientCustomNote();
   const advice=cashAdvice(best,earlySettlement).replace(/^النصيحة:\s*/,'');
   const durationText=best.actualPayments===58?'58 شهر (4 سنوات و10 أشهر)':`${best.actualPayments} شهر`;
 
+  /*
+    نرسم البطاقة أولاً على مقاس منطقي كامل حتى لا ينقص أي جزء من الأسفل،
+    ثم نصغّر الناتج النهائي لمقاس أنسب للجوال.
+  */
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=1880;
-  const ctx=canvas.getContext('2d');
+  canvas.height=2070;
 
+  const ctx=canvas.getContext('2d');
   ctx.fillStyle='#ffffff';
-  ctx.fillRect(0,0,1080,1880);
+  ctx.fillRect(0,0,1080,2070);
   ctx.direction='rtl';
   ctx.textAlign='right';
   ctx.textBaseline='alphabetic';
@@ -3998,6 +4003,7 @@ async function createDetailedResultPngBlob(){
       ctx.drawImage(img,100,232,img.width*scale,img.height*scale);
     }catch(e){}
   }
+
   ctx.fillStyle='#073b67';
   ctx.font='900 29px Cairo, Arial, sans-serif';
   ctx.fillText(best.name,980,260);
@@ -4006,40 +4012,52 @@ async function createDetailedResultPngBlob(){
   ctx.font='800 20px Cairo, Arial, sans-serif';
   ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,300);
 
-  // Work category + external obligations near the top
+  // Top info: work category + salary together, and external obligations in red
   const infoY=365;
-  canvasRoundRect(ctx,70,infoY,450,78,16,'#f8fbfd','#dce8f0');
-  canvasRoundRect(ctx,560,infoY,450,78,16,'#f8fbfd','#dce8f0');
 
+  // Left card: job + salary in the same line
+  canvasRoundRect(ctx,70,infoY,570,82,16,'#f8fbfd','#dce8f0');
   ctx.fillStyle='#718694';
-  ctx.font='700 16px Cairo, Arial, sans-serif';
-  ctx.fillText('جهة العمل',490,infoY+29);
-  ctx.fillText('الالتزامات الشهرية الأخرى',980,infoY+29);
+  ctx.font='700 15px Cairo, Arial, sans-serif';
+  ctx.fillText('جهة العمل والراتب',610,infoY+28);
 
   ctx.fillStyle='#173042';
-  ctx.font='900 23px Cairo, Arial, sans-serif';
-  ctx.fillText(typeName(),490,infoY+61);
-  ctx.fillText(externalObligations>0?englishMoney(externalObligations):'لا يوجد',980,infoY+61);
+  ctx.font='900 22px Cairo, Arial, sans-serif';
+  ctx.fillText(`${typeName()}  •  ${englishMoney(salary)}`,610,infoY+62);
+
+  // Right card: other monthly obligations — red
+  canvasRoundRect(ctx,665,infoY,345,82,16,'#fffafa','#efcaca');
+  ctx.fillStyle='#a12626';
+  ctx.font='800 14px Cairo, Arial, sans-serif';
+  ctx.fillText('الالتزامات الشهرية الأخرى',980,infoY+27);
+
+  ctx.fillStyle='#a12626';
+  ctx.font='900 20px Cairo, Arial, sans-serif';
+  ctx.fillText(externalObligations>0?englishMoney(externalObligations):'لا يوجد',980,infoY+59);
+
+  ctx.fillStyle='#a12626';
+  ctx.font='700 12px Cairo, Arial, sans-serif';
+  ctx.fillText('غير التمويل الشخصي',980,infoY+76);
 
   // Bank feature
-  canvasRoundRect(ctx,70,465,940,92,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,470,940,92,18,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#1881c2';
   ctx.font='900 17px Cairo, Arial, sans-serif';
-  ctx.fillText('ميزة البنك المرشح',980,497);
+  ctx.fillText('ميزة البنك المرشح',980,502);
 
   ctx.fillStyle='#073b67';
   ctx.font='900 24px Cairo, Arial, sans-serif';
-  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,532);
+  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,537);
 
   // Cash
-  canvasRoundRect(ctx,70,580,940,170,24,'#eef8fd','#b9dce9');
+  canvasRoundRect(ctx,70,585,940,170,24,'#eef8fd','#b9dce9');
   ctx.fillStyle='#607a8a';
   ctx.font='800 20px Cairo, Arial, sans-serif';
-  ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,625);
+  ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,630);
 
   ctx.fillStyle='#0b78b7';
   ctx.font='900 54px Cairo, Arial, sans-serif';
-  ctx.fillText(englishMoney(best.cashAfterDebt),980,700);
+  ctx.fillText(englishMoney(best.cashAfterDebt),980,705);
 
   // Details
   const boxes=[
@@ -4055,7 +4073,7 @@ async function createDetailedResultPngBlob(){
     ['مدة الحسبة',durationText,false]
   ];
 
-  const startY=790,bw=450,bh=86,gap=14;
+  const startY=795,bw=450,bh=86,gap=14;
   boxes.forEach((box,i)=>{
     const col=i%2,row=Math.floor(i/2);
     const x=col===0?70:560;
@@ -4076,9 +4094,9 @@ async function createDetailedResultPngBlob(){
     ctx.fillText(box[1],x+bw-18,y+65);
   });
 
-  let y=startY+5*(bh+gap)+6;
+  let y=startY+5*(bh+gap)+8;
 
-  // Optional note above commodity-fee note
+  // Optional client note — only when entered
   if(customNote){
     canvasRoundRect(ctx,70,y,940,82,15,'#fffafa','#efcaca');
     ctx.fillStyle='#a12626';
@@ -4091,18 +4109,18 @@ async function createDetailedResultPngBlob(){
   }
 
   // Commodity fee note
-  canvasRoundRect(ctx,70,y,940,78,15,'#fffafa','#efcaca');
+  canvasRoundRect(ctx,70,y,940,82,15,'#fffafa','#efcaca');
   ctx.fillStyle='#a12626';
   ctx.font='900 16px Cairo, Arial, sans-serif';
   drawWrappedArabic(
     ctx,
     'رسوم فرق السلعة: قد لا توجد في بعض البنوك أو بعض السلع، وقد تختلف حسب البنك ونوع السلعة.',
-    980,y+29,850,26,2
+    980,y+30,850,26,2
   );
-  y+=94;
+  y+=98;
 
   // Advice
-  canvasRoundRect(ctx,70,y,940,116,16,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,120,16,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
   ctx.font='900 19px Cairo, Arial, sans-serif';
   ctx.fillText('إرشاد',980,y+31);
@@ -4110,10 +4128,10 @@ async function createDetailedResultPngBlob(){
   ctx.fillStyle='#35576a';
   ctx.font='800 16px Cairo, Arial, sans-serif';
   drawWrappedArabic(ctx,advice,980,y+59,850,25,3);
-  y+=132;
+  y+=138;
 
   // Disclaimer
-  canvasRoundRect(ctx,70,y,940,112,16,'#fffafa','#efd1d1');
+  canvasRoundRect(ctx,70,y,940,116,16,'#fffafa','#efd1d1');
   ctx.fillStyle='#8f2929';
   ctx.font='900 15px Cairo, Arial, sans-serif';
   drawWrappedArabic(
@@ -4121,20 +4139,20 @@ async function createDetailedResultPngBlob(){
     'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.',
     980,y+28,850,24,4
   );
-  y+=128;
+  y+=134;
 
   // Fees
-  canvasRoundRect(ctx,70,y,940,90,16,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,y,940,92,16,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67';
   ctx.font='900 17px Cairo, Arial, sans-serif';
-  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+30);
+  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+31);
 
   ctx.fillStyle='#111111';
   ctx.font='900 30px Cairo, Arial, sans-serif';
-  ctx.fillText('2,800 ريال',980,y+68);
-  y+=108;
+  ctx.fillText('2,800 ريال',980,y+70);
+  y+=112;
 
-  // Contact + QR
+  // Contact
   ctx.fillStyle='#073b67';
   ctx.font='900 19px Cairo, Arial, sans-serif';
   ctx.fillText('للتأكيد على الحسبة والإجراءات والاستفسارات:',980,y+27);
@@ -4147,19 +4165,34 @@ async function createDetailedResultPngBlob(){
   ctx.font='800 16px Cairo, Arial, sans-serif';
   ctx.fillText('اتصال أو واتساب',980,y+98);
 
+  // QR and its caption fully inside the image
   try{
     const qr=await loadImageForCanvas(SERVICES_QR_DATA);
-    const qx=70,qy=y-6,qsize=155;
+    const qx=70,qy=y-10,qsize=150;
     canvasRoundRect(ctx,qx,qy,qsize,qsize,15,'#ffffff','#dce8f0');
     ctx.drawImage(qr,qx+8,qy+8,qsize-16,qsize-16);
 
     ctx.fillStyle='#5f7888';
     ctx.font='800 15px Cairo, Arial, sans-serif';
-    ctx.fillText('باركود بعض خدماتنا',980,qy+135);
+    ctx.textAlign='left';
+    ctx.fillText('لمعرفة بعض خدماتنا، امسح الباركود',70,qy+176);
+    ctx.textAlign='right';
   }catch(e){}
 
+  /*
+    Final output is physically smaller than the current version,
+    while preserving the full content including QR/caption.
+  */
+  const finalCanvas=document.createElement('canvas');
+  finalCanvas.width=900;
+  finalCanvas.height=1725;
+  const fctx=finalCanvas.getContext('2d');
+  fctx.fillStyle='#ffffff';
+  fctx.fillRect(0,0,900,1725);
+  fctx.drawImage(canvas,0,0,1080,2070,0,0,900,1725);
+
   return await new Promise((resolve,reject)=>{
-    canvas.toBlob(
+    finalCanvas.toBlob(
       blob=>blob?resolve(blob):reject(new Error('PNG_FAILED')),
       'image/png',
       0.95
