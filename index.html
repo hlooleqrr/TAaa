@@ -2568,6 +2568,258 @@ button{
   }
 }
 
+
+/* =========================================================
+   FINO — FINAL REQUESTED POLISH
+========================================================= */
+
+/* PAGE 2: bank selection like the work-type buttons */
+#page2 .bank-grid{
+  display:grid !important;
+  grid-template-columns:repeat(4,1fr) !important;
+  gap:7px !important;
+}
+
+#page2 .bank-card{
+  min-height:86px !important;
+  height:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+  padding:8px 6px !important;
+  border:1px solid #d8e6ef !important;
+  border-radius:12px !important;
+  background:#fff !important;
+  text-align:center !important;
+}
+
+#page2 .bank-card.active{
+  border:2px solid #073b67 !important;
+  background:#f6fbfe !important;
+  box-shadow:0 8px 20px rgba(7,59,103,.10) !important;
+}
+
+#page2 .bank-logo{
+  width:96px !important;
+  height:52px !important;
+  flex:0 0 52px !important;
+  display:grid !important;
+  place-items:center !important;
+  padding:2px !important;
+}
+
+#page2 .bank-logo img{
+  max-width:100% !important;
+  max-height:50px !important;
+  object-fit:contain !important;
+}
+
+#page2 .bank-name{
+  width:100%;
+  font-size:7.5px !important;
+  line-height:1.25 !important;
+  font-weight:900 !important;
+  text-align:center !important;
+  color:#294b5d !important;
+}
+
+#page2 .bank-name small{
+  display:none !important;
+}
+
+#page2 .section-label.bank-question small{
+  display:none !important;
+}
+
+/* PAGE 3: cash first and dominant */
+#page3 .cash-hero{
+  margin-top:6px !important;
+  padding:18px 20px !important;
+  border:2px solid #bcddea !important;
+  border-radius:18px !important;
+  background:linear-gradient(135deg,#ffffff,#eef8fd) !important;
+  box-shadow:0 14px 34px rgba(7,59,103,.08) !important;
+}
+
+#page3 .cash-label{
+  color:#607a8a !important;
+  font-size:9px !important;
+  font-weight:900 !important;
+}
+
+#page3 .cash-title{
+  margin-top:2px !important;
+  color:#075488 !important;
+  font-size:18px !important;
+  line-height:1.45 !important;
+  font-weight:900 !important;
+}
+
+#page3 .cash-value{
+  margin-top:5px !important;
+  color:#0b78b7 !important;
+  font-size:48px !important;
+  line-height:1.05 !important;
+  font-weight:900 !important;
+}
+
+/* Recommended bank below cash */
+#page3 .best{
+  margin-top:8px !important;
+  background:#fff !important;
+  color:#173042 !important;
+  border:2px solid #d5e6f1 !important;
+  box-shadow:0 10px 28px rgba(7,59,103,.06) !important;
+}
+
+#page3 .best-tag{
+  color:#1881c2 !important;
+}
+
+#page3 .best-name{
+  color:#073b67 !important;
+  font-size:23px !important;
+}
+
+#page3 .best-copy{
+  color:#5f7888 !important;
+  font-size:8px !important;
+  font-weight:800 !important;
+}
+
+#page3 .best-rate{
+  color:#073b67 !important;
+}
+
+#page3 .best-rate small{
+  color:#708695 !important;
+  opacity:1 !important;
+}
+
+/* Small "available after obligations" line only */
+#page3 .obligation-mini{
+  margin:4px 0 7px;
+  padding:4px 7px;
+  border-radius:8px;
+  background:#f8fbfd;
+  color:#6d8391;
+  font-size:6.5px;
+  line-height:1.45;
+  font-weight:800;
+}
+
+#page3 .obligation-mini strong{
+  color:#365b70;
+}
+
+/* Details bigger */
+#page3 .finance-detail{
+  min-height:66px !important;
+  padding:9px 10px !important;
+}
+
+#page3 .finance-detail small{
+  font-size:7.5px !important;
+  font-weight:800 !important;
+}
+
+#page3 .finance-detail b{
+  font-size:13px !important;
+  font-weight:900 !important;
+}
+
+#page3 .finance-detail.key b,
+#page3 .finance-detail.cash b{
+  font-size:16px !important;
+}
+
+/* Final notice strong and readable */
+#page3 .final-notice{
+  padding:11px 13px !important;
+  font-size:9px !important;
+  line-height:1.8 !important;
+  font-weight:900 !important;
+}
+
+/* Single final CTA kept */
+#page3 .capture-cta{
+  background:#fff !important;
+  border:2px solid #d6e7f1 !important;
+}
+
+/* Share buttons always visible */
+#page3 .actions{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:8px !important;
+  margin-top:9px !important;
+}
+
+#page3 .action{
+  min-height:48px !important;
+  border-radius:12px !important;
+  font-size:10px !important;
+  font-weight:900 !important;
+  cursor:pointer !important;
+}
+
+#page3 .wa,
+#page3 .share-image{
+  background:#fff !important;
+  color:#073b67 !important;
+  border:2px solid #cfe0eb !important;
+}
+
+/* Image-share modal text */
+.phone-modal-card .mode-note{
+  margin-top:5px;
+  padding:7px 9px;
+  border-radius:9px;
+  background:#f7fbfe;
+  color:#5f7888;
+  font-size:8px;
+  line-height:1.6;
+  font-weight:800;
+}
+
+/* Share image card white & concise */
+.share-card-preview{
+  background:#fff !important;
+}
+
+.share-card-preview .sc-service{
+  margin-top:22px;
+  padding:18px 20px;
+  border-radius:16px;
+  background:#f5faff;
+  color:#073b67;
+  font-size:21px;
+  line-height:1.6;
+  font-weight:900;
+}
+
+@media(max-width:900px){
+  #page2 .bank-grid{
+    grid-template-columns:repeat(3,1fr) !important;
+  }
+}
+
+@media(max-width:600px){
+  #page2 .bank-grid{
+    grid-template-columns:repeat(2,1fr) !important;
+  }
+
+  #page3 .cash-value{
+    font-size:36px !important;
+  }
+
+  #page3 .actions{
+    grid-template-columns:1fr !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2691,12 +2943,9 @@ button{
 
 </div>
 
-<div class="section-label">
+<div class="section-label bank-question">
   <div class="num">04</div>
-  <div>
-    <b>اختر البنك الذي ينزل عليه راتبك</b>
-    <small>اختر اسم البنك وشعاره</small>
-  </div>
+  <div><b>اختر البنك الذي ينزل عليه راتبك</b></div>
 </div>
 
 <div class="bank-grid" id="bankGrid"></div>
@@ -2966,7 +3215,7 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   const c=document.getElementById('results');
 
   if(!out.length){
-    c.innerHTML='<div class="final-notice" style="padding:16px;font-size:9px;text-align:center">لا توجد نسبة مطابقة ضمن جداول العروض الحالية لهذه الحالة. تواصل معنا لمراجعة الخيارات الأخرى.</div>';
+    c.innerHTML='<div class="final-notice" style="padding:16px;text-align:center">لا توجد نسبة مطابقة ضمن جداول العروض الحالية لهذه الحالة. تواصل معنا لمراجعة الخيارات الأخرى.</div>';
     return;
   }
 
@@ -2974,36 +3223,31 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   const cashClass=best.cashAfterDebt<0?' negative':'';
 
   let h=`
+    <div class="cash-hero${cashClass}">
+      <div class="cash-label">النتيجة الأهم للعميل</div>
+      <div class="cash-title">صافي الكاش المتوقع بعد سداد المديونية</div>
+      <div class="cash-value">${money(best.cashAfterDebt)}</div>
+    </div>
+
     <div class="best">
       <div class="best-logo">${logo(best.key)}</div>
       <div>
-        <div class="best-tag">🏆 البنك المرشح لك</div>
+        <div class="best-tag">🏆 المصرف المرشح</div>
         <div class="best-name">${best.name}</div>
-        <div class="best-copy">هامش الربح المسجل: ${fmt(best.rate)}% • مدة التمويل الأساسية: 60 شهرًا • الأقساط الفعلية بالحسبة: ${best.actualPayments}</div>
+        <div class="best-copy">هامش الربح المحتسب عليه: ${fmt(best.rate)}% • مدة التمويل الأساسية: 60 شهرًا • الأقساط الفعلية: ${best.actualPayments}</div>
       </div>
       <div class="best-rate">${fmt(best.rate)}%<small>هامش الربح</small></div>
     </div>
 
-    <div class="cash-hero${cashClass}">
-      <div>
-        <div class="cash-label">النتيجة الأهم للعميل</div>
-        <div class="cash-title">صافي الكاش المتوقع بعد سداد مديونيتك</div>
-        
-      </div>
-      <div class="cash-value">${money(best.cashAfterDebt)}</div>
-    </div>
-
-    
-      <div class="impact-note">${best.installmentAffected
-        ? `الحسبة: ${money(best.totalObligationCap)} سقف 45% − ${money(best.externalObligations)} التزامات أخرى = ${money(best.availableAfterOther)} متاح، ولذلك تم اعتماد ${money(best.installment)} كقسط شخصي.`
-        : `المتاح بعد الالتزامات الأخرى ${money(best.availableAfterOther)}، وهو أعلى من حد التمويل الشخصي ${money(best.personalCap)}؛ لذلك تم اعتماد الحد الشخصي كاملًا ${money(best.installment)}.`}
-      </div>
+    <div class="obligation-mini">
+      <strong>المتاح بعد الالتزامات الأخرى:</strong> ${money(best.availableAfterOther)}
+      ${best.installmentAffected?' • تم خفض القسط المتاح بسبب الالتزامات الشهرية الأخرى.':''}
     </div>
 
     <div class="bank-advantage">
       <div class="adv-icon">${best.waiverMonths>0?'🎁':best.deferMonths>0?'📅':'⭐'}</div>
       <div>
-        <div class="adv-label">ميزة البنك المرشح</div>
+        <div class="adv-label">ميزة المصرف المرشح</div>
         <div class="adv-title">${best.featureTitle||'عرض شراء مديونية'}</div>
         <div class="adv-copy">${best.featureCopy||'تخضع الميزة النهائية لشروط البنك وقت التنفيذ.'}</div>
       </div>
@@ -3012,35 +3256,34 @@ function renderResults(salary,earlySettlement,externalObligations,out){
     <div class="finance-details">
       <div class="finance-detail key"><small>القسط الشهري المحتسب</small><b>${money(best.installment)}</b></div>
       <div class="finance-detail debt"><small>الالتزامات الشهرية الأخرى</small><b>${money(best.externalObligations)}</b></div>
-      <div class="finance-detail"><small>عدد الأقساط الفعلية بالحسبة</small><b>${best.actualPayments} شهر</b></div>
-      <div class="finance-detail"><small>إجمالي التمويل مع الأرباح</small><b>${money(best.grossWithProfit)}</b></div>
+      <div class="finance-detail"><small>عدد الأقساط الفعلية</small><b>${best.actualPayments} شهر</b></div>
 
-      <div class="finance-detail"><small>معامل الربح</small><b>${best.profitFactor.toFixed(4)}</b></div>
+      <div class="finance-detail"><small>إجمالي التمويل مع الأرباح</small><b>${money(best.grossWithProfit)}</b></div>
       <div class="finance-detail"><small>صافي التمويل قبل الرسوم والسداد</small><b>${money(best.principalBeforeFees)}</b></div>
       <div class="finance-detail profit"><small>إجمالي الأرباح</small><b>${money(best.totalProfit)}</b></div>
 
       <div class="finance-detail"><small>الرسوم الإدارية 0.5%</small><b>${moneyExact(best.adminFee)}</b></div>
-      <div class="finance-detail"><small>ضريبة القيمة المضافة على الرسوم 15%</small><b>${moneyExact(best.adminVat)}</b></div>
+      <div class="finance-detail"><small>ضريبة الرسوم الإدارية 15%</small><b>${moneyExact(best.adminVat)}</b></div>
       <div class="finance-detail commodity-fee"><small>رسوم فرق السلعة</small><b>${moneyExact(best.commodityFee)}</b></div>
 
       <div class="finance-detail"><small>صافي التمويل بعد الرسوم وقبل السداد</small><b>${money(best.netBeforeDebt)}</b></div>
       <div class="finance-detail debt"><small>مبلغ السداد المبكر للمديونية</small><b>${money(earlySettlement)}</b></div>
-      <div class="finance-detail cash"><small>صافي الكاش المتبقي للعميل</small><b>${money(best.cashAfterDebt)}</b></div>
+      <div class="finance-detail cash"><small>صافي الكاش المتوقع بعد السداد</small><b>${money(best.cashAfterDebt)}</b></div>
     </div>
 
-    
-
-    <div class="commodity-note"><b>⚠️ تنويه رسوم فرق السلعة:</b> تم احتسابها بنسبة 1% من التمويل، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد أصلًا لدى بعض البنوك.</div>
+    <div class="commodity-note">
+      <b>رسوم فرق السلعة:</b> محسوبة في هذه الحسبة بنسبة 1%، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد في بعض البنوك أو بعض السلع.
+    </div>
 
     <div class="list-title"><b>بقية الخيارات بالترتيب</b><span>${out.length} خيارات مطابقة</span></div>
   `;
 
   out.slice(1).forEach((b,i)=>{
     let notes='';
-    if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>إعفاء من أول قسطين</b>؛ لذلك حسبة إجمالي التمويل تكون على 58 قسطًا فعليًا.</div>`;
-    if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل قسطين</b> — تأجيل وليس إعفاء — لذلك الحسبة تبقى على 60 قسطًا.</div>`;
-    if(b.key==='ANB')notes+=`<div class="note">📅 العربي الوطني: إمكانية <b>تأجيل قسط أو قسطين</b> حسب اختيار العميل وشروط العرض؛ الحسبة تبقى على 60 قسطًا.</div>`;
-    if(b.key==='SAB')notes+=`<div class="note">شراء المديونية في هذا البنك قد يبدأ لبعض الجهات من راتب <b>10,000 ريال فأعلى.</b></div>`;
+    if(b.key==='SNB')notes+=`<div class="note">⭐ الأهلي: <b>إعفاء من أول قسطين</b>؛ لذلك الحسبة على 58 قسطًا فعليًا.</div>`;
+    if(b.key==='RAJHI')notes+=`<div class="note">⭐ الراجحي: إمكانية <b>تأجيل قسطين</b> — تأجيل وليس إعفاء.</div>`;
+    if(b.key==='ANB')notes+=`<div class="note">📅 العربي الوطني: إمكانية <b>تأجيل قسط أو قسطين</b> حسب شروط العرض.</div>`;
+    if(b.key==='SAB')notes+=`<div class="note">قد يبدأ شراء المديونية في هذا البنك لبعض الجهات من راتب <b>10,000 ريال فأعلى.</b></div>`;
 
     h+=`
       <div class="result-bank">
@@ -3114,15 +3357,52 @@ function cashAdvice(best,earlySettlement){
   return 'النصيحة: الصافي المتبقي مرتفع مقارنةً بمديونيتك الحالية، والعرض ممتاز مبدئيًا من ناحية الفائض. تأكد من النسبة النهائية والرسوم وشروط البنك قبل التنفيذ.';
 }
 
-function shareWhats(){
+
+let shareMode='text';
+
+function openSharePhone(mode){
   if(!latestResults.length){
     alert('لا توجد نتيجة لمشاركتها');
     return;
   }
+  shareMode=mode;
+  const title=document.querySelector('#phoneModal .phone-modal-card h3');
+  const desc=document.querySelector('#phoneModal .phone-modal-card p');
+  const note=document.getElementById('shareModeNote');
+
+  if(title)title.textContent=mode==='image'?'🖼️ مشاركة صورة الحسبة عبر واتساب':'📱 إرسال الحسبة عبر واتساب';
+  if(desc)desc.textContent='أدخل رقم جوال العميل أولاً.';
+  if(note)note.textContent=mode==='image'
+    ? 'سيتم تجهيز صورة الحسبة، ثم فتح محادثة واتساب للرقم المدخل. إذا لم يدعم جهازك إرفاق الصورة تلقائياً، ستُحفظ الصورة لتضيفها للمحادثة.'
+    : 'سيتم فتح محادثة واتساب للرقم المدخل بالرسالة الجاهزة.';
+
   document.getElementById('clientPhoneError').textContent='';
   document.getElementById('clientWhatsappNumber').value='';
   document.getElementById('phoneModal').classList.add('open');
   setTimeout(()=>document.getElementById('clientWhatsappNumber').focus(),100);
+}
+
+function shareWhats(){openSharePhone('text');}
+
+
+function shareResultImage(){
+  openSharePhone('image');
+}
+
+function handleShareToClient(){
+  const entered=document.getElementById('clientWhatsappNumber').value;
+  const phone=normalizeSaudiWhatsappNumber(entered);
+  if(!phone){
+    document.getElementById('clientPhoneError').textContent='أدخل رقم جوال سعودي صحيح، مثال: 05XXXXXXXX';
+    return;
+  }
+
+  if(shareMode==='image'){
+    closePhoneModal();
+    shareResultImageDirect(phone);
+  }else{
+    sendWhatsToClient();
+  }
 }
 
 function closePhoneModal(){
@@ -3191,25 +3471,40 @@ function sendWhatsToClient(){
 
 🎉 تمت حسبة شراء مديونية التمويل الشخصي
 
-📅 ${saudiGregorianDate()} م
-🕌 ${saudiHijriDate()} هـ
-🕒 ${saudiTimeEnglish()}
+📅 التاريخ الميلادي: ${saudiGregorianDate()}
+🕌 التاريخ الهجري: ${saudiHijriDate()}
+🕒 الوقت: ${saudiTimeEnglish()}
 
+👤 جهة العمل: ${typeName()}
 🏦 البنك المرشح: ${best.name}
 📈 هامش الربح: ${englishNumber(best.rate,2)}%
-💵 صافي الكاش المتوقع: *${englishMoney(best.cashAfterDebt)}*
-💳 القسط الشهري: ${englishMoney(best.installment)}
-📌 السداد المبكر: ${englishMoney(earlySettlement)}
-📎 الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}
 
-${advice}
+💵 *صافي الكاش المتوقع بعد سداد المديونية*
+*${englishMoney(best.cashAfterDebt)}*
 
-⚠️ الحسبة مبدئية، ورسوم فرق السلعة محسوبة 1% وقد تختلف حسب البنك والسلعة وقد لا توجد.
+📌 تفاصيل العرض
+• إجمالي التمويل مع الأرباح: ${englishMoney(best.grossWithProfit)}
+• صافي التمويل قبل الرسوم والسداد: ${englishMoney(best.principalBeforeFees)}
+• صافي التمويل بعد الرسوم وقبل السداد: ${englishMoney(best.netBeforeDebt)}
+• مبلغ السداد المبكر: ${englishMoney(earlySettlement)}
+• القسط الشهري: ${englishMoney(best.installment)}
+• إجمالي الأرباح: ${englishMoney(best.totalProfit)}
+• الرسوم الإدارية 0.5%: ${englishMoneyExact(best.adminFee)}
+• ضريبة الرسوم الإدارية 15%: ${englishMoneyExact(best.adminVat)}
+• رسوم فرق السلعة 1%: ${englishMoneyExact(best.commodityFee)} (قد لا توجد في بعض البنوك أو بعض السلع)
+${externalObligations>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}\n`:''}
+💡 ${advice}
 
-📞 للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:
+⚠️ هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ.
+
+🔺 تنويه:
+نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة بأسرع وقت وبدون تعقيدات.
+
+💳 *أتعاب المتابعة والإنجاز*
+*لإنجاز تحويل مديونية التمويل الشخصي: 2,800 ريال*
+
+📞 للاستفسار وبدء الإجراءات:
 *${PHONE}*
-
-💳 أتعاب المتابعة والإنجاز لتحويل المديونية: *2,800 ريال*\n\n⚡ متابعة وإنجاز بأسرع وقت وبدون تعقيدات.
 
 🔗 بعض خدماتنا:
 ${SERVICE_URL}`;
@@ -3237,11 +3532,12 @@ function fillShareCard(){
   document.getElementById('scAdvice').textContent=cashAdvice(best,earlySettlement);
 }
 
-async function shareResultImage(){
+async function shareResultImageDirect(clientPhone){
   if(!latestResults.length){
     alert('لا توجد نتيجة لمشاركتها');
     return;
   }
+
   fillShareCard();
 
   const card=document.getElementById('shareCardPreview');
@@ -3261,21 +3557,31 @@ async function shareResultImage(){
   const blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
   const file=new File([blob],'FINO-result.svg',{type:'image/svg+xml'});
 
+  let shared=false;
   if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
     try{
       await navigator.share({files:[file],title:'FINO - نتيجة الحسبة'});
-      return;
+      shared=true;
     }catch(e){}
   }
 
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  a.download='FINO-result.svg';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  if(!shared){
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download='FINO-result.svg';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+  }
+
+  const best=latestResults[0];
+  const caption=`FINO | نتيجة حسبة شراء مديونية التمويل الشخصي
+البنك المرشح: ${best.name}
+صافي الكاش المتوقع: ${englishMoney(best.cashAfterDebt)}
+للتأكيد والإنجاز: ${PHONE}`;
+  window.open(`https://wa.me/${clientPhone}?text=${encodeURIComponent(caption)}`,'_blank');
 }
 
 document.addEventListener('keydown',function(e){
@@ -3331,18 +3637,18 @@ setInterval(updateAllFooters,1000);
   <div class="sc-bank"><div class="sc-logo" id="scLogo"></div><div><div class="sc-bank-name" id="scBankName"></div><div id="scRate"></div></div></div>
   <div class="sc-cash"><small>صافي الكاش المتوقع بعد سداد المديونية</small><b id="scCash"></b></div>
   <div class="sc-row"><div class="sc-box"><small>القسط الشهري</small><b id="scInstallment"></b></div><div class="sc-box"><small>السداد المبكر</small><b id="scDebt"></b></div><div class="sc-box"><small>التزامات شهرية أخرى</small><b id="scExternal"></b></div><div class="sc-box"><small>سقف إجمالي الالتزامات</small><b id="scTotalCap"></b></div></div>
-  <div class="sc-advice" id="scAdvice"></div>
-  <div class="sc-footer">للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:<br><span class="sc-phone">0506214458</span><br>بعض خدماتنا: hlooleqrr.github.io/mwaqe3/#services</div>
+  <div class="sc-advice" id="scAdvice"></div><div class="sc-service">احتساب دقيق • ترشيح البنك الأنسب • متابعة وإنجاز التمويل</div>
+  <div class="sc-footer">للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:<br><span class="sc-phone">0506214458</span><br>بعض خدماتنا: https://hlooleqrr.github.io/mwaqe3/#services</div>
 </div>
 
 <div class="phone-modal" id="phoneModal">
   <div class="phone-modal-card">
     <h3>📱 إرسال الحسبة عبر واتساب</h3>
-    <p>أدخل رقم جوال العميل، وسيتم فتح واتساب مباشرة بالرسالة والحسبة الجاهزة.</p>
+    <p>أدخل رقم جوال العميل أولاً.</p><div class="mode-note" id="shareModeNote"></div>
     <input id="clientWhatsappNumber" inputmode="tel" type="tel" placeholder="05XXXXXXXX" autocomplete="tel">
     <div class="phone-error" id="clientPhoneError"></div>
     <div class="phone-modal-actions">
-      <button class="phone-modal-send" onclick="sendWhatsToClient()">إرسال عبر واتساب</button>
+      <button class="phone-modal-send" onclick="handleShareToClient()">متابعة</button>
       <button class="phone-modal-cancel" onclick="closePhoneModal()">إلغاء</button>
     </div>
   </div>
