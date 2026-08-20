@@ -3446,6 +3446,7 @@ function assessBankEligibility(finance,earlySettlement){
   const cash=Number(finance.cashAfterDebt||0);
   const debt=Number(earlySettlement||0);
 
+  // إذا لم يتبق أي فائض بعد جميع الرسوم والضريبة ورسوم فرق السلعة والسداد.
   if(cash<=0){
     return {
       eligible:false,
@@ -3454,30 +3455,51 @@ function assessBankEligibility(finance,earlySettlement){
     };
   }
 
+  // مصرف الراجحي:
+  // يجب ألا يقل صافي الكاش عن 5% من مبلغ السداد المبكر.
+  // أقل من 5% = رفض.
   if(finance.key==='RAJHI'){
     const minCash=debt*0.05;
-    if(cash<=minCash){
+    if(cash<minCash){
       return {
         eligible:false,
         warning:'',
-        reason:'صافي الكاش بعد السداد أقل من 5% من مبلغ السداد المبكر، ولذلك لا يحقق الحد المطلوب لهذا العرض.'
+        reason:'صافي الكاش بعد خصم الرسوم والضريبة ورسوم فرق السلعة والسداد المبكر أقل من 5% من مبلغ السداد المبكر، ولذلك لا يحقق شرط العرض.'
       };
     }
+
+    return {eligible:true,warning:'',reason:''};
   }
 
+  // البنك الأهلي السعودي:
+  // صافي الكاش بعد خصم كل شيء يجب ألا يقل عن 6,000 ريال.
   if(finance.key==='SNB'){
-    if(cash<=6000){
+    if(cash<6000){
       return {
         eligible:false,
         warning:'',
-        reason:'صافي الكاش بعد السداد لا يتجاوز 6,000 ريال، ولذلك لا يحقق الحد المطلوب لهذا العرض.'
+        reason:'صافي الكاش بعد خصم الرسوم والضريبة ورسوم فرق السلعة والسداد المبكر أقل من 6,000 ريال، ولذلك لا يحقق شرط العرض.'
       };
     }
+
+    return {eligible:true,warning:'',reason:''};
   }
 
+  // بقية البنوك:
+  // أقل من 6,000 ريال = رفض.
+  if(cash<6000){
+    return {
+      eligible:false,
+      warning:'',
+      reason:'صافي الكاش بعد خصم الرسوم والضريبة ورسوم فرق السلعة والسداد المبكر أقل من 6,000 ريال، ولذلك لا يحقق الحد المطلوب.'
+    };
+  }
+
+  // من 6,000 وأقل من 10,000 ريال:
+  // لا نستبعد البنك، لكن نظهر تنبيه احتمال الرفض.
   let warning='';
-  if(finance.key!=='RAJHI' && finance.key!=='SNB' && cash<10000){
-    warning='⚠️ قد يرفض البنك الطلب بسبب انخفاض الفائض بعد السداد إلى أقل من 10,000 ريال، وذلك حسب سياسة كل بنك. تواصل معنا للاستفسار.';
+  if(cash<10000){
+    warning='⚠️ تنبيه: صافي الفائض بعد السداد أقل من 10,000 ريال، وقد يرفض البنك الطلب بسبب انخفاض الفائض حسب سياسة كل بنك. تواصل معنا للاستفسار.';
   }
 
   return {eligible:true,warning,reason:''};
@@ -4184,12 +4206,12 @@ async function createDetailedResultPngBlob(){
     while preserving the full content including QR/caption.
   */
   const finalCanvas=document.createElement('canvas');
-  finalCanvas.width=900;
-  finalCanvas.height=1725;
+  finalCanvas.width=720;
+  finalCanvas.height=1380;
   const fctx=finalCanvas.getContext('2d');
   fctx.fillStyle='#ffffff';
-  fctx.fillRect(0,0,900,1725);
-  fctx.drawImage(canvas,0,0,1080,2070,0,0,900,1725);
+  fctx.fillRect(0,0,720,1380);
+  fctx.drawImage(canvas,0,0,1080,2070,0,0,720,1380);
 
   return await new Promise((resolve,reject)=>{
     finalCanvas.toBlob(
