@@ -3094,6 +3094,27 @@ button{
 .fees-fields.disabled{display:none}
 @media(max-width:600px){.fees-fields{grid-template-columns:1fr}}
 
+
+.type-btn.private-type-btn{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  line-height:1.25;
+}
+.type-btn.private-type-btn span{
+  font-size:9px;
+  font-weight:900;
+}
+.type-btn.private-type-btn small{
+  display:block;
+  font-size:5.6px;
+  line-height:1.35;
+  font-weight:800;
+  opacity:.82;
+}
+
 </style>
 </head>
 <body>
@@ -3173,7 +3194,7 @@ button{
   <button class="type-btn active" data-type="government" onclick="selectType(this)">حكومي</button>
   <button class="type-btn" data-type="semiGovernment" onclick="selectType(this)">شبه حكومي</button>
   <button class="type-btn" data-type="military" onclick="selectType(this)">عسكري</button>
-  <button class="type-btn" data-type="private" onclick="selectType(this)">قطاع خاص</button>
+  <button class="type-btn private-type-btn" data-type="private" onclick="selectType(this)"><span>قطاع خاص</span><small>يشترط أن تكون جهة العمل معتمدة لدى جميع البنوك • Class A • منخفضة المخاطر</small></button>
   <button class="type-btn" data-type="retired" onclick="selectType(this)">متقاعد</button>
 </div>
 
@@ -3693,12 +3714,17 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <input id="serviceFeesAmount" type="number" inputmode="numeric" min="0" value="2800" placeholder="2800">
     </div>
     <div class="fees-field">
-      <label for="serviceFeesDate">تاريخ الأتعاب (اختياري)</label>
-      <input id="serviceFeesDate" type="date">
+      <label for="serviceOfferName">اسم العرض (اختياري)</label>
+      <input id="serviceOfferName" type="text" placeholder="مثال: عرض شهر رمضان">
+    </div>
+    <div class="fees-field">
+      <label for="serviceOfferExpiry">تاريخ انتهاء العرض (اختياري)</label>
+      <input id="serviceOfferExpiry" type="date">
     </div>
   </div>
 </div>
 
+${customerType==='private'?`<div class="bank-policy-warning"><b>تنويه القطاع الخاص:</b> القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.</div>`:''}
 <div class="commodity-note">
       <b>رسوم فرق السلعة:</b> محسوبة في هذه الحسبة بنسبة 1%، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد في بعض البنوك أو بعض السلع.
     </div>
@@ -3748,19 +3774,32 @@ function serviceFeesAmount(){
   const value=Number(el?el.value:2800);
   return Number.isFinite(value)&&value>=0 ? value : 0;
 }
-function serviceFeesDate(){
-  const el=document.getElementById('serviceFeesDate');
+function serviceOfferName(){
+  const el=document.getElementById('serviceOfferName');
+  return el ? String(el.value||'').trim() : '';
+}
+function serviceOfferExpiry(){
+  const el=document.getElementById('serviceOfferExpiry');
   return el ? String(el.value||'').trim() : '';
 }
 function serviceFeesWhatsappBlock(){
   if(!includeServiceFees())return '';
   const amount=englishMoney(serviceFeesAmount());
-  const date=serviceFeesDate();
+  const offer=serviceOfferName();
+  const expiry=serviceOfferExpiry();
+
+  let offerLine='';
+  if(offer&&expiry)offerLine=`
+🎁 ${offer} — ينتهي بتاريخ ${expiry}`;
+  else if(offer)offerLine=`
+🎁 ${offer}`;
+  else if(expiry)offerLine=`
+📅 ينتهي العرض بتاريخ ${expiry}`;
+
   return `
 
 💳 *أتعاب المتابعة والإنجاز*
-*لإنجاز تحويل مديونية التمويل الشخصي: ${amount}*${date?`
-📅 تاريخ الأتعاب: ${date}`:''}`;
+*لإنجاز تحويل مديونية التمويل الشخصي: ${amount}*${offerLine}`;
 }
 
 function getClientCustomNote(){
@@ -3791,7 +3830,7 @@ function updateClientCustomNote(){
 
 function privateSectorNotice(){
   if(customerType!=='private')return '';
-  return 'تنويه القطاع الخاص: الفئة المختارة قطاع خاص معتمد لدى البنوك ومصنف KLC A ومنخفض المخاطر. ومع ذلك تختلف نسب التمويل، وحدود المنح، وطريقة الاحتساب بحسب جهة العمل وتصنيفها وسياسة كل بنك. لذلك تعتبر الحسبة مبدئية؛ لتأكيد الحسبة ومعرفة التفاصيل وإنجاز التمويل، تواصل معنا.';
+  return 'تنويه القطاع الخاص: القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.';
 }
 
 function englishNumber(value, decimals=0){
@@ -3998,7 +4037,7 @@ function sendWhatsToClient(){
 🕒 الوقت: ${saudiTimeEnglish()}
 
 👤 جهة العمل: ${typeName()}
-${customerType==='private'?`📌 تنويه القطاع الخاص: الفئة المختارة معتمدة لدى البنوك ومصنفة KLC A ومنخفضة المخاطر، لكن النسب والمنح وطريقة الاحتساب تختلف بحسب جهة العمل وتصنيفها وسياسة كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.
+${customerType==='private'?`📌 تنويه القطاع الخاص: القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.
 `:''}🏦 البنك المرشح: ${best.name}
 📈 هامش الربح: ${englishNumber(best.rate,2)}%
 
@@ -4144,7 +4183,7 @@ async function createDetailedResultPngBlob(){
     ctx.font='900 15px Cairo, Arial, sans-serif';
     drawWrappedArabic(
       ctx,
-      'تنويه القطاع الخاص: الفئة المختارة معتمدة لدى البنوك ومصنفة KLC A ومنخفضة المخاطر، لكن النسب والمنح وطريقة الاحتساب تختلف حسب جهة العمل وتصنيفها وسياسة كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.',
+      'تنويه القطاع الخاص: القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.',
       980,500,850,23,4
     );
     featureY=595;
@@ -4256,9 +4295,11 @@ async function createDetailedResultPngBlob(){
   // Fees — optional and editable
   if(includeServiceFees()){
     const feeAmount=englishMoney(serviceFeesAmount());
-    const feeDate=serviceFeesDate();
+    const offerName=serviceOfferName();
+    const offerExpiry=serviceOfferExpiry();
+    const hasOfferLine=!!(offerName||offerExpiry);
 
-    canvasRoundRect(ctx,70,y,940,feeDate?112:92,16,'#f7fbfe','#d7e7f1');
+    canvasRoundRect(ctx,70,y,940,hasOfferLine?116:92,16,'#f7fbfe','#d7e7f1');
     ctx.fillStyle='#073b67';
     ctx.font='900 17px Cairo, Arial, sans-serif';
     ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+31);
@@ -4267,11 +4308,16 @@ async function createDetailedResultPngBlob(){
     ctx.font='900 30px Cairo, Arial, sans-serif';
     ctx.fillText(feeAmount,980,y+70);
 
-    if(feeDate){
+    if(hasOfferLine){
+      let offerText='';
+      if(offerName&&offerExpiry)offerText=`${offerName} — ينتهي بتاريخ ${offerExpiry}`;
+      else if(offerName)offerText=offerName;
+      else offerText=`ينتهي العرض بتاريخ ${offerExpiry}`;
+
       ctx.fillStyle='#5f7888';
       ctx.font='800 15px Cairo, Arial, sans-serif';
-      ctx.fillText(`تاريخ الأتعاب: ${feeDate}`,980,y+96);
-      y+=132;
+      ctx.fillText(offerText,980,y+98);
+      y+=136;
     }else{
       y+=112;
     }
