@@ -3087,7 +3087,7 @@ button{
 </div></div>
 <section class="page active" id="page1"><div class="viewport">
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SMART FINANCE MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب دقيق • تأكيد المعلومات • إنجاز التمويل</small><b>0506214458</b></span></a></header>
-<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>تحويل مديونية التمويل الشخصي • ترشيح مباشر</div><div class="kicker">احتساب وترشيح فوري لتحويل مديونية التمويل الشخصي</div><h1> <br> <span class="accent"></span></h1><p class="hero-sub">حسب راتبك وفئتك وبنك الراتب، مع مراجعة الحسبة وتأكيد المعلومات ثم <span class="finance-delivery">إنجاز التمويل</span> بأسرع وقت وبدون تعقيدات.</p>
+<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>تحويل مديونية التمويل الشخصي • ترشيح مباشر</div><div class="kicker">احتساب وترشيح فوري لتحويل مديونية التمويل الشخصي</div><h1>نقارن عروض البنوك<br>ونرشّح لك <span class="accent">الأنسب لتحويل مديونيتك</span></h1><p class="hero-sub">حسب راتبك وفئتك وبنك الراتب، مع مراجعة الحسبة وتأكيد المعلومات ثم <span class="finance-delivery">إنجاز التمويل</span> بأسرع وقت وبدون تعقيدات.</p>
 <div class="services"><div class="service"><i>🧮</i><div><b>احتساب فوري</b><small>ترشيح خلال ثوانٍ</small></div></div><div class="service"><i>✓</i><div><b>تأكيد المعلومات</b><small>مطابقة قبل التنفيذ</small></div></div><div class="service"><i>⚡</i><div><b>إنجاز التمويل</b><small>إجراءات أسرع</small></div></div></div>
 <a class="big-phone" href="https://wa.me/966506214458" target="_blank"><div class="mobile">📱</div><div><small>للاحتساب الدقيق • تأكيد المعلومات • وإنجاز تحويل المديونية</small><b>0506214458</b></div></a>
 <div class="tip-card"><div class="tip-head"><b>💡 نصيحة اليوم</b><span id="tipCount">1 / 55</span></div><div class="tip-text" id="tip1"></div></div></div>
@@ -3098,17 +3098,7 @@ button{
 <div class="live-date"><div class="date-day" id="formDay">—</div><div><small>الميلادي</small><b id="formGreg">—</b></div><div><small>الهجري</small><b id="formHijri">—</b></div><div class="live-time" id="formTime">—</div></div>
 <a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>لا تتردد • واتساب أو اتصال</small><b>0506214458</b></span></a></header>
 
-<div class="form-wrap">
-  <div class="page-title">
-    <div class="eyebrow">شراء مديونية التمويل الشخصي</div>
-
-    <h1>
-      وش أفضل بنك يشتري مديونية تمويلك الشخصي؟
-      <span>وكم يصفي لك كاش؟</span>
-    </h1>
-
-    <p>قارن البنوك حسب راتبك والتزاماتك • واعرف صافي الكاش المتوقع بعد سداد تمويلك الحالي</p>
-  </div>
+<div class="form-wrap"><div class="page-title"><div class="eyebrow">تحويل مديونية التمويل الشخصي</div><h1>هل هدفك <span>سيولة أفضل ونسبة أقل؟</span></h1><p>قرارك يبدأ بحسبة واضحة • نرشّح لك الأنسب وننجزك مع الأفضل</p></div>
 <div class="marketing-questions"><div class="marketing-track">
 <span class="marketing-q">💰 <strong>هل تريد سيولة وفائضًا أعلى بعد سداد مديونيتك؟</strong></span>
 <span class="marketing-q">📈 <strong>هل نسبة إعادة التمويل عندك مرتفعة؟</strong></span>
@@ -3386,7 +3376,7 @@ function findRate(s,t){for(const r of t)if(s>=r.min&&s<=r.max)return r.rate;retu
 function typeName(){
   if(customerType==='semiGovernment')return 'شبه حكومي';
   if(customerType==='military')return 'عسكري';
-  if(customerType==='private')return 'قطاع خاص';
+  if(customerType==='private')return 'قطاع خاص معتمد لدى البنوك • KLC A • منخفض المخاطر';
   if(customerType==='retired')return 'متقاعد';
   return 'حكومي';
 }
@@ -3728,6 +3718,12 @@ function updateClientCustomNote(){
   }
 }
 
+
+function privateSectorNotice(){
+  if(customerType!=='private')return '';
+  return 'تنويه القطاع الخاص: الفئة المختارة قطاع خاص معتمد لدى البنوك ومصنف KLC A ومنخفض المخاطر. ومع ذلك تختلف نسب التمويل، وحدود المنح، وطريقة الاحتساب بحسب جهة العمل وتصنيفها وسياسة كل بنك. لذلك تعتبر الحسبة مبدئية؛ لتأكيد الحسبة ومعرفة التفاصيل وإنجاز التمويل، تواصل معنا.';
+}
+
 function englishNumber(value, decimals=0){
   const n=Number(value||0);
   return new Intl.NumberFormat('en-US',{
@@ -3932,7 +3928,8 @@ function sendWhatsToClient(){
 🕒 الوقت: ${saudiTimeEnglish()}
 
 👤 جهة العمل: ${typeName()}
-🏦 البنك المرشح: ${best.name}
+${customerType==='private'?`📌 تنويه القطاع الخاص: الفئة المختارة معتمدة لدى البنوك ومصنفة KLC A ومنخفضة المخاطر، لكن النسب والمنح وطريقة الاحتساب تختلف بحسب جهة العمل وتصنيفها وسياسة كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.
+`:''}🏦 البنك المرشح: ${best.name}
 📈 هامش الربح: ${englishNumber(best.rate,2)}%
 
 💵 *صافي الكاش المتوقع بعد سداد المديونية*
@@ -3956,8 +3953,8 @@ ${externalObligations>0?`• الالتزامات الشهرية الأخرى: $
 🔺 تنويه:
 نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والإنجاز عبر البنوك وشركات التمويل المرخّصة بأسرع وقت وبدون تعقيدات.
 
-💳 *أتعاب الإنجاز*
-*انجاز تحويل مديونية التمويل الشخصي: 2,800 ريال*
+💳 *أتعاب المتابعة والإنجاز*
+*لإنجاز تحويل مديونية التمويل الشخصي: 2,800 ريال*
 
 📞 للاستفسار وبدء الإجراءات:
 *${PHONE}*
@@ -4071,25 +4068,39 @@ async function createDetailedResultPngBlob(){
   ctx.font='700 12px Cairo, Arial, sans-serif';
   ctx.fillText('غير التمويل الشخصي',980,infoY+76);
 
+  let featureY=470;
+  if(customerType==='private'){
+    canvasRoundRect(ctx,70,470,940,105,16,'#fffafa','#efcaca');
+    ctx.fillStyle='#a12626';
+    ctx.font='900 15px Cairo, Arial, sans-serif';
+    drawWrappedArabic(
+      ctx,
+      'تنويه القطاع الخاص: الفئة المختارة معتمدة لدى البنوك ومصنفة KLC A ومنخفضة المخاطر، لكن النسب والمنح وطريقة الاحتساب تختلف حسب جهة العمل وتصنيفها وسياسة كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.',
+      980,500,850,23,4
+    );
+    featureY=595;
+  }
+
   // Bank feature
-  canvasRoundRect(ctx,70,470,940,92,18,'#f7fbfe','#d7e7f1');
+  canvasRoundRect(ctx,70,featureY,940,92,18,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#1881c2';
   ctx.font='900 17px Cairo, Arial, sans-serif';
-  ctx.fillText('ميزة البنك المرشح',980,502);
+  ctx.fillText('ميزة البنك المرشح',980,featureY+32);
 
   ctx.fillStyle='#073b67';
   ctx.font='900 24px Cairo, Arial, sans-serif';
-  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,537);
+  ctx.fillText(best.featureTitle||'عرض شراء مديونية',980,featureY+67);
 
   // Cash
-  canvasRoundRect(ctx,70,585,940,170,24,'#eef8fd','#b9dce9');
+  const cashY=featureY+115;
+  canvasRoundRect(ctx,70,cashY,940,170,24,'#eef8fd','#b9dce9');
   ctx.fillStyle='#607a8a';
   ctx.font='800 20px Cairo, Arial, sans-serif';
-  ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,630);
+  ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,cashY+45);
 
   ctx.fillStyle='#0b78b7';
   ctx.font='900 54px Cairo, Arial, sans-serif';
-  ctx.fillText(englishMoney(best.cashAfterDebt),980,705);
+  ctx.fillText(englishMoney(best.cashAfterDebt),980,cashY+120);
 
   // Details
   const boxes=[
@@ -4105,7 +4116,7 @@ async function createDetailedResultPngBlob(){
     ['مدة الحسبة',durationText,false]
   ];
 
-  const startY=795,bw=450,bh=86,gap=14;
+  const startY=cashY+210,bw=450,bh=86,gap=14;
   boxes.forEach((box,i)=>{
     const col=i%2,row=Math.floor(i/2);
     const x=col===0?70:560;
@@ -4168,7 +4179,7 @@ async function createDetailedResultPngBlob(){
   ctx.font='900 15px Cairo, Arial, sans-serif';
   drawWrappedArabic(
     ctx,
-    'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والإنجاز السريع عبر البنوك وشركات التمويل المرخّصة ننجز بأسرع وقت وبدون تعقيدات.',
+    'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.',
     980,y+28,850,24,4
   );
   y+=134;
