@@ -3076,6 +3076,24 @@ button{
 .custom-note-preview.show{display:block}
 .custom-note-preview b{color:#8e1d1d}
 
+
+.fees-control{margin-top:8px;padding:10px;border:1px solid #d8e7f0;border-radius:11px;background:#fff}
+.fees-control-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fees-control-title{color:#073b67;font-size:9px;font-weight:900}
+.fees-toggle{display:inline-flex;align-items:center;gap:7px;cursor:pointer;user-select:none}
+.fees-toggle input{display:none}
+.fees-switch{width:42px;height:23px;border-radius:999px;background:#cbd8e0;position:relative;transition:.2s ease}
+.fees-switch::after{content:"";position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.16);transition:.2s ease}
+.fees-toggle input:checked + .fees-switch{background:#0b78b7}
+.fees-toggle input:checked + .fees-switch::after{transform:translateX(-19px)}
+.fees-toggle-text{color:#4e6878;font-size:8px;font-weight:900}
+.fees-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.fees-field label{display:block;margin-bottom:4px;color:#637d8b;font-size:6.5px;font-weight:800}
+.fees-field input{width:100%;height:38px;border:1px solid #d8e6ee;border-radius:9px;background:#fff;color:#173042;padding:0 9px;outline:none;font-size:10px;font-weight:900}
+.fees-field input:focus{border-color:#79afd2;box-shadow:0 0 0 3px rgba(21,128,194,.045)}
+.fees-fields.disabled{display:none}
+@media(max-width:600px){.fees-fields{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -3660,7 +3678,28 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div id="clientCustomNotePreview" class="custom-note-preview"></div>
     </div>
 
-    <div class="commodity-note">
+    <div class="fees-control">
+  <div class="fees-control-top">
+    <div class="fees-control-title">التحكم بأتعاب المتابعة والإنجاز</div>
+    <label class="fees-toggle">
+      <input id="includeFeesToggle" type="checkbox" checked onchange="updateFeesControls()">
+      <span class="fees-switch"></span>
+      <span class="fees-toggle-text">إضافة الأتعاب</span>
+    </label>
+  </div>
+  <div class="fees-fields" id="feesFields">
+    <div class="fees-field">
+      <label for="serviceFeesAmount">مبلغ الأتعاب</label>
+      <input id="serviceFeesAmount" type="number" inputmode="numeric" min="0" value="2800" placeholder="2800">
+    </div>
+    <div class="fees-field">
+      <label for="serviceFeesDate">تاريخ الأتعاب (اختياري)</label>
+      <input id="serviceFeesDate" type="date">
+    </div>
+  </div>
+</div>
+
+<div class="commodity-note">
       <b>رسوم فرق السلعة:</b> محسوبة في هذه الحسبة بنسبة 1%، وقد تختلف حسب البنك ونوع السلعة، وقد لا توجد في بعض البنوك أو بعض السلع.
     </div>
 
@@ -3692,6 +3731,37 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   c.innerHTML=h;
 }
 
+
+
+function updateFeesControls(){
+  const toggle=document.getElementById('includeFeesToggle');
+  const fields=document.getElementById('feesFields');
+  if(!toggle||!fields)return;
+  fields.classList.toggle('disabled',!toggle.checked);
+}
+function includeServiceFees(){
+  const toggle=document.getElementById('includeFeesToggle');
+  return toggle ? toggle.checked : true;
+}
+function serviceFeesAmount(){
+  const el=document.getElementById('serviceFeesAmount');
+  const value=Number(el?el.value:2800);
+  return Number.isFinite(value)&&value>=0 ? value : 0;
+}
+function serviceFeesDate(){
+  const el=document.getElementById('serviceFeesDate');
+  return el ? String(el.value||'').trim() : '';
+}
+function serviceFeesWhatsappBlock(){
+  if(!includeServiceFees())return '';
+  const amount=englishMoney(serviceFeesAmount());
+  const date=serviceFeesDate();
+  return `
+
+💳 *أتعاب المتابعة والإنجاز*
+*لإنجاز تحويل مديونية التمويل الشخصي: ${amount}*${date?`
+📅 تاريخ الأتعاب: ${date}`:''}`;
+}
 
 function getClientCustomNote(){
   const el=document.getElementById('clientCustomNote');
@@ -3953,8 +4023,7 @@ ${externalObligations>0?`• الالتزامات الشهرية الأخرى: $
 🔺 تنويه:
 نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والإنجاز عبر البنوك وشركات التمويل المرخّصة بأسرع وقت وبدون تعقيدات.
 
-💳 *أتعاب المتابعة والإنجاز*
-*لإنجاز تحويل مديونية التمويل الشخصي: 2,800 ريال*
+${serviceFeesWhatsappBlock()}
 
 📞 للاستفسار وبدء الإجراءات:
 *${PHONE}*
@@ -4184,16 +4253,29 @@ async function createDetailedResultPngBlob(){
   );
   y+=134;
 
-  // Fees
-  canvasRoundRect(ctx,70,y,940,92,16,'#f7fbfe','#d7e7f1');
-  ctx.fillStyle='#073b67';
-  ctx.font='900 17px Cairo, Arial, sans-serif';
-  ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+31);
+  // Fees — optional and editable
+  if(includeServiceFees()){
+    const feeAmount=englishMoney(serviceFeesAmount());
+    const feeDate=serviceFeesDate();
 
-  ctx.fillStyle='#111111';
-  ctx.font='900 30px Cairo, Arial, sans-serif';
-  ctx.fillText('2,800 ريال',980,y+70);
-  y+=112;
+    canvasRoundRect(ctx,70,y,940,feeDate?112:92,16,'#f7fbfe','#d7e7f1');
+    ctx.fillStyle='#073b67';
+    ctx.font='900 17px Cairo, Arial, sans-serif';
+    ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+31);
+
+    ctx.fillStyle='#111111';
+    ctx.font='900 30px Cairo, Arial, sans-serif';
+    ctx.fillText(feeAmount,980,y+70);
+
+    if(feeDate){
+      ctx.fillStyle='#5f7888';
+      ctx.font='800 15px Cairo, Arial, sans-serif';
+      ctx.fillText(`تاريخ الأتعاب: ${feeDate}`,980,y+96);
+      y+=132;
+    }else{
+      y+=112;
+    }
+  }
 
   // Contact
   ctx.fillStyle='#073b67';
@@ -4656,6 +4738,7 @@ setInterval(updateAllFooters,1000);
    FINO runtime stability initializer
 ========================================================= */
 function initFINORuntime(){
+  try{updateFeesControls();}catch(e){}
   // Initial ARIA state
   document.querySelectorAll('.page').forEach(p=>{
     p.setAttribute('aria-hidden',p.classList.contains('active')?'false':'true');
