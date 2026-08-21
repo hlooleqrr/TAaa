@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -4051,12 +4050,14 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div class="finance-detail cash"><small>صافي الكاش المتوقع بعد السداد</small><b>${money(best.cashAfterDebt)}</b></div>
     </div>
 
+    ${activeAccess && activeAccess.record && activeAccess.record.free ? `
     <div class="client-note-editor">
       <label for="clientCustomNote">ملاحظة للعميل (اختياري)</label>
       <small>مثال: تثبيت راتب، تحويل راتب، أو أي ملاحظة تريد ظهورها للعميل. اتركها فارغة إذا لا توجد ملاحظة.</small>
       <textarea id="clientCustomNote" class="client-note-input" placeholder="اكتب الملاحظة هنا..." oninput="updateClientCustomNote()"></textarea>
       <div id="clientCustomNotePreview" class="custom-note-preview"></div>
     </div>
+    ` : ''}
 
     ${activeAccess && activeAccess.record && activeAccess.record.free ? `
     <div class="fees-control">
@@ -4204,6 +4205,8 @@ function serviceFeesWhatsappBlock(){
 }
 
 function getClientCustomNote(){
+  const isFree=!!(activeAccess && activeAccess.record && activeAccess.record.free);
+  if(!isFree)return '';
   const el=document.getElementById('clientCustomNote');
   return el ? String(el.value||'').trim() : '';
 }
