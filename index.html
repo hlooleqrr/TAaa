@@ -3334,6 +3334,25 @@ button{
   background:#eef8fd;
 }
 
+
+/* FINO — تكبير وضوح الخطوط في الصفحتين الثانية والثالثة فقط */
+#page2 .viewport,#page3 .viewport{font-size:17px}
+#page2 .page-title h1,#page3 .result-head h1{font-size:clamp(30px,3vw,44px)!important;line-height:1.3!important;font-weight:900!important}
+#page2 .page-title p,#page3 .result-head p{font-size:16px!important;font-weight:800!important;line-height:1.8!important}
+#page2 .section-label b,#page2 .input-head b,#page2 label,#page3 .profile,#page3 .final-notice{font-size:16px!important;font-weight:900!important}
+#page2 .section-label small,#page2 .input-head small,#page2 .eligibility-strip,#page2 .tip-bar,#page3 .tip-bar{font-size:14px!important;line-height:1.8!important}
+#page2 input,#page2 select,#page2 button,#page3 button{font-size:16px!important;font-weight:900!important}
+#page2 .job-option,#page2 .bank-option,#page2 .bank-choice,#page2 .bank-name{font-size:15px!important;font-weight:900!important}
+#page3 #results,#page3 #results p,#page3 #results small,#page3 #results div{font-size:max(14px,1em)}
+#page3 #results h2,#page3 #results h3,#page3 #results b{font-weight:900}
+@media(max-width:700px){
+ #page2 .viewport,#page3 .viewport{font-size:18px}
+ #page2 .page-title h1,#page3 .result-head h1{font-size:30px!important}
+ #page2 .page-title p,#page3 .result-head p,#page2 .section-label b,#page2 .input-head b,#page2 label{font-size:17px!important}
+ #page2 .section-label small,#page2 .input-head small,#page2 .eligibility-strip,#page2 .tip-bar,#page3 .tip-bar{font-size:15px!important}
+ #page2 input,#page2 select,#page2 button,#page3 button{font-size:17px!important}
+}
+
 </style>
 </head>
 <body>
@@ -3353,10 +3372,10 @@ button{
 
 <section class="page active" id="page1"><div class="viewport">
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SMART FINANCE MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب دقيق • تأكيد المعلومات • إنجاز التمويل</small><b>0506214458</b></span></a></header>
-<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>منصة FINO • احتساب وترشيح مباشر</div><div class="kicker">منصة FINO الذكية لتحويل مديونية التمويل الشخصي</div><h1>احتساب وترشيح فوري<br><span class="accent"></span></h1><p class="hero-sub">نرشّح لك فورًا أفضل عروض شراء المديونية حسب راتبك وفئتك وبنك الراتب، مع مراجعة الحسبة وتأكيد المعلومات ثم <span class="finance-delivery">إنجاز التمويل بأسرع وقت وبدون تعقيدات</span>.</p>
+<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>منصة FINO • احتساب وترشيح مباشر</div><div class="kicker">منصة FINO الذكية لتحويل مديونية التمويل الشخصي</div><h1>احتساب وترشيح فورًا</h1><p class="hero-sub">نرشّح لك فورًا أفضل عروض شراء المديونية حسب راتبك وفئتك وبنك الراتب، مع مراجعة الحسبة وتأكيد المعلومات ثم <span class="finance-delivery">إنجاز التمويل بأسرع وقت وبدون تعقيدات</span>.</p>
 <div class="services"><div class="service"><i>🧮</i><div><b>احتساب فوري</b><small>ترشيح خلال ثوانٍ</small></div></div><div class="service"><i>✓</i><div><b>تأكيد المعلومات</b><small>مطابقة قبل التنفيذ</small></div></div><div class="service"><i>⚡</i><div><b>إنجاز التمويل</b><small>إجراءات أسرع</small></div></div></div>
 <a class="big-phone" href="https://wa.me/966506214458" target="_blank"><div class="mobile">📱</div><div><small>للاحتساب الدقيق • تأكيد المعلومات • وإنجاز تحويل المديونية</small><b>0506214458</b></div></a>
-<div class="tip-card"><div class="tip-head"><b>💡 نصيحة اليوم</b><span id="tipCount">1 / 55</span></div><div class="tip-text" id="tip1"></div></div></div>
+</div>
 <div class="login-card"><div class="login-top"><h2>FINO LIVE</h2><span>● المنصة جاهزة</span></div><div class="date-box"><div class="today" id="today">—</div><div class="date-grid"><div class="date-cell"><small>الميلادي</small><b id="greg">—</b></div><div class="date-cell"><small>الهجري</small><b id="hijri">—</b></div></div><div class="clock" id="clock">—</div></div><label class="label">كود الاشتراك</label><input class="password" id="password" type="text" placeholder="أدخل كود الاشتراك" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"><button type="button" class="login-btn" onclick="login()">دخول المنصة ←</button><div class="error" id="loginError">أدخل كود الاشتراك</div></div></div>
 </div></section>
 <section class="page" id="page2"><div class="viewport">
@@ -5156,7 +5175,7 @@ document.getElementById('phoneModal')?.addEventListener('click',function(e){
   if(e.target===this)closePhoneModal();
 });
 
-function updateTip(){const t=TIPS[tipIndex];document.getElementById('tip1').textContent=t;document.getElementById('tip2').innerHTML='<b>💡 نصيحة اليوم:</b> '+t;document.getElementById('tip3').innerHTML='<b>💡 نصيحة اليوم:</b> '+t;document.getElementById('tipCount').textContent=`${tipIndex+1} / ${TIPS.length}`;tipIndex=(tipIndex+1)%TIPS.length}
+function updateTip(){const t=TIPS[tipIndex];const tip1=document.getElementById('tip1'),tip2=document.getElementById('tip2'),tip3=document.getElementById('tip3'),tipCount=document.getElementById('tipCount');if(tip1)tip1.textContent=t;if(tip2)tip2.innerHTML='<b>💡 نصيحة اليوم:</b> '+t;if(tip3)tip3.innerHTML='<b>💡 نصيحة اليوم:</b> '+t;if(tipCount)tipCount.textContent=`${tipIndex+1} / ${TIPS.length}`;tipIndex=(tipIndex+1)%TIPS.length}
 function updateDate(){const n=new Date();document.getElementById('today').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{weekday:'long'});document.getElementById('greg').textContent=n.toLocaleDateString('ar-SA-u-ca-gregory',{year:'numeric',month:'long',day:'numeric'});document.getElementById('hijri').textContent=n.toLocaleDateString('ar-SA-u-ca-islamic-umalqura',{year:'numeric',month:'long',day:'numeric'});document.getElementById('clock').textContent=n.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='Enter')login()});document.getElementById('salary').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});document.getElementById('earlySettlement').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});
 document.getElementById('externalObligations').addEventListener('keydown',e=>{if(e.key==='Enter')calculate()});renderBanks();updateTip();updateDate();setInterval(updateTip,6000);setInterval(updateDate,1000);
@@ -5273,60 +5292,4 @@ function initFINORuntime(){
   if(phoneModal && !phoneModal.dataset.bound){
     phoneModal.dataset.bound='1';
     phoneModal.addEventListener('click',function(e){
-      if(e.target===this)closePhoneModal();
-    });
-  }
-
-  // Click outside image preview closes it.
-  const imageModal=document.getElementById('imagePreviewModal');
-  if(imageModal && !imageModal.dataset.bound){
-    imageModal.dataset.bound='1';
-    imageModal.addEventListener('click',function(e){
-      if(e.target===this)closeImagePreview();
-    });
-  }
-
-  // Enter on customer mobile proceeds with current share mode.
-  const clientPhone=document.getElementById('clientWhatsappNumber');
-  if(clientPhone && !clientPhone.dataset.bound){
-    clientPhone.dataset.bound='1';
-    clientPhone.addEventListener('keydown',function(e){
-      if(e.key==='Enter'){
-        e.preventDefault();
-        handleShareToClient();
-      }
-    });
-  }
-
-  // Silent structural self-check: logs only; does not alter the website.
-  const requiredIds=[
-    'page1','page2','page3','password','salary','earlySettlement',
-    'externalObligations','bankGrid','results','phoneModal',
-    'clientWhatsappNumber'
-  ];
-  const missingIds=requiredIds.filter(id=>!document.getElementById(id));
-  const requiredFns=[
-    'login','calculate','renderBanks','selectBank','selectType',
-    'shareWhats','shareResultImage','shareDetailedResultImage'
-  ];
-  const missingFns=requiredFns.filter(name=>typeof window[name]!=='function');
-
-  if(missingIds.length||missingFns.length){
-    console.error('FINO self-check failed',{
-      missingIds,
-      missingFunctions:missingFns
-    });
-  }else{
-    console.info('FINO self-check: OK');
-  }
-}
-
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',initFINORuntime,{once:true});
-}else{
-  initFINORuntime();
-}
-
-</script>
-</body>
-</html>
+      if(e.target===th
