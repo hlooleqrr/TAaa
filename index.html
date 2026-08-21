@@ -3307,6 +3307,33 @@ button{
   }
 }
 
+
+/* =========================================================
+   FINO — SUBSCRIPTION RENEWAL CTA
+========================================================= */
+.subscription-renew{
+  display:none;
+  margin-top:6px;
+  width:100%;
+  min-height:34px;
+  border:1px solid #cfe1ed;
+  border-radius:9px;
+  background:#f6fbfe;
+  color:#075488;
+  font-size:7px;
+  font-weight:900;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+}
+.subscription-renew.show{
+  display:flex;
+}
+.subscription-renew:hover{
+  background:#eef8fd;
+}
+
 </style>
 </head>
 <body>
@@ -3321,6 +3348,7 @@ button{
   <div class="sub-title">⏳ حالة الاشتراك</div>
   <div class="sub-remaining" id="subscriptionRemaining">—</div>
   <div class="sub-code-type" id="subscriptionType">—</div>
+  <button type="button" class="subscription-renew" id="subscriptionRenewBtn" onclick="openSubscriptionRenewal()">💬 لتجديد الاشتراك اضغط هنا</button>
 </div>
 
 <section class="page active" id="page1"><div class="viewport">
@@ -3648,6 +3676,8 @@ function formatRemaining(ms){
 function hideSubscriptionBadge(){
   const badge=document.getElementById('subscriptionBadge');
   if(badge)badge.classList.remove('show');
+  const renew=document.getElementById('subscriptionRenewBtn');
+  if(renew)renew.classList.remove('show');
   if(subscriptionTimer){
     clearInterval(subscriptionTimer);
     subscriptionTimer=null;
@@ -3665,6 +3695,33 @@ function expireCurrentSubscription(){
   }
 }
 
+
+function openSubscriptionRenewal(){
+  const msg='السلام عليكم أريد تجديد الاشتراك';
+  openWhatsappToClient('966506214458',msg);
+}
+
+function updateRenewalButton(record,state){
+  const btn=document.getElementById('subscriptionRenewBtn');
+  if(!btn)return;
+
+  // Free code never shows renewal.
+  if(!record || record.free){
+    btn.classList.remove('show');
+    return;
+  }
+
+  const left=Number(state&&state.expiresAt||0)-Date.now();
+  const twoDaysMs=2*24*60*60*1000;
+
+  // Show from exactly 2 days remaining until expiry.
+  if(left>0 && left<=twoDaysMs){
+    btn.classList.add('show');
+  }else{
+    btn.classList.remove('show');
+  }
+}
+
 function startSubscriptionBadge(record,state){
   activeAccess={record,state};
   const badge=document.getElementById('subscriptionBadge');
@@ -3675,6 +3732,8 @@ function startSubscriptionBadge(record,state){
   badge.classList.add('show');
 
   const tick=()=>{
+    updateRenewalButton(record,state);
+
     if(record.free){
       remaining.textContent='الكود الحر • غير محدد المدة';
       type.textContent='دخول دائم';
