@@ -1,4 +1,5 @@
-DOCTYPE html>
+
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -3256,6 +3257,57 @@ button{
   }
 }
 
+
+/* =========================================================
+   FINO — ACCESS-SPECIFIC RESULT ACTION
+========================================================= */
+.subscriber-whatsapp-box{
+  margin-top:8px;
+  padding:11px 12px;
+  border:1px solid #d8e7f0;
+  border-radius:11px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.subscriber-whatsapp-copy b{
+  display:block;
+  color:#073b67;
+  font-size:9px;
+  font-weight:900;
+}
+.subscriber-whatsapp-copy small{
+  display:block;
+  margin-top:2px;
+  color:#637d8b;
+  font-size:6.5px;
+  line-height:1.5;
+  font-weight:800;
+}
+.subscriber-whatsapp-btn{
+  flex:0 0 auto;
+  min-height:40px;
+  padding:0 13px;
+  border:1px solid #d4e5ef;
+  border-radius:10px;
+  background:#f6fbfe;
+  color:#075488;
+  font-size:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+@media(max-width:600px){
+  .subscriber-whatsapp-box{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .subscriber-whatsapp-btn{
+    width:100%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3450,7 +3502,7 @@ button{
 </div>
 <script>
 const PHONE='0506214458', SERVICE_URL='https://hlooleqrr.github.io/mwaqe3/#services', INF=Infinity;
-const ACCESS_CODES=[{"hash":"4825f8061d8de89b3bc08e04333b20991af852a53ef7a941c534b71ccf01c34a","days":7,"label":"اشتراك أسبوع"},{"hash":"1633915455001506460b3f846e1fa3071d635aa533aeb50a7d984b2cba52b42f","days":14,"label":"اشتراك أسبوعين"},{"hash":"12a506c9ef955fd5e8334a6cb70759d88b4f7e193d07bf5dc4f5ddd4bfaab03c","days":21,"label":"اشتراك ثلاثة أسابيع"},{"hash":"53ae0a79623fe3348a058051a4bf98eef63209d935227c09417cb4ab15b1456f","days":35,"label":"اشتراك خمسة أسابيع"},{"hash":"4cd022b792f4133a30373f57bc68d21e89810aadc40b9fd2797a70a7e1acdb29","days":0,"label":"الكود الحر","free":true}];
+const ACCESS_CODES=[{"hash":"7983a0a9c0a8cbdfc53cc674f07c4b8f533f01ba1ca0bcacb69c30d7a71cac15","days":7,"label":"اشتراك أسبوع"},{"hash":"eeb0a15a59f9d4694c7a68a8da1a1987390d30bba778d70d27496d31c08fa300","days":14,"label":"اشتراك أسبوعين"},{"hash":"edef3e7739361f80010a18823ca53d51ec8077c57a6a7a93ae3325f65abe479a","days":21,"label":"اشتراك ثلاثة أسابيع"},{"hash":"6950391d19ba548c3f7ff886a4c3000f183fb42bd52a3a27349a0e66071c73ea","days":35,"label":"اشتراك خمسة أسابيع"},{"hash":"03d3e6e947d3206c3c864d4b5f6f5baf0778f01ddf9ca392b57bd7866769a2f3","days":0,"label":"الكود الحر","free":true}];
 const ACCESS_STORAGE_PREFIX='fino_access_v1_';
 let activeAccess=null;
 let subscriptionTimer=null;
@@ -4006,30 +4058,40 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <div id="clientCustomNotePreview" class="custom-note-preview"></div>
     </div>
 
+    ${activeAccess && activeAccess.record && activeAccess.record.free ? `
     <div class="fees-control">
-  <div class="fees-control-top">
-    <div class="fees-control-title">التحكم بأتعاب المتابعة والإنجاز</div>
-    <label class="fees-toggle">
-      <input id="includeFeesToggle" type="checkbox" onchange="updateFeesControls()">
-      <span class="fees-switch"></span>
-      <span class="fees-toggle-text">إضافة الأتعاب</span>
-    </label>
-  </div>
-  <div class="fees-fields disabled" id="feesFields">
-    <div class="fees-field">
-      <label for="serviceFeesAmount">مبلغ الأتعاب</label>
-      <input id="serviceFeesAmount" type="number" inputmode="numeric" min="0" value="0" placeholder="أدخل مبلغ الأتعاب">
+      <div class="fees-control-top">
+        <div class="fees-control-title">أتعاب إنجاز تحويل مديونية التمويل الشخصي</div>
+        <label class="fees-toggle">
+          <input id="includeFeesToggle" type="checkbox" onchange="updateFeesControls()">
+          <span class="fees-switch"></span>
+          <span class="fees-toggle-text">إضافة الأتعاب</span>
+        </label>
+      </div>
+      <div class="fees-fields disabled" id="feesFields">
+        <div class="fees-field">
+          <label for="serviceFeesAmount">مبلغ الأتعاب</label>
+          <input id="serviceFeesAmount" type="number" inputmode="numeric" min="0" value="2800" placeholder="2800">
+        </div>
+        <div class="fees-field">
+          <label for="serviceOfferName">اسم العرض (اختياري)</label>
+          <input id="serviceOfferName" type="text" placeholder="مثال: عرض شهر رمضان">
+        </div>
+        <div class="fees-field">
+          <label for="serviceOfferExpiry">تاريخ انتهاء العرض (اختياري)</label>
+          <input id="serviceOfferExpiry" type="date">
+        </div>
+      </div>
     </div>
-    <div class="fees-field">
-      <label for="serviceOfferName">اسم العرض (اختياري)</label>
-      <input id="serviceOfferName" type="text" placeholder="مثال: عرض شهر رمضان">
+    ` : `
+    <div class="subscriber-whatsapp-box">
+      <div class="subscriber-whatsapp-copy">
+        <b>لديك استفسار؟ تحدث معنا الآن عبر واتساب</b>
+        <small>اضغط على الزر لفتح المحادثة مباشرة وإرسال رسالة الاستفسار.</small>
+      </div>
+      <button type="button" class="subscriber-whatsapp-btn" onclick="openSubscriberInquiry()">💬 تحدث معنا عبر واتساب</button>
     </div>
-    <div class="fees-field">
-      <label for="serviceOfferExpiry">تاريخ انتهاء العرض (اختياري)</label>
-      <input id="serviceOfferExpiry" type="date">
-    </div>
-  </div>
-</div>
+    `}
 
 ${customerType==='private'?`<div class="bank-policy-warning"><b>تنويه القطاع الخاص:</b> القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.</div>`:''}
 <div class="commodity-note">
@@ -4066,6 +4128,12 @@ ${customerType==='private'?`<div class="bank-policy-warning"><b>تنويه ال�
 
 
 
+
+function openSubscriberInquiry(){
+  const msg='السلام عليكم، لدي استفسار';
+  openWhatsappToClient('966506214458',msg);
+}
+
 function updateFeesControls(){
   const toggle=document.getElementById('includeFeesToggle');
   const fields=document.getElementById('feesFields');
@@ -4081,7 +4149,8 @@ function updateFeesControls(){
 }
 
 function validateFeesBeforeShare(){
-  if(!includeServiceFees())return true;
+  const isFree=!!(activeAccess && activeAccess.record && activeAccess.record.free);
+  if(!isFree || !includeServiceFees())return true;
 
   const amount=serviceFeesAmount();
   if(!(amount>0)){
@@ -4097,13 +4166,14 @@ function validateFeesBeforeShare(){
 }
 
 function includeServiceFees(){
+  const isFree=!!(activeAccess && activeAccess.record && activeAccess.record.free);
   const toggle=document.getElementById('includeFeesToggle');
-  return toggle ? toggle.checked : true;
+  return !!(isFree && toggle && toggle.checked);
 }
 function serviceFeesAmount(){
   const el=document.getElementById('serviceFeesAmount');
   const value=Number(el?el.value:2800);
-  return Number.isFinite(value)&&value>=0 ? value : 0;
+  return Number.isFinite(value)&&value>=0 ? value : 2800;
 }
 function serviceOfferName(){
   const el=document.getElementById('serviceOfferName');
@@ -4129,8 +4199,8 @@ function serviceFeesWhatsappBlock(){
 
   return `
 
-💳 *أتعاب المتابعة والإنجاز*
-*لإنجاز تحويل مديونية التمويل الشخصي: ${amount}*${offerLine}`;
+💳 *أتعاب إنجاز تحويل مديونية التمويل الشخصي*
+*${amount}*${offerLine}`;
 }
 
 function getClientCustomNote(){
@@ -4633,7 +4703,7 @@ async function createDetailedResultPngBlob(){
     canvasRoundRect(ctx,70,y,940,hasOfferLine?116:92,16,'#f7fbfe','#d7e7f1');
     ctx.fillStyle='#073b67';
     ctx.font='900 17px Cairo, Arial, sans-serif';
-    ctx.fillText('أتعاب المتابعة والإنجاز لتحويل مديونية التمويل الشخصي',980,y+31);
+    ctx.fillText('أتعاب إنجاز تحويل مديونية التمويل الشخصي',980,y+31);
 
     ctx.fillStyle='#111111';
     ctx.font='900 30px Cairo, Arial, sans-serif';
