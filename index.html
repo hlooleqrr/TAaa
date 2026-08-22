@@ -4537,7 +4537,47 @@ function renderResults(salary,earlySettlement,externalObligations,out){
 
 
 function openSubscriberInquiry(){
-  const msg='السلام عليكم، لدي استفسار';
+  const best=getSelectedResult();
+  const name=currentClientName();
+  const salary=Number(document.getElementById('salary')?.value||0);
+  const earlySettlement=Number(document.getElementById('earlySettlement')?.value||0);
+  const externalObligations=Number(document.getElementById('externalObligations')?.value||0);
+  const selectedRank=(Number(selectedResultIndex)||0)+1;
+
+  let msg='السلام عليكم، لدي استفسار';
+
+  if(best){
+    msg+=`
+
+📋 تفاصيل الحسبة والترشيح
+
+👤 العميل: ${name||'غير مذكور'}
+💼 جهة العمل: ${typeName()}
+💵 صافي الراتب: ${englishMoney(salary)}
+📌 الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}
+🏦 بنك الراتب الحالي: ${selectedBankName||'غير محدد'}
+
+🏆 الترشيح رقم ${selectedRank}: ${best.name}
+📈 هامش الربح: ${englishNumber(best.rate,2)}%
+💳 القسط الشهري: ${englishMoney(best.installment)}
+⏳ مدة الحسبة: ${best.actualPayments} شهر
+
+💰 إجمالي التمويل مع الأرباح: ${englishMoney(best.grossWithProfit)}
+💰 صافي التمويل قبل الرسوم والسداد: ${englishMoney(best.principalBeforeFees)}
+💰 صافي التمويل بعد الرسوم وقبل السداد: ${englishMoney(best.netBeforeDebt)}
+📉 إجمالي الأرباح: ${englishMoney(best.totalProfit)}
+
+🏦 السداد المبكر للمديونية الحالية: ${englishMoney(earlySettlement)}
+💵 صافي الكاش المتوقع بعد سداد المديونية: ${englishMoney(best.cashAfterDebt)}
+
+🧾 الرسوم الإدارية: ${englishMoneyExact(best.adminFee)}
+🧾 ضريبة الرسوم الإدارية: ${englishMoneyExact(best.adminVat)}
+🧾 رسوم فرق السلعة: ${englishMoneyExact(best.commodityFee)}
+
+${best.featureTitle?`⭐ ميزة البنك: ${best.featureTitle}\n`:''}${customerType==='military'?`🔴 تنويه: قد لا تُحتسب بعض البدلات للعسكري لدى بعض البنوك، ونحتاج تأكيد الحسبة.\n`:''}${customerType==='private'?`🔴 تنويه: القطاع الخاص تختلف فيه النسب والمنح حسب اعتماد جهة العمل وتصنيفها لدى كل بنك.\n`:''}
+أرغب في التأكد من الحسبة ومعرفة التفاصيل.`;
+  }
+
   openWhatsappToClient('966506214458',msg);
 }
 
