@@ -3387,6 +3387,63 @@ button{
   font-weight:900;
 }
 
+
+/* =========================================================
+   FINO — MILITARY SALARY NOTE + SELECTED RANK BANNER
+========================================================= */
+.salary-label-row{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.military-salary-note{
+  display:none;
+  color:#b32626;
+  font-size:7px;
+  line-height:1.5;
+  font-weight:900;
+}
+.military-salary-note.show{
+  display:inline;
+}
+
+.selected-rank-banner{
+  margin-bottom:8px;
+  padding:9px 12px;
+  border:2px solid #b8d9ec;
+  border-radius:12px;
+  background:#f4faff;
+  color:#073b67;
+  text-align:center;
+  font-size:10px;
+  line-height:1.55;
+  font-weight:900;
+}
+.selected-rank-banner strong{
+  color:#0b78b7;
+  font-size:13px;
+}
+.selected-rank-banner.secondary{
+  border-color:#e4c87a;
+  background:#fffaf0;
+  color:#785d17;
+}
+.selected-rank-banner.secondary strong{
+  color:#a56b00;
+}
+
+.result-bank.rank-one-alt{
+  border:2px solid #b9ddec!important;
+  background:#f6fbfe!important;
+  box-shadow:0 8px 22px rgba(7,59,103,.07)!important;
+}
+.result-bank.rank-one-alt .rank-chip{
+  background:#eaf6fd!important;
+  border-color:#b9ddec!important;
+  color:#075488!important;
+}
+
 </style>
 </head>
 <body>
@@ -3456,7 +3513,7 @@ button{
       </div>
     </div>
     <div class="primary-input-wrap">
-      <input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="مثال: 10000">
+      <div class="salary-label-row"><span class="military-salary-note" id="militarySalaryNote">(للعسكري: اعتمد الأقل بين الراتب المودع في الحساب والراتب الموضح في التعريف)</span></div><input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="أدخل صافي الراتب المودع في الحساب حسب رسالة إيداع الراتب">
       <span class="primary-currency">ريال</span>
     </div>
   </div>
@@ -3663,6 +3720,10 @@ function selectType(btn){
   btn.classList.add('active');
   btn.setAttribute('aria-pressed','true');
   customerType=btn.dataset.type||'government';
+  const militaryNote=document.getElementById('militarySalaryNote');
+  if(militaryNote){
+    militaryNote.classList.toggle('show',customerType==='military');
+  }
 }
 function showPage(id){
   const target=document.getElementById(id);
@@ -4175,6 +4236,10 @@ function renderResults(salary,earlySettlement,externalObligations,out){
   const cashClass=best.cashAfterDebt<0?' negative':'';
 
   let h=`
+    ${selectedRank===1
+      ? `<div class="selected-rank-banner"><strong>الترشيح رقم 1</strong> • هذا هو الترشيح الأول والأفضل حسب البيانات المدخلة.</div>`
+      : `<div class="selected-rank-banner secondary"><strong>أنت الآن تستعرض الترشيح رقم ${selectedRank}</strong> • هذا ليس الترشيح الأول، ويمكنك الرجوع للترشيح رقم 1 من القائمة بالأسفل.</div>`
+    }
     <div class="cash-hero${cashClass}">
       <div class="cash-label">النتيجة الأهم للعميل</div>
       <div class="cash-title">صافي الكاش المتوقع بعد سداد المديونية</div>
@@ -4289,12 +4354,12 @@ ${customerType==='private'?`<div class="bank-policy-warning"><b>تنويه ال�
     if(b.key==='SAB')notes+=`<div class="note">قد يبدأ شراء المديونية في هذا البنك لبعض الجهات من راتب <b>10,000 ريال فأعلى.</b></div>`;
 
     h+=`
-      <div class="result-bank selectable-result" role="button" tabindex="0"
+      <div class="result-bank selectable-result ${idx===0 && selectedResultIndex!==0?'rank-one-alt':''}" role="button" tabindex="0"
            onclick="selectResultBank(${idx})"
            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectResultBank(${idx});}">
         <div class="result-logo">${logo(b.key)}</div>
         <div>
-          <div class="rank-chip">الترشيح رقم ${idx+1}</div>
+          <div class="rank-chip">${idx===0?'الترشيح رقم 1 • الأفضل':`الترشيح رقم ${idx+1}`}</div>
           <div class="result-name">${b.name}</div>
           <div class="result-order">هامش الربح: ${fmt(b.rate)}%</div>
           <div class="alt-cash">صافي الكاش المتوقع: <b>${money(b.cashAfterDebt)}</b></div>
@@ -5379,6 +5444,10 @@ document.getElementById('password')?.addEventListener('keydown',e=>{
    FINO runtime stability initializer
 ========================================================= */
 function initFINORuntime(){
+  try{
+    const militaryNote=document.getElementById('militarySalaryNote');
+    if(militaryNote)militaryNote.classList.toggle('show',customerType==='military');
+  }catch(e){}
   try{updateFeesControls();}catch(e){}
   // Initial ARIA state
   document.querySelectorAll('.page').forEach(p=>{
@@ -5436,21 +5505,4 @@ function initFINORuntime(){
   const missingFns=requiredFns.filter(name=>typeof window[name]!=='function');
 
   if(missingIds.length||missingFns.length){
-    console.error('FINO self-check failed',{
-      missingIds,
-      missingFunctions:missingFns
-    });
-  }else{
-    console.info('FINO self-check: OK');
-  }
-}
-
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',initFINORuntime,{once:true});
-}else{
-  initFINORuntime();
-}
-
-</script>
-</body>
-</html>
+    cons
