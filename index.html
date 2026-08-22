@@ -4093,6 +4093,15 @@ function typeName(){
   if(customerType==='retired')return 'متقاعد';
   return 'حكومي';
 }
+function clientMilitaryNotice(){
+  const n=currentClientName();
+  return `${n?`يا ${n}، دامك عسكري، `:'دامك عسكري، '}قد لا تُحتسب بعض البدلات ضمن الراتب لدى بعض البنوك. لتأكيد الحسبة ومعرفة الراتب المحتسب تواصل معنا اتصال أو واتساب.`;
+}
+function clientPrivateNotice(){
+  const n=currentClientName();
+  return `${n?`يا ${n}، `:''}القطاع الخاص يختلف تصنيفه من بنك لآخر؛ يلزم التأكد أن جهة عملك معتمدة ومصنفة منخفضة المخاطر لدى البنك المرشح. لتأكيد الحسبة والتصنيف تواصل معنا اتصال أو واتساب.`;
+}
+
 function fmt(n){return Number(n).toFixed(2).replace(/0+$/,'').replace(/\.$/,'')}
 function money(n){
   const value=Number(n||0);
@@ -4574,7 +4583,7 @@ function openSubscriberInquiry(){
 🧾 ضريبة الرسوم الإدارية: ${englishMoneyExact(best.adminVat)}
 🧾 رسوم فرق السلعة: ${englishMoneyExact(best.commodityFee)}
 
-${best.featureTitle?`⭐ ميزة البنك: ${best.featureTitle}\n`:''}${customerType==='military'?`🔴 تنويه: قد لا تُحتسب بعض البدلات للعسكري لدى بعض البنوك، ونحتاج تأكيد الحسبة.\n`:''}${customerType==='private'?`🔴 تنويه: القطاع الخاص تختلف فيه النسب والمنح حسب اعتماد جهة العمل وتصنيفها لدى كل بنك.\n`:''}
+${best.featureTitle?`⭐ ميزة البنك: ${best.featureTitle}\n`:''}${customerType==='military'?`🔴 تنويه للعسكري: ${clientMilitaryNotice()}\n`:''}${customerType==='private'?`🔴 تنويه القطاع الخاص: ${clientPrivateNotice()}\n`:''}
 أرغب في التأكد من الحسبة ومعرفة التفاصيل.`;
   }
 
@@ -4892,7 +4901,8 @@ function sendWhatsToClient(){
 
 👤 جهة العمل: ${typeName()}
 ${customerType==='military'?`🔴 تنويه${currentClientName()?` يا ${currentClientName()}`:''}: قد لا تُحتسب بعض البدلات ضمن الراتب لدى بعض البنوك؛ للتأكد من الحسبة تواصل معنا.
-`:''}${customerType==='private'?`📌 تنويه القطاع الخاص: القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.
+`:''}${customerType==='military'?`🔴 تنويه للعسكري: ${clientMilitaryNotice()}
+`:''}${customerType==='private'?`🔴 تنويه القطاع الخاص: ${clientPrivateNotice()}
 `:''}🏦 البنك المرشح: ${best.name}
 📈 هامش الربح: ${englishNumber(best.rate,2)}%
 
@@ -5032,13 +5042,15 @@ async function createDetailedResultPngBlob(){
   ctx.fillText('غير التمويل الشخصي',980,infoY+76);
 
   let featureY=470;
-  if(customerType==='private'){
+  if(customerType==='military' || customerType==='private'){
     canvasRoundRect(ctx,70,470,940,105,16,'#fffafa','#efcaca');
     ctx.fillStyle='#a12626';
     ctx.font='900 15px Cairo, Arial, sans-serif';
     drawWrappedArabic(
       ctx,
-      'تنويه القطاع الخاص: القطاع الخاص بجميع فئاته تختلف فيه النسب، وحدود منح التمويل، وطريقة الاحتساب بحسب اعتماد جهة العمل وتصنيفها ومستوى المخاطر لدى كل بنك. الحسبة مبدئية؛ للتأكيد ومعرفة التفاصيل والإنجاز تواصل معنا.',
+      customerType==='military'
+        ? `تنويه للعسكري: ${clientMilitaryNotice()}`
+        : `تنويه القطاع الخاص: ${clientPrivateNotice()}`,
       980,500,850,23,4
     );
     featureY=595;
