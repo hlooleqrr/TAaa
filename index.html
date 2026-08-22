@@ -3444,6 +3444,25 @@ button{
   color:#075488!important;
 }
 
+
+/* =========================================================
+   FINO — MILITARY RESULT NOTICE
+========================================================= */
+.military-result-note{
+  margin:8px 0;
+  padding:9px 11px;
+  border:1px solid #efcaca;
+  border-radius:10px;
+  background:#fffafa;
+  color:#a12626;
+  font-size:8px;
+  line-height:1.7;
+  font-weight:900;
+}
+.military-result-note b{
+  color:#8f1f1f;
+}
+
 </style>
 </head>
 <body>
@@ -3509,11 +3528,11 @@ button{
       <span class="input-icon">💵</span>
       <div>
         <b>أدخل صافي الراتب</b>
-        <small>مثال: 10000 ريال</small>
+        <small>أدخل صافي الراتب المودع في الحساب حسب رسالة إيداع الراتب</small>
       </div>
     </div>
     <div class="primary-input-wrap">
-      <div class="salary-label-row"><span class="military-salary-note" id="militarySalaryNote">(للعسكري: اعتمد الأقل بين الراتب المودع في الحساب والراتب الموضح في التعريف)</span></div><input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="أدخل صافي الراتب المودع في الحساب حسب رسالة إيداع الراتب">
+      <div class="salary-label-row"><span class="military-salary-note" id="militarySalaryNote">(للعسكري: اذكر الأقل بين الراتب المودع في الحساب والراتب الموضح في التعريف)</span></div><input class="primary-input" id="salary" type="number" inputmode="numeric" placeholder="أدخل صافي الراتب">
       <span class="primary-currency">ريال</span>
     </div>
   </div>
@@ -4240,6 +4259,11 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       ? `<div class="selected-rank-banner"><strong>الترشيح رقم 1</strong> • هذا هو الترشيح الأول والأفضل حسب البيانات المدخلة.</div>`
       : `<div class="selected-rank-banner secondary"><strong>أنت الآن تستعرض الترشيح رقم ${selectedRank}</strong> • هذا ليس الترشيح الأول، ويمكنك الرجوع للترشيح رقم 1 من القائمة بالأسفل.</div>`
     }
+    ${customerType==='military'?`
+    <div class="military-result-note">
+      <b>تنويه للقطاع العسكري:</b> قد لا تُحتسب بعض البدلات ضمن الراتب لدى بعض البنوك، لذلك نرجو التواصل معنا لتأكيد الحسبة ومعرفة التفاصيل.
+    </div>
+    `:''}
     <div class="cash-hero${cashClass}">
       <div class="cash-label">النتيجة الأهم للعميل</div>
       <div class="cash-title">صافي الكاش المتوقع بعد سداد المديونية</div>
@@ -5505,4 +5529,21 @@ function initFINORuntime(){
   const missingFns=requiredFns.filter(name=>typeof window[name]!=='function');
 
   if(missingIds.length||missingFns.length){
-    cons
+    console.error('FINO self-check failed',{
+      missingIds,
+      missingFunctions:missingFns
+    });
+  }else{
+    console.info('FINO self-check: OK');
+  }
+}
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initFINORuntime,{once:true});
+}else{
+  initFINORuntime();
+}
+
+</script>
+</body>
+</html>
