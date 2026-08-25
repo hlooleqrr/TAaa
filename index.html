@@ -7572,13 +7572,29 @@ async function createSmartDetailedPngBlob(){
     ctx.textAlign='right';
   }catch(e){}
 
+  /*
+    Crop the final SMART card to the actual used content height.
+    This removes the unnecessary white space at the bottom while keeping
+    the exact same content, colors, typography, and proportions.
+  */
+  const contentBottom=Math.min(2040,Math.max(1180,y+205));
+  const outputWidth=720;
+  const scale=outputWidth/1080;
+  const outputHeight=Math.ceil(contentBottom*scale);
+
   const finalCanvas=document.createElement('canvas');
-  finalCanvas.width=720;
-  finalCanvas.height=1380;
+  finalCanvas.width=outputWidth;
+  finalCanvas.height=outputHeight;
+
   const fctx=finalCanvas.getContext('2d');
   fctx.fillStyle='#ffffff';
-  fctx.fillRect(0,0,720,1380);
-  fctx.drawImage(canvas,0,0,1080,2070,0,0,720,1380);
+  fctx.fillRect(0,0,outputWidth,outputHeight);
+
+  fctx.drawImage(
+    canvas,
+    0,0,1080,contentBottom,
+    0,0,outputWidth,outputHeight
+  );
 
   return await new Promise((resolve,reject)=>{
     finalCanvas.toBlob(blob=>blob?resolve(blob):reject(new Error('PNG_FAILED')),'image/png',0.95);
@@ -8034,3 +8050,38 @@ function runFINOSmartSelfTest(){
   amountSamples.forEach(a=>rateSamples.forEach(rate=>{
     unique.add(smartResultAdvice({cashAfterDebt:a,rate}));
   }));
+  push('100 contextual smart guidance messages',unique.size===100);
+  push('legal notice wording',smartLegalNoticeText().includes('بأسرع وقت وبدون تعقيدات') && smartLegalNoticeText().includes('البنوك وشركات التمويل المرخّصة'));
+  push('smart detailed image function',typeof createSmartDetailedPngBlob==='function');
+  push('smart short image function',typeof createSmartResultPngBlob==='function');
+  push('smart WhatsApp text',typeof buildSmartWhatsAppMessage==='function');
+  push('Saudi phone normalization',normalizeSaudiWhatsappNumber('0506214458')==='966506214458');
+
+  return {passed:tests.every(t=>t.ok),tests};
+}
+
+
+async function testFINOSmartImageClipboardSupport(){
+  const result={
+    secureContext:!!window.isSecureContext,
+    clipboard:!!navigator.clipboard,
+    clipboardWrite:!!(navigator.clipboard&&navigator.clipboard.write),
+    clipboardItem:!!window.ClipboardItem,
+    pngBlob:false,
+    note:''
+  };
+  try{
+    if(smartLastResult){
+      const blob=await createSmartDetailedPngBlob();
+      result.pngBlob=!!(blob&&blob.type==='image/png'&&blob.size>0);
+      result.pngSize=blob?blob.size:0;
+    }else{
+      result.note='أنشئ حسبة ذكية أولًا لاختبار ملف PNG فعليًا.';
+    }
+  }catch(e){
+    result.pngError=String(e&&e.message||e);
+  }
+  return result;
+}
+
+</script>
