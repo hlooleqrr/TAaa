@@ -4953,6 +4953,9 @@ function calculateSmartPersonal(fromResult=false){
   const gross=principal*factor;
   const finalInstallment=gross/months;
   const profit=gross-principal;
+  const obligationImpact=obligationImpactInfo(
+    salary,external,smartCustomerType,rate,months,commodityEnabled
+  );
 
   const bank=BANKS.find(x=>x.id===smartSelectedBank)||{name:'بنك آخر',logo:'',id:'OTHER'};
   const name=cleanClientName(clientName);
@@ -4971,6 +4974,7 @@ function calculateSmartPersonal(fromResult=false){
     requested,requestedNetMode,principal,
     adminFee,adminVat,commodityFee,netBeforeDebt,cashAfterDebt,
     gross,installment:finalInstallment,profit,
+    obligationImpact,
     bank,customerType:smartCustomerType
   };
 
@@ -4987,6 +4991,16 @@ function calculateSmartPersonal(fromResult=false){
       <div class="cash-title">${smartResultCashTitle(smartLastResult)}</div>
       <div class="cash-value">${money(cashAfterDebt)}</div>
     </div>
+
+    ${obligationImpact.affected?`
+      <div class="bank-policy-warning">
+        🔴 الالتزامات الأخرى تجاوزت الحد الذي لا يؤثر على التمويل الشخصي بمقدار <b>${money(obligationImpact.excess)}</b>، وخفّضت القسط المتاح بمقدار <b>${money(obligationImpact.installmentReduction)}</b>.
+      </div>
+      <label class="switch-row" style="margin-bottom:12px">
+        <span><b>إضافة أثر الالتزامات للعميل</b><small>يظهر في النص والصور عند تشغيله.</small></span>
+        <input id="smartObligationImpactToggle" type="checkbox" onchange="window.__FINO_SMART_INCLUDE_OBLIGATION_IMPACT=this.checked">
+      </label>
+    `:''}
 
     <div class="best">
       <div class="best-logo">${bank.id==='OTHER'?'<div class="other-logo">+</div>':logo(bank.id)}</div>
@@ -5653,8 +5667,17 @@ function buildFinance(bank,salary,earlySettlement,externalObligations){
   const netBeforeDebt=principalBeforeFees-adminFee-adminVat-commodityFee;
   const cashAfterDebt=netBeforeDebt-earlySettlement;
   const totalProfit=grossWithProfit-principalBeforeFees;
+  const obligationImpact=obligationImpactInfo(
+    salary,
+    externalObligations,
+    customerType,
+    bank.rate,
+    actualPayments,
+    commodityEnabled
+  );
   return {
     ...bank,
+    obligationImpact,
     installment,
     personalCap,
     totalObligationCap,
@@ -5683,6 +5706,63 @@ function buildFinance(bank,salary,earlySettlement,externalObligations){
     featureCopy:term.featureCopy,
     offerExpiry:term.offerExpiry||''
   };
+}
+
+
+function obligationImpactInfo(salary,externalObligations,customerKind,rate,actualPayments=60,commodityEnabled=false){
+  salary=Number(salary||0);
+  externalObligations=Number(externalObligations||0);
+  rate=Number(rate||0);
+  actualPayments=Number(actualPayments||60);
+
+  const personalRate=customerKind==='retired'?0.25:0.3333;
+  const personalCap=salary*personalRate;
+  const totalCap=salary*0.45;
+
+  // الالتزامات الأخرى التي يمكن وجودها قبل أن تبدأ بخفض قسط التمويل الشخصي.
+  const allowedExternalWithoutImpact=Math.max(0,totalCap-personalCap);
+  const excess=Math.max(0,externalObligations-allowedExternalWithoutImpact);
+  const affected=excess>0.005;
+
+  const actualInstallment=Math.max(0,Math.min(personalCap,totalCap-externalObligations));
+  const installmentReduction=Math.max(0,personalCap-actualInstallment);
+
+  const years=actualPayments/12;
+  const factor=1+(years*rate/100);
+
+  const principalWithoutImpact=(personalCap*actualPayments)/factor;
+  const principalActual=(actualInstallment*actualPayments)/factor;
+  const principalReduction=Math.max(0,principalWithoutImpact-principalActual);
+
+  const adminRate=0.005;
+  const vatRate=adminRate*0.15;
+  const commodityRate=commodityEnabled?0.01:0;
+  const netFactor=1-adminRate-vatRate-commodityRate;
+
+  return {
+    affected,
+    allowedExternalWithoutImpact,
+    excess,
+    personalCap,
+    actualInstallment,
+    installmentReduction,
+    principalWithoutImpact,
+    principalActual,
+    principalReduction,
+    netWithoutImpact:principalWithoutImpact*netFactor,
+    netActual:principalActual*netFactor,
+    netReduction:principalReduction*netFactor
+  };
+}
+
+function obligationImpactText(info,name=''){
+  if(!info||!info.affected)return '';
+  const who=name?`يا ${name}، `:'';
+  return `${who}التزاماتك الشهرية الأخرى تجاوزت الحد الذي لا يؤثر على التمويل الشخصي بمقدار ${money(info.excess)}؛ لذلك انخفض الاستقطاع الشهري المتاح للتمويل الشخصي بمقدار ${money(info.installmentReduction)}. ولو لم تتجاوز التزاماتك الأخرى ${money(info.allowedExternalWithoutImpact)} لكان الحد الأعلى لصافي التمويل قبل الرسوم تقريبًا ${money(info.principalWithoutImpact)} بدلًا من ${money(info.principalActual)}.`;
+}
+
+function includeObligationImpactForClient(){
+  return !!(activeAccess&&activeAccess.record&&activeAccess.record.free&&window.__FINO_INCLUDE_OBLIGATION_IMPACT);
 }
 
 function assessBankEligibility(finance,earlySettlement){
@@ -6113,6 +6193,18 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       <strong>المتاح بعد الالتزامات الأخرى:</strong> ${money(best.availableAfterOther)}
       ${best.installmentAffected?' • تم خفض القسط المتاح بسبب الالتزامات الشهرية الأخرى.':''}
     </div>
+    ${best.obligationImpact&&best.obligationImpact.affected?`
+      <div class="bank-policy-warning" style="margin-top:10px">
+        🔴 الالتزامات الأخرى تجاوزت الحد الذي لا يؤثر على التمويل الشخصي بمقدار <b>${money(best.obligationImpact.excess)}</b>، وخفّضت القسط المتاح بمقدار <b>${money(best.obligationImpact.installmentReduction)}</b>.
+      </div>
+      <label class="switch-row" style="margin-top:10px">
+        <span>
+          <b>إضافة أثر الالتزامات للعميل</b>
+          <small>عند تشغيلها تظهر المعلومة في النص والصور.</small>
+        </span>
+        <input id="buyoutObligationImpactToggle" type="checkbox" onchange="window.__FINO_INCLUDE_OBLIGATION_IMPACT=this.checked">
+      </label>
+    `:''}
     ` : ''}
 
     <div class="bank-advantage">
@@ -6574,6 +6666,11 @@ function shareSmartDetailedImage(){
   if(!validateSmartFeesBeforeShare())return;
   openSharePhone('smart-detail');
 }
+
+function includeSmartObligationImpactForClient(){
+  return !!(isFreeAccess()&&window.__FINO_SMART_INCLUDE_OBLIGATION_IMPACT);
+}
+
 function buildSmartWhatsAppMessage(){
   const r=smartLastResult;
   if(!r)return '';
@@ -6613,6 +6710,7 @@ ${smartCustomAmountEnabled?`• مبلغ التمويل المحدد: ${englishM
 ${r.commodityEnabled?`• رسوم فرق السلعة: ${englishMoneyExact(r.commodityFee)} (قد لا توجد في بعض البنوك أو بعض السلع)
 `:''}${r.earlySettlement>0?`• السداد المبكر للمديونية السابقة: ${englishMoney(r.earlySettlement)}
 `:''}${r.external>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(r.external)}
+`:''}${includeSmartObligationImpactForClient()&&r.obligationImpact?.affected?`🔴 أثر الالتزامات: ${obligationImpactText(r.obligationImpact,n)}
 `:''}${r.customerType==='military'?`🔴 تنويه للعسكري: ${smartMilitaryNoticeText()}
 `:''}${r.customerType==='private'?`🔴 تنويه القطاع الخاص: ${smartPrivateNoticeText()}
 `:''}${note?`🔴 ملاحظة: ${note}
@@ -6777,7 +6875,7 @@ ${lowSurplus?'⚠️ معليش تنبيه: الصافي منخفض وقد يت�
 • ضريبة الرسوم الإدارية: ${englishMoneyExact(best.adminVat)}
 ${best.commodityEnabled?`• رسوم فرق السلعة: ${englishMoneyExact(best.commodityFee)} (قد لا توجد في بعض البنوك أو بعض السلع)
 `:''}
-${externalObligations>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}\n`:''}${getClientCustomNote()?`🔴 ملاحظة: ${getClientCustomNote()}\n`:''}
+${externalObligations>0?`• الالتزامات الشهرية الأخرى: ${englishMoney(externalObligations)}\n`:''}${includeObligationImpactForClient()&&best.obligationImpact?.affected?`🔴 أثر الالتزامات: ${obligationImpactText(best.obligationImpact,currentClientName())}\n`:''}${getClientCustomNote()?`🔴 ملاحظة: ${getClientCustomNote()}\n`:''}
 ⚠️ هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ.
 
 🔺 تنويه:
@@ -6984,6 +7082,14 @@ async function createDetailedResultPngBlob(){
   let y=startY+detailRows*(bh+gap)+8;
 
   // Optional client note — only when entered
+  if(includeObligationImpactForClient()&&best.obligationImpact&&best.obligationImpact.affected){
+    canvasRoundRect(ctx,70,y,940,120,16,'#fffafa','#efcaca');
+    ctx.fillStyle='#a12626';
+    ctx.font='900 15px Cairo, Arial, sans-serif';
+    drawWrappedArabic(ctx,`أثر الالتزامات: ${obligationImpactText(best.obligationImpact,currentClientName())}`,980,y+32,850,27,4);
+    y+=140;
+  }
+
   if(customNote){
     canvasRoundRect(ctx,70,y,940,82,15,'#fffafa','#efcaca');
     ctx.fillStyle='#a12626';
@@ -7513,6 +7619,14 @@ async function createSmartDetailedPngBlob(){
 
   let y=startY+Math.ceil(boxes.length/2)*(bh+gap)+8;
 
+  if(includeSmartObligationImpactForClient()&&r.obligationImpact&&r.obligationImpact.affected){
+    canvasRoundRect(ctx,70,y,940,120,16,'#fffafa','#efcaca');
+    ctx.fillStyle='#a12626';
+    ctx.font='900 15px Cairo, Arial, sans-serif';
+    drawWrappedArabic(ctx,`أثر الالتزامات: ${obligationImpactText(r.obligationImpact,currentClientName())}`,980,y+32,850,27,4);
+    y+=140;
+  }
+
   if(note){
     canvasRoundRect(ctx,70,y,940,82,15,'#fffafa','#efcaca');
     ctx.fillStyle='#a12626';
@@ -7725,7 +7839,7 @@ async function createResultPngBlob(){
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=1350;
+  canvas.height=1460;
   const ctx=canvas.getContext('2d');
 
   ctx.fillStyle='#ffffff';
@@ -7796,30 +7910,39 @@ async function createResultPngBlob(){
   ctx.fillText(englishMoney(best.installment),490,770);
   ctx.fillText(englishMoney(earlySettlement),980,770);
 
-  canvasRoundRect(ctx,70,825,940,195,20,'#f7fbfe','#d7e7f1');
+  const showImpact=includeObligationImpactForClient()&&best.obligationImpact&&best.obligationImpact.affected;
+  if(showImpact){
+    canvasRoundRect(ctx,70,815,940,100,18,'#fffafa','#efcaca');
+    ctx.fillStyle='#a12626'; ctx.font='900 17px Cairo, Arial, sans-serif';
+    drawWrappedArabic(ctx,`أثر الالتزامات: ${obligationImpactText(best.obligationImpact,currentClientName())}`,980,845,850,27,3);
+  }
+
+  const adviceY=showImpact?935:825;
+  canvasRoundRect(ctx,70,adviceY,940,195,20,'#f7fbfe','#d7e7f1');
   ctx.fillStyle='#073b67'; ctx.font='900 25px Cairo, Arial, sans-serif';
-  ctx.fillText('نصيحتنا لك',980,870);
+  ctx.fillText('نصيحتنا لك',980,adviceY+45);
   ctx.fillStyle='#35576a'; ctx.font='800 22px Cairo, Arial, sans-serif';
   drawWrappedArabic(ctx,advice.replace(/^النصيحة:\s*/,''),
-    980,915,850,38,3);
+    980,adviceY+90,850,38,3);
 
   // Footer/service
   ctx.strokeStyle='#e1ebf2'; ctx.lineWidth=3;
-  ctx.beginPath(); ctx.moveTo(70,1050); ctx.lineTo(1010,1050); ctx.stroke();
+  const footerShift=showImpact?110:0;
+  ctx.beginPath(); ctx.moveTo(70,1050+footerShift); ctx.lineTo(1010,1050+footerShift); ctx.stroke();
 
   ctx.fillStyle='#073b67'; ctx.font='900 25px Cairo, Arial, sans-serif';
-  ctx.fillText(best.commodityEnabled?'احتساب دقيق • رسوم فرق السلعة محتسبة 1% • ترشيح البنك الأنسب':'احتساب دقيق • بدون رسوم فرق السلعة • ترشيح البنك الأنسب',1010,1100);
+  ctx.fillText(best.commodityEnabled?'احتساب دقيق • رسوم فرق السلعة محتسبة 1% • ترشيح البنك الأنسب':'احتساب دقيق • بدون رسوم فرق السلعة • ترشيح البنك الأنسب',1010,1100+footerShift);
 
   ctx.fillStyle='#5f7888'; ctx.font='700 21px Cairo, Arial, sans-serif';
-  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1150);
+  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1150+footerShift);
 
   ctx.fillStyle='#111111'; ctx.font='900 40px Arial, sans-serif';
   ctx.textAlign='left';
-  ctx.fillText('0506214458',70,1210);
+  ctx.fillText('0506214458',70,1210+footerShift);
 
   ctx.textAlign='right';
   ctx.fillStyle='#5f7888'; ctx.font='700 19px Arial, sans-serif';
-  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1260);
+  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1260+footerShift);
 
   return await new Promise((resolve,reject)=>{
     canvas.toBlob(blob=>{
