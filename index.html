@@ -7612,6 +7612,49 @@ async function shareSmartDetailedImageDirect(clientPhone){
     return;
   }
 
+  /*
+    مهم تقنيًا:
+    Safari/iPhone وبعض المتصفحات تفقد صلاحية النسخ إذا انتظرنا إنشاء الصورة
+    قبل استدعاء clipboard.write().
+    لذلك نستدعي clipboard.write() فورًا داخل نقرة المستخدم،
+    ونمرر Promise للصورة نفسها.
+  */
+  const canClipboardImage=!!(
+    navigator.clipboard &&
+    typeof navigator.clipboard.write==='function' &&
+    window.ClipboardItem
+  );
+
+  if(canClipboardImage){
+    try{
+      const pngPromise=(async()=>{
+        if(document.fonts&&document.fonts.ready){
+          try{await document.fonts.ready;}catch(e){}
+        }
+        return await createSmartDetailedPngBlob();
+      })();
+
+      const item=new ClipboardItem({
+        'image/png':pngPromise
+      });
+
+      // MUST happen immediately while the click/user-gesture is still active.
+      await navigator.clipboard.write([item]);
+
+      // Open the exact customer chat only after clipboard accepted the PNG item.
+      openWhatsappToClient(clientPhone,'');
+
+      setTimeout(()=>{
+        alert('تم نسخ بطاقة التفاصيل كصورة وفتح واتساب العميل. اضغط مطولًا داخل خانة الرسالة ثم «لصق» وبعدها إرسال.');
+      },650);
+
+      return;
+    }catch(err){
+      console.warn('FINO smart clipboard image fallback:',err);
+      // Continue to reliable fallback below.
+    }
+  }
+
   try{
     if(document.fonts&&document.fonts.ready){
       try{await document.fonts.ready;}catch(e){}
@@ -7619,42 +7662,23 @@ async function shareSmartDetailedImageDirect(clientPhone){
 
     const blob=await createSmartDetailedPngBlob();
 
-    // Try to place the PNG directly in the device clipboard.
-    // Then open the exact customer WhatsApp chat with NO extra caption text.
-    let copied=false;
-    try{
-      if(navigator.clipboard && window.ClipboardItem){
-        await navigator.clipboard.write([
-          new ClipboardItem({'image/png':blob})
-        ]);
-        copied=true;
-      }
-    }catch(e){}
+    // Fallback: keep the PNG visibly ready for native share/save.
+    showPreparedImage(
+      blob,
+      'FINO-personal-finance-details.png',
+      clientPhone,
+      '',
+      'بطاقة تفاصيل حاسبة التمويل الشخصي'
+    );
 
-    // Keep a real PNG available as fallback only.
-    // No caption text is sent with the image.
-    if(!copied){
-      const url=URL.createObjectURL(blob);
-      const a=document.createElement('a');
-      a.href=url;
-      a.download='FINO-personal-finance-details.png';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url),5000);
-    }
-
-    openWhatsappToClient(clientPhone,'');
-
-    if(copied){
-      setTimeout(()=>{
-        alert('تم تجهيز الصورة ونسخها. افتح خانة الكتابة في محادثة العميل واضغط لصق لإرسال الصورة.');
-      },700);
+    const note=document.getElementById('imagePreviewNote');
+    if(note){
+      note.textContent='تعذر النسخ التلقائي للصورة في هذا المتصفح. استخدم «مشاركة الصورة» لإرسال ملف PNG، أو «فتح واتساب العميل» بعد حفظ/نسخ الصورة.';
     }
 
   }catch(err){
     console.error('FINO smart detailed image error:',err);
-    alert('تعذر إنشاء بطاقة تفاصيل التمويل الشخصي على هذا المتصفح.');
+    alert('تعذر إنشاء بطاقة تفاصيل التمويل على هذا المتصفح.');
   }
 }
 
@@ -8010,16 +8034,3 @@ function runFINOSmartSelfTest(){
   amountSamples.forEach(a=>rateSamples.forEach(rate=>{
     unique.add(smartResultAdvice({cashAfterDebt:a,rate}));
   }));
-  push('100 contextual smart guidance messages',unique.size===100);
-  push('legal notice wording',smartLegalNoticeText().includes('بأسرع وقت وبدون تعقيدات') && smartLegalNoticeText().includes('البنوك وشركات التمويل المرخّصة'));
-  push('smart detailed image function',typeof createSmartDetailedPngBlob==='function');
-  push('smart short image function',typeof createSmartResultPngBlob==='function');
-  push('smart WhatsApp text',typeof buildSmartWhatsAppMessage==='function');
-  push('Saudi phone normalization',normalizeSaudiWhatsappNumber('0506214458')==='966506214458');
-
-  return {passed:tests.every(t=>t.ok),tests};
-}
-
-</script>
-</body>
-</html>
