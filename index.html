@@ -6779,3 +6779,143 @@ document.getElementById('password')?.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
     e.preventDefault();
     login();
+  }
+});
+
+</script>
+
+
+<div class="share-card-preview" id="shareCardPreview">
+  <div class="sc-head"><div class="sc-brand">FINO</div><div id="scDate"></div></div>
+  <div class="sc-title">ترشيح شراء مديونية التمويل الشخصي</div>
+  <div class="sc-bank"><div class="sc-logo" id="scLogo"></div><div><div class="sc-bank-name" id="scBankName"></div><div id="scRate"></div></div></div>
+  <div class="sc-cash"><small>صافي الكاش المتوقع بعد سداد المديونية</small><b id="scCash"></b></div>
+  <div class="sc-row"><div class="sc-box"><small>القسط الشهري</small><b id="scInstallment"></b></div><div class="sc-box"><small>السداد المبكر</small><b id="scDebt"></b></div><div class="sc-box"><small>التزامات شهرية أخرى</small><b id="scExternal"></b></div><div class="sc-box"><small>سقف إجمالي الالتزامات</small><b id="scTotalCap"></b></div></div>
+  <div class="sc-advice" id="scAdvice"></div><div class="sc-service">احتساب دقيق • ترشيح البنك الأنسب • متابعة وإنجاز التمويل</div>
+  <div class="sc-footer">للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:<br><span class="sc-phone">0506214458</span><br>بعض خدماتنا: https://hlooleqrr.github.io/mwaqe3/#services</div>
+</div>
+
+<div class="phone-modal" id="phoneModal">
+  <div class="phone-modal-card">
+    <h3>📱 إرسال الحسبة عبر واتساب</h3>
+    <p>أدخل رقم جوال العميل أولاً.</p><div class="mode-note" id="shareModeNote"></div>
+    <div class="free-share-name" id="freeShareNameWrap">
+      <label for="freeShareClientName">اسم العميل (اختياري للكود الحر)</label>
+      <input id="freeShareClientName" type="text" maxlength="40" placeholder="اكتب اسم العميل إذا رغبت">
+    </div>
+    <input id="clientWhatsappNumber" inputmode="tel" type="tel" placeholder="05XXXXXXXX" autocomplete="tel">
+    <div class="phone-error" id="clientPhoneError"></div>
+    <div class="phone-modal-actions">
+      <button type="button" class="phone-modal-send" onclick="handleShareToClient()">متابعة</button>
+      <button type="button" class="phone-modal-cancel" onclick="closePhoneModal()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="image-preview-modal" id="imagePreviewModal">
+  <div class="image-preview-card">
+    <div class="image-preview-head">
+      <h3 id="imagePreviewTitle">صورة الحسبة</h3>
+      <button type="button" onclick="closeImagePreview()">✕</button>
+    </div>
+
+    <img class="image-preview-img" id="imagePreviewImg" alt="صورة الحسبة">
+
+    <div class="image-preview-note" id="imagePreviewNote">
+      الصورة جاهزة. على الجوال استخدم «مشاركة الصورة» لإرسال ملف PNG عبر قائمة المشاركة، أو افتح واتساب العميل على الرقم الذي أدخلته.
+    </div>
+
+    <div class="image-preview-actions">
+      <button class="preview-share" type="button" onclick="nativeSharePreparedImage()">📤 مشاركة الصورة</button>
+      <button class="preview-download" type="button" onclick="downloadPreparedImage()">⬇️ حفظ الصورة</button>
+      <button class="preview-whatsapp" type="button" onclick="openPreparedClientWhatsapp()">📲 فتح واتساب العميل</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+/* =========================================================
+   FINO runtime stability initializer
+========================================================= */
+function initFINORuntime(){
+  try{
+    const militaryNote=document.getElementById('militarySalaryNote');
+    if(militaryNote)militaryNote.classList.toggle('show',customerType==='military');
+  }catch(e){}
+  try{updateFeesControls();}catch(e){}
+  // Initial ARIA state
+  document.querySelectorAll('.page').forEach(p=>{
+    p.setAttribute('aria-hidden',p.classList.contains('active')?'false':'true');
+  });
+
+  document.querySelectorAll('.type-btn').forEach(btn=>{
+    btn.setAttribute('aria-pressed',btn.classList.contains('active')?'true':'false');
+  });
+
+  // Re-render banks after the complete DOM is available.
+  try{renderBanks();}catch(e){console.error('FINO renderBanks:',e);}
+
+  // Click outside phone modal closes it.
+  const phoneModal=document.getElementById('phoneModal');
+  if(phoneModal && !phoneModal.dataset.bound){
+    phoneModal.dataset.bound='1';
+    phoneModal.addEventListener('click',function(e){
+      if(e.target===this)closePhoneModal();
+    });
+  }
+
+  // Click outside image preview closes it.
+  const imageModal=document.getElementById('imagePreviewModal');
+  if(imageModal && !imageModal.dataset.bound){
+    imageModal.dataset.bound='1';
+    imageModal.addEventListener('click',function(e){
+      if(e.target===this)closeImagePreview();
+    });
+  }
+
+  // Enter on customer mobile proceeds with current share mode.
+  const clientPhone=document.getElementById('clientWhatsappNumber');
+  if(clientPhone && !clientPhone.dataset.bound){
+    clientPhone.dataset.bound='1';
+    clientPhone.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){
+        e.preventDefault();
+        handleShareToClient();
+      }
+    });
+  }
+
+  // Silent structural self-check: logs only; does not alter the website.
+  const requiredIds=[
+    'page1','page2','page3','password','salary','earlySettlement',
+    'externalObligations','bankGrid','results','phoneModal',
+    'clientWhatsappNumber'
+  ];
+  const missingIds=requiredIds.filter(id=>!document.getElementById(id));
+  const requiredFns=[
+    'login','calculate','renderBanks','selectBank','selectType',
+    'shareWhats','shareResultImage','shareDetailedResultImage'
+  ];
+  const missingFns=requiredFns.filter(name=>typeof window[name]!=='function');
+
+  if(missingIds.length||missingFns.length){
+    console.error('FINO self-check failed',{
+      missingIds,
+      missingFunctions:missingFns
+    });
+  }else{
+    console.info('FINO self-check: OK');
+  }
+}
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',initFINORuntime,{once:true});
+}else{
+  initFINORuntime();
+}
+
+</script>
+</body>
+</html>
