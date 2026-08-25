@@ -4667,13 +4667,67 @@ function smartPrivateNoticeText(){
 }
 function smartResultAdvice(r){
   if(!r)return '';
-  if(r.earlySettlement>0){
-    if(r.cashAfterDebt<0)return 'المبلغ الحالي لا يغطي السداد المبكر؛ ارفع مبلغ التمويل أو راجع الحسبة.';
-    if(r.cashAfterDebt<10000)return 'الصافي بعد السداد منخفض؛ راجع حاجتك للسيولة وتأكد من العرض قبل التنفيذ.';
-    if(r.cashAfterDebt<30000)return 'الصافي بعد السداد جيد مبدئيًا؛ قارن القسط وإجمالي الأرباح قبل اتخاذ القرار.';
-    return 'الصافي بعد السداد مرتفع مبدئيًا؛ راجع إجمالي الأرباح والقسط قبل التنفيذ.';
-  }
-  return 'راجع القسط وإجمالي الأرباح والرسوم قبل اعتماد التمويل.';
+
+  const amount=Number(r.cashAfterDebt||0);
+  const rate=Number(r.rate||0);
+
+  // 10 مستويات للمبلغ × 10 مستويات لهامش الربح = 100 إرشاد سياقي مختلف.
+  // الإرشاد لا يغيّر نتيجة الحسبة؛ بل يصف قوة النتيجة بصورة عملية وواضحة.
+  const amountGuidance=[
+    'المبلغ المتاح لا يغطي احتياجًا تمويليًا فعليًا؛ الأفضل الانتظار حاليًا حتى يتحسن المبلغ المتاح أو يظهر عرض أنسب.',
+    'المبلغ المتاح محدود جدًا؛ إذا لم تكن الحاجة عاجلة فالانتظار قد يكون أفضل من الدخول في التزام جديد بهذا الصافي.',
+    'المبلغ المتاح منخفض؛ مناسب فقط إذا كان يحقق احتياجًا محددًا وواضحًا، وإلا فالانتظار خيار أفضل.',
+    'المبلغ المتاح مقبول لاحتياج محدود؛ القرار يكون أفضل عندما يكون الغرض من التمويل واضحًا والمبلغ يحقق الهدف مباشرة.',
+    'المبلغ المتاح جيد مبدئيًا؛ إذا كان يغطي احتياجك دون الحاجة لرفع التمويل أكثر فهذه نقطة إيجابية في العرض.',
+    'المبلغ المتاح جيد؛ الحسبة تعطي مساحة مناسبة للسيولة مع بقاء التمويل ضمن الحد المحتسب.',
+    'المبلغ المتاح جيد جدًا مقارنة بحسبة التمويل؛ العرض مناسب مبدئيًا إذا كان هذا المبلغ يحقق احتياجك الفعلي.',
+    'المبلغ المتاح مرتفع ويعطي مرونة جيدة؛ من الأفضل اختيار المبلغ الذي تحتاجه فعلًا وعدم رفع التمويل لمجرد توفر حد أعلى.',
+    'المبلغ المتاح مرتفع جدًا؛ النتيجة قوية من ناحية السيولة، ويمكن خفض مبلغ التمويل إذا كان احتياجك أقل من الحد المتاح.',
+    'المبلغ المتاح ممتاز من ناحية السيولة؛ استخدم فقط القدر الذي يحقق احتياجك حتى لا تتحمل تمويلًا أعلى من حاجتك.'
+  ];
+
+  const rateGuidance=[
+    'وهامش الربح الظاهر منخفض جدًا ضمن هذه الحسبة، وهذا يعزز جاذبية النتيجة مبدئيًا.',
+    'وهامش الربح منخفض، لذلك تبدو الحسبة قوية مبدئيًا من ناحية تكلفة الربح.',
+    'وهامش الربح جيد ومنافس مبدئيًا، خصوصًا إذا كان المبلغ المتاح يحقق احتياجك.',
+    'وهامش الربح جيد؛ النتيجة متوازنة مبدئيًا بين مبلغ التمويل والتكلفة.',
+    'وهامش الربح متوسط؛ قيمة العرض تعتمد أكثر على مقدار المبلغ الذي تحتاجه فعليًا.',
+    'وهامش الربح متوسط إلى مرتفع؛ إذا كان احتياجك أقل من الحد الأعلى فخفض مبلغ التمويل قد يكون أنسب.',
+    'وهامش الربح مرتفع نسبيًا؛ إذا لم تكن الحاجة عاجلة فقد يفيد انتظار فرصة بنسبة أقل.',
+    'وهامش الربح مرتفع؛ الأفضل أن يكون التمويل لحاجة واضحة ومبلغ محدد بدل استخدام كامل الحد المتاح.',
+    'وهامش الربح مرتفع جدًا مقارنة بالمستويات الأقل؛ إذا لم تكن بحاجة عاجلة فالانتظار لعرض أفضل قد يكون أكثر ملاءمة.',
+    'وهامش الربح مرتفع بشكل واضح؛ الإرشاد هنا هو عدم الاستعجال إذا كان بالإمكان انتظار عرض أقل تكلفة.'
+  ];
+
+  let ai=0;
+  if(amount<=0)ai=0;
+  else if(amount<5000)ai=1;
+  else if(amount<10000)ai=2;
+  else if(amount<20000)ai=3;
+  else if(amount<35000)ai=4;
+  else if(amount<50000)ai=5;
+  else if(amount<75000)ai=6;
+  else if(amount<100000)ai=7;
+  else if(amount<150000)ai=8;
+  else ai=9;
+
+  let ri=0;
+  if(rate<1.25)ri=0;
+  else if(rate<1.75)ri=1;
+  else if(rate<2.25)ri=2;
+  else if(rate<2.75)ri=3;
+  else if(rate<3.25)ri=4;
+  else if(rate<3.75)ri=5;
+  else if(rate<4.25)ri=6;
+  else if(rate<4.75)ri=7;
+  else if(rate<5.50)ri=8;
+  else ri=9;
+
+  return `${amountGuidance[ai]} ${rateGuidance[ri]} للتأكيد على الحسبة والإجراءات والاستفسارات تواصل معنا اتصال أو واتساب على ${PHONE}.`;
+}
+
+function smartLegalNoticeText(){
+  return 'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت تقديم وتنفيذ الطلب. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة والمتابعة والإنجاز بأسرع وقت وبدون تعقيدات عبر البنوك وشركات التمويل المرخّصة.';
 }
 
 
@@ -4935,13 +4989,22 @@ function calculateSmartPersonal(fromResult=false){
     </div>
 
     <div class="best">
-      <div class="best-logo">${bank.id==='OTHER'?'<div class="other-logo">+</div>':`<img src="${bank.logo}" alt="${bank.name}" style="max-width:150px;max-height:72px;object-fit:contain">`}</div>
+      <div class="best-logo">${bank.id==='OTHER'?'<div class="other-logo">+</div>':logo(bank.id)}</div>
       <div>
         <div class="best-tag">🧮 حاسبة التمويل الشخصي</div>
         <div class="best-name">${bank.name}</div>
-        <div class="best-copy">هامش الربح المحتسب عليه: ${fmt(rate)}% • مدة الحسبة: 60 شهر</div>
+        <div class="best-copy">هامش الربح المحتسب عليه: ${fmt(rate)}% • مدة الحسبة الفعلية: 60 شهر</div>
       </div>
       <div class="best-rate">${fmt(rate)}%<small>هامش الربح</small></div>
+    </div>
+
+    <div class="bank-advantage">
+      <div class="adv-icon">⭐</div>
+      <div>
+        <div class="adv-label">البنك المختار للحسبة</div>
+        <div class="adv-title">${bank.name}</div>
+        <div class="adv-copy">تم تطبيق بيانات التمويل الشخصي المدخلة وهامش الربح المحدد على هذا البنك.</div>
+      </div>
     </div>
 
     <div class="finance-details">
@@ -5074,7 +5137,7 @@ function calculateSmartPersonal(fromResult=false){
       </div>
 
       <div class="final-notice">
-        <b>تنويه مهم:</b> هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ.
+        <b>تنويه مهم:</b> ${smartLegalNoticeText()}
       </div>
 
       <div class="actions smart-result-actions parity-actions">
@@ -6554,10 +6617,7 @@ ${r.commodityEnabled?`• رسوم فرق السلعة: ${englishMoneyExact(r.co
 `:''}${r.customerType==='private'?`🔴 تنويه القطاع الخاص: ${smartPrivateNoticeText()}
 `:''}${note?`🔴 ملاحظة: ${note}
 `:''}
-⚠️ هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ.
-
-🔺 تنويه:
-نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة وترشيح العروض والإنجاز عبر البنوك وشركات التمويل المرخّصة بأسرع وقت وبدون تعقيدات.
+⚠️ ${smartLegalNoticeText()}
 
 ${smartFeesWhatsappBlock()}
 
@@ -7224,7 +7284,7 @@ async function createSmartResultPngBlob(){
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=1350;
+  canvas.height=1510;
   const ctx=canvas.getContext('2d');
   ctx.fillStyle='#ffffff';
   ctx.fillRect(0,0,1080,1350);
@@ -7291,27 +7351,32 @@ async function createSmartResultPngBlob(){
   ctx.font='800 22px Cairo, Arial, sans-serif';
   drawWrappedArabic(ctx,smartResultAdvice(r),980,915,850,38,3);
 
+  canvasRoundRect(ctx,70,1045,940,145,18,'#fffafa','#efd1d1');
+  ctx.fillStyle='#8f2929';
+  ctx.font='900 17px Cairo, Arial, sans-serif';
+  drawWrappedArabic(ctx,smartLegalNoticeText(),980,1080,850,28,4);
+
   ctx.strokeStyle='#e1ebf2';
   ctx.lineWidth=3;
-  ctx.beginPath();ctx.moveTo(70,1050);ctx.lineTo(1010,1050);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(70,1220);ctx.lineTo(1010,1220);ctx.stroke();
 
   ctx.fillStyle='#073b67';
   ctx.font='900 25px Cairo, Arial, sans-serif';
-  ctx.fillText('احتساب دقيق • تأكيد المعلومات • إنجاز التمويل الشخصي',1010,1100);
+  ctx.fillText('احتساب دقيق • تأكيد المعلومات • إنجاز التمويل الشخصي',1010,1270);
 
   ctx.fillStyle='#5f7888';
   ctx.font='700 21px Cairo, Arial, sans-serif';
-  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1150);
+  ctx.fillText('للتأكيد على الحسبة والإجراءات والاستفسارات:',1010,1320);
 
   ctx.fillStyle='#111111';
   ctx.font='900 40px Arial, sans-serif';
   ctx.textAlign='left';
-  ctx.fillText(PHONE,70,1210);
+  ctx.fillText(PHONE,70,1380);
 
   ctx.textAlign='right';
   ctx.fillStyle='#5f7888';
   ctx.font='700 19px Arial, sans-serif';
-  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1260);
+  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1430);
 
   return await new Promise((resolve,reject)=>{
     canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('PNG_FAILED')),'image/png',0.95);
@@ -7460,7 +7525,7 @@ async function createSmartDetailedPngBlob(){
   canvasRoundRect(ctx,70,y,940,116,16,'#fffafa','#efd1d1');
   ctx.fillStyle='#8f2929';
   ctx.font='900 15px Cairo, Arial, sans-serif';
-  drawWrappedArabic(ctx,'هذه الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. نحن لسنا جهة تمويلية، ودورنا يقتصر على الوساطة والمتابعة والإنجاز عبر البنوك وشركات التمويل المرخّصة.',980,y+28,850,24,4);
+  drawWrappedArabic(ctx,smartLegalNoticeText(),980,y+28,850,24,4);
   y+=134;
 
   if(smartIncludeFees()){
@@ -7520,42 +7585,77 @@ async function createSmartDetailedPngBlob(){
   });
 }
 
-function shareSmartResultImageDirect(clientPhone){
-  if(!smartLastResult)return;
-  (async()=>{
-    try{
-      if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch(e){}}
-      const blob=await createSmartResultPngBlob();
-      const r=smartLastResult;
-      const caption=`FINO | حاسبة التمويل الشخصي
-${currentClientName()?`العميل: ${currentClientName()}
-`:''}البنك المختار: ${r.bank.name}
-الصافي المتوقع: ${englishMoney(r.cashAfterDebt)}
-للتأكيد والاستفسار:
-${PHONE}`;
-      showPreparedImage(blob,'FINO-personal-finance.png',clientPhone,caption,'الصورة المختصرة لحاسبة التمويل الشخصي');
-    }catch(err){
-      console.error(err);
-      alert('تعذر إنشاء صورة الحسبة على هذا المتصفح.');
-    }
-  })();
+async function shareSmartResultImageDirect(clientPhone){
+  if(!smartLastResult){
+    alert('لا توجد نتيجة لمشاركتها');
+    return;
+  }
+  try{
+    if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch(e){}}
+    const blob=await createSmartResultPngBlob();
+    showPreparedImage(
+      blob,
+      'FINO-personal-finance.png',
+      clientPhone,
+      '',
+      'الصورة المختصرة لحاسبة التمويل الشخصي'
+    );
+  }catch(err){
+    console.error('FINO smart short image error:',err);
+    alert('تعذر إنشاء صورة الحسبة على هذا المتصفح.');
+  }
 }
 
-function shareSmartDetailedImageDirect(clientPhone){
-  if(!smartLastResult)return;
-  (async()=>{
-    try{
-      if(document.fonts&&document.fonts.ready){try{await document.fonts.ready}catch(e){}}
-      const blob=await createSmartDetailedPngBlob();
-      const caption=`FINO | بطاقة تفاصيل حاسبة التمويل الشخصي
-${currentClientName()?`العميل: ${currentClientName()}
-`:''}للتأكيد والاستفسار: ${PHONE}`;
-      showPreparedImage(blob,'FINO-personal-finance-details.png',clientPhone,caption,'بطاقة تفاصيل حاسبة التمويل الشخصي');
-    }catch(err){
-      console.error(err);
-      alert('تعذر إنشاء بطاقة تفاصيل التمويل على هذا المتصفح.');
+async function shareSmartDetailedImageDirect(clientPhone){
+  if(!smartLastResult){
+    alert('لا توجد نتيجة لمشاركتها');
+    return;
+  }
+
+  try{
+    if(document.fonts&&document.fonts.ready){
+      try{await document.fonts.ready;}catch(e){}
     }
-  })();
+
+    const blob=await createSmartDetailedPngBlob();
+
+    // Try to place the PNG directly in the device clipboard.
+    // Then open the exact customer WhatsApp chat with NO extra caption text.
+    let copied=false;
+    try{
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([
+          new ClipboardItem({'image/png':blob})
+        ]);
+        copied=true;
+      }
+    }catch(e){}
+
+    // Keep a real PNG available as fallback only.
+    // No caption text is sent with the image.
+    if(!copied){
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=url;
+      a.download='FINO-personal-finance-details.png';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),5000);
+    }
+
+    openWhatsappToClient(clientPhone,'');
+
+    if(copied){
+      setTimeout(()=>{
+        alert('تم تجهيز الصورة ونسخها. افتح خانة الكتابة في محادثة العميل واضغط لصق لإرسال الصورة.');
+      },700);
+    }
+
+  }catch(err){
+    console.error('FINO smart detailed image error:',err);
+    alert('تعذر إنشاء بطاقة تفاصيل التمويل الشخصي على هذا المتصفح.');
+  }
 }
 
 async function createResultPngBlob(){
@@ -7805,7 +7905,7 @@ document.getElementById('password')?.addEventListener('keydown',e=>{
     <img class="image-preview-img" id="imagePreviewImg" alt="صورة الحسبة">
 
     <div class="image-preview-note" id="imagePreviewNote">
-      الصورة جاهزة. على الجوال استخدم «مشاركة الصورة» لإرسال ملف PNG عبر قائمة المشاركة، أو افتح واتساب العميل على الرقم الذي أدخلته.
+      الصورة جاهزة. «مشاركة الصورة» تفتح مشاركة الجوال بملف PNG، و«فتح واتساب العميل» يفتح المحادثة على الرقم الذي أدخلته.
     </div>
 
     <div class="image-preview-actions">
@@ -7896,6 +7996,28 @@ if(document.readyState==='loading'){
   document.addEventListener('DOMContentLoaded',initFINORuntime,{once:true});
 }else{
   initFINORuntime();
+}
+
+
+function runFINOSmartSelfTest(){
+  const tests=[];
+  const push=(name,ok)=>tests.push({name,ok:!!ok});
+
+  // 100 unique guidance combinations.
+  const unique=new Set();
+  const amountSamples=[0,3000,7000,15000,25000,42000,65000,90000,120000,180000];
+  const rateSamples=[0.99,1.49,1.99,2.49,2.99,3.49,3.99,4.49,4.99,5.99];
+  amountSamples.forEach(a=>rateSamples.forEach(rate=>{
+    unique.add(smartResultAdvice({cashAfterDebt:a,rate}));
+  }));
+  push('100 contextual smart guidance messages',unique.size===100);
+  push('legal notice wording',smartLegalNoticeText().includes('بأسرع وقت وبدون تعقيدات') && smartLegalNoticeText().includes('البنوك وشركات التمويل المرخّصة'));
+  push('smart detailed image function',typeof createSmartDetailedPngBlob==='function');
+  push('smart short image function',typeof createSmartResultPngBlob==='function');
+  push('smart WhatsApp text',typeof buildSmartWhatsAppMessage==='function');
+  push('Saudi phone normalization',normalizeSaudiWhatsappNumber('0506214458')==='966506214458');
+
+  return {passed:tests.every(t=>t.ok),tests};
 }
 
 </script>
