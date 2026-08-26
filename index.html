@@ -4290,6 +4290,226 @@ button{
   font-weight:900;
 }
 
+
+/* =========================================================
+   FINO LOCAL ADMIN — HIDDEN OWNER PANEL
+========================================================= */
+.admin-secret-trigger{
+  width:16px;height:16px;border:0;background:transparent;opacity:.015;
+  padding:0;margin:0 3px;cursor:default;position:relative;z-index:5;
+}
+.admin-overlay{
+  position:fixed;inset:0;z-index:999999;background:rgba(5,23,35,.50);
+  display:none;align-items:center;justify-content:center;padding:18px;
+  backdrop-filter:blur(5px);
+}
+.admin-overlay.show{display:flex}
+.admin-login-card{
+  width:min(430px,95vw);background:#fff;border:1px solid #dce8f0;border-radius:20px;
+  box-shadow:0 28px 80px rgba(0,0,0,.22);padding:20px;
+}
+.admin-login-card h3{margin:0;color:#073b67;font-size:20px;font-weight:900}
+.admin-login-card p{color:#617887;font-size:11px;line-height:1.8;font-weight:800}
+.admin-login-card .admin-warning{
+  padding:9px 10px;border:1px solid #efcaca;border-radius:10px;background:#fffafa;
+  color:#9c2424;font-size:9px;line-height:1.7;font-weight:900;margin:10px 0;
+}
+.admin-login-card input{
+  width:100%;height:46px;border:1px solid #cfdee8;border-radius:11px;
+  padding:0 12px;font-size:15px;font-weight:900;outline:none;
+}
+.admin-login-actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}
+.admin-login-actions button{min-height:42px;border:0;border-radius:10px;font-weight:900;cursor:pointer}
+.admin-login-go{background:#073b67;color:#fff}
+.admin-login-close{background:#eef4f7;color:#36576a;padding:0 16px}
+.admin-login-error{min-height:20px;color:#a12626;font-size:8px;font-weight:900;margin-top:7px}
+
+.admin-panel{
+  position:fixed;inset:12px;z-index:1000000;background:#f7fbfd;border:1px solid #dce8f0;
+  border-radius:22px;box-shadow:0 28px 90px rgba(0,0,0,.26);display:none;overflow:hidden;
+  direction:rtl;
+}
+.admin-panel.show{display:flex;flex-direction:column}
+.admin-head{
+  min-height:68px;background:#fff;border-bottom:1px solid #dce8f0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;
+}
+.admin-head-title b{display:block;color:#073b67;font-size:17px;font-weight:900}
+.admin-head-title small{display:block;color:#718694;font-size:8px;font-weight:800;margin-top:2px}
+.admin-head-actions{display:flex;gap:7px;flex-wrap:wrap}
+.admin-head-actions button{
+  min-height:36px;border:1px solid #d6e4eb;border-radius:9px;background:#fff;
+  color:#31566c;font-size:8px;font-weight:900;padding:0 11px;cursor:pointer;
+}
+.admin-head-actions .danger{color:#9c2424;border-color:#efcaca;background:#fffafa}
+.admin-body{flex:1;min-height:0;display:grid;grid-template-columns:270px 1fr}
+.admin-side{
+  min-height:0;overflow:auto;background:#fff;border-left:1px solid #dce8f0;padding:10px;
+}
+.admin-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:9px}
+.admin-tabs button{
+  min-height:34px;border:1px solid #dce8f0;border-radius:8px;background:#fff;
+  color:#526f7f;font-size:7px;font-weight:900;cursor:pointer;
+}
+.admin-tabs button.active{background:#073b67;color:#fff;border-color:#073b67}
+.admin-add-btn{
+  width:100%;min-height:39px;border:0;border-radius:9px;background:#eef8fd;color:#075488;
+  font-size:8px;font-weight:900;cursor:pointer;margin-bottom:8px;
+}
+.admin-bank-list{display:grid;gap:5px}
+.admin-bank-item{
+  width:100%;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  min-height:58px;border:1px solid #e0eaf0;border-radius:10px;background:#fff;padding:7px;
+  text-align:right;cursor:pointer;
+}
+.admin-bank-item.active{border:2px solid #1881c2;background:#f3f9fd}
+.admin-bank-item img{width:44px;height:36px;object-fit:contain}
+.admin-bank-placeholder{
+  width:44px;height:36px;border-radius:8px;background:#eef5f9;color:#0b78b7;
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;
+}
+.admin-bank-item b{display:block;color:#173042;font-size:8px;font-weight:900}
+.admin-bank-item small{display:block;color:#748b99;font-size:6px;font-weight:800;margin-top:2px}
+.admin-status-dot{width:8px;height:8px;border-radius:50%;background:#c6d2d9}
+.admin-status-dot.on{background:#14865b}
+
+.admin-main{min-width:0;min-height:0;overflow:auto;padding:14px}
+.admin-empty{
+  min-height:300px;display:flex;align-items:center;justify-content:center;text-align:center;
+  color:#718694;font-size:12px;font-weight:800;
+}
+.admin-card{
+  background:#fff;border:1px solid #dce8f0;border-radius:15px;padding:12px;margin-bottom:10px;
+}
+.admin-card-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.admin-card-title b{color:#073b67;font-size:11px;font-weight:900}
+.admin-card-title small{color:#718694;font-size:6.5px;font-weight:800}
+.admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.admin-field label{display:block;color:#617887;font-size:6.5px;font-weight:900;margin-bottom:4px}
+.admin-field input,.admin-field select,.admin-field textarea{
+  width:100%;border:1px solid #d2e1e9;border-radius:9px;background:#fff;color:#173042;
+  padding:8px;font-size:9px;font-weight:800;outline:none;
+}
+.admin-field input,.admin-field select{height:39px}
+.admin-field textarea{min-height:72px;resize:vertical}
+.admin-checks{display:flex;flex-wrap:wrap;gap:6px}
+.admin-check{
+  display:flex;align-items:center;gap:5px;padding:7px 9px;border:1px solid #dce8f0;
+  border-radius:8px;background:#fff;color:#36576a;font-size:7px;font-weight:900;
+}
+.admin-check input{accent-color:#0b78b7}
+.admin-rate-head{
+  display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;
+  color:#718694;font-size:6px;font-weight:900;padding:0 4px 4px;
+}
+.admin-rate-row{
+  display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;margin-bottom:6px;
+}
+.admin-rate-row input{
+  width:100%;height:36px;border:1px solid #d5e3ea;border-radius:8px;padding:0 7px;
+  font-size:9px;font-weight:900;outline:none;
+}
+.admin-rate-row button{
+  width:36px;border:1px solid #efcaca;border-radius:8px;background:#fffafa;
+  color:#a12626;font-weight:900;cursor:pointer;
+}
+.admin-inline-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.admin-inline-actions button{
+  min-height:36px;border:0;border-radius:9px;padding:0 11px;font-size:8px;font-weight:900;cursor:pointer;
+}
+.admin-primary{background:#073b67;color:#fff}
+.admin-secondary{background:#eef5f9;color:#31566c}
+.admin-success{background:#eaf8f2;color:#137451}
+.admin-danger{background:#fff0f0;color:#a12626}
+.admin-save-bar{
+  position:sticky;bottom:-14px;background:rgba(247,251,253,.94);backdrop-filter:blur(5px);
+  border-top:1px solid #dce8f0;padding:10px 0 2px;display:flex;justify-content:flex-end;gap:7px;
+}
+.admin-save-bar button{min-height:42px;border:0;border-radius:10px;padding:0 18px;font-size:9px;font-weight:900;cursor:pointer}
+.admin-logo-preview{width:110px;height:58px;object-fit:contain;border:1px solid #e0eaf0;border-radius:9px;background:#fff;padding:5px}
+.admin-entity-list{display:grid;gap:6px}
+.admin-entity-row{
+  display:grid;grid-template-columns:1fr 150px 120px auto;gap:7px;align-items:center;
+  border:1px solid #dce8f0;border-radius:9px;background:#fff;padding:7px;
+}
+.admin-entity-row input,.admin-entity-row select{
+  width:100%;height:36px;border:1px solid #d5e3ea;border-radius:8px;padding:0 7px;font-size:8px;font-weight:800;
+}
+.admin-entity-row button{width:36px;height:36px;border:1px solid #efcaca;border-radius:8px;background:#fffafa;color:#a12626}
+.admin-backup-note{
+  padding:10px;border:1px solid #d7e7f1;border-radius:10px;background:#f7fbfe;
+  color:#486778;font-size:8px;line-height:1.8;font-weight:800;
+}
+.admin-toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%);
+  z-index:1000002;background:#073b67;color:#fff;border-radius:999px;padding:9px 15px;
+  font-size:8px;font-weight:900;display:none;box-shadow:0 10px 30px rgba(0,0,0,.18)
+}
+.admin-toast.show{display:block}
+@media(max-width:850px){
+  .admin-panel{inset:5px}
+  .admin-body{grid-template-columns:1fr}
+  .admin-side{max-height:230px;border-left:0;border-bottom:1px solid #dce8f0}
+  .admin-grid{grid-template-columns:1fr}
+  .admin-entity-row{grid-template-columns:1fr}
+}
+
+
+/* FINO ADMIN — feature/copy/note/expiry additions */
+.admin-feature-off{
+  padding:8px 10px;border:1px dashed #ccdce5;border-radius:9px;
+  background:#f8fbfd;color:#718694;font-size:7px;font-weight:900;
+}
+.admin-copy-row{
+  display:grid;grid-template-columns:1fr auto;gap:7px;align-items:end;margin-bottom:10px;
+}
+.admin-copy-row select{
+  width:100%;height:39px;border:1px solid #d2e1e9;border-radius:9px;
+  background:#fff;color:#173042;padding:0 8px;font-size:8px;font-weight:900;
+}
+.admin-copy-row button{
+  min-height:39px;border:0;border-radius:9px;background:#eef8fd;color:#075488;
+  padding:0 12px;font-size:8px;font-weight:900;cursor:pointer;
+}
+.expired-offer-alert{
+  margin:9px 0;padding:11px;border:1px solid #efb8b8;border-radius:12px;
+  background:#fff7f7;color:#9d2525;font-size:8px;line-height:1.7;font-weight:900;
+}
+.expired-offer-alert b{font-size:9px}
+.expired-offer-list{display:grid;gap:7px;margin:9px 0}
+.expired-offer-card{
+  display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:9px;
+  padding:10px;border:1px solid #efcaca;border-radius:12px;background:#fffafa;
+}
+.expired-offer-card .expired-logo img{width:64px;height:42px;object-fit:contain}
+.expired-offer-card .expired-logo .other-logo{width:50px;height:42px}
+.expired-offer-card b{display:block;color:#8f2929;font-size:9px;font-weight:900}
+.expired-offer-card small{display:block;color:#866565;font-size:6.5px;line-height:1.55;font-weight:800;margin-top:2px}
+.expired-offer-card button{
+  min-height:34px;border:1px solid #efbcbc;border-radius:8px;background:#fff;color:#9d2525;
+  font-size:7px;font-weight:900;padding:0 10px;cursor:pointer;
+}
+.expired-offer-detail{
+  margin:10px 0;padding:12px;border:2px solid #df7777;border-radius:14px;background:#fffafa;
+}
+.expired-offer-detail .expired-title{color:#9d2525;font-size:12px;font-weight:900;margin-bottom:5px}
+.expired-offer-detail .expired-sub{color:#825b5b;font-size:7px;line-height:1.65;font-weight:800;margin-bottom:9px}
+.expired-offer-detail .expired-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.expired-offer-detail .expired-actions button{
+  min-height:34px;border:0;border-radius:8px;padding:0 10px;font-size:7px;font-weight:900;cursor:pointer;
+}
+.expired-open-admin{background:#073b67;color:#fff}
+.expired-close{background:#eef4f7;color:#36576a}
+.bank-admin-note{
+  margin:8px 0;padding:9px 10px;border:1px solid #ead6a5;border-radius:10px;
+  background:#fffaf0;color:#805b12;font-size:8px;line-height:1.65;font-weight:900;
+}
+@media(max-width:650px){
+  .admin-copy-row{grid-template-columns:1fr}
+  .expired-offer-card{grid-template-columns:55px 1fr}
+  .expired-offer-card button{grid-column:1/-1}
+}
+
 </style>
 </head>
 <body>
@@ -4352,7 +4572,7 @@ button{
 </div>
 <div class="live-footer">
   <span class="footer-brand">FINO • أدوات التمويل الذكية</span>
-  <span class="footer-date"><b id="f4Day">—</b><b id="f4Greg">—</b><b id="f4Hijri">—</b><span class="footer-time" id="f4Time">—</span></span>
+  <span class="footer-date"><button type="button" class="admin-secret-trigger" onclick="openFINOAdminLogin()" aria-label=""></button><b id="f4Day">—</b><b id="f4Greg">—</b><b id="f4Hijri">—</b><span class="footer-time" id="f4Time">—</span></span>
 </div>
 </div></section>
 
@@ -4714,6 +4934,1026 @@ const BANK_TERMS={
   }
 };
 
+
+
+/* =========================================================
+   FINO LOCAL ADMIN CONFIGURATION
+   Local-only: localStorage. Defaults do not change calculator behavior.
+========================================================= */
+const FINO_ADMIN_STORAGE_KEY='FINO_ADMIN_CONFIG_V1';
+const FINO_ADMIN_BACKUP_KEY='FINO_ADMIN_BACKUP_V1';
+const FINO_ADMIN_PASSWORD_HASH='45a8aa6c8681d6e5665811f9554a4016ff0e84661f6db1d37feccb1c9e98fd0f';
+
+/* Safe local storage: works on GitHub Pages, and falls back to memory
+   if the preview/browser blocks localStorage for the current origin. */
+const FINO_ADMIN_MEMORY_STORE={};
+function finoAdminStorageGet(key){
+  try{
+    if(window.localStorage)return localStorage.getItem(key);
+  }catch(e){}
+  return Object.prototype.hasOwnProperty.call(FINO_ADMIN_MEMORY_STORE,key)
+    ? FINO_ADMIN_MEMORY_STORE[key]
+    : null;
+}
+function finoAdminStorageSet(key,value){
+  const text=String(value??'');
+  try{
+    if(window.localStorage){
+      localStorage.setItem(key,text);
+      return true;
+    }
+  }catch(e){}
+  FINO_ADMIN_MEMORY_STORE[key]=text;
+  return true;
+}
+function finoAdminStorageRemove(key){
+  try{
+    if(window.localStorage)localStorage.removeItem(key);
+  }catch(e){}
+  delete FINO_ADMIN_MEMORY_STORE[key];
+}
+
+/* Pure JS SHA-256 fallback for browsers/previews where crypto.subtle
+   is unavailable (for example some local/sandbox previews). */
+function finoSha256Fallback(ascii){
+  function rightRotate(value,amount){return (value>>>amount)|(value<<(32-amount));}
+  const mathPow=Math.pow,maxWord=mathPow(2,32),lengthProperty='length';
+  let i,j,result='',words=[],asciiBitLength=ascii[lengthProperty]*8;
+  const hash=finoSha256Fallback.h=finoSha256Fallback.h||[];
+  const k=finoSha256Fallback.k=finoSha256Fallback.k||[];
+  let primeCounter=k[lengthProperty],isComposite={};
+  for(let candidate=2;primeCounter<64;candidate++){
+    if(!isComposite[candidate]){
+      for(i=0;i<313;i+=candidate)isComposite[i]=candidate;
+      hash[primeCounter]=(mathPow(candidate,.5)*maxWord)|0;
+      k[primeCounter++]=(mathPow(candidate,1/3)*maxWord)|0;
+    }
+  }
+  ascii+='\x80';
+  while(ascii[lengthProperty]%64-56)ascii+='\x00';
+  for(i=0;i<ascii[lengthProperty];i++){
+    j=ascii.charCodeAt(i);
+    if(j>>8)return '';
+    words[i>>2]|=j<<((3-i)%4)*8;
+  }
+  words[words[lengthProperty]]=(asciiBitLength/maxWord)|0;
+  words[words[lengthProperty]]=asciiBitLength;
+  for(j=0;j<words[lengthProperty];){
+    const w=words.slice(j,j+=16),oldHash=hash.slice(0);
+    for(i=0;i<64;i++){
+      const w15=w[i-15],w2=w[i-2];
+      const a=hash[0],e=hash[4];
+      const temp1=hash[7]
+        +(rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25))
+        +((e&hash[5])^((~e)&hash[6]))
+        +k[i]
+        +(w[i]=(i<16)?w[i]:(
+          w[i-16]
+          +(rightRotate(w15,7)^rightRotate(w15,18)^(w15>>>3))
+          +w[i-7]
+          +(rightRotate(w2,17)^rightRotate(w2,19)^(w2>>>10))
+        )|0);
+      const temp2=(rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22))
+        +((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash=[(temp1+temp2)|0].concat(hash);
+      hash[4]=(hash[4]+temp1)|0;
+      hash.pop();
+    }
+    for(i=0;i<8;i++)hash[i]=(hash[i]+oldHash[i])|0;
+  }
+  for(i=0;i<8;i++){
+    for(j=3;j+1;j--){
+      const b=(hash[i]>>(j*8))&255;
+      result+=(b<16?'0':'')+b.toString(16);
+    }
+  }
+  return result;
+}
+
+let finoAdminConfig=null;
+let finoAdminEditingBankId='';
+let finoAdminTab='banks';
+let finoAdminUnlocked=false;
+
+function cloneAdminValue(v){
+  return JSON.parse(JSON.stringify(v));
+}
+function rateRowsToAdmin(rows){
+  return (rows||[]).map(r=>({
+    min:Number(r.min||0),
+    max:Number.isFinite(r.max)?Number(r.max):null,
+    rate:Number(r.rate||0)
+  })).sort((a,b)=>a.min-b.min);
+}
+function adminRowsToRates(rows){
+  return (rows||[])
+    .map(r=>({
+      min:Math.max(0,Number(r.min||0)),
+      max:(r.max===null||r.max===''||!Number.isFinite(Number(r.max)))?INF:Number(r.max),
+      rate:Number(r.rate||0)
+    }))
+    .filter(r=>Number.isFinite(r.rate)&&r.rate>=0)
+    .sort((a,b)=>b.min-a.min);
+}
+function defaultEligibilityForBank(id){
+  const map={
+    SAB:['government','semiGovernment','military','private','retired'],
+    RAJHI:['government','semiGovernment','military'],
+    ANB:['government','semiGovernment','military','retired'],
+    SNB:['government','semiGovernment','military','private'],
+    BILAD:['government','semiGovernment','military']
+  };
+  return map[id]||[];
+}
+function defaultMinSalaryForBank(id){
+  return id==='SAB'?10000:0;
+}
+function bankAdminTableSource(id){
+  if(id==='SNB'){
+    return {
+      general:rateRowsToAdmin(RATES.SNB_CIV||[]),
+      military:rateRowsToAdmin(RATES.SNB_MIL||[])
+    };
+  }
+  return {
+    general:rateRowsToAdmin(RATES[id]||[]),
+    military:[]
+  };
+}
+function buildFINOAdminDefaults(){
+  const banks={};
+  BANKS.filter(b=>b.id!=='OTHER').forEach(b=>{
+    const term=bankTerm(b.id);
+    const tables=bankAdminTableSource(b.id);
+    banks[b.id]={
+      id:b.id,
+      name:b.name,
+      short:b.short||'',
+      logo:b.logo||'',
+      entityType:'bank',
+      buyoutEnabled:tables.general.length>0||tables.military.length>0,
+      minSalary:defaultMinSalaryForBank(b.id),
+      eligibleTypes:defaultEligibilityForBank(b.id),
+      tables,
+      useMilitaryTable:tables.military.length>0,
+      offerLimited:!!term.offerExpiry,
+      offerExpiry:term.offerExpiry||'',
+      featureEnabled:!!(term.featureTitle||term.featureCopy),
+      adminNote:'',
+      waiverMonths:Number(term.waiverMonths||0),
+      deferMonths:Number(term.deferMonths||0),
+      featureTitle:term.featureTitle||'',
+      featureCopy:term.featureCopy||''
+    };
+  });
+  return {
+    version:1,
+    updatedAt:new Date().toISOString(),
+    banks,
+    workEntities:[]
+  };
+}
+function normalizeFINOAdminConfig(raw){
+  const defaults=buildFINOAdminDefaults();
+  if(!raw||typeof raw!=='object')return defaults;
+  const cfg={
+    version:1,
+    updatedAt:raw.updatedAt||new Date().toISOString(),
+    banks:{},
+    workEntities:Array.isArray(raw.workEntities)?raw.workEntities:defaults.workEntities
+  };
+
+  Object.keys(defaults.banks).forEach(id=>{
+    cfg.banks[id]={...defaults.banks[id],...(raw.banks&&raw.banks[id]?raw.banks[id]:{})};
+    cfg.banks[id].tables={
+      general:Array.isArray(cfg.banks[id].tables?.general)?cfg.banks[id].tables.general:defaults.banks[id].tables.general,
+      military:Array.isArray(cfg.banks[id].tables?.military)?cfg.banks[id].tables.military:defaults.banks[id].tables.military
+    };
+    if(typeof cfg.banks[id].featureEnabled!=='boolean'){
+      cfg.banks[id].featureEnabled=!!(cfg.banks[id].featureTitle||cfg.banks[id].featureCopy);
+    }
+    cfg.banks[id].adminNote=String(cfg.banks[id].adminNote||'');
+  });
+
+  if(raw.banks){
+    Object.keys(raw.banks).forEach(id=>{
+      if(!cfg.banks[id]){
+        const x=raw.banks[id]||{};
+        cfg.banks[id]={
+          id,
+          name:x.name||id,
+          short:x.short||'',
+          logo:x.logo||'',
+          entityType:x.entityType||'finance',
+          buyoutEnabled:!!x.buyoutEnabled,
+          minSalary:Number(x.minSalary||0),
+          eligibleTypes:Array.isArray(x.eligibleTypes)?x.eligibleTypes:[],
+          tables:{
+            general:Array.isArray(x.tables?.general)?x.tables.general:[],
+            military:Array.isArray(x.tables?.military)?x.tables.military:[]
+          },
+          useMilitaryTable:!!x.useMilitaryTable,
+          offerLimited:!!x.offerLimited,
+          offerExpiry:x.offerExpiry||'',
+          featureEnabled:typeof x.featureEnabled==='boolean'?x.featureEnabled:!!(x.featureTitle||x.featureCopy),
+          adminNote:String(x.adminNote||''),
+          waiverMonths:Number(x.waiverMonths||0),
+          deferMonths:Number(x.deferMonths||0),
+          featureTitle:x.featureTitle||'',
+          featureCopy:x.featureCopy||''
+        };
+      }
+    });
+  }
+  return cfg;
+}
+function loadFINOAdminConfig(){
+  try{
+    const raw=finoAdminStorageGet(FINO_ADMIN_STORAGE_KEY);
+    finoAdminConfig=normalizeFINOAdminConfig(raw?JSON.parse(raw):null);
+  }catch(e){
+    console.error('FINO admin load',e);
+    finoAdminConfig=buildFINOAdminDefaults();
+  }
+  applyFINOAdminConfig();
+  return finoAdminConfig;
+}
+function getFINOAdminConfig(){
+  if(!finoAdminConfig)loadFINOAdminConfig();
+  return finoAdminConfig;
+}
+function saveFINOAdminConfig(cfg){
+  try{
+    const current=finoAdminStorageGet(FINO_ADMIN_STORAGE_KEY);
+    if(current)finoAdminStorageSet(FINO_ADMIN_BACKUP_KEY,current);
+    cfg.updatedAt=new Date().toISOString();
+    finoAdminStorageSet(FINO_ADMIN_STORAGE_KEY,JSON.stringify(cfg));
+    finoAdminConfig=normalizeFINOAdminConfig(cfg);
+    applyFINOAdminConfig();
+    showFINOAdminToast('تم الحفظ والتطبيق على الحاسبات في هذا الجهاز');
+    return true;
+  }catch(e){
+    console.error('FINO admin save',e);
+    alert('تعذر حفظ التحديث محليًا. قد تكون مساحة التخزين ممتلئة.');
+    return false;
+  }
+}
+function applyFINOAdminConfig(){
+  if(!finoAdminConfig)return;
+  const cfg=finoAdminConfig;
+
+  Object.values(cfg.banks||{}).forEach(entry=>{
+    if(!entry||!entry.id)return;
+    let b=BANKS.find(x=>x.id===entry.id);
+    if(!b){
+      b={id:entry.id,name:entry.name||entry.id,short:entry.short||'',logo:entry.logo||''};
+      BANKS.splice(Math.max(0,BANKS.length-1),0,b);
+    }else{
+      if(entry.name)b.name=entry.name;
+      if(entry.short!==undefined)b.short=entry.short;
+      if(entry.logo!==undefined&&entry.logo!=='')b.logo=entry.logo;
+    }
+
+    if(entry.id==='SNB'){
+      RATES.SNB_CIV=adminRowsToRates(entry.tables?.general||[]);
+      RATES.SNB_MIL=adminRowsToRates(entry.tables?.military||[]);
+    }else{
+      RATES[entry.id]=adminRowsToRates(entry.tables?.general||[]);
+    }
+
+    BANK_TERMS[entry.id]={
+      ...(BANK_TERMS[entry.id]||{}),
+      waiverMonths:Math.max(0,Number(entry.waiverMonths||0)),
+      deferMonths:Math.max(0,Number(entry.deferMonths||0)),
+      commodityFee:0,
+      offerExpiry:entry.offerLimited?(entry.offerExpiry||''):'',
+      featureEnabled:!!entry.featureEnabled,
+      adminNote:String(entry.adminNote||''),
+      featureTitle:entry.featureEnabled?(entry.featureTitle||''):'',
+      featureCopy:entry.featureEnabled?(entry.featureCopy||''):''
+    };
+  });
+
+  try{renderBanks();}catch(e){}
+  try{renderSmartBanks();}catch(e){}
+}
+
+function parseFINOAdminOfferDate(value){
+  const s=String(value||'').trim();
+  let m=s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if(m)return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),23,59,59,999);
+  m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(m)return new Date(Number(m[1]),Number(m[2])-1,Number(m[3]),23,59,59,999);
+  return null;
+}
+function adminOfferStatus(entry,now=new Date()){
+  if(!entry||!entry.offerLimited)return {active:true,expired:false,daysExpired:0,within30:false,hidden:false};
+  const end=parseFINOAdminOfferDate(entry.offerExpiry);
+  if(!end)return {active:false,expired:true,daysExpired:31,within30:false,hidden:true,invalid:true};
+  if(now<=end)return {active:true,expired:false,daysExpired:0,within30:false,hidden:false,end};
+  const daysExpired=Math.max(1,Math.floor((now-end)/86400000)+1);
+  return {
+    active:false,
+    expired:true,
+    daysExpired,
+    within30:daysExpired<=30,
+    hidden:daysExpired>30,
+    end
+  };
+}
+function adminBankBaseAllows(id,type){
+  const cfg=getFINOAdminConfig();
+  const entry=cfg?.banks?.[id];
+  if(!entry)return true;
+  if(!entry.buyoutEnabled)return false;
+  return Array.isArray(entry.eligibleTypes)&&entry.eligibleTypes.includes(type);
+}
+function getExpiredAdminCandidateEntries(salary){
+  const cfg=getFINOAdminConfig();
+  const result=[];
+  Object.values(cfg?.banks||{}).forEach(entry=>{
+    if(!entry?.buyoutEnabled)return;
+    if(entry.id===selectedBank)return;
+    if(!adminBankBaseAllows(entry.id,customerType))return;
+    if(Number(salary)<Number(entry.minSalary||0))return;
+
+    const status=adminOfferStatus(entry);
+    if(!status.expired||!status.within30)return;
+
+    const rate=adminRateForBank(entry.id,salary,customerType);
+    if(rate===null||!Number.isFinite(rate))return;
+
+    const b=BANKS.find(x=>x.id===entry.id);
+    result.push({
+      key:entry.id,
+      name:entry.name||b?.name||entry.id,
+      rate,
+      offerExpiry:entry.offerExpiry||'',
+      daysExpired:status.daysExpired
+    });
+  });
+  return result;
+}
+function buildExpiredAdminResults(salary,earlySettlement,externalObligations){
+  const rows=getExpiredAdminCandidateEntries(salary);
+  const results=rows.map(bank=>{
+    const finance=buildFinance(bank,salary,earlySettlement,externalObligations);
+    const policy=assessBankEligibility(finance,earlySettlement);
+    return {
+      ...finance,
+      expiredOffer:true,
+      daysExpired:bank.daysExpired,
+      offerExpiry:bank.offerExpiry,
+      policyWarning:policy.warning,
+      policyReason:policy.reason,
+      policyEligible:policy.eligible
+    };
+  }).filter(x=>x.policyEligible);
+  results.sort((a,b)=>(a.rate-b.rate)||(b.cashAfterDebt-a.cashAfterDebt));
+  return results;
+}
+function rankExpiredOfferAmongAll(expired,active){
+  const combined=[
+    ...(active||[]).map(x=>({key:x.key,rate:x.rate,active:true})),
+    ...(window.__FINO_EXPIRED_RESULTS||[]).map(x=>({key:x.key,rate:x.rate,active:false}))
+  ].sort((a,b)=>a.rate-b.rate);
+  const idx=combined.findIndex(x=>x.key===expired.key&&!x.active);
+  return idx>=0?idx+1:null;
+}
+
+function adminBankAllows(id,type){
+  const cfg=getFINOAdminConfig();
+  const entry=cfg?.banks?.[id];
+  if(!entry)return true;
+  if(!adminBankBaseAllows(id,type))return false;
+  return adminOfferStatus(entry).active;
+}
+function adminRateForBank(id,salary,type){
+  const cfg=getFINOAdminConfig();
+  const entry=cfg?.banks?.[id];
+  if(!entry||!entry.buyoutEnabled)return null;
+  if(Number(salary)<Number(entry.minSalary||0))return null;
+
+  let rows=entry.tables?.general||[];
+  if(type==='military'&&entry.useMilitaryTable&&(entry.tables?.military||[]).length){
+    rows=entry.tables.military;
+  }
+  const rates=adminRowsToRates(rows);
+  return findRate(Number(salary),rates);
+}
+function applyAdminCandidateOverrides(candidates,salary){
+  const cfg=getFINOAdminConfig();
+  if(!cfg)return candidates;
+
+  let out=(candidates||[]).filter(c=>adminBankAllows(c.key,customerType));
+
+  Object.values(cfg.banks||{}).forEach(entry=>{
+    if(!entry?.buyoutEnabled)return;
+    if(entry.id===selectedBank)return;
+    if(!adminBankAllows(entry.id,customerType))return;
+    if(Number(salary)<Number(entry.minSalary||0))return;
+
+    const rate=adminRateForBank(entry.id,salary,customerType);
+    if(rate===null||!Number.isFinite(rate))return;
+
+    const existing=out.find(x=>x.key===entry.id);
+    const bankObj=BANKS.find(x=>x.id===entry.id);
+    const name=entry.name||bankObj?.name||entry.id;
+    if(existing){
+      existing.rate=rate;
+      existing.name=name;
+    }else{
+      out.push({key:entry.id,name,rate});
+    }
+  });
+
+  const unique=[];
+  const seen=new Set();
+  out.forEach(x=>{
+    if(!x||seen.has(x.key))return;
+    seen.add(x.key);
+    unique.push(x);
+  });
+  return unique;
+}
+
+/* ---------- Hidden login ---------- */
+function openFINOAdminLogin(){
+  if(!isFreeAccess())return;
+  const overlay=document.getElementById('adminLoginOverlay');
+  if(!overlay)return;
+  overlay.classList.add('show');
+  document.getElementById('adminLoginError').textContent='';
+  const input=document.getElementById('adminAccessPassword');
+  if(input){input.value='';setTimeout(()=>input.focus(),80);}
+}
+function closeFINOAdminLogin(){
+  document.getElementById('adminLoginOverlay')?.classList.remove('show');
+}
+async function sha256FINO(text){
+  const value=String(text||'');
+  try{
+    if(window.crypto&&crypto.subtle&&window.TextEncoder){
+      const data=new TextEncoder().encode(value);
+      const digest=await crypto.subtle.digest('SHA-256',data);
+      return Array.from(new Uint8Array(digest))
+        .map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+  }catch(e){}
+  return finoSha256Fallback(value);
+}
+async function verifyFINOAdminLogin(){
+  if(!isFreeAccess())return;
+  const input=document.getElementById('adminAccessPassword');
+  const error=document.getElementById('adminLoginError');
+  try{
+    const hash=await sha256FINO(input?.value||'');
+    if(hash!==FINO_ADMIN_PASSWORD_HASH){
+      if(error)error.textContent='رمز الدخول غير صحيح. الدخول غير المصرح به قد يعرضك للمساءلة القانونية.';
+      if(input){input.value='';input.focus();}
+      return;
+    }
+    finoAdminUnlocked=true;
+    closeFINOAdminLogin();
+    openFINOAdminPanel();
+  }catch(e){
+    if(error)error.textContent='تعذر التحقق الآمن من رمز الدخول في هذا المتصفح.';
+  }
+}
+function openFINOAdminPanel(){
+  if(!isFreeAccess()||!finoAdminUnlocked)return;
+  try{
+    loadFINOAdminConfig();
+    finoAdminTab='banks';
+    const first=Object.keys(getFINOAdminConfig().banks||{})[0]||'';
+    finoAdminEditingBankId=first;
+    const panel=document.getElementById('adminPanel');
+    if(panel)panel.classList.add('show');
+    renderFINOAdmin();
+  }catch(e){
+    console.error('FINO admin open:',e);
+    const panel=document.getElementById('adminPanel');
+    if(panel)panel.classList.add('show');
+    const main=document.getElementById('adminMain');
+    if(main)main.innerHTML='<div class="admin-empty">تعذر تحميل جزء من بيانات لوحة المسؤول. أغلق اللوحة وافتحها مرة أخرى.</div>';
+  }
+}
+function closeFINOAdminPanel(){
+  document.getElementById('adminPanel')?.classList.remove('show');
+}
+function showFINOAdminToast(msg){
+  const el=document.getElementById('adminToast');
+  if(!el)return;
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(showFINOAdminToast._t);
+  showFINOAdminToast._t=setTimeout(()=>el.classList.remove('show'),1800);
+}
+
+/* ---------- Panel rendering ---------- */
+function setFINOAdminTab(tab){
+  finoAdminTab=tab;
+  renderFINOAdmin();
+}
+function renderFINOAdmin(){
+  const cfg=getFINOAdminConfig();
+  ['Banks','Entities','Backup'].forEach(x=>{
+    const el=document.getElementById('adminTab'+x);
+    const key=x.toLowerCase();
+    if(el)el.classList.toggle('active',finoAdminTab===key);
+  });
+  const addBtn=document.getElementById('adminAddBankBtn');
+  if(addBtn)addBtn.style.display=finoAdminTab==='banks'?'block':'none';
+
+  renderFINOAdminBankList();
+
+  const main=document.getElementById('adminMain');
+  if(!main)return;
+  if(finoAdminTab==='entities')main.innerHTML=renderFINOAdminEntitiesHtml(cfg);
+  else if(finoAdminTab==='backup')main.innerHTML=renderFINOAdminBackupHtml(cfg);
+  else main.innerHTML=renderFINOAdminBankEditorHtml(cfg);
+}
+function renderFINOAdminBankList(){
+  const cfg=getFINOAdminConfig();
+  const list=document.getElementById('adminBankList');
+  if(!list)return;
+  if(finoAdminTab!=='banks'){
+    list.innerHTML='';
+    return;
+  }
+  list.innerHTML=Object.values(cfg.banks||{}).map(b=>`
+    <button type="button" class="admin-bank-item ${finoAdminEditingBankId===b.id?'active':''}" onclick="selectFINOAdminBank('${escapeFINOAdminAttr(b.id)}')">
+      ${b.logo?`<img src="${escapeFINOAdminAttr(b.logo)}" alt="">`:`<div class="admin-bank-placeholder">🏦</div>`}
+      <span><b>${escapeFINOAdminHtml(b.name||b.id)}</b><small>${
+        !b.buyoutEnabled
+          ? 'غير مفعّل للترشيح'
+          : adminOfferStatus(b).expired
+            ? (adminOfferStatus(b).within30?`العرض منتهي منذ ${adminOfferStatus(b).daysExpired} يوم`:'العرض منتهي ومؤرشف')
+            : 'شراء مديونية مفعّل'
+      }</small></span>
+      <i class="admin-status-dot ${b.buyoutEnabled&&adminOfferStatus(b).active?'on':''}"></i>
+    </button>
+  `).join('');
+}
+function selectFINOAdminBank(id){
+  finoAdminEditingBankId=id;
+  renderFINOAdmin();
+}
+function escapeFINOAdminHtml(s){
+  return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeFINOAdminAttr(s){
+  return escapeFINOAdminHtml(s).replace(/`/g,'&#96;');
+}
+function adminTypeLabel(type){
+  return ({
+    government:'حكومي',
+    semiGovernment:'شبه حكومي',
+    military:'عسكري',
+    private:'قطاع خاص',
+    retired:'متقاعد'
+  })[type]||type;
+}
+function renderRateRowsHtml(rows,tableName){
+  const list=Array.isArray(rows)?rows:[];
+  if(!list.length)return `<div class="admin-backup-note">لا توجد شرائح بعد. اضغط «إضافة شريحة».</div>`;
+  return `
+    <div class="admin-rate-head"><span>من راتب</span><span>إلى راتب</span><span>هامش الربح %</span><span></span></div>
+    ${list.map((r,i)=>`
+      <div class="admin-rate-row">
+        <input type="number" min="0" value="${Number(r.min||0)}" data-rate-table="${tableName}" data-rate-index="${i}" data-rate-field="min">
+        <input type="number" min="0" value="${r.max===null?'':Number(r.max)}" placeholder="فأعلى" data-rate-table="${tableName}" data-rate-index="${i}" data-rate-field="max">
+        <input type="number" min="0" step="0.01" value="${Number(r.rate||0)}" data-rate-table="${tableName}" data-rate-index="${i}" data-rate-field="rate">
+        <button type="button" onclick="deleteFINOAdminRateRow('${tableName}',${i})">×</button>
+      </div>
+    `).join('')}
+  `;
+}
+function renderFINOAdminBankEditorHtml(cfg){
+  const b=cfg.banks?.[finoAdminEditingBankId];
+  if(!b)return `<div class="admin-empty">اختر بنكًا من القائمة أو أضف جهة تمويلية جديدة.</div>`;
+  const types=['government','semiGovernment','military','private','retired'];
+  return `
+    <div class="admin-card">
+      <div class="admin-card-title"><b>${escapeFINOAdminHtml(b.name)}</b><small>تحديث البيانات المحلية للحاسبة</small></div>
+      <div class="admin-grid">
+        <div class="admin-field"><label>اسم البنك / الجهة</label><input id="adminBankName" value="${escapeFINOAdminAttr(b.name)}"></div>
+        <div class="admin-field"><label>الاسم المختصر</label><input id="adminBankShort" value="${escapeFINOAdminAttr(b.short||'')}"></div>
+        <div class="admin-field"><label>نوع الجهة</label>
+          <select id="adminBankEntityType">
+            <option value="bank" ${b.entityType==='bank'?'selected':''}>بنك</option>
+            <option value="finance" ${b.entityType==='finance'?'selected':''}>شركة تمويل</option>
+            <option value="other" ${b.entityType==='other'?'selected':''}>جهة تمويلية أخرى</option>
+          </select>
+        </div>
+        <div class="admin-field"><label>أقل راتب مؤهل</label><input id="adminBankMinSalary" type="number" min="0" value="${Number(b.minSalary||0)}"></div>
+        <div class="admin-field"><label>تفعيل شراء المديونية</label>
+          <select id="adminBankBuyoutEnabled"><option value="1" ${b.buyoutEnabled?'selected':''}>مفعّل</option><option value="0" ${!b.buyoutEnabled?'selected':''}>موقوف</option></select>
+        </div>
+        <div class="admin-field"><label>شعار الجهة</label><input id="adminBankLogoFile" type="file" accept="image/*" onchange="previewFINOAdminLogo(this)"></div>
+      </div>
+      <div class="admin-inline-actions">
+        ${b.logo?`<img class="admin-logo-preview" id="adminLogoPreview" src="${escapeFINOAdminAttr(b.logo)}" alt="">`:`<img class="admin-logo-preview" id="adminLogoPreview" style="display:none" alt="">`}
+        <button type="button" class="admin-secondary" onclick="clearFINOAdminLogo()">حذف الشعار المحلي</button>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title"><b>الفئات المؤهلة للعرض</b><small>يمكن تغييرها متى تغيرت سياسة العرض</small></div>
+      <div class="admin-checks">
+        ${types.map(t=>`<label class="admin-check"><input type="checkbox" data-admin-eligible="${t}" ${b.eligibleTypes?.includes(t)?'checked':''}>${adminTypeLabel(t)}</label>`).join('')}
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title"><b>نسخ إعدادات من بنك آخر</b><small>اختياري — ينسخ الشرائح والفئات وخصائص العرض، مع إبقاء اسم وشعار الجهة الحالية كما هما</small></div>
+      <div class="admin-copy-row">
+        <div class="admin-field">
+          <label>اختر البنك المطابق</label>
+          <select id="adminCopySourceBank">
+            <option value="">— اختر بنكًا للنسخ منه —</option>
+            ${Object.values(cfg.banks||{}).filter(x=>x.id!==b.id).map(x=>`<option value="${escapeFINOAdminAttr(x.id)}">${escapeFINOAdminHtml(x.name||x.id)}</option>`).join('')}
+          </select>
+        </div>
+        <button type="button" onclick="copyFINOAdminBankSettings()">نسخ الشرائح والمعلومات</button>
+      </div>
+      <div class="admin-backup-note">بعد النسخ تقدر تعدل أي نسبة أو شريحة أو فئة أو ميزة قبل الضغط على «حفظ وتطبيق فورًا».</div>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title"><b>شرائح الراتب وهامش الربح</b><small>اترك «إلى راتب» فارغًا للشريحة المفتوحة فأعلى</small></div>
+      <div class="admin-field" style="margin-bottom:8px">
+        <label class="admin-check"><input id="adminUseMilitaryTable" type="checkbox" ${b.useMilitaryTable?'checked':''} onchange="toggleFINOAdminMilitaryTable(this.checked)">استخدام جدول مستقل للعسكري</label>
+      </div>
+      <b style="display:block;color:#31566c;font-size:8px;margin-bottom:6px">الجدول العام / المدني</b>
+      <div id="adminGeneralRates">${renderRateRowsHtml(b.tables?.general||[],'general')}</div>
+      <div class="admin-inline-actions"><button class="admin-secondary" type="button" onclick="addFINOAdminRateRow('general')">＋ إضافة شريحة</button></div>
+
+      ${b.useMilitaryTable?`
+        <div style="height:12px"></div>
+        <b style="display:block;color:#31566c;font-size:8px;margin-bottom:6px">جدول العسكري</b>
+        <div id="adminMilitaryRates">${renderRateRowsHtml(b.tables?.military||[],'military')}</div>
+        <div class="admin-inline-actions"><button class="admin-secondary" type="button" onclick="addFINOAdminRateRow('military')">＋ إضافة شريحة</button></div>
+      `:''}
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title"><b>مدة العرض وميزة البنك</b><small>إذا لم يكن العرض محددًا بمدة اتركه «غير محدد»</small></div>
+      <div class="admin-grid">
+        <div class="admin-field"><label>هل العرض محدد بتاريخ؟</label>
+          <select id="adminOfferLimited"><option value="0" ${!b.offerLimited?'selected':''}>غير محدد</option><option value="1" ${b.offerLimited?'selected':''}>محدد بتاريخ</option></select>
+        </div>
+        <div class="admin-field"><label>تاريخ انتهاء العرض</label><input id="adminOfferExpiry" type="date" value="${escapeFINOAdminAttr(adminDateToInput(b.offerExpiry||''))}"></div>
+        <div class="admin-field"><label>إعفاء أقساط (شهر)</label><input id="adminWaiverMonths" type="number" min="0" max="12" value="${Number(b.waiverMonths||0)}"></div>
+        <div class="admin-field"><label>تأجيل أقساط (شهر)</label><input id="adminDeferMonths" type="number" min="0" max="12" value="${Number(b.deferMonths||0)}"></div>
+        <div class="admin-field"><label>ميزة البنك</label>
+          <select id="adminFeatureEnabled" onchange="updateFINOAdminFeatureFields()">
+            <option value="0" ${!b.featureEnabled?'selected':''}>مطفأة — لا تظهر ميزة</option>
+            <option value="1" ${b.featureEnabled?'selected':''}>مفعّلة</option>
+          </select>
+        </div>
+        <div class="admin-field" style="grid-column:span 2"><label>عنوان الميزة</label><input id="adminFeatureTitle" value="${escapeFINOAdminAttr(b.featureTitle||'')}" ${b.featureEnabled?'':'disabled'}></div>
+      </div>
+      <div class="admin-field" style="margin-top:8px"><label>وصف الميزة</label><textarea id="adminFeatureCopy" ${b.featureEnabled?'':'disabled'}>${escapeFINOAdminHtml(b.featureCopy||'')}</textarea></div>
+      <div class="${b.featureEnabled?'':'admin-feature-off'}" id="adminFeatureOffNote">${b.featureEnabled?'':'الميزة مطفأة حاليًا ولن تظهر للعميل في الترشيح أو الرسائل.'}</div>
+
+      <div class="admin-field" style="margin-top:10px">
+        <label>ملاحظة خاصة بهذا البنك (اختياري)</label>
+        <textarea id="adminBankNote" placeholder="مثال: لابد من تثبيت الراتب ونزول الراتب">${escapeFINOAdminHtml(b.adminNote||'')}</textarea>
+      </div>
+
+      ${b.offerLimited&&adminOfferStatus(b).expired?`
+        <div class="admin-warning" style="margin-top:9px">
+          ⚠️ العرض منتهي منذ ${adminOfferStatus(b).daysExpired} يوم. لن يدخل في الترشيح الحالي. ${
+            adminOfferStatus(b).within30
+              ? 'سيظهر للمسؤول كعرض منتهي حديثًا لمدة 30 يومًا للمقارنة فقط.'
+              : 'تجاوز 30 يومًا ولن يظهر ضمن نتائج المقارنة.'
+          }
+        </div>
+      `:''}
+      <div class="admin-inline-actions">
+        <button type="button" class="admin-success" onclick="extendFINOAdminOffer()">📅 تمديد العرض</button>
+      </div>
+    </div>
+
+    <div class="admin-save-bar">
+      <button type="button" class="admin-primary" onclick="saveCurrentFINOAdminBank()">حفظ وتطبيق فورًا</button>
+    </div>
+  `;
+}
+function adminDateToInput(v){
+  const s=String(v||'').trim();
+  const m=s.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if(m)return `${m[3]}-${m[2]}-${m[1]}`;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
+  return '';
+}
+function inputDateToAdmin(v){
+  const s=String(v||'').trim();
+  const m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m?`${m[3]}/${m[2]}/${m[1]}`:'';
+}
+function collectFINOAdminRates(tableName){
+  const rows=[];
+  document.querySelectorAll(`[data-rate-table="${tableName}"][data-rate-field="min"]`).forEach(minEl=>{
+    const i=minEl.dataset.rateIndex;
+    const maxEl=document.querySelector(`[data-rate-table="${tableName}"][data-rate-index="${i}"][data-rate-field="max"]`);
+    const rateEl=document.querySelector(`[data-rate-table="${tableName}"][data-rate-index="${i}"][data-rate-field="rate"]`);
+    const min=Number(minEl.value||0);
+    const maxRaw=String(maxEl?.value||'').trim();
+    const rate=Number(rateEl?.value||0);
+    rows.push({min,max:maxRaw===''?null:Number(maxRaw),rate});
+  });
+  return rows.sort((a,b)=>a.min-b.min);
+}
+function syncFINOAdminEditorIntoMemory(){
+  const cfg=getFINOAdminConfig();
+  const b=cfg.banks?.[finoAdminEditingBankId];
+  if(!b)return null;
+
+  b.name=document.getElementById('adminBankName')?.value.trim()||b.name;
+  b.short=document.getElementById('adminBankShort')?.value.trim()||'';
+  b.entityType=document.getElementById('adminBankEntityType')?.value||'bank';
+  b.minSalary=Math.max(0,Number(document.getElementById('adminBankMinSalary')?.value||0));
+  b.buyoutEnabled=document.getElementById('adminBankBuyoutEnabled')?.value==='1';
+  b.eligibleTypes=Array.from(document.querySelectorAll('[data-admin-eligible]:checked')).map(x=>x.dataset.adminEligible);
+  b.useMilitaryTable=!!document.getElementById('adminUseMilitaryTable')?.checked;
+  b.tables=b.tables||{general:[],military:[]};
+  b.tables.general=collectFINOAdminRates('general');
+  if(b.useMilitaryTable)b.tables.military=collectFINOAdminRates('military');
+  b.offerLimited=document.getElementById('adminOfferLimited')?.value==='1';
+  b.offerExpiry=b.offerLimited?inputDateToAdmin(document.getElementById('adminOfferExpiry')?.value||''):'';
+  if(b.offerLimited&&!b.offerExpiry){
+    b.offerLimited=false;
+  }
+  b.waiverMonths=Math.max(0,Number(document.getElementById('adminWaiverMonths')?.value||0));
+  b.deferMonths=Math.max(0,Number(document.getElementById('adminDeferMonths')?.value||0));
+  b.featureEnabled=document.getElementById('adminFeatureEnabled')?.value==='1';
+  b.featureTitle=document.getElementById('adminFeatureTitle')?.value.trim()||'';
+  b.featureCopy=document.getElementById('adminFeatureCopy')?.value.trim()||'';
+  b.adminNote=document.getElementById('adminBankNote')?.value.trim()||'';
+  return b;
+}
+function saveCurrentFINOAdminBank(){
+  const b=syncFINOAdminEditorIntoMemory();
+  if(!b)return;
+  if(b.buyoutEnabled&&!b.eligibleTypes.length){
+    alert('اختر فئة واحدة مؤهلة على الأقل أو أوقف شراء المديونية لهذه الجهة.');
+    return;
+  }
+  if(b.buyoutEnabled&&!(b.tables?.general||[]).length&&!(b.tables?.military||[]).length){
+    alert('أضف شريحة نسبة واحدة على الأقل أو أوقف شراء المديونية لهذه الجهة.');
+    return;
+  }
+  saveFINOAdminConfig(getFINOAdminConfig());
+  renderFINOAdmin();
+}
+
+function toggleFINOAdminMilitaryTable(checked){
+  const b=syncFINOAdminEditorIntoMemory()||getFINOAdminConfig().banks?.[finoAdminEditingBankId];
+  if(!b)return;
+  b.useMilitaryTable=!!checked;
+  if(b.useMilitaryTable&&!(b.tables?.military||[]).length){
+    b.tables=b.tables||{general:[],military:[]};
+    b.tables.military=cloneAdminValue(b.tables.general||[]);
+  }
+  renderFINOAdmin();
+}
+
+function updateFINOAdminFeatureFields(){
+  const enabled=document.getElementById('adminFeatureEnabled')?.value==='1';
+  const title=document.getElementById('adminFeatureTitle');
+  const copy=document.getElementById('adminFeatureCopy');
+  const note=document.getElementById('adminFeatureOffNote');
+  if(title)title.disabled=!enabled;
+  if(copy)copy.disabled=!enabled;
+  if(note){
+    note.className=enabled?'':'admin-feature-off';
+    note.textContent=enabled?'':'الميزة مطفأة حاليًا ولن تظهر للعميل في الترشيح أو الرسائل.';
+  }
+}
+function copyFINOAdminBankSettings(){
+  const sourceId=document.getElementById('adminCopySourceBank')?.value||'';
+  if(!sourceId){alert('اختر البنك الذي تريد نسخ إعداداته أولًا.');return;}
+  const cfg=getFINOAdminConfig();
+  const target=syncFINOAdminEditorIntoMemory()||cfg.banks?.[finoAdminEditingBankId];
+  const source=cfg.banks?.[sourceId];
+  if(!target||!source)return;
+
+  const identity={
+    id:target.id,name:target.name,short:target.short,logo:target.logo,entityType:target.entityType
+  };
+
+  target.buyoutEnabled=source.buyoutEnabled;
+  target.minSalary=source.minSalary;
+  target.eligibleTypes=cloneAdminValue(source.eligibleTypes||[]);
+  target.tables=cloneAdminValue(source.tables||{general:[],military:[]});
+  target.useMilitaryTable=!!source.useMilitaryTable;
+  target.offerLimited=!!source.offerLimited;
+  target.offerExpiry=source.offerExpiry||'';
+  target.featureEnabled=!!source.featureEnabled;
+  target.featureTitle=source.featureTitle||'';
+  target.featureCopy=source.featureCopy||'';
+  target.adminNote=source.adminNote||'';
+  target.waiverMonths=Number(source.waiverMonths||0);
+  target.deferMonths=Number(source.deferMonths||0);
+
+  Object.assign(target,identity);
+  renderFINOAdmin();
+  showFINOAdminToast(`تم نسخ إعدادات ${source.name||source.id} — راجعها ثم احفظ`);
+}
+
+function addFINOAdminRateRow(tableName){
+  const b=syncFINOAdminEditorIntoMemory()||getFINOAdminConfig().banks?.[finoAdminEditingBankId];
+  if(!b)return;
+  b.tables=b.tables||{general:[],military:[]};
+  b.tables[tableName]=Array.isArray(b.tables[tableName])?b.tables[tableName]:[];
+  b.tables[tableName].push({min:0,max:null,rate:0});
+  renderFINOAdmin();
+}
+function deleteFINOAdminRateRow(tableName,index){
+  const b=syncFINOAdminEditorIntoMemory()||getFINOAdminConfig().banks?.[finoAdminEditingBankId];
+  if(!b)return;
+  b.tables[tableName].splice(index,1);
+  renderFINOAdmin();
+}
+function extendFINOAdminOffer(){
+  const sel=document.getElementById('adminOfferLimited');
+  const date=document.getElementById('adminOfferExpiry');
+  if(sel)sel.value='1';
+  if(date&&!date.value){
+    const d=new Date();d.setMonth(d.getMonth()+1);
+    date.value=d.toISOString().slice(0,10);
+  }
+  date?.focus();
+}
+function previewFINOAdminLogo(input){
+  const file=input?.files?.[0];
+  if(!file)return;
+  if(file.size>900000){
+    alert('يفضل أن يكون الشعار أقل من 900KB حتى لا تمتلئ مساحة التخزين المحلية.');
+    input.value='';
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const b=getFINOAdminConfig().banks?.[finoAdminEditingBankId];
+    if(!b)return;
+    b.logo=String(reader.result||'');
+    const img=document.getElementById('adminLogoPreview');
+    if(img){img.src=b.logo;img.style.display='block';}
+  };
+  reader.readAsDataURL(file);
+}
+function clearFINOAdminLogo(){
+  const b=getFINOAdminConfig().banks?.[finoAdminEditingBankId];
+  if(!b)return;
+  b.logo='';
+  const img=document.getElementById('adminLogoPreview');
+  if(img){img.removeAttribute('src');img.style.display='none';}
+}
+function startAddFINOAdminBank(){
+  const cfg=getFINOAdminConfig();
+  const id='CUSTOM_'+Date.now().toString(36).toUpperCase();
+  cfg.banks[id]={
+    id,name:'جهة تمويلية جديدة',short:'',logo:'',entityType:'finance',
+    buyoutEnabled:false,minSalary:0,
+    eligibleTypes:['government','semiGovernment','military','private','retired'],
+    tables:{general:[],military:[]},useMilitaryTable:false,
+    offerLimited:false,offerExpiry:'',featureEnabled:false,adminNote:'',waiverMonths:0,deferMonths:0,
+    featureTitle:'',featureCopy:''
+  };
+  finoAdminEditingBankId=id;
+  renderFINOAdmin();
+}
+
+/* ---------- Work entities ---------- */
+function renderFINOAdminEntitiesHtml(cfg){
+  return `
+    <div class="admin-card">
+      <div class="admin-card-title"><b>جهات العمل الخاصة / التصنيفات الداخلية</b><small>قائمة محلية للمسؤول، ولا تغير الحسبة الحالية لأن الحاسبة لا تطلب اسم الشركة من العميل.</small></div>
+      <div class="admin-entity-list" id="adminEntityList">
+        ${(cfg.workEntities||[]).map((e,i)=>`
+          <div class="admin-entity-row">
+            <input value="${escapeFINOAdminAttr(e.name||'')}" placeholder="اسم جهة العمل" data-entity-index="${i}" data-entity-field="name">
+            <select data-entity-index="${i}" data-entity-field="class">
+              ${['Class A','Class B','Class C','غير محدد'].map(x=>`<option ${e.class===x?'selected':''}>${x}</option>`).join('')}
+            </select>
+            <select data-entity-index="${i}" data-entity-field="risk">
+              ${['منخفض المخاطر','متوسط المخاطر','مرتفع المخاطر','غير محدد'].map(x=>`<option ${e.risk===x?'selected':''}>${x}</option>`).join('')}
+            </select>
+            <button type="button" onclick="deleteFINOAdminEntity(${i})">×</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="admin-inline-actions">
+        <button class="admin-secondary" type="button" onclick="addFINOAdminEntity()">＋ إضافة جهة عمل</button>
+        <button class="admin-primary" type="button" onclick="saveFINOAdminEntities()">حفظ الجهات</button>
+      </div>
+    </div>
+  `;
+}
+function syncFINOAdminEntities(){
+  const cfg=getFINOAdminConfig();
+  document.querySelectorAll('[data-entity-index][data-entity-field="name"]').forEach(nameEl=>{
+    const i=Number(nameEl.dataset.entityIndex);
+    const cls=document.querySelector(`[data-entity-index="${i}"][data-entity-field="class"]`);
+    const risk=document.querySelector(`[data-entity-index="${i}"][data-entity-field="risk"]`);
+    if(!cfg.workEntities[i])cfg.workEntities[i]={};
+    cfg.workEntities[i].name=nameEl.value.trim();
+    cfg.workEntities[i].class=cls?.value||'غير محدد';
+    cfg.workEntities[i].risk=risk?.value||'غير محدد';
+  });
+}
+function addFINOAdminEntity(){
+  syncFINOAdminEntities();
+  getFINOAdminConfig().workEntities.push({name:'',class:'Class A',risk:'منخفض المخاطر'});
+  renderFINOAdmin();
+}
+function deleteFINOAdminEntity(i){
+  syncFINOAdminEntities();
+  getFINOAdminConfig().workEntities.splice(i,1);
+  renderFINOAdmin();
+}
+function saveFINOAdminEntities(){
+  syncFINOAdminEntities();
+  saveFINOAdminConfig(getFINOAdminConfig());
+}
+
+/* ---------- Backup / export / import ---------- */
+function renderFINOAdminBackupHtml(cfg){
+  return `
+    <div class="admin-card">
+      <div class="admin-card-title"><b>النسخ الاحتياطية والنقل</b><small>آخر تحديث محلي: ${escapeFINOAdminHtml(cfg.updatedAt||'—')}</small></div>
+      <div class="admin-backup-note">
+        قبل كل حفظ، يتم الاحتفاظ تلقائيًا بالنسخة السابقة. يمكنك استرجاع آخر نسخة أو تصدير جميع الإعدادات إلى ملف JSON ونقلها لجهاز آخر يدويًا.
+      </div>
+      <div class="admin-inline-actions">
+        <button class="admin-primary" type="button" onclick="exportFINOAdminConfig()">تصدير إعدادات JSON</button>
+        <button class="admin-secondary" type="button" onclick="document.getElementById('adminImportFile').click()">استيراد إعدادات JSON</button>
+        <button class="admin-success" type="button" onclick="restoreFINOAdminBackup()">استرجاع آخر نسخة محفوظة</button>
+        <button class="admin-danger" type="button" onclick="resetFINOAdminLocalConfig()">العودة للبيانات الأصلية</button>
+      </div>
+    </div>
+  `;
+}
+function exportFINOAdminConfig(){
+  const cfg=getFINOAdminConfig();
+  const blob=new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`FINO-admin-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function importFINOAdminConfigFile(input){
+  const file=input?.files?.[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const cfg=normalizeFINOAdminConfig(JSON.parse(String(reader.result||'')));
+      saveFINOAdminConfig(cfg);
+      finoAdminEditingBankId=Object.keys(cfg.banks||{})[0]||'';
+      renderFINOAdmin();
+    }catch(e){
+      alert('ملف الإعدادات غير صالح.');
+    }finally{
+      input.value='';
+    }
+  };
+  reader.readAsText(file,'utf-8');
+}
+function restoreFINOAdminBackup(){
+  try{
+    const raw=finoAdminStorageGet(FINO_ADMIN_BACKUP_KEY);
+    if(!raw){alert('لا توجد نسخة احتياطية سابقة على هذا الجهاز.');return;}
+    const current=finoAdminStorageGet(FINO_ADMIN_STORAGE_KEY);
+    if(current)localStorage.setItem(FINO_ADMIN_STORAGE_KEY,current);
+    finoAdminConfig=normalizeFINOAdminConfig(JSON.parse(raw));
+    finoAdminStorageSet(FINO_ADMIN_STORAGE_KEY,JSON.stringify(finoAdminConfig));
+    applyFINOAdminConfig();
+    finoAdminEditingBankId=Object.keys(finoAdminConfig.banks||{})[0]||'';
+    renderFINOAdmin();
+    showFINOAdminToast('تم استرجاع آخر نسخة');
+  }catch(e){
+    alert('تعذر استرجاع النسخة الاحتياطية.');
+  }
+}
+function resetFINOAdminLocalConfig(){
+  if(!confirm('هل تريد العودة للبيانات الأصلية الموجودة في الكود؟ سيتم أخذ نسخة احتياطية أولًا.'))return;
+  try{
+    const current=finoAdminStorageGet(FINO_ADMIN_STORAGE_KEY);
+    if(current)finoAdminStorageSet(FINO_ADMIN_BACKUP_KEY,current);
+    finoAdminStorageRemove(FINO_ADMIN_STORAGE_KEY);
+    finoAdminConfig=buildFINOAdminDefaults();
+    applyFINOAdminConfig();
+    finoAdminEditingBankId=Object.keys(finoAdminConfig.banks||{})[0]||'';
+    renderFINOAdmin();
+    showFINOAdminToast('تم الرجوع للبيانات الأصلية');
+  }catch(e){}
+}
 
 function openBuyoutFromFree(){
   showPage('page2');
@@ -5758,7 +6998,7 @@ function bankOfferExpiryLine(bank){
 }
 
 function bankTerm(key){
-  return BANK_TERMS[key]||{waiverMonths:0,deferMonths:0,commodityFee:0,offerExpiry:'',featureTitle:'',featureCopy:''};
+  return BANK_TERMS[key]||{waiverMonths:0,deferMonths:0,commodityFee:0,offerExpiry:'',featureEnabled:false,adminNote:'',featureTitle:'',featureCopy:''};
 }
 
 function feeRatesForCommodity(commodityEnabled){
@@ -5914,6 +7154,8 @@ function buildFinance(bank,salary,earlySettlement,externalObligations){
     manualAmount:false,
     waiverMonths:term.waiverMonths,
     deferMonths:term.deferMonths,
+    featureEnabled:!!term.featureEnabled,
+    adminNote:String(term.adminNote||''),
     featureTitle:term.featureTitle,
     featureCopy:term.featureCopy,
     offerExpiry:term.offerExpiry||''
@@ -6194,11 +7436,16 @@ function calculate(){
     if(r!==null)candidates.push({key:'BILAD',name:'بنك البلاد',rate:r});
   }
 
+  candidates=applyAdminCandidateOverrides(candidates,salary);
+
   const evaluated=candidates.map(bank=>{
     const finance=buildFinance(bank,salary,earlySettlement,externalObligations);
     const policy=assessBankEligibility(finance,earlySettlement);
     return {...finance,policyWarning:policy.warning,policyReason:policy.reason,policyEligible:policy.eligible};
   });
+
+  window.__FINO_EXPIRED_RESULTS=buildExpiredAdminResults(salary,earlySettlement,externalObligations);
+  window.__FINO_EXPIRED_SELECTED_KEY='';
 
   const out=evaluated.filter(bank=>bank.policyEligible);
 
@@ -6293,11 +7540,16 @@ function toggleFreeCommodityFee(checked){
     if(r!==null)candidates.push({key:'BILAD',name:'بنك البلاد',rate:r});
   }
 
+  candidates=applyAdminCandidateOverrides(candidates,salary);
+
   const evaluated=candidates.map(bank=>{
     const finance=buildFinance(bank,salary,earlySettlement,externalObligations);
     const policy=assessBankEligibility(finance,earlySettlement);
     return {...finance,policyWarning:policy.warning,policyReason:policy.reason,policyEligible:policy.eligible};
   });
+
+  window.__FINO_EXPIRED_RESULTS=buildExpiredAdminResults(salary,earlySettlement,externalObligations);
+  window.__FINO_EXPIRED_SELECTED_KEY='';
 
   const out=evaluated.filter(bank=>bank.policyEligible);
   out.sort((a,b)=>(a.rate-b.rate)||(b.cashAfterDebt-a.cashAfterDebt));
@@ -6452,6 +7704,107 @@ function selectResultBank(index){
   }
 }
 
+
+function selectExpiredFINOOffer(key){
+  window.__FINO_EXPIRED_SELECTED_KEY=key||'';
+  renderResults(
+    Number(document.getElementById('salary')?.value||0),
+    Number(document.getElementById('earlySettlement')?.value||0),
+    Number(document.getElementById('externalObligations')?.value||0),
+    latestResults
+  );
+}
+function closeExpiredFINOOffer(){
+  window.__FINO_EXPIRED_SELECTED_KEY='';
+  renderResults(
+    Number(document.getElementById('salary')?.value||0),
+    Number(document.getElementById('earlySettlement')?.value||0),
+    Number(document.getElementById('externalObligations')?.value||0),
+    latestResults
+  );
+}
+function openFINOAdminForBank(id){
+  if(!isFreeAccess())return;
+  finoAdminUnlocked=true;
+  loadFINOAdminConfig();
+  finoAdminEditingBankId=id;
+  finoAdminTab='banks';
+  document.getElementById('adminPanel')?.classList.add('show');
+  renderFINOAdmin();
+}
+function expiredOfferSummaryHtml(activeResults){
+  const expired=window.__FINO_EXPIRED_RESULTS||[];
+  if(!expired.length)return '';
+
+  const activeBest=(activeResults||[])[0]||null;
+  const better=activeBest?expired.filter(x=>x.rate<activeBest.rate):expired.slice();
+
+  let html='';
+  if(better.length){
+    const x=better[0];
+    const rank=rankExpiredOfferAmongAll(x,activeResults);
+    html+=`
+      <div class="expired-offer-alert">
+        ⚠️ يوجد عرض منتهي حديثًا كان أقل هامش ربح من الترشيح الحالي:
+        <b>${x.name} — ${fmt(x.rate)}%</b>.
+        انتهى بتاريخ <b>${x.offerExpiry}</b> منذ <b>${x.daysExpired} يوم</b>
+        ${rank?`، وكان سيظهر تقريبًا كترشيح رقم ${rank} لو كان العرض ساريًا.`:''}
+        هذا العرض غير داخل الترشيح الحالي.
+      </div>
+    `;
+  }
+
+  html+=`<div class="expired-offer-list">`;
+  expired.forEach(x=>{
+    const rank=rankExpiredOfferAmongAll(x,activeResults);
+    html+=`
+      <div class="expired-offer-card">
+        <div class="expired-logo">${logo(x.key)}</div>
+        <div>
+          <b>${x.name} • ${fmt(x.rate)}%</b>
+          <small>عرض منتهي منذ ${x.daysExpired} يوم • انتهى ${x.offerExpiry}${rank?` • ترتيبه النظري ${rank}`:''}</small>
+        </div>
+        <button type="button" onclick="selectExpiredFINOOffer('${escapeFINOAdminAttr(x.key)}')">عرض التفاصيل</button>
+      </div>
+    `;
+  });
+  html+=`</div>`;
+
+  const selected=(window.__FINO_EXPIRED_RESULTS||[]).find(x=>x.key===window.__FINO_EXPIRED_SELECTED_KEY);
+  if(selected){
+    html+=`
+      <div class="expired-offer-detail">
+        <div class="expired-title">⚠️ عرض منتهي • ${selected.name}</div>
+        <div class="expired-sub">
+          انتهى بتاريخ ${selected.offerExpiry} منذ ${selected.daysExpired} يوم. هذه التفاصيل للمراجعة فقط، والعرض غير داخل الترشيح الحالي حتى يتم تمديده أو تحويله إلى عرض غير محدد بتاريخ.
+        </div>
+        <div class="best">
+          <div class="best-logo">${logo(selected.key)}</div>
+          <div>
+            <div class="best-tag">عرض منتهي — غير مفعّل في الترشيح</div>
+            <div class="best-name">${selected.name}</div>
+            <div class="best-copy">هامش الربح السابق: ${fmt(selected.rate)}% • الأقساط الفعلية: ${selected.actualPayments} شهر</div>
+          </div>
+          <div class="best-rate">${fmt(selected.rate)}%<small>هامش الربح السابق</small></div>
+        </div>
+        <div class="finance-details">
+          <div class="finance-detail key"><small>القسط الشهري</small><b>${money(selected.installment)}</b></div>
+          <div class="finance-detail"><small>إجمالي التمويل مع الأرباح</small><b>${money(selected.grossWithProfit)}</b></div>
+          <div class="finance-detail"><small>صافي التمويل قبل الرسوم</small><b>${money(selected.principalBeforeFees)}</b></div>
+          <div class="finance-detail"><small>صافي التمويل بعد الرسوم</small><b>${money(selected.netBeforeDebt)}</b></div>
+          <div class="finance-detail profit"><small>إجمالي الأرباح</small><b>${money(selected.totalProfit)}</b></div>
+          <div class="finance-detail cash"><small>صافي الكاش بعد السداد</small><b>${money(selected.cashAfterDebt)}</b></div>
+        </div>
+        <div class="expired-actions">
+          ${isFreeAccess()?`<button class="expired-open-admin" type="button" onclick="openFINOAdminForBank('${escapeFINOAdminAttr(selected.key)}')">فتح البنك في لوحة المسؤول وتمديد العرض</button>`:''}
+          <button class="expired-close" type="button" onclick="closeExpiredFINOOffer()">إغلاق التفاصيل</button>
+        </div>
+      </div>
+    `;
+  }
+  return html;
+}
+
 function renderResults(salary,earlySettlement,externalObligations,out){
   document.getElementById('profile').innerHTML=`
     <div class="pill">الراتب: <b>${money(salary)}</b></div>
@@ -6473,7 +7826,8 @@ function renderResults(salary,earlySettlement,externalObligations,out){
         <h3>معليش، حاليًا لا يوجد بنك مناسب لشراء مديونيتك</h3>
         <p>حسب البيانات المدخلة، إما أن الالتزامات الحالية لا تسمح بتمويل مناسب، أو أن مبلغ المديونية أعلى من التمويل المتاح، أو أن الفائض بعد السداد لا يحقق الحد المطلوب لبعض البنوك. انتظر وجرّب معنا من فترة لفترة؛ لعل يظهر لك عرض أفضل.</p>
         <strong>0506214458</strong>
-      </div>`;
+      </div>
+      ${expiredOfferSummaryHtml(out)}`;
     return;
   }
 
@@ -6488,6 +7842,7 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       ? `<div class="selected-rank-banner"><strong>الترشيح رقم 1</strong> • هذا هو الترشيح الأول والأفضل حسب البيانات المدخلة.</div>`
       : `<div class="selected-rank-banner secondary"><strong>أنت الآن تستعرض الترشيح رقم ${selectedRank}</strong> • هذا ليس الترشيح الأول، ويمكنك الرجوع للترشيح رقم 1 من القائمة بالأسفل.</div>`
     }
+    ${expiredOfferSummaryHtml(out)}
     <div class="cash-hero${cashClass}">
       <div class="cash-label">النتيجة الأهم للعميل</div>
       <div class="cash-title">صافي الكاش المتوقع بعد سداد المديونية</div>
@@ -6521,14 +7876,18 @@ function renderResults(salary,earlySettlement,externalObligations,out){
       : ''}
     ` : ''}
 
+    ${best.featureEnabled?`
     <div class="bank-advantage">
       <div class="adv-icon">${best.waiverMonths>0?'🎁':best.deferMonths>0?'📅':'⭐'}</div>
       <div>
         <div class="adv-label">ميزة المصرف المرشح</div>
-        <div class="adv-title">${best.featureTitle||'عرض شراء مديونية'}</div>
-        <div class="adv-copy">${best.featureCopy||'تخضع الميزة النهائية لشروط البنك وقت التنفيذ.'}</div>
+        <div class="adv-title">${best.featureTitle||'ميزة البنك'}</div>
+        <div class="adv-copy">${best.featureCopy||''}</div>
       </div>
     </div>
+    `:''}
+
+    ${best.adminNote?`<div class="bank-admin-note">📌 ملاحظة البنك: ${best.adminNote}</div>`:''}
 
     ${best.offerExpiry?`<div class="offer-expiry-notice">⏳ هذا العرض محدد حتى تاريخ <b>${best.offerExpiry}</b> • تطبق الشروط والأحكام.</div>`:''}
 
@@ -6727,6 +8086,7 @@ function renderResults(salary,earlySettlement,externalObligations,out){
           <div class="result-select-hint">اضغط لعرض تفاصيل هذا الترشيح ومشاركته</div>
         </div>
         <div class="result-rate">${fmt(b.rate)}%</div>
+        ${b.adminNote?`<div class="notes"><div class="note">📌 ${b.adminNote}</div></div>`:''}
         ${notes?`<div class="notes">${notes}</div>`:''}
         ${b.policyWarning?`<div class="notes"><div class="bank-policy-warning">${b.policyWarning}</div></div>`:''}
       </div>
@@ -6779,7 +8139,7 @@ ${best.offerExpiry?`⏳ العرض محدد حتى تاريخ: ${best.offerExpir
 🧾 ضريبة الرسوم الإدارية: ${englishMoneyExact(best.adminVat)}
 ${best.commodityEnabled?`🧾 رسوم فرق السلعة: ${englishMoneyExact(best.commodityFee)}`:'🧾 رسوم فرق السلعة: غير محتسبة في هذه الحسبة'}
 
-${best.featureTitle?`⭐ ميزة البنك: ${best.featureTitle}\n`:''}${customerType==='military'?`🔴 تنويه للعسكري: ${clientMilitaryNotice()}\n`:''}${customerType==='private'?`🔴 تنويه القطاع الخاص: ${clientPrivateNotice()}\n`:''}
+${best.featureEnabled&&best.featureTitle?`⭐ ميزة البنك: ${best.featureTitle}\n`:''}${best.adminNote?`📌 ملاحظة البنك: ${best.adminNote}\n`:''}${customerType==='military'?`🔴 تنويه للعسكري: ${clientMilitaryNotice()}\n`:''}${customerType==='private'?`🔴 تنويه القطاع الخاص: ${clientPrivateNotice()}\n`:''}
 أرغب في التأكد من الحسبة ومعرفة التفاصيل.`;
   }
 
@@ -7423,6 +8783,14 @@ async function createDetailedResultPngBlob(){
     ctx.font='900 15px Cairo, Arial, sans-serif';
     drawWrappedArabic(ctx,`أثر الالتزامات: ${obligationImpactText(best.obligationImpact,currentClientName())}`,980,y+32,850,27,4);
     y+=140;
+  }
+
+  if(best.adminNote){
+    canvasRoundRect(ctx,70,y,940,82,15,'#fffaf0','#ead6a5');
+    ctx.fillStyle='#805b12';
+    ctx.font='900 16px Cairo, Arial, sans-serif';
+    drawWrappedArabic(ctx,`ملاحظة البنك: ${best.adminNote}`,980,y+30,850,26,2);
+    y+=98;
   }
 
   if(customNote){
@@ -8395,6 +9763,50 @@ document.getElementById('password')?.addEventListener('keydown',e=>{
   <div class="sc-footer">للاحتساب الدقيق وتأكيد المعلومات وإنجاز التمويل:<br><span class="sc-phone">0506214458</span><br>بعض خدماتنا: https://hlooleqrr.github.io/mwaqe3/#services</div>
 </div>
 
+
+<div class="admin-overlay" id="adminLoginOverlay">
+  <div class="admin-login-card">
+    <h3>دخول المسؤول / المختص</h3>
+    <p>هذه البوابة مخصصة لإدارة بيانات العروض والنسب المحلية على هذا الجهاز.</p>
+    <div class="admin-warning">⚠️ الدخول غير المصرح به أو محاولة استخدام رمز دخول خاطئ قد يعرضك للمساءلة القانونية.</div>
+    <input id="adminAccessPassword" type="password" autocomplete="off" placeholder="أدخل رمز دخول المسؤول">
+    <div class="admin-login-error" id="adminLoginError"></div>
+    <div class="admin-login-actions">
+      <button class="admin-login-go" type="button" onclick="verifyFINOAdminLogin()">دخول لوحة الإدارة</button>
+      <button class="admin-login-close" type="button" onclick="closeFINOAdminLogin()">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-head">
+    <div class="admin-head-title">
+      <b>FINO • لوحة المسؤول المحلية</b>
+      <small>تحديثات هذا الجهاز فقط • تحفظ تلقائيًا في المتصفح • مع نسخة احتياطية قبل كل حفظ</small>
+    </div>
+    <div class="admin-head-actions">
+      <button type="button" onclick="exportFINOAdminConfig()">تصدير JSON</button>
+      <button type="button" onclick="document.getElementById('adminImportFile').click()">استيراد JSON</button>
+      <input id="adminImportFile" type="file" accept=".json,application/json" hidden onchange="importFINOAdminConfigFile(this)">
+      <button type="button" onclick="restoreFINOAdminBackup()">استرجاع آخر نسخة</button>
+      <button type="button" class="danger" onclick="closeFINOAdminPanel()">إغلاق</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <aside class="admin-side">
+      <div class="admin-tabs">
+        <button id="adminTabBanks" class="active" onclick="setFINOAdminTab('banks')">البنوك</button>
+        <button id="adminTabEntities" onclick="setFINOAdminTab('entities')">جهات العمل</button>
+        <button id="adminTabBackup" onclick="setFINOAdminTab('backup')">النسخ</button>
+      </div>
+      <button class="admin-add-btn" id="adminAddBankBtn" type="button" onclick="startAddFINOAdminBank()">＋ إضافة بنك / جهة تمويلية</button>
+      <div class="admin-bank-list" id="adminBankList"></div>
+    </aside>
+    <main class="admin-main" id="adminMain"></main>
+  </div>
+</div>
+<div class="admin-toast" id="adminToast"></div>
+
 <div class="phone-modal" id="phoneModal">
   <div class="phone-modal-card">
     <h3>📱 إرسال الحسبة عبر واتساب</h3>
@@ -8454,6 +9866,9 @@ function initFINORuntime(){
     btn.setAttribute('aria-pressed',btn.classList.contains('active')?'true':'false');
   });
 
+  // Apply local owner updates before rendering banks.
+  try{loadFINOAdminConfig();}catch(e){console.error('FINO admin config:',e);}
+
   // Re-render banks after the complete DOM is available.
   try{renderBanks();}catch(e){console.error('FINO renderBanks:',e);}
 
@@ -8472,6 +9887,22 @@ function initFINORuntime(){
     imageModal.dataset.bound='1';
     imageModal.addEventListener('click',function(e){
       if(e.target===this)closeImagePreview();
+    });
+  }
+
+  // Admin login interactions.
+  const adminPass=document.getElementById('adminAccessPassword');
+  if(adminPass&&!adminPass.dataset.bound){
+    adminPass.dataset.bound='1';
+    adminPass.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){e.preventDefault();verifyFINOAdminLogin();}
+    });
+  }
+  const adminLogin=document.getElementById('adminLoginOverlay');
+  if(adminLogin&&!adminLogin.dataset.bound){
+    adminLogin.dataset.bound='1';
+    adminLogin.addEventListener('click',e=>{
+      if(e.target===adminLogin)closeFINOAdminLogin();
     });
   }
 
