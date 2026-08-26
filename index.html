@@ -4650,7 +4650,7 @@ const BANK_TERMS={
     featureTitle:'شراء المديونية يبدأ من راتب 10,000 ريال فأعلى',
     featureCopy:'تخضع الأهلية النهائية لشروط البنك وجهة العمل وقت التنفيذ.'
   }
-};
+,BILAD:[{min:25000,max:INF,rate:2.10},{min:20000,max:24999,rate:2.30},{min:15000,max:19999,rate:2.60},{min:10000,max:14999,rate:2.70},{min:5000,max:9999,rate:3.06},{min:0,max:4999,rate:5.21}]};
 
 
 function openBuyoutFromFree(){
@@ -6079,6 +6079,16 @@ function calculate(){
     const snbTable=customerType==='military'?RATES.SNB_MIL:RATES.SNB_CIV;
     const r=findRate(salary,snbTable);
     if(r!==null)candidates.push({key:'SNB',name:'البنك الأهلي السعودي SNB',rate:r});
+  }
+
+  if(selectedBank!=='BILAD'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='military')){
+    const r=findRate(salary,RATES.BILAD);
+    if(r!==null)candidates.push({key:'BILAD',name:'بنك البلاد',rate:r});
+  }
+
+  if(selectedBank!=='BILAD'&&(customerType==='government'||customerType==='semiGovernment'||customerType==='military')){
+    const r=findRate(salary,RATES.BILAD);
+    if(r!==null)candidates.push({key:'BILAD',name:'بنك البلاد',rate:r});
   }
 
   const evaluated=candidates.map(bank=>{
