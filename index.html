@@ -5424,6 +5424,24 @@ button{
 .portal-smart-only .portal-back{display:none!important}
 @media(max-width:600px){.smart-finance-kind{grid-template-columns:1fr}}
 
+
+/* FINO V16 */
+.portal-service-locked .portal-service-switch,
+.portal-service-locked .portal-admin-entry,
+.portal-service-locked .portal-free-service-grid{display:none!important}
+.portal-code-admin-toolbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:9px}
+.portal-code-admin-toolbar button{border:1px solid #d2e2e9;border-radius:9px;padding:9px 7px;font:900 7px Cairo,Arial,sans-serif;background:#fff;color:#214c64}
+.portal-code-admin-toolbar button.primary{background:#0879ae;color:#fff;border-color:#0879ae}
+.portal-code-admin-toolbar button.danger{background:#fff5f5;color:#a23232;border-color:#e9c7c7}
+.portal-code-admin-toolbar button.success{background:#f1fbf5;color:#23734d;border-color:#c5e3d1}
+.portal-code-state-card{margin-top:8px;padding:9px;border-radius:10px;background:#fafcfd;border:1px solid #dbe7ec;font-size:7px;line-height:1.75;color:#4a697a}
+.portal-code-state-card b{color:#17465f}
+.portal-reason-box{margin:9px 0;padding:11px;border-radius:11px;border:1px solid #ead2b7;background:#fffaf3;color:#6f5225;font-size:8px;line-height:1.9;font-weight:800}
+.portal-reason-box b{display:block;font-size:9px;color:#7a4d10;margin-bottom:4px}
+.portal-adjust-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:7px}
+.portal-adjust-options button{border:1px solid #d3e1e8;background:#fff;border-radius:8px;padding:8px;font:900 7px Cairo,Arial,sans-serif;color:#2d5268}
+@media(max-width:600px){.portal-code-admin-toolbar,.portal-adjust-options{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -7098,6 +7116,31 @@ function finoCentralCodeToLocal(c){
 function clearFINOAdminPanels(){
   document.querySelectorAll('.portal-code-manager,.portal-contract-box').forEach(el=>el.remove());
 }
+
+async function finoAdminToggleCode(id,enabled){
+  if(!finoCentralAdminToken)return;
+  const d=await finoCentralAdminDashboard(true);
+  const x=(d.data?.codes||[]).find(v=>v.id===id);
+  if(!x){portalAssistant('<div class="portal-central-error">لم نجد الكود في المركزية.</div>');return}
+  const payload={...x,id:x.id,code:x.code,enabled:!!enabled,config:{...(x.config||{}),source:'FINO-Web-V16'}};
+  const r=await finoCentralAdminCall('fino_admin_upsert_code',{p_payload:payload});
+  if(!r.ok||r.data?.ok===false){
+    portalAssistant(`<div class="portal-central-error">تعذر ${enabled?'تفعيل':'إيقاف'} الكود.<br>${portalEsc(finoCentralDebugMessage(r))}</div>`);return;
+  }
+  await finoCentralAdminDashboard(true);
+  portalAssistant(`<div class="portal-central-confirm">✅ تم ${enabled?'تفعيل':'إيقاف'} الكود ${portalEsc(x.code)} مركزيًا. رمز الكود لم يتغير.</div>`);
+  await showFINOPortalCodeManager(id);
+}
+async function finoAdminResetCodeUsage(id){
+  if(!finoCentralAdminToken)return;
+  const r=await finoCentralAdminCall('fino_admin_extend_code',{p_code_id:id,p_minutes:0,p_reset_entries:true,p_unlock_device:true});
+  if(!r.ok||r.data?.ok===false){
+    portalAssistant(`<div class="portal-central-error">تعذر تصفير استخدامات الكود.<br>${portalEsc(finoCentralDebugMessage(r))}</div>`);return;
+  }
+  await finoCentralAdminDashboard(true);
+  portalAssistant('<div class="portal-central-confirm">✅ تم تصفير الاستخدامات وفك ربط الجهاز. نفس الكود ما زال محفوظًا.</div>');
+  await showFINOPortalCodeManager(id);
+}
 async function showFINOPortalCodeManager(editId=''){
   if(!finoPortal.adminUnlocked)return;
   clearFINOAdminPanels();
@@ -7146,10 +7189,10 @@ async function showFINOPortalCodeManager(editId=''){
         </div>
       </div>
       <div class="portal-code-field"><label>الخدمة المتاحة</label><select id="pcService">
-        <option value="buyout" ${c.allowedService==='buyout'?'selected':''}>تحويل المديونية فقط</option>
-        <option value="smart" ${c.allowedService==='smart'?'selected':''}>الحاسبة الذكية فقط — العميل لا يرى أي خدمة أخرى</option>
+        <option value="buyout" ${c.allowedService==='buyout'?'selected':''}>تحويل المديونية فقط — يقفل بقية الخدمات</option>
+        <option value="smart" ${c.allowedService==='smart'?'selected':''}>الحاسبة الذكية فقط — يقفل بقية الخدمات</option>
         <option value="both" ${c.allowedService==='both'?'selected':''}>الحاسبتان</option>
-        <option value="contract" ${c.allowedService==='contract'?'selected':''}>عقد فقط — يفتح صفحة العقد مباشرة</option>
+        <option value="contract" ${c.allowedService==='contract'?'selected':''}>عقد فقط — يفتح العقد مباشرة ويقفل بقية الخدمات</option>
       </select></div>
       <div class="portal-code-field"><label>العقد المرتبط بالكود</label><select id="pcContract">
         <option value="">بدون عقد</option>
@@ -7174,8 +7217,15 @@ async function showFINOPortalCodeManager(editId=''){
         </div>
       </div>
     </div>
-    <button class="portal-execute" type="button" onclick="saveFINODynamicCodeFromForm('${c.id||''}')">✅ تنفيذ وحفظ مركزيًا</button>
-    <div class="portal-note">بعد الضغط على تنفيذ: يتم الحفظ في FINO-Central، ثم نعيد قراءة الكود من المركزية للتأكد أنه محفوظ فعلًا.</div>
+    <button class="portal-execute" type="button" onclick="saveFINODynamicCodeFromForm('${c.id||''}')">✅ تنفيذ وحفظ التعديل مركزيًا</button>
+    <div class="portal-note">${c.id?'أنت الآن تعدل نفس الكود. تغيير الخدمة أو المدة أو الأتعاب لا يغيّر رمز الكود، إلا إذا أنت غيرت خانة الكود بنفسك.':'بعد التنفيذ يتم إنشاء الكود ثم التحقق منه مركزيًا.'}</div>
+    ${c.id?`<div class="portal-code-state-card"><b>الكود الحالي</b><br>${portalEsc(c.code||'')} • ${c.enabled!==false?'مفعل':'موقوف'} • ${portalEsc(c.allowedService==='buyout'?'تحويل المديونية فقط':c.allowedService==='smart'?'الحاسبة الذكية فقط':c.allowedService==='contract'?'العقد فقط':'الخدمتان')}</div>
+    <div class="portal-code-admin-toolbar">
+      <button type="button" class="${c.enabled!==false?'danger':'success'}" onclick="finoAdminToggleCode('${c.id}',${c.enabled===false?'true':'false'})">${c.enabled!==false?'⏸️ إيقاف الكود':'▶️ تفعيل الكود من جديد'}</button>
+      <button type="button" onclick="finoAdminResetCodeUsage('${c.id}')">♻️ تصفير الاستخدامات وفك الجهاز</button>
+      <button type="button" class="primary" onclick="showFINOPortalCodeManager('${c.id}')">✏️ تعديل نفس الكود</button>
+      <button type="button" class="danger" onclick="deleteFINODynamicCode('${c.id}')">🗑️ حذف الكود نهائيًا</button>
+    </div>`:''}
     ${c.id&&finoCentralAdminToken?`<div class="portal-code-presets">
       <button type="button" onclick="extendFINOCentralCode('${c.id}',15)">تمديد 15 دقيقة</button>
       <button type="button" onclick="extendFINOCentralCode('${c.id}',60)">تمديد ساعة</button>
@@ -7244,6 +7294,12 @@ async function saveFINODynamicCodeFromForm(id=''){
 
   if(!payload.code){
     portalAssistant('<div class="portal-central-error">اكتب الكود أولًا.</div>');return;
+  }
+  if(id){
+    const original=String(document.getElementById('pcCode')?.dataset.originalCode||'').toUpperCase();
+    if(original&&payload.code!==original){
+      if(!confirm(`أنت تغيّر رمز الدخول من ${original} إلى ${payload.code}. إذا هدفك فقط تغيير الخدمة أو التفعيل أو المدة اضغط إلغاء وخلك على نفس الكود.`))return;
+    }
   }
   if(allowed==='contract'&&!payload.contract_template_id){
     portalAssistant('<div class="portal-central-error">هذا الكود «عقد فقط». اختر العقد المرتبط به قبل التنفيذ.</div>');return;
@@ -7425,13 +7481,14 @@ async function extendFINOCentralCode(id,minutes){
   showFINOPortalCodeManager(id);
 }
 async function deleteFINODynamicCode(id){
+  if(!confirm('تأكيد حذف الكود نهائيًا؟'))return;
   if(finoCentralAdminToken){
     const r=await finoCentralAdminCall('fino_admin_delete_code',{p_code_id:id});
     if(!r.ok||r.data?.ok===false){
-      portalAssistant('<div class="portal-alert">تعذر حذف الكود مركزيًا.</div>');return;
+      portalAssistant(`<div class="portal-central-error">تعذر حذف الكود مركزيًا.<br>${portalEsc(finoCentralDebugMessage(r))}</div>`);return;
     }
     await finoCentralAdminDashboard(true);
-    portalAssistant('<div class="portal-executed">✅ تم حذف الكود مركزيًا.</div>');
+    portalAssistant('<div class="portal-central-confirm">✅ تم حذف الكود نهائيًا من FINO-Central.</div>');
     showFINOPortalCodeManager();return;
   }
   const list=getFINODynamicCodes().filter(x=>x.id!==id);
@@ -7696,6 +7753,51 @@ function showFINOContractDone(data={}){
   finoCentralClearEntry();
 }
 
+
+function finoCentralServiceScope(){
+  const s1=activeAccess?.record?.centralData?.allowed_services;
+  const s2=finoCentralRestoreEntry()?.allowed_services;
+  const services=Array.isArray(s1)?s1:(Array.isArray(s2)?s2:[]);
+  if(services.length===1)return services[0];
+  if(services.includes('buyout')&&services.includes('smart'))return 'both';
+  if(services.includes('contract'))return 'contract';
+  return services[0]||'';
+}
+function finoScopeAllows(service){
+  const scope=finoPortal?.strictServiceScope||finoCentralServiceScope();
+  if(!scope||scope==='both')return true;
+  return scope===service;
+}
+function finoScopeGuard(service){
+  if(finoScopeAllows(service))return true;
+  const names={buyout:'تحويل المديونية',smart:'الحاسبة الذكية',contract:'العقود'};
+  portalAssistant(`<div class="portal-reason-box"><b>هذا الكود مخصص لخدمة واحدة فقط</b>الخدمة المسموحة بهذا الكود: ${portalEsc(names[finoPortal.strictServiceScope]||finoPortal.strictServiceScope)}.</div>`);
+  return false;
+}
+function finoApplyStrictServiceScope(){
+  const scope=finoCentralServiceScope();
+  finoPortal.strictServiceScope=scope||'';
+  const page=document.getElementById('specialistBotPage');
+  if(page){
+    page.classList.toggle('portal-service-locked',!!scope&&scope!=='both');
+    page.classList.toggle('portal-smart-only',scope==='smart');
+  }
+  finoHideDisallowedPortalActions();
+  return scope;
+}
+function finoHideDisallowedPortalActions(){
+  const scope=finoPortal?.strictServiceScope||finoCentralServiceScope();
+  if(!scope||scope==='both')return;
+  const page=document.getElementById('specialistBotPage');
+  if(!page)return;
+  page.querySelectorAll('button').forEach(btn=>{
+    const txt=(btn.textContent||'').trim();
+    const admin=txt.includes('المختص')||txt.includes('إعدادات');
+    if(admin){btn.style.display='none';return}
+    if(scope==='smart'&&txt.includes('تحويل المديونية'))btn.style.display='none';
+    if(scope==='buyout'&&txt.includes('الحاسبة الذكية'))btn.style.display='none';
+  });
+}
 function finoCentralApplyEntrySettings(data){
   if(!data)return;
   finoPortal.activeCodeConfig={
@@ -8137,6 +8239,7 @@ function portalAdd(role,htmlContent){
   else bubble.textContent=htmlContent;
   row.appendChild(bubble);
   chat.appendChild(row);
+  setTimeout(()=>{try{finoHideDisallowedPortalActions()}catch(e){}},0);
 
   requestAnimationFrame(()=>{
     if(role==='assistant'){
@@ -8190,6 +8293,7 @@ function openFINOSmartPortal(trial=false){
     finoCentralApplyEntrySettings(activeAccess.record.centralData);
   }
   showPage('specialistBotPage');
+  finoApplyStrictServiceScope();
   incrementFINOPortalUsage();
   const title=document.getElementById('portalMainTitle');
   const sub=document.getElementById('portalMainSub');
@@ -8304,10 +8408,21 @@ async function handleFINOPortalRestart(){
 }
 function resetFINOSmartPortal(){
   if(!finoCentralGuard())return;
+  const scope=finoPortal.strictServiceScope||finoCentralServiceScope();
   const chat=document.getElementById('finoBotChat');
   if(chat)chat.innerHTML='';
   finoPortal.mode=null;finoPortal.step=null;finoPortal.data={};
   finoPortal.adminBankId='';finoPortal.adminRateIndex=null;finoPortal.imageFile=null;finoPortal.imageRead=null;
+  if(scope==='smart'){
+    finoPortal.strictServiceScope='smart';
+    setTimeout(()=>startFINOPortalSmart(),20);
+    return;
+  }
+  if(scope==='buyout'){
+    finoPortal.strictServiceScope='buyout';
+    setTimeout(()=>startFINOPortalBuyout(),20);
+    return;
+  }
   if(finoPortal.trial){
     finoPortal.mode='buyout';
     const pkg=FINOPackageBannerHtml();
@@ -8324,10 +8439,11 @@ function resetFINOSmartPortal(){
   }
 }
 function FINOPortalBack(){
-  if(finoPortal.smartOnlyCode){
+  if(['smart','buyout','contract'].includes(finoPortal.strictServiceScope||'')){
     finoCentralClearEntry();activeAccess=null;pendingAccessAfterLogin=null;
-    document.getElementById('specialistBotPage')?.classList.remove('portal-smart-only');
-    finoPortal.smartOnlyCode=false;showPage('page1');return;
+    document.getElementById('specialistBotPage')?.classList.remove('portal-smart-only','portal-service-locked');
+    finoPortal.smartOnlyCode=false;finoPortal.strictServiceScope='';
+    showPage('page1');return;
   }
   if(finoCentralIsPortalLocked()){
     finoCentralClearEntry();
@@ -8503,7 +8619,7 @@ function applyFINOFreeConversationSettings(mode){
   showPortalWorkTypes(mode);
 }
 function startFINOPortalBuyout(){
-  if(!finoCentralGuard())return;
+  if(!finoCentralGuard()||!finoScopeGuard('buyout'))return;
   portalUser('تحويل المديونية');
   if(isFreeAccess())showFINOFreeConversationSettings('buyout');
   else{
@@ -8512,7 +8628,7 @@ function startFINOPortalBuyout(){
   }
 }
 function startFINOPortalSmart(){
-  if(!finoCentralGuard())return;
+  if(!finoCentralGuard()||!finoScopeGuard('smart'))return;
   if(finoPortal.trial)return;
   portalUser('الحاسبة الذكية');
   if(isFreeAccess())showFINOFreeConversationSettings('smart');
@@ -8526,6 +8642,35 @@ function startFINOPortalSmart(){
 
 
 
+
+function restartFINOSmartWithEdit(kind){
+  if(!finoScopeAllows('smart'))return;
+  if(kind==='salary'){
+    finoPortal.step='smart_salary';
+    portalAssistant('اكتب صافي الراتب الصحيح.');
+    setPortalInput(true,'صافي الراتب','number');return;
+  }
+  if(kind==='obligations'){
+    finoPortal.step='smart_personal_installment';
+    portalAssistant('نراجع الالتزامات من جديد. كم قسط التمويل الشخصي القائم؟ وإذا ما فيه اكتب 0.');
+    setPortalInput(true,'قسط الشخصي','number');return;
+  }
+  if(kind==='deduction'){
+    finoPortal.step='smart_custom_deduction';
+    portalAssistant('اكتب نسبة الاستقطاع الجديدة حتى 80%.');
+    setPortalInput(true,'من 0 إلى 80','number');return;
+  }
+  if(kind==='term'){
+    finoPortal.step='smart_custom_term';
+    portalAssistant('اكتب المدة الجديدة بالأشهر حتى 360 شهر.');
+    setPortalInput(true,'من 1 إلى 360','number');return;
+  }
+  if(kind==='amount'){
+    portalAssistant('المبلغ النهائي يرتبط بالقسط المتاح. نراجع الالتزامات أولًا، وبعد ظهور الحد الأعلى تقدر تختار مبلغ أقل.');
+    finoPortal.step='smart_personal_installment';
+    setPortalInput(true,'قسط الشخصي','number');
+  }
+}
 function askFINOPortalSmartFinanceKind(){
   finoPortal.step='smart_finance_kind';setPortalInput(false);
   portalAssistant(`وش نوع الحسبة المطلوبة؟${portalOptions([
@@ -9442,7 +9587,7 @@ function runFINOPortalSmart(){
     const detail=['consumer','company'].includes(smartFinanceKind)
       ?`سقف غير العقاري 45% = ${money(eligibility.nonMortgageCap)}${smartHasMortgage?` • السقف الإجمالي ${fmt(eligibility.overallPct)}% = ${money(eligibility.overallCap)}`:''}`
       :`حد الاستقطاع ${fmt(eligibility.pct)}% = ${money(eligibility.cap)} • الالتزامات المحتسبة = ${money(eligibility.obligations)}`;
-    portalAssistant(`<div class="portal-alert">للأسف${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}، ما يطلع لك قسط جديد بهذه البيانات. الالتزامات تتجاوز الحد المسموح بمبلغ ${money(Math.abs(eligibility.available))}.<br>${detail}</div>`);
+    portalAssistant(`<div class="portal-reason-box"><b>${cleanClientName(clientName)?`يا ${cleanClientName(clientName)}، `:''}سبب عدم ظهور تمويل بهذه البيانات</b>الالتزامات تتجاوز الحد المسموح بمبلغ ${money(Math.abs(eligibility.available))}.<br>${detail}<div class="portal-adjust-options"><button type="button" onclick="restartFINOSmartWithEdit('salary')">تعديل الراتب</button><button type="button" onclick="restartFINOSmartWithEdit('obligations')">تعديل الالتزامات</button><button type="button" onclick="restartFINOSmartWithEdit('amount')">طلب مبلغ أقل</button><button type="button" onclick="restartFINOSmartWithEdit('term')">تعديل المدة</button></div></div>`);
     return;
   }
   calculateSmartPersonal();
@@ -11838,17 +11983,27 @@ function finishIdentityAndEnter(){
     showPage('freeHub');
   }else if(activeAccess.record && activeAccess.record.central){
     const services=activeAccess.record.centralData?.allowed_services||[];
-    if(services.length===1&&services[0]==='contract'){
+    const only=services.length===1?services[0]:'';
+    if(only==='contract'){
+      finoPortal.strictServiceScope='contract';
       openFINOContractClient();
+    }else if(only==='smart'){
+      openFINOSmartPortal(false);
+      finoPortal.strictServiceScope='smart';
+      finoPortal.smartOnlyCode=true;
+      finoApplyStrictServiceScope();
+      setTimeout(()=>startFINOPortalSmart(),60);
+    }else if(only==='buyout'){
+      openFINOSmartPortal(true);
+      finoPortal.strictServiceScope='buyout';
+      finoApplyStrictServiceScope();
+      setTimeout(()=>startFINOPortalBuyout(),60);
     }else if(activeAccess.record.free){
       showPage('freeHub');
     }else{
-      openFINOSmartPortal(services.length===1&&services[0]==='buyout');
-      if(services.length===1&&services[0]==='smart'){
-        document.getElementById('specialistBotPage')?.classList.add('portal-smart-only');
-        finoPortal.smartOnlyCode=true;
-        setTimeout(()=>startFINOPortalSmart(),60);
-      }
+      openFINOSmartPortal(false);
+      finoPortal.strictServiceScope='both';
+      finoApplyStrictServiceScope();
     }
   }else if(activeAccess.record && activeAccess.record.dynamic){
     openFINOSmartPortal(activeAccess.record.trialSmart===true);
@@ -15266,4 +15421,4 @@ async function testFINOSmartImageClipboardSupport(){
 
 </script>
 </body>
-</html
+</html>
