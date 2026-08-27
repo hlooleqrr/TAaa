@@ -5151,6 +5151,59 @@ button{
   color:#a12626;font-size:6.2px;line-height:1.65;font-weight:900
 }
 
+
+/* FINO V6 — maximum one-file smart portal */
+.portal-copy h1{font-size:24px!important}
+.portal-copy p{font-size:9px!important;line-height:1.8!important}
+.portal-bubble{font-size:13px!important;line-height:2!important;font-weight:900!important}
+.portal-option{min-height:48px!important;font-size:10px!important}
+.portal-bank{min-height:62px!important}
+.portal-bank b{font-size:9px!important}
+.portal-result-head b{font-size:13px!important}
+.portal-result-head span{font-size:9px!important}
+.portal-cash-hero small{font-size:9px!important}
+.portal-cash-hero b{font-size:27px!important}
+.portal-detail-line{padding:10px 11px!important}
+.portal-detail-line span{font-size:9px!important}
+.portal-detail-line b{font-size:10px!important}
+.portal-note,.portal-alert,.portal-admin-global-note{font-size:8px!important;line-height:1.8!important}
+.portal-result-actions .portal-option{font-size:9px!important;min-height:50px!important}
+.portal-image-overlay-body{padding:8px!important}
+.portal-image-overlay-body img{
+  max-width:min(760px,94vw)!important;
+  width:auto!important;height:auto!important;
+  image-rendering:auto;
+}
+.portal-code-manager{margin-top:9px;padding:10px;border:1px solid #d6e5ed;border-radius:12px;background:#f8fcfe}
+.portal-code-manager h4{margin:0 0 8px;color:#073b67;font-size:11px;font-weight:900}
+.portal-code-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.portal-code-field{display:grid;gap:4px}
+.portal-code-field.full{grid-column:1/-1}
+.portal-code-field label{font-size:7px;color:#587383;font-weight:900}
+.portal-code-field input,.portal-code-field select,.portal-code-field textarea{
+  width:100%;min-height:40px;border:1px solid #cddde6;border-radius:8px;background:#fff;
+  color:#173e56;padding:7px 8px;font-family:Cairo,Arial,sans-serif;font-size:8px;font-weight:800
+}
+.portal-code-field textarea{min-height:70px;resize:vertical}
+.portal-code-row{
+  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:8px;
+  border:1px solid #dce8ed;border-radius:9px;background:#fff;margin-top:6px
+}
+.portal-code-row b{font-size:8px;color:#244b61}
+.portal-code-row small{display:block;font-size:6.4px;color:#7c909b;margin-top:2px}
+.portal-code-row button{border:0;border-radius:8px;background:#eef5f8;color:#31566c;padding:8px;font-size:7px;font-weight:900}
+.portal-toggle-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.portal-toggle-line label{display:flex;align-items:center;gap:4px;font-size:7px;font-weight:900;color:#35576b}
+.portal-central-status{
+  margin:8px 0;padding:8px;border-radius:9px;border:1px solid #d5e5ec;background:#f7fbfd;
+  color:#31566c;font-size:7px;line-height:1.7;font-weight:900
+}
+.portal-central-status.online{border-color:#b9e2d1;background:#f2fbf7;color:#147653}
+@media(max-width:560px){
+ .portal-code-grid{grid-template-columns:1fr}
+ .portal-code-field.full{grid-column:auto}
+}
+
 </style>
 </head>
 <body>
@@ -6604,6 +6657,183 @@ let finoPortal={
 
 const FINO_PORTAL_CLIENT_DEFAULTS_KEY='FINO_PORTAL_CLIENT_DEFAULTS_V1';
 
+
+const FINO_CODES_KEY='FINO_DYNAMIC_CODES_V1';
+const FINO_CENTRAL_CONFIG_KEY='FINO_CENTRAL_CONFIG_V1';
+
+/*
+  CENTRAL MODE:
+  This one-file build works now using localStorage.
+  If a secure central API is later connected, put its HTTPS endpoint
+  into FINO_CENTRAL_CONFIG_V1 as {"endpoint":"https://..."}.
+  The same UI then attempts central sync first and falls back locally.
+*/
+function finoCentralConfig(){
+  try{return JSON.parse(localStorage.getItem(FINO_CENTRAL_CONFIG_KEY)||'{}')}catch(e){return {}}
+}
+async function finoCentralRequest(action,payload={}){
+  const cfg=finoCentralConfig();
+  if(!cfg.endpoint)return {ok:false,local:true,error:'NO_ENDPOINT'};
+  try{
+    const r=await fetch(cfg.endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action,payload})
+    });
+    if(!r.ok)throw new Error('HTTP_'+r.status);
+    return {ok:true,data:await r.json()};
+  }catch(e){
+    return {ok:false,error:String(e.message||e)};
+  }
+}
+function getFINODynamicCodes(){
+  try{
+    const x=JSON.parse(localStorage.getItem(FINO_CODES_KEY)||'[]');
+    return Array.isArray(x)?x:[];
+  }catch(e){return []}
+}
+function saveFINODynamicCodes(x){
+  localStorage.setItem(FINO_CODES_KEY,JSON.stringify(x));
+}
+function finoGenerateCode(){
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s='';
+  for(let i=0;i<10;i++)s+=chars[Math.floor(Math.random()*chars.length)];
+  return s.slice(0,3)+'-'+s.slice(3,7)+'-'+s.slice(7);
+}
+function finoCodeNow(){return Date.now()}
+function finoCodeExpiryLabel(c){
+  if(!c.expiresAt)return 'غير محدد';
+  const d=new Date(c.expiresAt);
+  return d.toLocaleString('ar-SA',{timeZone:'Asia/Riyadh'});
+}
+function finoDynamicCodeValid(c){
+  if(!c||c.enabled===false)return {ok:false,msg:'الكود موقوف'};
+  if(c.expiresAt&&Date.now()>Number(c.expiresAt))return {ok:false,msg:'الكود منتهي'};
+  if(c.maxUses&&Number(c.used||0)>=Number(c.maxUses))return {ok:false,msg:'انتهى عدد استخدامات الكود'};
+  return {ok:true};
+}
+function renderFINODynamicCodes(){
+  const list=getFINODynamicCodes().slice().reverse();
+  if(!list.length)return '<div class="portal-note">لا توجد أكواد مضافة من المختص حتى الآن.</div>';
+  return list.map(c=>`<div class="portal-code-row">
+    <div>
+      <b>${portalEsc(c.name||'كود')} • ${portalEsc(c.code)}</b>
+      <small>${c.enabled===false?'موقوف':'مفعل'} • الانتهاء: ${portalEsc(finoCodeExpiryLabel(c))} • الاستخدام: ${Number(c.used||0)}${c.maxUses?'/'+Number(c.maxUses):''}</small>
+    </div>
+    <button type="button" onclick="editFINODynamicCode('${c.id}')">تعديل</button>
+  </div>`).join('');
+}
+function showFINOPortalCodeManager(editId=''){
+  if(!finoPortal.adminUnlocked)return;
+  finoPortal.step='admin_codes';
+  setPortalInput(false);
+  const list=getFINODynamicCodes();
+  const c=list.find(x=>x.id===editId)||{
+    id:'',code:finoGenerateCode(),name:'كود عميل',enabled:true,
+    durationMinutes:1440,maxUses:0,maxRecalculations:0,
+    allowRestart:true,showCompact:true,showDetailed:true,showText:true,
+    feesEnabled:false,feeAmount:2800,noteEnabled:false,note:'',
+    bannerText:'',bannerImage:'',allowedService:'buyout'
+  };
+  portalAssistant(`<div class="portal-code-manager">
+    <h4>${c.id?'تعديل الكود':'إضافة كود جديد'}</h4>
+    <div class="portal-code-grid">
+      <div class="portal-code-field"><label>اسم الكود / العرض</label><input id="pcName" value="${portalEsc(c.name||'')}"></div>
+      <div class="portal-code-field"><label>الكود</label><input id="pcCode" value="${portalEsc(c.code||finoGenerateCode())}"></div>
+      <div class="portal-code-field"><label>مدة الصلاحية بالدقائق — 0 بدون مدة</label><input id="pcDuration" inputmode="numeric" value="${Number(c.durationMinutes||0)}"></div>
+      <div class="portal-code-field"><label>عدد الاستخدامات — 0 غير محدود</label><input id="pcUses" inputmode="numeric" value="${Number(c.maxUses||0)}"></div>
+      <div class="portal-code-field"><label>عدد مرات إعادة الحسبة — 0 غير محدود</label><input id="pcRecalc" inputmode="numeric" value="${Number(c.maxRecalculations||0)}"></div>
+      <div class="portal-code-field"><label>الخدمة المتاحة</label><select id="pcService">
+        <option value="buyout" ${c.allowedService==='buyout'?'selected':''}>تحويل المديونية فقط</option>
+        <option value="smart" ${c.allowedService==='smart'?'selected':''}>التمويل الشخصي فقط</option>
+        <option value="both" ${c.allowedService==='both'?'selected':''}>الخدمتان</option>
+      </select></div>
+      <div class="portal-code-field full"><label>النص الظاهر للعميل / اسم العرض</label><input id="pcBanner" value="${portalEsc(c.bannerText||'')}"></div>
+      <div class="portal-code-field full"><label>رابط صورة العرض — اختياري</label><input id="pcBannerImage" value="${portalEsc(c.bannerImage||'')}"></div>
+      <div class="portal-code-field full"><label>ملاحظة العميل</label><textarea id="pcNote">${portalEsc(c.note||'')}</textarea></div>
+      <div class="portal-code-field"><label>أتعاب المتابعة</label><input id="pcFee" inputmode="numeric" value="${Number(c.feeAmount||2800)}"></div>
+      <div class="portal-code-field full">
+        <div class="portal-toggle-line">
+          <label><input type="checkbox" id="pcEnabled" ${c.enabled!==false?'checked':''}> الكود مفعل</label>
+          <label><input type="checkbox" id="pcRestart" ${c.allowRestart!==false?'checked':''}> السماح ببدء من جديد</label>
+          <label><input type="checkbox" id="pcCompact" ${c.showCompact!==false?'checked':''}> البطاقة المختصرة</label>
+          <label><input type="checkbox" id="pcDetailed" ${c.showDetailed!==false?'checked':''}> البطاقة الكاملة</label>
+          <label><input type="checkbox" id="pcText" ${c.showText!==false?'checked':''}> إرسال النص</label>
+          <label><input type="checkbox" id="pcFees" ${c.feesEnabled?'checked':''}> تفعيل الأتعاب</label>
+          <label><input type="checkbox" id="pcNoteEnabled" ${c.noteEnabled?'checked':''}> تفعيل الملاحظة</label>
+        </div>
+      </div>
+    </div>
+    <button class="portal-execute" type="button" onclick="saveFINODynamicCodeFromForm('${c.id||''}')">تنفيذ وحفظ الكود</button>
+    ${c.id?`<button class="portal-option" type="button" onclick="deleteFINODynamicCode('${c.id}')">حذف الكود</button>`:''}
+    <div class="portal-central-status ${finoCentralConfig().endpoint?'online':''}">
+      ${finoCentralConfig().endpoint?'🌐 تم ضبط عنوان مزامنة مركزية. سيحاول النظام المزامنة ثم يستخدم النسخة المحلية عند تعذر الاتصال.':'📱 الوضع الحالي: حفظ محلي على هذا الجهاز. الكود جاهز تقنيًا للربط بعنوان API مركزي لاحقًا دون تغيير واجهة الإدارة.'}
+    </div>
+    <div id="portalDynamicCodeList">${renderFINODynamicCodes()}</div>
+  </div>`);
+}
+function editFINODynamicCode(id){showFINOPortalCodeManager(id)}
+async function saveFINODynamicCodeFromForm(id=''){
+  const list=getFINODynamicCodes();
+  const old=list.find(x=>x.id===id);
+  const duration=Math.max(0,Number(document.getElementById('pcDuration')?.value||0));
+  const now=Date.now();
+  const item={
+    ...(old||{}),
+    id:id||('C'+now.toString(36)+Math.random().toString(36).slice(2,6)),
+    name:String(document.getElementById('pcName')?.value||'كود عميل').trim(),
+    code:String(document.getElementById('pcCode')?.value||'').trim().toUpperCase(),
+    enabled:!!document.getElementById('pcEnabled')?.checked,
+    durationMinutes:duration,
+    expiresAt:duration?now+duration*60000:0,
+    maxUses:Math.max(0,Number(document.getElementById('pcUses')?.value||0)),
+    maxRecalculations:Math.max(0,Number(document.getElementById('pcRecalc')?.value||0)),
+    allowRestart:!!document.getElementById('pcRestart')?.checked,
+    showCompact:!!document.getElementById('pcCompact')?.checked,
+    showDetailed:!!document.getElementById('pcDetailed')?.checked,
+    showText:!!document.getElementById('pcText')?.checked,
+    feesEnabled:!!document.getElementById('pcFees')?.checked,
+    feeAmount:Math.max(0,Number(document.getElementById('pcFee')?.value||2800)),
+    noteEnabled:!!document.getElementById('pcNoteEnabled')?.checked,
+    note:String(document.getElementById('pcNote')?.value||'').trim(),
+    bannerText:String(document.getElementById('pcBanner')?.value||'').trim(),
+    bannerImage:String(document.getElementById('pcBannerImage')?.value||'').trim(),
+    allowedService:String(document.getElementById('pcService')?.value||'buyout'),
+    updatedAt:new Date().toISOString(),
+    used:Number(old?.used||0),
+    recalculations:Number(old?.recalculations||0)
+  };
+  if(!item.code){portalAssistant('<div class="portal-alert">اكتب الكود أولاً.</div>');return}
+  const duplicate=list.find(x=>x.code===item.code&&x.id!==item.id);
+  if(duplicate){portalAssistant('<div class="portal-alert">هذا الكود مستخدم مسبقًا.</div>');return}
+  const idx=list.findIndex(x=>x.id===item.id);
+  if(idx>=0)list[idx]=item;else list.push(item);
+  saveFINODynamicCodes(list);
+  const central=await finoCentralRequest('save_code',item);
+  portalAssistant(`<div class="portal-executed">✅ تم التنفيذ وحفظ الكود ${portalEsc(item.code)}.${central.ok?' وتمت المزامنة المركزية.':' الحفظ الحالي محلي.'}</div>`);
+  showFINOPortalCodeManager(item.id);
+}
+async function deleteFINODynamicCode(id){
+  const list=getFINODynamicCodes().filter(x=>x.id!==id);
+  saveFINODynamicCodes(list);
+  await finoCentralRequest('delete_code',{id});
+  portalAssistant('<div class="portal-executed">تم حذف الكود.</div>');
+  showFINOPortalCodeManager();
+}
+function getFINOActiveDynamicCode(){
+  const code=String(activeAccess?.code||'').trim().toUpperCase();
+  return getFINODynamicCodes().find(x=>String(x.code||'').toUpperCase()===code)||null;
+}
+function applyFINOActiveCodeSettings(){
+  const c=getFINOActiveDynamicCode();
+  if(!c)return;
+  finoPortal.activeCodeConfig=c;
+  finoPortal.includeFees=!!c.feesEnabled;
+  finoPortal.feeAmount=Number(c.feeAmount||2800);
+  finoPortal.clientNote=c.noteEnabled?String(c.note||''):'';
+}
+
 const FINO_PORTAL_ARCHIVE_KEY='FINO_PORTAL_ARCHIVE_V1';
 const FINO_PORTAL_USAGE_KEY='FINO_PORTAL_USAGE_V1';
 
@@ -6691,6 +6921,10 @@ function showFINOPortalArchive(){
     <h4>أرشفة العملاء <span class="portal-archive-count">${list.length}</span></h4>
     <input class="portal-archive-search" id="portalArchiveSearch" placeholder="ابحث بالاسم أو الجوال أو التاريخ أو البنك" oninput="filterFINOPortalArchive(this.value)">
     <div class="portal-note">مرات استخدام كود التجربة على هذا الجهاز: ${Number(usage['تجربة المنصة الذكية • يوم واحد']||0)}</div>
+    <div class="portal-options">
+      <button type="button" class="portal-option" onclick="deleteFINOPortalArchiveOlderThan(30)">حذف الأرشيف الأقدم من 30 يوم</button>
+      <button type="button" class="portal-option" onclick="deleteFINOPortalArchiveOlderThan(7)">حذف الأرشيف الأقدم من 7 أيام</button>
+    </div>
     <div class="portal-archive-list" id="portalArchiveList">${renderFINOPortalArchiveItems(list)}</div>
     <div class="portal-admin-global-note">⚠️ هذه الأرشفة محلية على هذا الجهاز والمتصفح فقط. مزامنة الأرشيف أو أوامر المختص على جميع الجوالات تحتاج قاعدة بيانات/Backend مركزي، ولا يمكن تنفيذها بأمان داخل ملف HTML ثابت وحده.</div>
   </div>`);
@@ -6711,6 +6945,19 @@ function filterFINOPortalArchive(q){
   const el=document.getElementById('portalArchiveList');
   if(el)el.innerHTML=renderFINOPortalArchiveItems(list);
 }
+
+function deleteFINOPortalArchiveItem(id){
+  const list=getFINOPortalArchive().filter(x=>x.id!==id);
+  saveFINOPortalArchive(list);
+  showFINOPortalArchive();
+}
+function deleteFINOPortalArchiveOlderThan(days){
+  days=Math.max(0,Number(days||0));
+  const cut=Date.now()-days*86400000;
+  const list=getFINOPortalArchive().filter(x=>new Date(x.createdAt||0).getTime()>=cut);
+  saveFINOPortalArchive(list);
+  showFINOPortalArchive();
+}
 function openFINOPortalArchiveItem(id){
   const x=getFINOPortalArchive().find(a=>a.id===id);
   if(!x)return;
@@ -6726,6 +6973,8 @@ function openFINOPortalArchiveItem(id){
       <div class="portal-detail-line"><span>الالتزامات الأخرى</span><b>${money(Number(x.external||0))}</b></div>
       <div class="portal-detail-line"><span>عدد الأحداث</span><b>${(x.events||[]).length}</b></div>
     </div>
+    <div class="portal-note" style="margin-top:8px"><b>سجل العملية الكامل</b><br>${(x.events||[]).map(e=>portalEsc(JSON.stringify(e))).join('<br>')}</div>
+    <button type="button" class="portal-option" onclick="deleteFINOPortalArchiveItem('${x.id}')">حذف هذه العملية من الأرشيف</button>
   </div>`);
 }
 
@@ -6818,6 +7067,7 @@ function openFINOSmartPortal(trial=false){
     currentPreviewType:'',currentPreviewIndex:0,currentPreviewUrl:''
   };
   loadFINOPortalClientDefaults();
+  applyFINOActiveCodeSettings();
   showPage('specialistBotPage');
   incrementFINOPortalUsage();
   const title=document.getElementById('portalMainTitle');
@@ -6848,6 +7098,10 @@ function openFINOSmartPortal(trial=false){
     }
   }
   resetFINOSmartPortal();
+  const dc=finoPortal.activeCodeConfig;
+  if(dc&&(dc.bannerText||dc.bannerImage)){
+    portalAssistant(`<div class="portal-note">${dc.bannerImage?`<img src="${portalEsc(dc.bannerImage)}" alt="" style="max-width:100%;border-radius:10px;margin-bottom:6px">`:''}${dc.bannerText?portalEsc(dc.bannerText):''}</div>`);
+  }
 }
 function resetFINOSmartPortal(){
   const chat=document.getElementById('finoBotChat');
@@ -7052,9 +7306,9 @@ function showFINOPortalRank(index){
 
     <div class="portal-actions-label">اختر ما تحتاجه:</div>
     <div class="portal-result-actions">
-      <button type="button" class="portal-option primary" onclick="portalPreviewCompactImage(${index})"><span class="portal-action-icon">🧾</span><span>عرض البطاقة المختصرة للحسبة</span></button>
-      <button type="button" class="portal-option" onclick="portalPreviewDetailedImage(${index})"><span class="portal-action-icon">📄</span><span>عرض بطاقة تفاصيل التمويل كاملة</span></button>
-      <button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})"><span class="portal-action-icon">💬</span><span>إرسال تفاصيل الحسبة كاملة كنص عبر واتساب</span></button>
+      ${(!finoPortal.activeCodeConfig||finoPortal.activeCodeConfig.showCompact!==false)?`<button type="button" class="portal-option primary" onclick="portalPreviewCompactImage(${index})"><span class="portal-action-icon">🧾</span><span>عرض البطاقة المختصرة للحسبة</span></button>`:''}
+      ${(!finoPortal.activeCodeConfig||finoPortal.activeCodeConfig.showDetailed!==false)?`<button type="button" class="portal-option" onclick="portalPreviewDetailedImage(${index})"><span class="portal-action-icon">📄</span><span>عرض بطاقة تفاصيل التمويل كاملة</span></button>`:''}
+      ${(!finoPortal.activeCodeConfig||finoPortal.activeCodeConfig.showText!==false)?`<button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})"><span class="portal-action-icon">💬</span><span>إرسال تفاصيل الحسبة كاملة كنص عبر واتساب</span></button>`:''}
     </div>
   </div>`);
 
@@ -7190,6 +7444,7 @@ async function portalPreviewDetailedImage(i){
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
     openFINOPortalImageOverlay('بطاقة تفاصيل التمويل كاملة',url,'detail',i);
+    archiveFINOPortalConversation({kind:'detailed-preview',bank:(latestResults||[])[i]?.name||'',image:'generated-hd'});
   }catch(e){
     console.error('FINO portal detailed preview',e);
     portalAssistant('<div class="portal-alert">تعذر تجهيز بطاقة التفاصيل حاليًا.</div>');
@@ -7204,6 +7459,7 @@ async function portalPreviewCompactImage(i){
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
     openFINOPortalImageOverlay('البطاقة المختصرة للحسبة',url,'compact',i);
+    archiveFINOPortalConversation({kind:'compact-preview',bank:(latestResults||[])[i]?.name||'',image:'generated-hd'});
   }catch(e){
     console.error('FINO portal compact preview',e);
     portalAssistant('<div class="portal-alert">تعذر تجهيز البطاقة المختصرة حاليًا.</div>');
@@ -7453,6 +7709,7 @@ function showFINOPortalAdminMenu(){
     {label:'إضافة بنك جديد',onclick:"startFINOPortalAddBank()"},
     {label:'تفعيل / إعداد بنك',onclick:"startFINOPortalEnableBank()"},
     {label:'إعداد الأتعاب والملاحظة للعميل',onclick:"showFINOPortalShareSettings()"},
+    {label:'إدارة أكواد العملاء',onclick:"showFINOPortalCodeManager()"},
     {label:'أرشفة العملاء',onclick:"showFINOPortalArchive()"},
     {label:'فتح لوحة المختص الكاملة',onclick:"openFINOPortalFullAdmin()"}
   ])}`);
