@@ -5353,6 +5353,35 @@ button{
   .portal-settings-grid,.contract-client-actions{grid-template-columns:1fr}
 }
 
+
+/* FINO V12 — free code conversational controls */
+.portal-free-settings{margin:9px 0;padding:11px;border:1px solid #d3e3eb;border-radius:13px;background:#fbfdfe}
+.portal-free-settings h4{margin:0 0 4px;font-size:10px;color:#073b67}
+.portal-free-settings>p{margin:0 0 9px;font-size:7px;line-height:1.7;color:#718896}
+.portal-free-settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.portal-free-setting{padding:8px;border:1px solid #e0e9ee;border-radius:9px;background:#fff}
+.portal-free-setting.full{grid-column:1/-1}
+.portal-free-setting label{display:block;font-size:7.5px;font-weight:900;color:#244d64;margin-bottom:4px}
+.portal-free-setting small{display:block;font-size:6px;line-height:1.5;color:#7b919e;margin-top:3px}
+.portal-free-setting input,.portal-free-setting select,.portal-free-setting textarea{
+  width:100%;box-sizing:border-box;border:1px solid #cadde6;border-radius:8px;padding:8px;
+  font:800 8px Cairo,Arial,sans-serif;background:#fff;color:#183f57
+}
+.portal-free-setting textarea{min-height:62px;resize:vertical}
+.portal-free-switches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.portal-free-switch{
+  display:flex;align-items:flex-start;gap:6px;padding:8px;border:1px solid #dce8ed;border-radius:9px;background:#fff
+}
+.portal-free-switch input{width:auto;margin-top:2px}
+.portal-free-switch span{font-size:7px;font-weight:900;color:#244d64;line-height:1.5}
+.portal-free-switch small{display:block;font-size:5.8px;color:#7a919d;line-height:1.45}
+.portal-free-apply{
+  width:100%;border:0;border-radius:9px;padding:10px;margin-top:9px;background:#0879ae;color:#fff;
+  font:900 8.5px Cairo,Arial,sans-serif
+}
+.portal-free-summary{margin-top:7px;padding:8px;border-radius:9px;background:#eef8fd;color:#23546f;font-size:7px;line-height:1.8;font-weight:800}
+@media(max-width:600px){.portal-free-settings-grid,.portal-free-switches{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -8202,18 +8231,146 @@ function showPortalWorkTypes(mode){
     {label:'متقاعد',onclick:`chooseFINOPortalType('retired')`}
   ]));
 }
+
+function finoFreeSettingsDefaults(mode){
+  const s=finoPortal.freeConversationSettings||{};
+  return {
+    termMonths:Number(s.termMonths||60),
+    commodityMode:s.commodityMode||'default',
+    includeFees:!!s.includeFees,
+    feeAmount:Number(s.feeAmount||2800),
+    offerName:String(s.offerName||''),
+    offerExpiry:String(s.offerExpiry||''),
+    note:String(s.note||''),
+    obligationImpact:!!s.obligationImpact,
+    customAmountAfterResult:s.customAmountAfterResult!==false,
+    mode:mode||s.mode||'buyout'
+  };
+}
+function showFINOFreeConversationSettings(mode){
+  if(!isFreeAccess()){
+    if(mode==='buyout'){portalAssistant(`أبشر${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);showPortalWorkTypes('buyout');}
+    else{portalAssistant(`تمام${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);showPortalWorkTypes('smart');}
+    return;
+  }
+  finoPortal.mode=mode;
+  finoPortal.step='free_'+mode+'_settings';
+  setPortalInput(false);
+  const s=finoFreeSettingsDefaults(mode);
+  portalAssistant(`<div class="portal-free-settings">
+    <h4>إعدادات الحسبة قبل البدء</h4>
+    <p>هذه نفس أهم أدوات التحكم الموجودة في الحاسبة النهائية. اختر اللي تبيه الآن، وتقدر تعدلها لاحقًا.</p>
+    <div class="portal-free-settings-grid">
+      <div class="portal-free-setting">
+        <label>مدة التمويل</label>
+        <input id="portalFreeTerm" type="number" inputmode="numeric" min="1" max="60" value="${s.termMonths}">
+        <small>الحد الأعلى 60 شهر.</small>
+      </div>
+      <div class="portal-free-setting">
+        <label>رسوم فرق السلعة</label>
+        <select id="portalFreeCommodity">
+          <option value="default" ${s.commodityMode==='default'?'selected':''}>حسب إعداد كل بنك</option>
+          <option value="on" ${s.commodityMode==='on'?'selected':''}>تشغيل الرسوم</option>
+          <option value="off" ${s.commodityMode==='off'?'selected':''}>إطفاء الرسوم</option>
+        </select>
+        <small>${mode==='buyout'?'في تحويل المديونية يطبق اختيارك على البنوك المرشحة.':'في الحاسبة الذكية يحدد هل تحسب رسوم فرق السلعة 1%.'}</small>
+      </div>
+      <div class="portal-free-setting">
+        <label>مبلغ الأتعاب</label>
+        <input id="portalFreeFeeAmount" type="number" inputmode="numeric" min="0" value="${s.feeAmount}">
+      </div>
+      <div class="portal-free-setting">
+        <label>اسم عرض الأتعاب — اختياري</label>
+        <input id="portalFreeOfferName" value="${portalEsc(s.offerName)}" placeholder="مثال: عرض خاص">
+      </div>
+      <div class="portal-free-setting">
+        <label>تاريخ انتهاء عرض الأتعاب — اختياري</label>
+        <input id="portalFreeOfferExpiry" type="date" value="${portalEsc(s.offerExpiry)}">
+      </div>
+      <div class="portal-free-setting full">
+        <label>ملاحظة للعميل — اختياري</label>
+        <textarea id="portalFreeNote" placeholder="مثال: يلزم تثبيت الراتب أو أي ملاحظة تريد ظهورها للعميل">${portalEsc(s.note)}</textarea>
+      </div>
+    </div>
+    <div class="portal-free-switches" style="margin-top:7px">
+      <label class="portal-free-switch">
+        <input id="portalFreeFeesOn" type="checkbox" ${s.includeFees?'checked':''}>
+        <span>تفعيل الأتعاب<small>إذا أطفأتها لا تظهر الأتعاب في النص أو الصور.</small></span>
+      </label>
+      <label class="portal-free-switch">
+        <input id="portalFreeImpact" type="checkbox" ${s.obligationImpact?'checked':''}>
+        <span>إظهار أثر الالتزامات<small>إذا أثرت الالتزامات على القسط والتمويل تظهر للعميل.</small></span>
+      </label>
+      <label class="portal-free-switch">
+        <input id="portalFreeCustomAmount" type="checkbox" ${s.customAmountAfterResult?'checked':''}>
+        <span>التحكم بمبلغ التمويل بعد أول حسبة<small>بعد ظهور الحد الأعلى تقدر تخفض المبلغ المطلوب.</small></span>
+      </label>
+    </div>
+    <button type="button" class="portal-free-apply" onclick="applyFINOFreeConversationSettings('${mode}')">اعتماد الإعدادات وبدء الحسبة</button>
+  </div>`);
+}
+function applyFINOFreeConversationSettings(mode){
+  const s={
+    mode,
+    termMonths:normalizeFreeTermMonths(document.getElementById('portalFreeTerm')?.value||60),
+    commodityMode:String(document.getElementById('portalFreeCommodity')?.value||'default'),
+    includeFees:!!document.getElementById('portalFreeFeesOn')?.checked,
+    feeAmount:Math.max(0,Number(document.getElementById('portalFreeFeeAmount')?.value||2800)),
+    offerName:String(document.getElementById('portalFreeOfferName')?.value||'').trim(),
+    offerExpiry:String(document.getElementById('portalFreeOfferExpiry')?.value||'').trim(),
+    note:String(document.getElementById('portalFreeNote')?.value||'').trim(),
+    obligationImpact:!!document.getElementById('portalFreeImpact')?.checked,
+    customAmountAfterResult:!!document.getElementById('portalFreeCustomAmount')?.checked
+  };
+  finoPortal.freeConversationSettings=s;
+  finoPortal.includeFees=s.includeFees;
+  finoPortal.feeAmount=s.feeAmount;
+  finoPortal.serviceOfferName=s.offerName;
+  finoPortal.serviceOfferExpiry=s.offerExpiry;
+  finoPortal.clientNote=s.note;
+  freeBuyoutTermMonths=s.termMonths;
+  smartTermMonths=s.termMonths;
+  window.__FINO_INCLUDE_OBLIGATION_IMPACT=s.obligationImpact;
+  window.__FINO_SMART_INCLUDE_OBLIGATION_IMPACT=s.obligationImpact;
+
+  if(mode==='buyout'){
+    BANKS.forEach(b=>{
+      if(s.commodityMode==='on')freeCommodityOverrides[b.id]=true;
+      else if(s.commodityMode==='off')freeCommodityOverrides[b.id]=false;
+      else delete freeCommodityOverrides[b.id];
+    });
+  }
+
+  const sum=[
+    `المدة ${s.termMonths} شهر`,
+    `رسوم السلعة: ${s.commodityMode==='on'?'مفعلة':s.commodityMode==='off'?'مطفأة':'حسب البنك'}`,
+    `الأتعاب: ${s.includeFees?englishMoney(s.feeAmount):'مطفأة'}`,
+    `الملاحظة: ${s.note?'مفعلة':'لا توجد'}`,
+    `أثر الالتزامات: ${s.obligationImpact?'يظهر':'مخفي'}`,
+    `التحكم بالمبلغ: ${s.customAmountAfterResult?'متاح بعد أول حسبة':'غير مطلوب'}`
+  ].join(' • ');
+  portalAssistant(`<div class="portal-free-summary">${portalEsc(sum)}</div>`);
+  portalAssistant(`تمام${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);
+  showPortalWorkTypes(mode);
+}
 function startFINOPortalBuyout(){
   if(!finoCentralGuard())return;
   portalUser('تحويل المديونية');
-  portalAssistant(`أبشر${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);
-  showPortalWorkTypes('buyout');
+  if(isFreeAccess())showFINOFreeConversationSettings('buyout');
+  else{
+    portalAssistant(`أبشر${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);
+    showPortalWorkTypes('buyout');
+  }
 }
 function startFINOPortalSmart(){
   if(!finoCentralGuard())return;
   if(finoPortal.trial)return;
   portalUser('الحاسبة الذكية للتمويل الشخصي');
-  portalAssistant(`تمام${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);
-  showPortalWorkTypes('smart');
+  if(isFreeAccess())showFINOFreeConversationSettings('smart');
+  else{
+    portalAssistant(`تمام${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. اختر جهة عملك.`);
+    showPortalWorkTypes('smart');
+  }
 }
 function chooseFINOPortalType(type){
   if(!finoCentralGuard())return;
@@ -8315,7 +8472,7 @@ function runFINOPortalBuyout(){
   customerType=d.customerType;
   selectedBank=d.bankId;
   selectedBankName=d.bankName;
-  freeBuyoutTermMonths=60;
+  freeBuyoutTermMonths=normalizeFreeTermMonths(finoPortal.freeConversationSettings?.termMonths||freeBuyoutTermMonths||60);
   document.getElementById('salary').value=String(d.salary);
   document.getElementById('earlySettlement').value=String(d.settlement);
   document.getElementById('externalObligations').value=String(d.external||0);
@@ -8329,7 +8486,7 @@ function runFINOPortalBuyout(){
     portalAssistant(`<div class="portal-alert">معليش، حاليًا ما فيه بنك مناسب لشراء المديونية حسب البيانات المدخلة. جرّب معنا لاحقًا أو تواصل معنا للاستفسار.</div>`);
     return;
   }
-  portalAssistant(`تمت الحسبة، وطلع لك ${out.length} ${out.length===1?'ترشيح':'ترشيحات'} متاحة. اختر البنك اللي تبي تشوف تفاصيله كاملة.${renderFINOPortalRankings(out)}`);
+  portalAssistant(`تمت الحسبة، وطلع لك ${out.length} ${out.length===1?'ترشيح':'ترشيحات'} متاحة. اختر البنك اللي تبي تشوف تفاصيله كاملة.${renderFINOPortalRankings(out)}${finoPortal.freeConversationSettings?.customAmountAfterResult?'<div class="portal-note">التحكم بمبلغ التمويل مفعّل: بعد اختيار البنك افتح الحسبة النهائية لتحديد مبلغ أقل من الحد الأعلى.</div>':''}`);
   archiveFINOPortalConversation({kind:'buyout-calculation',rankingCount:out.length});
   if(activeAccess?.record?.central){
     finoCentralSaveCase({type:'buyout-calculation',ranking_count:out.length},out[0]||null);
@@ -8670,6 +8827,11 @@ async function createFINOPortalCompactPngBlob(){
     ctx.fillStyle='#111';ctx.font='900 24px Arial,sans-serif';ctx.fillText(englishMoney(serviceFeesAmount()),990,y+58);y+=80;
   }
 
+  // Permanent legal notice
+  canvasRoundRect(ctx,60,y,960,105,12,'#fff7f7','#efd1d1');
+  ctx.fillStyle='#8f2929';ctx.font='900 12px Cairo,Arial,sans-serif';
+  drawWrappedArabic(ctx,smartLegalNoticeText(),990,y+25,870,20,4);y+=115;
+
   // Contact + QR
   ctx.fillStyle='#073b67';ctx.font='900 16px Cairo,Arial,sans-serif';ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات',990,y+25);
   ctx.fillStyle='#111';ctx.font='900 29px Arial,sans-serif';ctx.fillText('0506214458',990,y+62);
@@ -8795,7 +8957,7 @@ async function createFINOPortalDetailedPngBlob(){
   // disclaimer + contact, compact
   canvasRoundRect(ctx,60,y,960,88,12,'#fff7f7','#efd1d1');
   ctx.fillStyle='#8f2929';ctx.font='900 12.5px Cairo,Arial,sans-serif';
-  drawWrappedArabic(ctx,'الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. دورنا الوساطة والترشيح والمتابعة والإنجاز عبر الجهات المرخصة.',990,y+27,870,20,3);y+=100;
+  drawWrappedArabic(ctx,smartLegalNoticeText(),990,y+27,870,20,4);y+=100;
 
   ctx.fillStyle='#073b67';ctx.font='900 15px Cairo,Arial,sans-serif';ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات',990,y+24);
   ctx.fillStyle='#111';ctx.font='900 28px Arial,sans-serif';ctx.fillText('0506214458',990,y+59);
@@ -8909,7 +9071,9 @@ function runFINOPortalSmart(){
   document.getElementById('smartEarlySettlement').value=String(d.settlement||0);
   document.getElementById('smartExternal').value=String(d.external||0);
   const com=document.getElementById('smartCommodityToggle');
-  if(com)com.checked=!!d.commodity;
+  const cs=finoPortal.freeConversationSettings||{};
+  const smartCommodityValue=cs.commodityMode==='on'?true:cs.commodityMode==='off'?false:!!d.commodity;
+  if(com)com.checked=smartCommodityValue;
   document.querySelectorAll('#smartTypeGrid .smart-type-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.type===smartCustomerType));
   calculateSmartPersonal();
   const r=smartLastResult;
@@ -8930,6 +9094,7 @@ function runFINOPortalSmart(){
     <div class="portal-options">
       <button type="button" class="portal-option primary" onclick="portalOpenOriginalSmart()">فتح الحسبة النهائية</button>
     </div>
+    ${finoPortal.freeConversationSettings?.customAmountAfterResult?'<div class="portal-note">التحكم بمبلغ التمويل مفعّل: افتح الحسبة النهائية لتحديد مبلغ أقل من الحد الأعلى وتطبيقه مباشرة.</div>':''}
   </div>`);
 }
 function portalOpenOriginalSmart(){if(smartLastResult)showPage('smartResultPage')}
@@ -10216,20 +10381,33 @@ function updateSmartCommodityText(){
 }
 
 function getSmartClientNote(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'&&finoPortal.clientNote)return String(finoPortal.clientNote||'').trim();
   const el=document.getElementById('smartClientNote');
   return el?String(el.value||'').trim():'';
 }
 function smartIncludeFees(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined')return !!finoPortal.includeFees;
   return !!document.getElementById('smartIncludeFeesToggle')?.checked;
 }
 function smartServiceFeesAmount(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'){
+    const pv=Number(finoPortal.feeAmount||2800);
+    return Number.isFinite(pv)&&pv>=0?pv:2800;
+  }
   const v=Number(document.getElementById('smartServiceFeesAmount')?.value||2800);
   return Number.isFinite(v)&&v>=0?v:2800;
 }
 function smartServiceOfferName(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'&&finoPortal.serviceOfferName)return String(finoPortal.serviceOfferName||'').trim();
   return String(document.getElementById('smartServiceOfferName')?.value||'').trim();
 }
 function smartServiceOfferExpiry(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'&&finoPortal.serviceOfferExpiry)return String(finoPortal.serviceOfferExpiry||'').trim();
   return String(document.getElementById('smartServiceOfferExpiry')?.value||'').trim();
 }
 function updateSmartFeesControls(){
@@ -12584,10 +12762,14 @@ function serviceFeesAmount(){
   return Number.isFinite(value)&&value>=0 ? value : 2800;
 }
 function serviceOfferName(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'&&finoPortal.serviceOfferName)return String(finoPortal.serviceOfferName||'').trim();
   const el=document.getElementById('serviceOfferName');
   return el ? String(el.value||'').trim() : '';
 }
 function serviceOfferExpiry(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive&&typeof finoPortal!=='undefined'&&finoPortal.serviceOfferExpiry)return String(finoPortal.serviceOfferExpiry||'').trim();
   const el=document.getElementById('serviceOfferExpiry');
   return el ? String(el.value||'').trim() : '';
 }
@@ -13978,7 +14160,7 @@ async function createResultPngBlob(){
 
   const canvas=document.createElement('canvas');
   canvas.width=1080;
-  canvas.height=1460;
+  canvas.height=1620;
   const ctx=canvas.getContext('2d');
 
   ctx.fillStyle='#ffffff';
@@ -14064,24 +14246,30 @@ async function createResultPngBlob(){
   drawWrappedArabic(ctx,advice.replace(/^النصيحة:\s*/,''),
     980,adviceY+90,850,38,3);
 
+  // Permanent legal notice
+  const footerShift=showImpact?110:0;
+  const legalY=1040+footerShift;
+  canvasRoundRect(ctx,70,legalY,940,145,18,'#fffafa','#efd1d1');
+  ctx.fillStyle='#8f2929';ctx.font='900 15px Cairo,Arial,sans-serif';
+  drawWrappedArabic(ctx,smartLegalNoticeText(),980,legalY+28,850,24,4);
+
   // Footer/service
   ctx.strokeStyle='#e1ebf2'; ctx.lineWidth=3;
-  const footerShift=showImpact?110:0;
-  ctx.beginPath(); ctx.moveTo(70,1050+footerShift); ctx.lineTo(1010,1050+footerShift); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(70,1205+footerShift); ctx.lineTo(1010,1205+footerShift); ctx.stroke();
 
   ctx.fillStyle='#073b67'; ctx.font='900 25px Cairo, Arial, sans-serif';
-  ctx.fillText(best.commodityEnabled?'احتساب دقيق • رسوم فرق السلعة محتسبة 1% • ترشيح البنك الأنسب':'احتساب دقيق • بدون رسوم فرق السلعة • ترشيح البنك الأنسب',1010,1100+footerShift);
+  ctx.fillText(best.commodityEnabled?'احتساب دقيق • رسوم فرق السلعة محتسبة 1% • ترشيح البنك الأنسب':'احتساب دقيق • بدون رسوم فرق السلعة • ترشيح البنك الأنسب',1010,1255+footerShift);
 
   ctx.fillStyle='#5f7888'; ctx.font='700 21px Cairo, Arial, sans-serif';
-  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1150+footerShift);
+  ctx.fillText('للتواصل وبدء الإجراءات:',1010,1305+footerShift);
 
   ctx.fillStyle='#111111'; ctx.font='900 40px Arial, sans-serif';
   ctx.textAlign='left';
-  ctx.fillText('0506214458',70,1210+footerShift);
+  ctx.fillText('0506214458',70,1365+footerShift);
 
   ctx.textAlign='right';
   ctx.fillStyle='#5f7888'; ctx.font='700 19px Arial, sans-serif';
-  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1260+footerShift);
+  ctx.fillText('hlooleqrr.github.io/mwaqe3/#services',1010,1415+footerShift);
 
   return await new Promise((resolve,reject)=>{
     canvas.toBlob(blob=>{
