@@ -4643,6 +4643,157 @@ button{
   .bot-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+
+/* =========================================================
+   FINO AI SPECIALIST — 2026 conversational interface
+   Overrides bot styles only.
+========================================================= */
+#specialistBotPage{background:#f6f9fb}
+#specialistBotPage .viewport{background:
+  radial-gradient(circle at 92% 8%,rgba(11,120,183,.08),transparent 30%),
+  radial-gradient(circle at 8% 90%,rgba(7,59,103,.05),transparent 34%),
+  #f8fbfd}
+.bot-wrap{width:min(1180px,100%);margin:0 auto;padding:10px 12px 84px}
+.bot-ai-hero{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px;
+  margin:8px 0 12px;padding:16px 18px;border:1px solid #dce8f0;border-radius:20px;
+  background:rgba(255,255,255,.92);box-shadow:0 14px 40px rgba(8,51,78,.06)
+}
+.bot-ai-badge{
+  width:54px;height:54px;border-radius:17px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(145deg,#073b67,#0b78b7);color:#fff;font-size:25px;
+  box-shadow:0 10px 24px rgba(11,120,183,.22)
+}
+.bot-ai-copy .eyebrow{color:#0b78b7;font-size:7px;font-weight:900;letter-spacing:.5px}
+.bot-ai-copy h1{margin:3px 0;color:#082f50;font-size:23px;font-weight:900}
+.bot-ai-copy p{margin:0;color:#687f8d;font-size:8px;line-height:1.65;font-weight:800}
+.bot-ai-status{
+  display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #dbe9f0;
+  border-radius:999px;background:#fff;color:#137451;font-size:7px;font-weight:900;white-space:nowrap
+}
+.bot-ai-status i{width:7px;height:7px;border-radius:50%;background:#18a16c;box-shadow:0 0 0 4px rgba(24,161,108,.10)}
+.bot-ai-shell{
+  height:min(720px,calc(100dvh - 210px));min-height:540px;
+  display:grid;grid-template-rows:auto 1fr auto;border:1px solid #d9e7ef;border-radius:22px;
+  overflow:hidden;background:#fff;box-shadow:0 20px 54px rgba(6,42,66,.08)
+}
+.bot-ai-topbar{
+  min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:8px 12px;border-bottom:1px solid #e2ebf0;background:rgba(255,255,255,.96)
+}
+.bot-ai-topbar .left{display:flex;align-items:center;gap:7px;min-width:0}
+.bot-ai-topbar b{color:#173e56;font-size:8px;font-weight:900}
+.bot-ai-topbar small{display:block;color:#8296a1;font-size:6px;font-weight:800;margin-top:1px}
+.bot-ai-top-actions{display:flex;align-items:center;gap:6px}
+.bot-ai-mini-btn{
+  min-height:31px;border:1px solid #dbe7ed;border-radius:9px;background:#fff;color:#486778;
+  padding:0 9px;font-size:6.5px;font-weight:900;cursor:pointer
+}
+.bot-ai-chat{
+  overflow:auto;padding:16px;background:
+    linear-gradient(180deg,rgba(248,251,253,.85),rgba(245,250,253,.95));
+  scroll-behavior:smooth
+}
+.bot-ai-msg{display:flex;margin:9px 0;animation:botFade .18s ease}
+@keyframes botFade{from{opacity:.2;transform:translateY(4px)}to{opacity:1;transform:none}}
+.bot-ai-msg.user{justify-content:flex-start}
+.bot-ai-msg.assistant{justify-content:flex-end}
+.bot-ai-bubble{
+  max-width:min(780px,88%);padding:11px 13px;border-radius:16px;font-size:9px;
+  line-height:1.85;font-weight:800;white-space:pre-wrap;overflow-wrap:anywhere
+}
+.bot-ai-msg.user .bot-ai-bubble{
+  background:linear-gradient(145deg,#073b67,#07598f);color:#fff;border-bottom-right-radius:5px;
+  box-shadow:0 8px 18px rgba(7,59,103,.14)
+}
+.bot-ai-msg.assistant .bot-ai-bubble{
+  background:#fff;color:#254a60;border:1px solid #dae7ee;border-bottom-left-radius:5px;
+  box-shadow:0 6px 20px rgba(11,67,98,.05)
+}
+.bot-ai-thinking{
+  display:inline-flex;align-items:center;gap:4px;color:#6c8390;font-size:7px;font-weight:900
+}
+.bot-ai-thinking span{width:5px;height:5px;border-radius:50%;background:#0b78b7;animation:botDot 1s infinite}
+.bot-ai-thinking span:nth-child(2){animation-delay:.15s}.bot-ai-thinking span:nth-child(3){animation-delay:.3s}
+@keyframes botDot{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.bot-ai-result{
+  margin-top:9px;padding:11px;border:1px solid #cfe2ec;border-radius:13px;
+  background:linear-gradient(180deg,#f8fcfe,#f2f9fc)
+}
+.bot-ai-result-head{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.bot-ai-result-head b{color:#073b67;font-size:9px;font-weight:900}
+.bot-ai-result-head span{color:#0b78b7;font-size:7px;font-weight:900}
+.bot-ai-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.bot-ai-stat{padding:8px;border:1px solid #dce8ef;border-radius:9px;background:#fff}
+.bot-ai-stat small{display:block;color:#758b98;font-size:6px;font-weight:800}
+.bot-ai-stat b{display:block;color:#0a3f68;font-size:9px;font-weight:900;margin-top:2px}
+.bot-ai-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.bot-ai-actions button{
+  min-height:35px;border:0;border-radius:9px;padding:0 11px;font-size:7px;font-weight:900;cursor:pointer
+}
+.bot-ai-primary{background:#073b67;color:#fff}
+.bot-ai-secondary{background:#eaf5fb;color:#075488}
+.bot-ai-confirm{background:#e8f7f0;color:#137451}
+.bot-ai-warn{background:#fff3f3;color:#9d2525}
+.bot-ai-composer{
+  border-top:1px solid #dce8ef;background:#fff;padding:9px 10px 10px;display:grid;gap:7px
+}
+.bot-ai-attachment{
+  display:none;grid-template-columns:58px 1fr auto;align-items:center;gap:8px;
+  padding:7px;border:1px solid #dae7ee;border-radius:11px;background:#f9fcfe
+}
+.bot-ai-attachment.show{display:grid}
+.bot-ai-attachment img{width:58px;height:46px;object-fit:cover;border-radius:8px;border:1px solid #dbe7ed}
+.bot-ai-attachment b{display:block;color:#36576a;font-size:7px;font-weight:900}
+.bot-ai-attachment small{display:block;color:#8296a1;font-size:6px;font-weight:800;margin-top:2px}
+.bot-ai-attachment button{border:0;background:transparent;color:#a12626;font-size:14px;cursor:pointer}
+.bot-ai-compose-row{display:grid;grid-template-columns:auto auto 1fr auto;gap:7px;align-items:end}
+.bot-ai-icon{
+  width:42px;height:42px;border:1px solid #d7e4eb;border-radius:11px;background:#fff;
+  color:#31566c;font-size:17px;cursor:pointer;transition:.15s
+}
+.bot-ai-icon:hover{background:#f2f8fb}.bot-ai-icon.listening{background:#fff0f0;border-color:#efcaca}
+.bot-ai-input-wrap{
+  display:flex;align-items:center;min-height:42px;border:1px solid #ccdce5;border-radius:12px;
+  background:#fff;padding:0 10px
+}
+.bot-ai-input{
+  width:100%;border:0;outline:none;background:transparent;color:#173e56;
+  font-size:9px;font-weight:800;padding:10px 0
+}
+.bot-ai-send{
+  height:42px;border:0;border-radius:11px;background:linear-gradient(145deg,#073b67,#0b78b7);
+  color:#fff;padding:0 16px;font-size:8px;font-weight:900;cursor:pointer;
+  box-shadow:0 8px 18px rgba(7,59,103,.16)
+}
+.bot-ai-footnote{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#8497a2;font-size:5.8px;font-weight:800}
+.bot-ai-setup{
+  margin:8px 0;padding:11px;border:1px solid #e8d8ac;border-radius:12px;background:#fffaf1;
+  color:#785817;font-size:7px;line-height:1.7;font-weight:900
+}
+.bot-ai-setup input{
+  width:100%;height:38px;margin-top:7px;border:1px solid #decda6;border-radius:9px;
+  padding:0 9px;font-size:7px;font-weight:800;outline:none
+}
+.bot-ai-setup button{
+  margin-top:7px;min-height:34px;border:0;border-radius:8px;background:#073b67;color:#fff;
+  padding:0 10px;font-size:7px;font-weight:900;cursor:pointer
+}
+.bot-ai-image-note{
+  margin-top:8px;padding:8px;border:1px solid #d7e8f1;border-radius:9px;background:#f5fbfe;
+  color:#486778;font-size:7px;line-height:1.7;font-weight:800
+}
+@media(max-width:760px){
+  .bot-ai-hero{grid-template-columns:1fr auto;padding:12px}
+  .bot-ai-copy h1{font-size:20px}
+  .bot-ai-status{display:none}
+  .bot-ai-shell{height:calc(100dvh - 175px);min-height:510px}
+  .bot-ai-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bot-ai-compose-row{grid-template-columns:auto auto 1fr}
+  .bot-ai-send{grid-column:1/-1}
+  .bot-ai-footnote{display:block}
+}
+
 </style>
 </head>
 <body>
@@ -4718,46 +4869,70 @@ button{
 
 <section class="page" id="specialistBotPage"><div class="viewport">
 <header class="header">
-  <div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SPECIALIST BOT</small></div></div>
+  <div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>AI SPECIALIST</small></div></div>
   <a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>دعم المختص</small><b>0506214458</b></span></a>
 </header>
+
 <div class="bot-wrap">
   <button type="button" class="smart-back" onclick="showPage('freeHub')">→ رجوع لاختيار الأدوات</button>
-  <div class="bot-head">
-    <div class="bot-head-copy">
-      <div class="eyebrow">FINO SPECIALIST ASSISTANT</div>
-      <h1>البوت الذكي للمختص</h1>
-      <p>اكتب أو تكلم باللهجة السعودية، أو أضف صورة عرض بنك لتحليلها وتجهيز التحديث.</p>
+
+  <div class="bot-ai-hero">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="bot-ai-badge">✦</div>
+      <div class="bot-ai-copy">
+        <div class="eyebrow">FINO AI • SPECIALIST MODE</div>
+        <h1>المساعد الذكي للمختص</h1>
+        <p>يفهم الكلام السعودي العامي، يتذكر سياق العميل، ويشغّل حاسبات FINO الأصلية بدل تخمين الأرقام.</p>
+      </div>
     </div>
-    <div class="bot-status">● جاهز للمختص</div>
+    <div class="bot-ai-status"><i></i><span id="finoAiConnectionState">الوضع المحلي جاهز</span></div>
   </div>
 
-  <div class="bot-shell">
-    <div class="bot-chat" id="finoBotChat"></div>
-    <div class="bot-composer">
-      <div class="bot-file-preview" id="finoBotFilePreview">
+  <div class="bot-ai-shell">
+    <div class="bot-ai-topbar">
+      <div class="left">
+        <div class="bot-ai-badge" style="width:34px;height:34px;border-radius:10px;font-size:16px">✦</div>
+        <div><b>FINO AI</b><small>محادثة المختص • الحسبة من محرك المنصة</small></div>
+      </div>
+      <div class="bot-ai-top-actions">
+        <button class="bot-ai-mini-btn" type="button" onclick="clearFINOAIConversation()">محادثة جديدة</button>
+        <button class="bot-ai-mini-btn" type="button" onclick="openFINOAISetup()">إعداد الاتصال</button>
+      </div>
+    </div>
+
+    <div class="bot-ai-chat" id="finoBotChat"></div>
+
+    <div class="bot-ai-composer">
+      <div class="bot-ocr-progress" id="finoBotOcrProgress" style="display:none">جاري قراءة الصورة وتحليل بيانات العرض…</div>
+      <div class="bot-ai-attachment" id="finoBotFilePreview">
         <img id="finoBotFileImage" alt="الصورة المضافة">
-        <span id="finoBotFileName">—</span>
-        <button type="button" onclick="clearFINOBotImage()">إزالة</button>
+        <div><b id="finoBotFileName">صورة عرض</b><small>سيتم إرسالها للذكاء الاصطناعي مع رسالتك</small></div>
+        <button type="button" onclick="clearFINOBotImage()">×</button>
       </div>
-      <div class="bot-ocr-progress" id="finoBotOcrProgress">جاري قراءة الصورة وتحليل بيانات العرض…</div>
-      <div class="bot-composer-row">
-        <button class="bot-icon-btn" id="finoBotMicBtn" type="button" onclick="toggleFINOBotVoice()" title="تحدث">🎙️</button>
-        <button class="bot-icon-btn" type="button" onclick="document.getElementById('finoBotImageInput').click()" title="إضافة صورة">🖼️</button>
-        <input class="bot-input" id="finoBotInput" type="text" autocomplete="off" placeholder="مثال: احسب لي عسكري راتبه 9900 وتمويل شخصي بنسبة 3%">
-        <button class="bot-send" type="button" onclick="sendFINOBotMessage()">إرسال</button>
+
+      <div class="bot-ai-compose-row">
+        <button class="bot-ai-icon" id="finoBotMicBtn" type="button" onclick="toggleFINOBotVoice()" title="تحدث">🎙️</button>
+        <button class="bot-ai-icon" type="button" onclick="document.getElementById('finoBotImageInput').click()" title="إضافة صورة">🖼️</button>
+        <div class="bot-ai-input-wrap">
+          <input class="bot-ai-input" id="finoBotInput" type="text" autocomplete="off" placeholder="تكلم بطريقتك… مثال: شوف عسكري راتبه 7800 ويبغى يحول مديونيته وسداده 37600">
+        </div>
+        <button class="bot-ai-send" id="finoBotSendBtn" type="button" onclick="sendFINOBotMessage()">إرسال</button>
       </div>
+
       <input id="finoBotImageInput" type="file" accept="image/*" hidden onchange="handleFINOBotImageSelected(this)">
-      <div class="bot-tip">الصوت يعتمد على دعم المتصفح. تحليل الصور يتم داخل المتصفح باستخدام OCR عند توفر الإنترنت، وأي تحديث للنسب لا يُحفظ إلا بعد تأكيدك.</div>
+      <div class="bot-ai-footnote">
+        <span>الأرقام النهائية تُحسب من نفس حاسبات FINO الأصلية • البوت يعمل محليًا حتى بدون ربط خارجي.</span>
+        <span>أي تحديث للبنوك أو النسب يحتاج تأكيدك قبل الحفظ.</span>
+      </div>
     </div>
   </div>
 </div>
+
 <div class="live-footer">
-  <span class="footer-brand">FINO • البوت الذكي للمختص</span>
+  <span class="footer-brand">FINO • المساعد الذكي للمختص</span>
   <span class="footer-date"><b id="f7Day">—</b><b id="f7Greg">—</b><b id="f7Hijri">—</b><span class="footer-time" id="f7Time">—</span></span>
 </div>
 </div></section>
-
 <section class="page" id="smartPage"><div class="viewport">
 <header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SMART CALCULATOR</small></div></div>
 <a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>إنجاز التمويل الشخصي</small><b>0506214458</b></span></a></header>
@@ -6061,13 +6236,58 @@ function resetFINOAdminLocalConfig(){
    FINO SPECIALIST BOT
    Local specialist assistant. No calculator formulas are replaced.
 ========================================================= */
+/* =========================================================
+   FINO AI SPECIALIST
+   External AI understands language/images.
+   FINO calculators remain source of truth for all numbers.
+========================================================= */
 let finoBotUnlocked=false;
 let finoBotPendingImage=null;
-let finoBotPendingUpdate=null;
-let finoBotPendingIntent=null;
 let finoBotRecognition=null;
 let finoBotListening=false;
+let finoAIHistory=[];
+let finoAIState={lastMode:null,lastInput:null,lastRankings:[],lastSmart:null,pendingUpdate:null};
 
+const FINO_AI_ENDPOINT_KEY='FINO_AI_ENDPOINT_V1';
+const FINO_AI_MAX_HISTORY=14;
+
+function getFINOAIEndpoint(){
+  return String(localStorage.getItem(FINO_AI_ENDPOINT_KEY)||'').trim();
+}
+function setFINOAIEndpoint(value){
+  const v=String(value||'').trim();
+  if(v)localStorage.setItem(FINO_AI_ENDPOINT_KEY,v);
+  else localStorage.removeItem(FINO_AI_ENDPOINT_KEY);
+  updateFINOAIConnectionState();
+}
+function updateFINOAIConnectionState(){
+  const el=document.getElementById('finoAiConnectionState');
+  if(!el)return;
+  const endpoint=getFINOAIEndpoint();
+  el.textContent=endpoint?'متصل بالذكاء الاصطناعي':'الوضع المحلي جاهز';
+  const dot=el.previousElementSibling;
+  if(dot)dot.style.background=endpoint?'#18a16c':'#d58a13';
+}
+function openFINOAISetup(){
+  const current=getFINOAIEndpoint();
+  addFINOBotAssistant(`
+    <div class="bot-ai-setup">
+      <b>إعداد اتصال الذكاء الاصطناعي</b><br>
+      أدخل رابط الـBackend الآمن الذي رفعته. لا تضع مفتاح API داخل الموقع.
+      <input id="finoAIEndpointInput" type="url" value="${escapeFINOAdminAttr(current)}" placeholder="https://your-worker.workers.dev">
+      <button type="button" onclick="saveFINOAISetup()">حفظ الاتصال</button>
+    </div>`);
+}
+function saveFINOAISetup(){
+  const input=document.getElementById('finoAIEndpointInput');
+  const v=String(input?.value||'').trim();
+  if(!/^https?:\/\//i.test(v)){
+    addFINOBotAssistant('رابط الخدمة غير صحيح. أدخل رابط يبدأ بـ https://');
+    return;
+  }
+  setFINOAIEndpoint(v.replace(/\/+$/,''));
+  addFINOBotAssistant('تم حفظ اتصال الذكاء الاصطناعي على هذا الجهاز ✅');
+}
 function openFINOSpecialistBotLogin(){
   if(!isFreeAccess())return;
   const overlay=document.getElementById('specialistBotLoginOverlay');
@@ -6092,12 +6312,8 @@ async function verifyFINOSpecialistBotLogin(){
     if(window.crypto&&window.crypto.subtle){
       const hash=await sha256FINO(entered);
       ok=hash===FINO_ADMIN_PASSWORD_HASH;
-    }else{
-      ok=entered==='11qq11qQ@';
-    }
-  }catch(e){
-    ok=entered==='11qq11qQ@';
-  }
+    }else ok=entered==='11qq11qQ@';
+  }catch(e){ok=entered==='11qq11qQ@';}
   if(!ok){
     if(error)error.textContent='رمز الدخول غير صحيح. الدخول غير المصرح به قد يعرضك للمساءلة القانونية.';
     if(input){input.value='';input.focus();}
@@ -6113,54 +6329,369 @@ function openFINOSpecialistBot(){
   initFINOSpecialistBot();
 }
 function initFINOSpecialistBot(){
+  updateFINOAIConnectionState();
   const chat=document.getElementById('finoBotChat');
   if(!chat)return;
   if(!chat.dataset.started){
     chat.dataset.started='1';
     addFINOBotAssistant(`حياك الله 👋
-أنا البوت المختص للمنصة.
+أنا مساعد FINO للمختص.
 
-تقدر تقول لي مثلًا:
-• "احسب لي عسكري راتبه 9900 وتمويل شخصي بنسبة 3%"
-• "عنده التزام 2000، كم أثر عليه من 45%؟"
-• "تحويل مديونية، راتبه 12000 حكومي، بنك راتبه الراجحي، السداد 77000"
-• أو أرسل صورة عرض بنك وقل: "حدث النسب من الصورة".
+كلمني بطريقتك وبالعامية، وأنا أفهم سياق العميل وأشغّل نفس حاسبات المنصة.
 
-إذا الصورة ما وضحت البنك، بقول لك مباشرة إن البنك غير واضح وأطلب منك اسمه.`);
+مثال:
+«شوف عسكري راتبه 7800 ويبغى يحول مديونيته، سداد قرضه 37600 وما عليه التزامات، وش ترشح له؟»
+
+وبعدها تقدر تقول:
+«طيب الثاني؟»
+«عطني الثالث»
+«عطنيهم مجمل»
+«لو صار السداد 30 ألف وش يتغير؟»
+
+وتقدر ترسل صورة عرض بنك وتقول:
+«حدث المنصة من الصورة»`);
+
   }
   setTimeout(()=>document.getElementById('finoBotInput')?.focus(),80);
+}
+function clearFINOAIConversation(){
+  finoAIHistory=[];
+  finoAIState={lastMode:null,lastInput:null,lastRankings:[],lastSmart:null,pendingUpdate:null};
+  const chat=document.getElementById('finoBotChat');
+  if(chat){chat.innerHTML='';delete chat.dataset.started;}
+  clearFINOBotImage();
+  initFINOSpecialistBot();
 }
 function addFINOBotMessage(role,htmlContent){
   const chat=document.getElementById('finoBotChat');
   if(!chat)return;
   const row=document.createElement('div');
-  row.className=`bot-msg ${role}`;
+  row.className=`bot-ai-msg ${role}`;
   const bubble=document.createElement('div');
-  bubble.className='bot-bubble';
+  bubble.className='bot-ai-bubble';
   if(role==='assistant')bubble.innerHTML=htmlContent;
   else bubble.textContent=htmlContent;
   row.appendChild(bubble);
   chat.appendChild(row);
   chat.scrollTop=chat.scrollHeight;
+  return row;
 }
-function addFINOBotAssistant(html){addFINOBotMessage('assistant',html)}
-function addFINOBotUser(text){addFINOBotMessage('user',text)}
+function addFINOBotAssistant(html){return addFINOBotMessage('assistant',html)}
+function addFINOBotUser(text){return addFINOBotMessage('user',text)}
+function addFINOBotThinking(){
+  return addFINOBotAssistant(`<div class="bot-ai-thinking"><span></span><span></span><span></span> أفهم طلبك وأراجع بيانات المنصة…</div>`);
+}
+function trimFINOAIHistory(){
+  if(finoAIHistory.length>FINO_AI_MAX_HISTORY)finoAIHistory=finoAIHistory.slice(-FINO_AI_MAX_HISTORY);
+}
+function FINOAITypeLabel(t){
+  return ({government:'حكومي',semiGovernment:'شبه حكومي',military:'عسكري',private:'قطاع خاص',retired:'متقاعد'})[t]||t||'غير محدد';
+}
+function getFINOAIPlatformContext(){
+  const cfg=getFINOAdminConfig();
+  const banks=Object.values(cfg?.banks||{}).map(b=>({
+    id:b.id,name:b.name,short:b.short||'',
+    buyoutEnabled:!!b.buyoutEnabled,
+    eligibleTypes:b.eligibleTypes||[],
+    minSalary:Number(b.minSalary||0),
+    generalRates:b.tables?.general||[],
+    militaryRates:b.tables?.military||[],
+    useMilitaryTable:!!b.useMilitaryTable,
+    offerLimited:!!b.offerLimited,
+    offerExpiry:b.offerExpiry||'',
+    featureEnabled:!!b.featureEnabled,
+    featureTitle:b.featureTitle||'',
+    featureCopy:b.featureCopy||'',
+    adminNote:b.adminNote||'',
+    waiverMonths:Number(b.waiverMonths||0),
+    deferMonths:Number(b.deferMonths||0)
+  }));
+  return {
+    now:new Date().toISOString(),
+    banks,
+    lastMode:finoAIState.lastMode,
+    lastInput:finoAIState.lastInput,
+    lastRankings:(finoAIState.lastRankings||[]).map((r,i)=>({
+      rank:i+1,key:r.key,name:r.name,rate:r.rate,cashAfterDebt:r.cashAfterDebt,
+      installment:r.installment,principalBeforeFees:r.principalBeforeFees,
+      netBeforeDebt:r.netBeforeDebt,totalProfit:r.totalProfit,actualPayments:r.actualPayments,
+      policyWarning:r.policyWarning||''
+    })),
+    lastSmart:finoAIState.lastSmart?{
+      bank:finoAIState.lastSmart.bank?.name||'',
+      rate:finoAIState.lastSmart.rate,
+      salary:finoAIState.lastSmart.salary,
+      customerType:finoAIState.lastSmart.customerType,
+      installment:finoAIState.lastSmart.installment,
+      principal:finoAIState.lastSmart.principal,
+      netBeforeDebt:finoAIState.lastSmart.netBeforeDebt,
+      cashAfterDebt:finoAIState.lastSmart.cashAfterDebt,
+      profit:finoAIState.lastSmart.profit,
+      months:finoAIState.lastSmart.months,
+      external:finoAIState.lastSmart.external,
+      earlySettlement:finoAIState.lastSmart.earlySettlement
+    }:null
+  };
+}
+async function fileToFINOAIDataUrl(file){
+  if(!file)return null;
+  if(file.size>7*1024*1024)throw new Error('IMAGE_TOO_LARGE');
+  return await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result||''));
+    reader.onerror=reject;
+    reader.readAsDataURL(file);
+  });
+}
+async function callFINOAI(userText,imageFile=null){
+  const endpoint=getFINOAIEndpoint();
+  if(!endpoint)throw new Error('NO_ENDPOINT');
+  const image=imageFile?await fileToFINOAIDataUrl(imageFile):null;
+  const payload={
+    message:userText,
+    history:finoAIHistory.slice(-FINO_AI_MAX_HISTORY),
+    context:getFINOAIPlatformContext(),
+    image
+  };
+  const response=await fetch(endpoint,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  if(!response.ok){
+    const txt=await response.text().catch(()=> '');
+    throw new Error(`AI_HTTP_${response.status}:${txt.slice(0,200)}`);
+  }
+  const data=await response.json();
+  if(!data||typeof data!=='object')throw new Error('AI_BAD_RESPONSE');
+  return data;
+}
+function renderFINOAIRankingCard(r,rank){
+  return `<div class="bot-ai-result">
+    <div class="bot-ai-result-head"><b>الترشيح رقم ${rank}</b><span>${r.name}</span></div>
+    <div class="bot-ai-grid">
+      <div class="bot-ai-stat"><small>هامش الربح</small><b>${fmt(r.rate)}%</b></div>
+      <div class="bot-ai-stat"><small>صافي الكاش</small><b>${money(r.cashAfterDebt)}</b></div>
+      <div class="bot-ai-stat"><small>القسط الشهري</small><b>${money(r.installment)}</b></div>
+      <div class="bot-ai-stat"><small>صافي التمويل</small><b>${money(r.netBeforeDebt)}</b></div>
+      <div class="bot-ai-stat"><small>الأرباح</small><b>${money(r.totalProfit)}</b></div>
+      <div class="bot-ai-stat"><small>الأقساط الفعلية</small><b>${r.actualPayments} شهر</b></div>
+    </div>
+    ${r.policyWarning?`<div class="bot-ai-image-note">${r.policyWarning}</div>`:''}
+    <div class="bot-ai-actions">
+      <button class="bot-ai-primary" type="button" onclick="openFINOAIBuyoutRank(${rank})">فتح التفاصيل الكاملة</button>
+    </div>
+  </div>`;
+}
+function renderFINOAIRankingsSummary(list){
+  if(!list?.length)return '<div class="bot-ai-image-note">ما فيه ترشيحات متاحة حسب البيانات الحالية.</div>';
+  return `<div class="bot-ai-result">
+    <div class="bot-ai-result-head"><b>ملخص الترشيحات</b><span>${list.length} عروض</span></div>
+    <div class="bot-rate-list">
+      ${list.map((r,i)=>`<div class="bot-rate-line"><span>${i+1}. ${r.name} • صافي ${money(r.cashAfterDebt)}</span><b>${fmt(r.rate)}%</b></div>`).join('')}
+    </div>
+  </div>`;
+}
+function renderFINOAISmartCard(r){
+  return `<div class="bot-ai-result">
+    <div class="bot-ai-result-head"><b>حسبة التمويل الشخصي</b><span>${r.bank?.name||''}</span></div>
+    <div class="bot-ai-grid">
+      <div class="bot-ai-stat"><small>القسط الشهري</small><b>${money(r.installment)}</b></div>
+      <div class="bot-ai-stat"><small>صافي التمويل بعد الرسوم</small><b>${money(r.netBeforeDebt)}</b></div>
+      <div class="bot-ai-stat"><small>${r.earlySettlement>0?'الصافي بعد السداد':'الصافي المتوقع'}</small><b>${money(r.cashAfterDebt)}</b></div>
+      <div class="bot-ai-stat"><small>هامش الربح</small><b>${fmt(r.rate)}%</b></div>
+      <div class="bot-ai-stat"><small>إجمالي الأرباح</small><b>${money(r.profit)}</b></div>
+      <div class="bot-ai-stat"><small>المدة</small><b>${r.months} شهر</b></div>
+    </div>
+    <div class="bot-ai-actions">
+      <button class="bot-ai-primary" type="button" onclick="openFINOAISmartFullResult()">فتح الحسبة النهائية</button>
+    </div>
+  </div>`;
+}
+function mapFINOAITypeToButton(type,selector){
+  document.querySelectorAll(selector).forEach(btn=>btn.classList.toggle('active',btn.dataset.type===type));
+}
+function executeFINOAIBuyout(args){
+  const salary=Number(args.salary||0);
+  const settlement=Number(args.early_settlement||0);
+  const external=Number(args.external_obligations||0);
+  const type=args.customer_type||'government';
+  const bankId=args.salary_bank_id||'';
+  const months=normalizeFreeTermMonths(Number(args.months||60));
+  if(!(salary>0)||!(settlement>0)||!bankId){
+    return {ok:false,message:'ناقصني الراتب أو السداد المبكر أو بنك نزول الراتب.'};
+  }
+  customerType=type;
+  selectedBank=bankId;
+  selectedBankName=BANKS.find(x=>x.id===bankId)?.name||bankId;
+  freeBuyoutTermMonths=months;
+  document.getElementById('salary').value=String(salary);
+  document.getElementById('earlySettlement').value=String(settlement);
+  document.getElementById('externalObligations').value=String(external);
+  mapFINOAITypeToButton(type,'.type-btn');
+  calculate();
+  const results=latestResults||[];
+  finoAIState.lastMode='buyout';
+  finoAIState.lastInput={salary,earlySettlement:settlement,externalObligations:external,customerType:type,salaryBankId:bankId,months};
+  finoAIState.lastRankings=results;
+  return {ok:true,results};
+}
+function openFINOAIBuyoutRank(rank){
+  const idx=Math.max(0,Number(rank||1)-1);
+  if(!finoAIState.lastRankings?.[idx])return;
+  selectedResultIndex=idx;
+  showPage('resultsPage');
+  renderResults(
+    Number(finoAIState.lastInput?.salary||0),
+    Number(finoAIState.lastInput?.earlySettlement||0),
+    Number(finoAIState.lastInput?.externalObligations||0),
+    finoAIState.lastRankings
+  );
+}
+function executeFINOAISmart(args){
+  const salary=Number(args.salary||0);
+  const rate=Number(args.rate||0);
+  const type=args.customer_type||'government';
+  const external=Number(args.external_obligations||0);
+  const settlement=Number(args.early_settlement||0);
+  const bankId=args.bank_id||'RAJHI';
+  const months=normalizeFreeTermMonths(Number(args.months||60));
+  const commodity=!!args.commodity_fee;
+  if(!(salary>0)||!(rate>0))return {ok:false,message:'ناقصني الراتب أو هامش الربح.'};
 
-function normalizeFINOBotArabicDigits(s){
+  smartCustomerType=type;
+  smartSelectedBank=bankId;
+  smartTermMonths=months;
+  document.getElementById('smartSalary').value=String(salary);
+  document.getElementById('smartRate').value=String(rate);
+  document.getElementById('smartEarlySettlement').value=String(settlement);
+  document.getElementById('smartExternal').value=String(external);
+  const comm=document.getElementById('smartCommodityToggle');
+  if(comm)comm.checked=commodity;
+  mapFINOAITypeToButton(type,'#smartTypeGrid .smart-type-btn');
+  calculateSmartPersonal();
+  finoAIState.lastMode='smart';
+  finoAIState.lastSmart=smartLastResult;
+  finoAIState.lastInput={salary,rate,customerType:type,external,earlySettlement:settlement,bankId,months,commodity};
+  return {ok:true,result:smartLastResult};
+}
+function openFINOAISmartFullResult(){
+  if(!finoAIState.lastSmart)return;
+  showPage('smartResultPage');
+}
+function renderFINOAIUpdatePreview(update){
+  const general=update.general_rates||[];
+  const military=update.military_rates||[];
+  const rows=[...general.map(x=>({...x,label:'عام'})),...military.map(x=>({...x,label:'عسكري'}))];
+  return `<div class="bot-ai-result">
+    <div class="bot-ai-result-head"><b>تحديث عرض ${update.bank_name||update.bank_id||''}</b><span>بانتظار تأكيدك</span></div>
+    <div class="bot-rate-list">
+      ${rows.map(r=>`<div class="bot-rate-line"><span>${r.label} • ${Number(r.min||0).toLocaleString('en-US')} ${r.max==null?'فأعلى':`إلى ${Number(r.max).toLocaleString('en-US')}`}</span><b>${r.rate}%</b></div>`).join('')}
+    </div>
+    ${update.offer_expiry?`<div class="bot-ai-image-note">تاريخ انتهاء العرض: ${update.offer_expiry}</div>`:''}
+    ${update.feature_title?`<div class="bot-ai-image-note">الميزة: ${update.feature_title}${update.feature_copy?` — ${update.feature_copy}`:''}</div>`:''}
+    <div class="bot-ai-actions">
+      <button class="bot-ai-confirm" type="button" onclick="confirmFINOAIUpdate()">تأكيد وتحديث المنصة</button>
+      <button class="bot-ai-warn" type="button" onclick="cancelFINOAIUpdate()">إلغاء التحديث</button>
+    </div>
+  </div>`;
+}
+function confirmFINOAIUpdate(){
+  const u=finoAIState.pendingUpdate;
+  if(!u)return;
+  const cfg=getFINOAdminConfig();
+  const entry=cfg?.banks?.[u.bank_id];
+  if(!entry){
+    addFINOBotAssistant(`البنك ${escapeFINOAdminHtml(u.bank_name||u.bank_id||'')} غير موجود في لوحة المسؤول. أضفه من لوحة المسؤول أولًا.`);
+    return;
+  }
+  if(Array.isArray(u.general_rates)&&u.general_rates.length){
+    entry.tables=entry.tables||{general:[],military:[]};
+    entry.tables.general=u.general_rates.map(r=>({min:Number(r.min||0),max:r.max==null?null:Number(r.max),rate:Number(r.rate)}));
+  }
+  if(Array.isArray(u.military_rates)&&u.military_rates.length){
+    entry.tables=entry.tables||{general:[],military:[]};
+    entry.tables.military=u.military_rates.map(r=>({min:Number(r.min||0),max:r.max==null?null:Number(r.max),rate:Number(r.rate)}));
+    entry.useMilitaryTable=true;
+  }
+  if(Array.isArray(u.eligible_types)&&u.eligible_types.length)entry.eligibleTypes=u.eligible_types;
+  if(typeof u.offer_limited==='boolean')entry.offerLimited=u.offer_limited;
+  if(u.offer_expiry!==undefined)entry.offerExpiry=u.offer_expiry||'';
+  if(typeof u.feature_enabled==='boolean')entry.featureEnabled=u.feature_enabled;
+  if(u.feature_title!==undefined)entry.featureTitle=u.feature_title||'';
+  if(u.feature_copy!==undefined)entry.featureCopy=u.feature_copy||'';
+  if(u.admin_note!==undefined)entry.adminNote=u.admin_note||'';
+  entry.buyoutEnabled=true;
+  if(saveFINOAdminConfig(cfg)){
+    finoAIState.pendingUpdate=null;
+    addFINOBotAssistant(`تم التحديث ✅
+حفظت العرض في لوحة المسؤول وطبقته فورًا على حاسبة تحويل المديونية، وأخذت نسخة احتياطية قبل التغيير.`);
+  }
+}
+function cancelFINOAIUpdate(){
+  finoAIState.pendingUpdate=null;
+  addFINOBotAssistant('تم إلغاء التحديث، وما تغير شيء في المنصة.');
+}
+function handleFINOAIAction(data){
+  const action=data.action||'reply';
+  const message=String(data.message||'').trim();
+
+  if(action==='buyout_calculation'){
+    const out=executeFINOAIBuyout(data.arguments||{});
+    if(!out.ok){addFINOBotAssistant(message||out.message);return;}
+    const first=out.results?.[0];
+    addFINOBotAssistant(`${message||'أبشر، هذه أفضل نتيجة حسب بيانات المنصة الحالية.'}${first?renderFINOAIRankingCard(first,1):'<div class="bot-ai-image-note">ما لقيت بنك متاح حسب البيانات الحالية.</div>'}`);
+    return;
+  }
+  if(action==='smart_calculation'){
+    const out=executeFINOAISmart(data.arguments||{});
+    if(!out.ok){addFINOBotAssistant(message||out.message);return;}
+    addFINOBotAssistant(`${message||'تمت الحسبة.'}${renderFINOAISmartCard(out.result)}`);
+    return;
+  }
+  if(action==='show_ranking'){
+    const rank=Math.max(1,Number(data.arguments?.rank||1));
+    const r=finoAIState.lastRankings?.[rank-1];
+    if(!r){addFINOBotAssistant(message||`ما عندي ترشيح رقم ${rank} في آخر حسبة.`);return;}
+    addFINOBotAssistant(`${message||`هذا الترشيح رقم ${rank}.`}${renderFINOAIRankingCard(r,rank)}`);
+    return;
+  }
+  if(action==='show_summary'){
+    addFINOBotAssistant(`${message||'هذا ملخص الترشيحات.'}${renderFINOAIRankingsSummary(finoAIState.lastRankings)}`);
+    return;
+  }
+  if(action==='show_smart_result'){
+    if(!finoAIState.lastSmart){addFINOBotAssistant(message||'ما عندي حسبة تمويل شخصي سابقة.');return;}
+    addFINOBotAssistant(`${message||'هذه آخر حسبة.'}${renderFINOAISmartCard(finoAIState.lastSmart)}`);
+    return;
+  }
+  if(action==='update_rates'){
+    const u=data.arguments||{};
+    finoAIState.pendingUpdate=u;
+    addFINOBotAssistant(`${message||'حللت العرض وجهزت التحديث، راجعه قبل الحفظ.'}${renderFINOAIUpdatePreview(u)}`);
+    return;
+  }
+  if(action==='ask_bank'||action==='ask_missing'||action==='reply'){
+    addFINOBotAssistant(message||'وش تبغاني أسوي لك؟');
+    return;
+  }
+  addFINOBotAssistant(message||'فهمت طلبك، لكن ما قدرت أحدد الإجراء المناسب.');
+}
+function normalizeFINOLocalDigits(s){
   const map={'٠':'0','١':'1','٢':'2','٣':'3','٤':'4','٥':'5','٦':'6','٧':'7','٨':'8','٩':'9','۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
   return String(s||'').replace(/[٠-٩۰-۹]/g,d=>map[d]||d).replace(/٫/g,'.').replace(/٬/g,',');
 }
-function normalizeFINOBotText(s){
-  return normalizeFINOBotArabicDigits(s)
+function normalizeFINOLocalText(s){
+  return normalizeFINOLocalDigits(s)
     .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي')
     .replace(/[ـ]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
 }
-function extractFINOBotNumbers(text){
-  const s=normalizeFINOBotArabicDigits(text).replace(/,/g,'');
+function extractFINOLocalNumbers(text){
+  const s=normalizeFINOLocalDigits(text).replace(/,/g,'');
   return (s.match(/\d+(?:\.\d+)?/g)||[]).map(Number);
 }
-function detectFINOBotCustomerType(text){
-  const s=normalizeFINOBotText(text);
+function detectFINOLocalCustomerType(text){
+  const s=normalizeFINOLocalText(text);
   if(/عسكري|العسكري|جندي|ضابط|رقيب|وكيل رقيب|ملازم|نقيب|رائد|مقدم|عقيد/.test(s))return 'military';
   if(/متقاعد|التقاعد/.test(s))return 'retired';
   if(/شبه حكومي|شبه حكوم/.test(s))return 'semiGovernment';
@@ -6168,10 +6699,10 @@ function detectFINOBotCustomerType(text){
   if(/حكومي|مدني/.test(s))return 'government';
   return '';
 }
-function FINOBotCustomerTypeLabel(t){
+function FINOLocalCustomerTypeLabel(t){
   return ({government:'حكومي',semiGovernment:'شبه حكومي',military:'عسكري',private:'قطاع خاص',retired:'متقاعد'})[t]||'غير محدد';
 }
-function FINOBotBankAliases(){
+function FINOLocalBankAliases(){
   const aliases={
     RAJHI:['الراجحي','مصرف الراجحي','rajhi','alrajhi'],
     SNB:['الاهلي','الأهلي','البنك الاهلي','snb','saudi national'],
@@ -6190,13 +6721,13 @@ function FINOBotBankAliases(){
   });
   return aliases;
 }
-function detectFINOBotBank(text){
-  const raw=normalizeFINOBotText(text);
-  const aliases=FINOBotBankAliases();
+function detectFINOLocalBank(text){
+  const raw=normalizeFINOLocalText(text);
+  const aliases=FINOLocalBankAliases();
   let best=null;
   Object.entries(aliases).forEach(([id,list])=>{
     list.forEach(alias=>{
-      const a=normalizeFINOBotText(alias);
+      const a=normalizeFINOLocalText(alias);
       if(a&&raw.includes(a)){
         if(!best||a.length>best.len)best={id,len:a.length};
       }
@@ -6207,15 +6738,15 @@ function detectFINOBotBank(text){
   const cfg=getFINOAdminConfig();
   return {id:best.id,name:cfg?.banks?.[best.id]?.name||bank?.name||best.id};
 }
-function extractFINOBotRate(text){
-  const s=normalizeFINOBotArabicDigits(text);
+function extractFINOLocalRate(text){
+  const s=normalizeFINOLocalDigits(text);
   const percentMatches=[...s.matchAll(/(\d+(?:\.\d+)?)\s*%/g)].map(m=>Number(m[1]));
   if(percentMatches.length)return percentMatches[0];
   const m=s.match(/(?:نسبه|النسبه|هامش(?:\s+الربح)?|فايده|فائده)\s*(?:هي|=|:)?\s*(\d+(?:\.\d+)?)/i);
   return m?Number(m[1]):null;
 }
-function extractFINOBotSalary(text){
-  const s=normalizeFINOBotArabicDigits(text).replace(/,/g,'');
+function extractFINOLocalSalary(text){
+  const s=normalizeFINOLocalDigits(text).replace(/,/g,'');
   const patterns=[
     /(?:راتبه|راتب|الصافي|صافي الراتب)\s*(?:هو|=|:)?\s*(\d{3,6})/i,
     /(\d{4,6})\s*(?:ريال)?\s*(?:راتب|راتبه)/i
@@ -6223,30 +6754,30 @@ function extractFINOBotSalary(text){
   for(const p of patterns){const m=s.match(p);if(m)return Number(m[1]);}
   return null;
 }
-function extractFINOBotExternal(text){
-  const s=normalizeFINOBotArabicDigits(text).replace(/,/g,'');
+function extractFINOLocalExternal(text){
+  const s=normalizeFINOLocalDigits(text).replace(/,/g,'');
   const m=s.match(/(?:التزاماته|التزامات|التزام|قسط خارجي|اقساط خارجيه)\s*(?:هي|=|:)?\s*(\d{1,6})/i);
   return m?Number(m[1]):0;
 }
-function extractFINOBotSettlement(text){
-  const s=normalizeFINOBotArabicDigits(text).replace(/,/g,'');
+function extractFINOLocalSettlement(text){
+  const s=normalizeFINOLocalDigits(text).replace(/,/g,'');
   const m=s.match(/(?:السداد المبكر|سداد مبكر|المديونيه|مديونيه)\s*(?:هي|=|:)?\s*(\d{3,7})/i);
   return m?Number(m[1]):null;
 }
-function extractFINOBotTerm(text){
-  const s=normalizeFINOBotArabicDigits(text);
+function extractFINOLocalTerm(text){
+  const s=normalizeFINOLocalDigits(text);
   const m=s.match(/(?:مده|مدة|على)\s*(\d{1,2})\s*شهر/i);
   if(m)return normalizeFreeTermMonths(Number(m[1]));
   return 60;
 }
-function botPersonalRateForType(type){return type==='retired'?0.25:0.3333}
+function FINOLocalPersonalRateForType(type){return type==='retired'?0.25:0.3333}
 
-function computeFINOBotSmartPreview(data){
+function computeFINOLocalSmartPreview(data){
   const salary=Number(data.salary||0);
   const rate=Number(data.rate||0);
   const external=Number(data.external||0);
   const months=normalizeFreeTermMonths(data.months||60);
-  const personalCap=salary*botPersonalRateForType(data.type);
+  const personalCap=salary*FINOLocalPersonalRateForType(data.type);
   const totalCap=salary*0.45;
   const installment=Math.max(0,Math.min(personalCap,totalCap-external));
   const gross=installment*months;
@@ -6262,7 +6793,7 @@ function computeFINOBotSmartPreview(data){
   const impact=obligationImpactInfo(salary,external,data.type,rate,months,!!data.commodity);
   return {salary,rate,external,months,personalCap,totalCap,installment,gross,factor,principal,adminFee,adminVat,commodityFee,net,cash,settlement,impact};
 }
-function renderFINOBotSmartPreview(data,r){
+function renderFINOLocalSmartPreview(data,r){
   const impact=r.impact?.affected
     ? `<div style="margin-top:7px;color:#9c2424;font-weight:900">الالتزامات أثرت على القسط بمقدار ${money(r.impact.installmentReduction)}، والتجاوز المؤثر ${money(r.impact.excess)}.</div>`
     : '';
@@ -6275,15 +6806,15 @@ function renderFINOBotSmartPreview(data,r){
         <div class="bot-quick-item"><small>${r.settlement>0?'الصافي بعد السداد':'الصافي المتوقع'}</small><b>${money(r.cash)}</b></div>
         <div class="bot-quick-item"><small>هامش الربح</small><b>${fmt(r.rate)}%</b></div>
         <div class="bot-quick-item"><small>المدة</small><b>${r.months} شهر</b></div>
-        <div class="bot-quick-item"><small>جهة العمل</small><b>${FINOBotCustomerTypeLabel(data.type)}</b></div>
+        <div class="bot-quick-item"><small>جهة العمل</small><b>${FINOLocalCustomerTypeLabel(data.type)}</b></div>
       </div>
       ${impact}
       <div class="bot-actions">
-        <button class="bot-primary" type="button" onclick="openFINOBotSmartFullResult()">فتح النتيجة الكاملة</button>
+        <button class="bot-primary" type="button" onclick="openFINOLocalSmartFullResult()">فتح النتيجة الكاملة</button>
       </div>
     </div>`;
 }
-function openFINOBotSmartFullResult(){
+function openFINOLocalSmartFullResult(){
   const data=finoBotPendingIntent?.kind==='smart'?finoBotPendingIntent.data:null;
   if(!data)return;
   showPage('smartPage');
@@ -6304,21 +6835,21 @@ function openFINOBotSmartFullResult(){
   if(commodity)commodity.checked=!!data.commodity;
   calculateSmartPersonal();
 }
-function processFINOBotCalculation(text){
-  const s=normalizeFINOBotText(text);
+function processFINOLocalCalculation(text){
+  const s=normalizeFINOLocalText(text);
   const isBuyout=/تحويل مديونيه|شراء مديونيه|تحويل المديونيه|شراء المديونيه/.test(s);
-  const isSmart=/تمويل شخصي|تمويل جديد|حاسبه ذكيه|الحاسبه الذكيه/.test(s)||(!isBuyout&&extractFINOBotRate(text)!==null);
+  const isSmart=/تمويل شخصي|تمويل جديد|حاسبه ذكيه|الحاسبه الذكيه/.test(s)||(!isBuyout&&extractFINOLocalRate(text)!==null);
   if(!isBuyout&&!isSmart)return false;
 
-  const type=detectFINOBotCustomerType(text)||'government';
-  const salary=extractFINOBotSalary(text);
-  const external=extractFINOBotExternal(text);
-  const settlement=extractFINOBotSettlement(text)||0;
-  const months=extractFINOBotTerm(text);
-  const bank=detectFINOBotBank(text);
+  const type=detectFINOLocalCustomerType(text)||'government';
+  const salary=extractFINOLocalSalary(text);
+  const external=extractFINOLocalExternal(text);
+  const settlement=extractFINOLocalSettlement(text)||0;
+  const months=extractFINOLocalTerm(text);
+  const bank=detectFINOLocalBank(text);
 
   if(isSmart){
-    const rate=extractFINOBotRate(text);
+    const rate=extractFINOLocalRate(text);
     const missing=[];
     if(!(salary>0))missing.push('الراتب');
     if(!(rate>0))missing.push('هامش الربح');
@@ -6327,9 +6858,9 @@ function processFINOBotCalculation(text){
       return true;
     }
     const data={kind:'smart',salary,rate,external,settlement,months,type,bankId:bank?.id||smartSelectedBank||'RAJHI',commodity:false};
-    const result=computeFINOBotSmartPreview(data);
+    const result=computeFINOLocalSmartPreview(data);
     finoBotPendingIntent={kind:'smart',data,result};
-    addFINOBotAssistant(`أبشر. فهمت طلبك كتمويل شخصي${bank?` على ${bank.name}`:''}. ${renderFINOBotSmartPreview(data,result)}`);
+    addFINOBotAssistant(`أبشر. فهمت طلبك كتمويل شخصي${bank?` على ${bank.name}`:''}. ${renderFINOLocalSmartPreview(data,result)}`);
     return true;
   }
 
@@ -6350,17 +6881,17 @@ function processFINOBotCalculation(text){
           <div class="bot-quick-item"><small>الراتب</small><b>${money(salary)}</b></div>
           <div class="bot-quick-item"><small>السداد المبكر</small><b>${money(settlement)}</b></div>
           <div class="bot-quick-item"><small>الالتزامات الأخرى</small><b>${money(external)}</b></div>
-          <div class="bot-quick-item"><small>جهة العمل</small><b>${FINOBotCustomerTypeLabel(type)}</b></div>
+          <div class="bot-quick-item"><small>جهة العمل</small><b>${FINOLocalCustomerTypeLabel(type)}</b></div>
           <div class="bot-quick-item"><small>بنك الراتب</small><b>${bank.name}</b></div>
           <div class="bot-quick-item"><small>المدة</small><b>${months} شهر</b></div>
         </div>
-        <div class="bot-actions"><button class="bot-primary" type="button" onclick="openFINOBotBuyoutFullResult()">تشغيل الترشيح وفتح النتيجة</button></div>
+        <div class="bot-actions"><button class="bot-primary" type="button" onclick="openFINOLocalBuyoutFullResult()">تشغيل الترشيح وفتح النتيجة</button></div>
       </div>`);
     return true;
   }
   return false;
 }
-function openFINOBotBuyoutFullResult(){
+function openFINOLocalBuyoutFullResult(){
   const data=finoBotPendingIntent?.kind==='buyout'?finoBotPendingIntent.data:null;
   if(!data)return;
   showPage('page2');
@@ -6377,17 +6908,17 @@ function openFINOBotBuyoutFullResult(){
   calculate();
 }
 
-function processFINOBotImpactQuestion(text){
-  const s=normalizeFINOBotText(text);
+function processFINOLocalImpactQuestion(text){
+  const s=normalizeFINOLocalText(text);
   if(!/45%|45|اثر|اثرت|التزامات|التزام/.test(s))return false;
-  const salary=extractFINOBotSalary(text)||finoBotPendingIntent?.data?.salary;
-  const external=extractFINOBotExternal(text)||finoBotPendingIntent?.data?.external||0;
-  const type=detectFINOBotCustomerType(text)||finoBotPendingIntent?.data?.type||'government';
+  const salary=extractFINOLocalSalary(text)||finoBotPendingIntent?.data?.salary;
+  const external=extractFINOLocalExternal(text)||finoBotPendingIntent?.data?.external||0;
+  const type=detectFINOLocalCustomerType(text)||finoBotPendingIntent?.data?.type||'government';
   if(!(salary>0)){
     addFINOBotAssistant('اذكر لي الراتب أول عشان أحسب لك أثر الالتزامات على سقف 45%.');
     return true;
   }
-  const personalCap=salary*botPersonalRateForType(type);
+  const personalCap=salary*FINOLocalPersonalRateForType(type);
   const totalCap=salary*0.45;
   const freeOther=Math.max(0,totalCap-personalCap);
   const excess=Math.max(0,external-freeOther);
@@ -6400,34 +6931,12 @@ function processFINOBotImpactQuestion(text){
 }
 
 /* ---------- Image OCR / rate update ---------- */
-function handleFINOBotImageSelected(input){
-  const file=input?.files?.[0];
-  if(!file)return;
-  finoBotPendingImage=file;
-  const preview=document.getElementById('finoBotFilePreview');
-  const img=document.getElementById('finoBotFileImage');
-  const name=document.getElementById('finoBotFileName');
-  if(preview)preview.classList.add('show');
-  if(name)name.textContent=file.name||'صورة عرض';
-  if(img){
-    const url=URL.createObjectURL(file);
-    img.onload=()=>URL.revokeObjectURL(url);
-    img.src=url;
-  }
-}
-function clearFINOBotImage(){
-  finoBotPendingImage=null;
-  finoBotPendingUpdate=null;
-  const input=document.getElementById('finoBotImageInput');
-  if(input)input.value='';
-  document.getElementById('finoBotFilePreview')?.classList.remove('show');
-  const img=document.getElementById('finoBotFileImage');
-  if(img)img.removeAttribute('src');
-}
-function ensureFINOBotTesseract(){
+
+
+function ensureFINOLocalTesseract(){
   if(window.Tesseract)return Promise.resolve(window.Tesseract);
-  if(ensureFINOBotTesseract._promise)return ensureFINOBotTesseract._promise;
-  ensureFINOBotTesseract._promise=new Promise((resolve,reject)=>{
+  if(ensureFINOLocalTesseract._promise)return ensureFINOLocalTesseract._promise;
+  ensureFINOLocalTesseract._promise=new Promise((resolve,reject)=>{
     const s=document.createElement('script');
     s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
     s.async=true;
@@ -6435,16 +6944,16 @@ function ensureFINOBotTesseract(){
     s.onerror=()=>reject(new Error('TESSERACT_LOAD_FAILED'));
     document.head.appendChild(s);
   });
-  return ensureFINOBotTesseract._promise;
+  return ensureFINOLocalTesseract._promise;
 }
-function setFINOBotOcrProgress(text,show=true){
+function setFINOLocalOcrProgress(text,show=true){
   const el=document.getElementById('finoBotOcrProgress');
   if(!el)return;
   el.textContent=text||'جاري التحليل…';
   el.classList.toggle('show',!!show);
 }
-function parseFINOBotRateRowsFromOCR(text){
-  const raw=normalizeFINOBotArabicDigits(text).replace(/[٪]/g,'%').replace(/,/g,'');
+function parseFINOLocalRateRowsFromOCR(text){
+  const raw=normalizeFINOLocalDigits(text).replace(/[٪]/g,'%').replace(/,/g,'');
   const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
   const rows=[];
 
@@ -6486,7 +6995,7 @@ function parseFINOBotRateRowsFromOCR(text){
 
   return rows.sort((a,b)=>a.min-b.min).map(({key,line,...r})=>r);
 }
-function renderFINOBotRateUpdateCandidate(candidate){
+function renderFINOLocalRateUpdateCandidate(candidate){
   const bankName=candidate.bank?.name||'غير واضح';
   const rows=candidate.rows||[];
   const rates=rows.length
@@ -6499,61 +7008,61 @@ function renderFINOBotRateUpdateCandidate(candidate){
       <div class="row">عدد الشرائح المستخرجة: <b>${rows.length}</b></div>
       ${rates}
       <div class="bot-actions">
-        ${candidate.bank&&rows.length?`<button class="bot-confirm" type="button" onclick="confirmFINOBotRateUpdate()">تأكيد وتحديث المنصة</button>`:''}
-        <button class="bot-secondary" type="button" onclick="showFINOBotOCRText()">عرض النص المقروء</button>
+        ${candidate.bank&&rows.length?`<button class="bot-confirm" type="button" onclick="confirmFINOLocalRateUpdate()">تأكيد وتحديث المنصة</button>`:''}
+        <button class="bot-secondary" type="button" onclick="showFINOLocalOCRText()">عرض النص المقروء</button>
       </div>
     </div>`;
 }
-async function analyzeFINOBotImage(){
+async function analyzeFINOLocalImage(){
   if(!finoBotPendingImage){
     addFINOBotAssistant('أضف الصورة أول، وبعدها قل لي: حدث النسب من الصورة.');
     return;
   }
-  setFINOBotOcrProgress('جاري تحميل محرك قراءة الصورة…',true);
+  setFINOLocalOcrProgress('جاري تحميل محرك قراءة الصورة…',true);
   try{
-    const T=await ensureFINOBotTesseract();
+    const T=await ensureFINOLocalTesseract();
     const result=await T.recognize(finoBotPendingImage,'ara+eng',{
       logger:m=>{
         if(m.status==='recognizing text'){
-          setFINOBotOcrProgress(`جاري قراءة الصورة… ${Math.round((m.progress||0)*100)}%`,true);
+          setFINOLocalOcrProgress(`جاري قراءة الصورة… ${Math.round((m.progress||0)*100)}%`,true);
         }
       }
     });
     const text=String(result?.data?.text||'').trim();
-    setFINOBotOcrProgress('',false);
-    const bank=detectFINOBotBank(text);
-    const rows=parseFINOBotRateRowsFromOCR(text);
-    finoBotPendingUpdate={bank,rows,ocrText:text};
+    setFINOLocalOcrProgress('',false);
+    const bank=detectFINOLocalBank(text);
+    const rows=parseFINOLocalRateRowsFromOCR(text);
+    window.__FINO_LOCAL_PENDING_UPDATE={bank,rows,ocrText:text};
 
     if(!bank){
-      addFINOBotAssistant(`قرأت الصورة، لكن اسم البنك مو واضح عندي. وش البنك هذا؟\n\n${renderFINOBotRateUpdateCandidate({bank:null,rows,ocrText:text})}`);
+      addFINOBotAssistant(`قرأت الصورة، لكن اسم البنك مو واضح عندي. وش البنك هذا؟\n\n${renderFINOLocalRateUpdateCandidate({bank:null,rows,ocrText:text})}`);
       return;
     }
     if(!rows.length){
       addFINOBotAssistant(`البنك واضح عندي: <b>${bank.name}</b>، لكن شرائح النسب بالصورة ما طلعت بشكل موثوق. اكتب الشرائح كنص أو أرسل صورة أوضح.`);
       return;
     }
-    addFINOBotAssistant(`تمام، الصورة واضحة مبدئيًا. البنك طلع <b>${bank.name}</b>. ما راح أغير شيء إلا إذا ضغطت تأكيد.\n${renderFINOBotRateUpdateCandidate(finoBotPendingUpdate)}`);
+    addFINOBotAssistant(`تمام، الصورة واضحة مبدئيًا. البنك طلع <b>${bank.name}</b>. ما راح أغير شيء إلا إذا ضغطت تأكيد.\n${renderFINOLocalRateUpdateCandidate(window.__FINO_LOCAL_PENDING_UPDATE)}`);
   }catch(e){
     console.error('FINO BOT OCR',e);
-    setFINOBotOcrProgress('',false);
+    setFINOLocalOcrProgress('',false);
     addFINOBotAssistant('ما قدرت أشغل قراءة الصورة على هذا المتصفح. تأكد أن الإنترنت شغال، أو اكتب لي اسم البنك والنسب كنص وأنا أجهزها لك.');
   }
 }
-function showFINOBotOCRText(){
-  const text=finoBotPendingUpdate?.ocrText||'لا يوجد نص مقروء.';
+function showFINOLocalOCRText(){
+  const text=window.__FINO_LOCAL_PENDING_UPDATE?.ocrText||'لا يوجد نص مقروء.';
   addFINOBotAssistant(`<div class="bot-update-card"><h4>النص المقروء من الصورة</h4><div class="row" style="white-space:pre-wrap">${escapeFINOAdminHtml(text)}</div></div>`);
 }
-function setFINOBotPendingBankFromText(text){
-  if(!finoBotPendingUpdate||finoBotPendingUpdate.bank)return false;
-  const bank=detectFINOBotBank(text);
+function setFINOLocalPendingBankFromText(text){
+  if(!window.__FINO_LOCAL_PENDING_UPDATE||window.__FINO_LOCAL_PENDING_UPDATE.bank)return false;
+  const bank=detectFINOLocalBank(text);
   if(!bank)return false;
-  finoBotPendingUpdate.bank=bank;
-  addFINOBotAssistant(`تمام، اعتمدت البنك: <b>${bank.name}</b>.\n${renderFINOBotRateUpdateCandidate(finoBotPendingUpdate)}`);
+  window.__FINO_LOCAL_PENDING_UPDATE.bank=bank;
+  addFINOBotAssistant(`تمام، اعتمدت البنك: <b>${bank.name}</b>.\n${renderFINOLocalRateUpdateCandidate(window.__FINO_LOCAL_PENDING_UPDATE)}`);
   return true;
 }
-function confirmFINOBotRateUpdate(){
-  const pending=finoBotPendingUpdate;
+function confirmFINOLocalRateUpdate(){
+  const pending=window.__FINO_LOCAL_PENDING_UPDATE;
   if(!pending?.bank||!(pending.rows||[]).length){
     addFINOBotAssistant('ما عندي تحديث مكتمل للحفظ.');
     return;
@@ -6573,12 +7082,107 @@ function confirmFINOBotRateUpdate(){
     addFINOBotAssistant(`تم ✅
 حدثت شرائح <b>${entry.name}</b> على هذا الجهاز، وتم تطبيقها فورًا على ترشيح شراء المديونية.
 أخذت المنصة نسخة احتياطية تلقائيًا قبل الحفظ.`);
-    finoBotPendingUpdate=null;
-    clearFINOBotImage();
+    window.__FINO_LOCAL_PENDING_UPDATE=null;
+    clearFINOLocalImage();
   }
 }
 
-/* ---------- Voice ---------- */
+
+
+function FINOLocalFallbackReply(text){
+  const s=normalizeFINOLocalText(text);
+
+  // If an image is attached and user asks to analyze/update it, use the built-in OCR fallback.
+  if(finoBotPendingImage && /حدث|تحديث|النسب|الصوره|الصورة|اقرا|اقرأ|حلل/.test(s)){
+    analyzeFINOLocalImage();
+    return true;
+  }
+
+  if(processFINOLocalCalculation(text))return true;
+  if(processFINOLocalImpactQuestion(text))return true;
+
+  if(/حدث النسب|غير النسب|تحديث المنصه|تحديث المنصة/.test(s)){
+    if(finoBotPendingImage){analyzeFINOLocalImage();return true;}
+    addFINOBotAssistant('أرسل صورة العرض أول، وأنا أحاول أقرأ البنك والشرائح محليًا. وللفهم المرن جدًا مثل ChatGPT يلزم ربط خدمة الذكاء الاصطناعي.');
+    return true;
+  }
+
+  if(/مرحبا|هلا|السلام|صباح|مساء/.test(s)){
+    addFINOBotAssistant('حياك الله. عطِني الحسبة بطريقتك، وإذا ما فهمتها محليًا أربط خدمة الذكاء الاصطناعي من «إعداد الاتصال» عشان يفهم الكلام الحر بشكل أوسع.');
+    return true;
+  }
+
+  return false;
+}
+
+
+async function sendFINOBotMessage(){
+  const input=document.getElementById('finoBotInput');
+  const text=String(input?.value||'').trim();
+  if(!text&&!finoBotPendingImage)return;
+  if(input)input.value='';
+  addFINOBotUser(text||'حلل الصورة المرفقة');
+
+  const endpoint=getFINOAIEndpoint();
+
+  // One-file mode: if no secure AI backend is connected, keep the bot usable
+  // with the built-in financing parser + image OCR fallback.
+  if(!endpoint){
+    const handled=FINOLocalFallbackReply(text||'حلل الصورة المرفقة');
+    if(!handled){
+      addFINOBotAssistant(`فهمت كلامك بشكل جزئي، لكن هذه الصياغة تحتاج الذكاء الاصطناعي الخارجي عشان أفهمها بنفس مرونة ChatGPT.
+تقدر الآن:
+• تعيد الطلب بصيغة أقصر فيها الراتب، نوع العميل، السداد أو النسبة.
+• أو تربط خدمة الذكاء الاصطناعي مرة واحدة من «إعداد الاتصال».`);
+    }
+    document.getElementById('finoBotInput')?.focus();
+    return;
+  }
+
+  const thinking=addFINOBotThinking();
+  const sendBtn=document.getElementById('finoBotSendBtn');
+  if(sendBtn)sendBtn.disabled=true;
+  try{
+    const data=await callFINOAI(text||'حلل الصورة المرفقة',finoBotPendingImage);
+    thinking?.remove();
+    finoAIHistory.push({role:'user',content:text||'[صورة مرفقة]'});
+    finoAIHistory.push({role:'assistant',content:data.message||data.action||''});
+    trimFINOAIHistory();
+    handleFINOAIAction(data);
+    if(finoBotPendingImage)clearFINOBotImage();
+  }catch(e){
+    thinking?.remove();
+    console.error('FINO AI',e);
+    addFINOBotAssistant('تعذر الاتصال بالذكاء الاصطناعي الآن. بأرجع أشغل المساعد المحلي بدل ما يتوقف البوت.');
+    FINOLocalFallbackReply(text||'حلل الصورة المرفقة');
+  }finally{
+    if(sendBtn)sendBtn.disabled=false;
+    document.getElementById('finoBotInput')?.focus();
+  }
+}
+function handleFINOBotImageSelected(input){
+  const file=input?.files?.[0];
+  if(!file)return;
+  finoBotPendingImage=file;
+  const preview=document.getElementById('finoBotFilePreview');
+  const img=document.getElementById('finoBotFileImage');
+  const name=document.getElementById('finoBotFileName');
+  if(preview)preview.classList.add('show');
+  if(name)name.textContent=file.name||'صورة عرض';
+  if(img){
+    const url=URL.createObjectURL(file);
+    img.onload=()=>URL.revokeObjectURL(url);
+    img.src=url;
+  }
+}
+function clearFINOBotImage(){
+  finoBotPendingImage=null;
+  const input=document.getElementById('finoBotImageInput');
+  if(input)input.value='';
+  document.getElementById('finoBotFilePreview')?.classList.remove('show');
+  const img=document.getElementById('finoBotFileImage');
+  if(img)img.removeAttribute('src');
+}
 function toggleFINOBotVoice(){
   if(finoBotListening){
     try{finoBotRecognition?.stop()}catch(e){}
@@ -6586,7 +7190,7 @@ function toggleFINOBotVoice(){
   }
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){
-    addFINOBotAssistant('التعرف الصوتي غير مدعوم في هذا المتصفح. استخدم الكتابة، أو جرب Chrome/متصفح يدعم Web Speech.');
+    addFINOBotAssistant('التعرف الصوتي غير مدعوم في هذا المتصفح. استخدم الكتابة أو متصفح يدعم Web Speech.');
     return;
   }
   const rec=new SR();
@@ -6602,54 +7206,14 @@ function toggleFINOBotVoice(){
     finoBotListening=false;
     document.getElementById('finoBotMicBtn')?.classList.remove('listening');
   };
-  rec.onerror=()=>{};
   rec.onresult=e=>{
     const text=e.results?.[0]?.[0]?.transcript||'';
     const input=document.getElementById('finoBotInput');
     if(input)input.value=text;
     if(text)sendFINOBotMessage();
   };
+  rec.onerror=()=>{};
   try{rec.start()}catch(e){}
-}
-
-/* ---------- Main message dispatcher ---------- */
-function sendFINOBotMessage(){
-  const input=document.getElementById('finoBotInput');
-  const text=String(input?.value||'').trim();
-  if(!text)return;
-  input.value='';
-  addFINOBotUser(text);
-
-  const s=normalizeFINOBotText(text);
-
-  if(finoBotPendingUpdate&&!finoBotPendingUpdate.bank&&setFINOBotPendingBankFromText(text))return;
-
-  if(finoBotPendingImage&&/حدث|تحديث|النسب|الصوره|الصورة|اقرا|اقرأ|حلل/.test(s)){
-    analyzeFINOBotImage();
-    return;
-  }
-
-  if(processFINOBotCalculation(text))return;
-  if(processFINOBotImpactQuestion(text))return;
-
-  if(/حدث النسب|غير النسب|تحديث المنصه|تحديث المنصة/.test(s)){
-    if(finoBotPendingImage){analyzeFINOBotImage();return;}
-    addFINOBotAssistant('أرسل صورة العرض أول، وأنا أقرأها وأطلع البنك والشرائح، وبعدها أعرضها عليك للتأكيد قبل الحفظ.');
-    return;
-  }
-
-  if(/مرحبا|هلا|السلام|صباح|مساء/.test(s)){
-    addFINOBotAssistant('حياك الله. عطِني الحسبة أو صورة العرض اللي تبي تحدثها وأنا معك.');
-    return;
-  }
-
-  addFINOBotAssistant(`فهمت عليك جزئيًا، لكن أبيها بصيغة أوضح شوي.
-مثال:
-"تمويل شخصي عسكري راتبه 9900 بنسبة 3%"
-أو:
-"تحويل مديونية حكومي راتبه 12000 بنك الراتب الراجحي والسداد 77000"
-أو أرسل صورة وقل:
-"حدث النسب من الصورة".`);
 }
 
 function openBuyoutFromFree(){
