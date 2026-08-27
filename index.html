@@ -9537,7 +9537,7 @@ function chooseFINOPortalCommodity(on){
 function runFINOPortalSmart(){
   const d=finoPortal.data;
   smartCustomerType=d.customerType;
-  smartSelectedBank=d.bankId;
+  smartSelectedBank=d.bankId||'CUSTOM_FINANCIER';
   smartTitleMode=d.smartTitleMode||smartTitleMode||'personal';
   smartCustomTitle=d.smartCustomTitle||smartCustomTitle||'';
   smartFinanceKind=d.financeKind||smartFinanceKind||'general';
@@ -9545,7 +9545,7 @@ function runFINOPortalSmart(){
   smartHasMortgage=!!d.hasMortgage;
   smartMortgageCurrent=Number(d.mortgageCurrent||0);
   smartMortgageMax=Number(d.mortgageMax||0);
-  smartCustomFinancierName=(d.bankId==='CUSTOM_FINANCIER'?String(d.bankName||''):'');
+  smartCustomFinancierName=(d.bankId==='CUSTOM_FINANCIER'||!BANKS.some(b=>b.id===d.bankId))?String(d.bankName||''):'';
   smartDeductionPercent=Number(d.deductionPercent||smartAutoDeductionPercent(d.salary));
   smartDeductionManual=Number.isFinite(Number(d.deductionPercent));
   smartTermMonths=normalizeSmartTermMonths(d.months||60);
@@ -9595,7 +9595,10 @@ function runFINOPortalSmart(){
   showPage('specialistBotPage');
   finoPortal.step='smart_result';
   setPortalInput(false);
-  if(!r){portalAssistant('<div class="portal-alert">تعذر إكمال الحسبة حسب البيانات المدخلة.</div>');return}
+  if(!r){
+    portalAssistant(`<div class="portal-reason-box"><b>لم تكتمل الحسبة</b>راجع البيانات التالية: الراتب، هامش الربح، الجهة الممولة، الالتزامات، والمدة. إذا كانت صحيحة اضغط تعديل البيانات وأعد المحاولة.<div class="portal-adjust-options"><button type="button" onclick="restartFINOSmartWithEdit('salary')">تعديل الراتب</button><button type="button" onclick="restartFINOSmartWithEdit('obligations')">تعديل الالتزامات</button><button type="button" onclick="restartFINOSmartWithEdit('term')">تعديل المدة</button></div></div>`);
+    return;
+  }
   portalAssistant(`<div class="portal-result">
     <div class="portal-result-head"><b>${portalEsc(r.displayTitle||'الحاسبة الذكية')}</b><span>${portalEsc(r.bank?.name||d.bankName||'')}</span></div>
     <div class="smart-result-ratio"><span>نسبة الاستقطاع المستخدمة${r.hasMortgage?' • يوجد عقاري قائم':''}</span><b>${fmt(r.deductionPercent)}%</b></div>
@@ -11331,8 +11334,19 @@ function smartResultCashTitle(r){
     : 'صافي التمويل المتوقع بعد الرسوم';
 }
 
+
+function canRunSmartCalculator(){
+  if(isFreeAccess())return true;
+  if(activeAccess?.record?.central){
+    const services=activeAccess.record.centralData?.allowed_services||[];
+    return services.includes('smart');
+  }
+  const restored=finoCentralRestoreEntry?.();
+  const services=restored?.allowed_services||[];
+  return Array.isArray(services)&&services.includes('smart');
+}
 function calculateSmartPersonal(fromResult=false){
-  if(!isFreeAccess())return;
+  if(!canRunSmartCalculator())return;
   const preservedSmartControls=fromResult?captureSmartResultControls():null;
 
   const salary=Number(document.getElementById('smartSalary')?.value||0);
@@ -15421,4 +15435,3 @@ async function testFINOSmartImageClipboardSupport(){
 
 </script>
 </body>
-</html>
