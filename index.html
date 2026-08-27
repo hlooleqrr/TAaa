@@ -4982,6 +4982,39 @@ button{
   .portal-expert-grid{grid-template-columns:1fr}
 }
 
+
+/* FINO SMART PORTAL V3 — requested presentation refinements */
+.portal-copy h1{font-size:18px}
+.portal-copy p{font-size:6.5px;line-height:1.55;max-width:690px}
+.portal-conditions-top{
+  margin:0 0 8px;padding:8px 10px;border:1px solid #ead6a8;border-radius:10px;
+  background:#fffaf1;color:#775718;font-size:6.4px;line-height:1.65;font-weight:900
+}
+.portal-media-card{
+  margin-top:9px;padding:9px;border:1px solid #d6e5ed;border-radius:12px;background:#fff
+}
+.portal-media-card b{display:block;color:#073b67;font-size:8px;font-weight:900;margin-bottom:6px}
+.portal-media-preview{
+  display:flex;justify-content:center;align-items:center;padding:6px;border:1px solid #e0eaf0;
+  border-radius:10px;background:#f8fbfd;min-height:120px
+}
+.portal-media-preview img{
+  display:block;max-width:100%;max-height:520px;width:auto;height:auto;border-radius:8px;
+  box-shadow:0 5px 16px rgba(8,49,72,.07)
+}
+.portal-media-help{
+  margin-top:7px;padding:7px 8px;border:1px solid #d8e7ef;border-radius:9px;background:#f7fbfe;
+  color:#567585;font-size:6.2px;line-height:1.65;font-weight:800
+}
+.portal-topbar .left-info{min-width:0}
+.portal-topbar .conditions-inline{
+  color:#805b12;font-size:5.7px;font-weight:900;line-height:1.4;margin-top:2px
+}
+@media(max-width:760px){
+  .portal-copy h1{font-size:17px}
+  .portal-media-preview img{max-height:420px}
+}
+
 </style>
 </head>
 <body>
@@ -6492,14 +6525,17 @@ function openFINOSmartPortal(trial=false){
   const title=document.getElementById('portalMainTitle');
   const sub=document.getElementById('portalMainSub');
   const top=document.getElementById('portalTopTitle');
+  const topSub=document.getElementById('portalTopSub');
   if(finoPortal.trial){
-    if(title)title.textContent='المنصة الذكية لترشيح أفضل بنك لشراء مديونية التمويل الشخصي';
-    if(sub)sub.textContent='ترشيح أفضل عرض لشراء مديونيتك من بنكك الحالي حسب بياناتك.';
-    if(top)top.textContent='ترشيح أفضل بنك لشراء المديونية';
+    if(title)title.textContent='المنصة الذكية';
+    if(sub)sub.textContent='ترشيح أفضل عرض لشراء مديونية تمويلك الشخصي من بنكك الحالي حسب بياناتك.';
+    if(top)top.textContent='شروط الحسبة';
+    if(topSub)topSub.textContent='لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.';
   }else{
     if(title)title.textContent='المنصة الذكية';
     if(sub)sub.textContent='تحويل المديونية، التمويل الشخصي، وأدوات المختص.';
     if(top)top.textContent='المنصة الذكية';
+    if(topSub)topSub.textContent='اختر الخدمة ونكمل معك خطوة بخطوة';
   }
   resetFINOSmartPortal();
 }
@@ -6508,14 +6544,9 @@ function resetFINOSmartPortal(){
   if(chat)chat.innerHTML='';
   finoPortal.mode=null;finoPortal.step=null;finoPortal.data={};
   finoPortal.adminBankId='';finoPortal.adminRateIndex=null;finoPortal.imageFile=null;finoPortal.imageRead=null;
-  portalAssistant(`${portalSaudiGreeting()}، مرحبًا بك.`);
   if(finoPortal.trial){
     finoPortal.mode='buyout';
-    portalAssistant(`نبدأ ترشيح أفضل بنك لشراء مديونية تمويلك الشخصي من بنكك الحالي.
-      <div class="portal-trial-conditions">
-        شروط الحسبة: لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.
-      </div>`);
-    portalAssistant('اختر جهة عملك.');
+    portalAssistant(`${portalSaudiGreeting()}، حياك الله. لنبدأ بترشيح أفضل بنك لشراء مديونيتك. اختر جهة عملك.`);
     showPortalWorkTypes('buyout');
   }else{
     portalAssistant(`وش الخدمة اللي تحتاجها؟${portalOptions([
@@ -6673,7 +6704,7 @@ function renderFINOPortalRankings(out){
   return `<div class="portal-result">
     <div class="portal-result-head"><b>اختر أحد البنوك المرشحة</b><span>${out.length} عروض متاحة</span></div>
     <div class="portal-rank-title">اضغط على أي بنك لفتح تفاصيل عرضه</div>
-    <div class="portal-rank-list">${out.slice(0,4).map((r,i)=>`
+    <div class="portal-rank-list">${out.map((r,i)=>`
       <button type="button" class="portal-rank" onclick="showFINOPortalRank(${i})">
         <span class="num">${i+1}</span>
         <span><b>${portalEsc(r.name)}</b><small>صافي الكاش ${money(r.cashAfterDebt)} • القسط ${money(r.installment)}</small></span>
@@ -6702,12 +6733,9 @@ function showFINOPortalRank(index){
     ${r.adminNote?`<div class="portal-note">📌 ${portalEsc(r.adminNote)}</div>`:''}
     ${renderFINOPortalExpertShareControls()}
     <div class="portal-result-actions">
-      <button type="button" class="portal-option primary" onclick="portalShareBuyoutText(${index})">إرسال نص واتساب</button>
-      <button type="button" class="portal-option" onclick="portalShareCompactImage(${index})">صورة مختصرة بالحسبة</button>
-      <button type="button" class="portal-option" onclick="portalShareDetailedImage(${index})">بطاقة تفاصيل التمويل كاملة</button>
-    </div>
-    <div class="portal-restart">
-      <button type="button" class="portal-option" onclick="restartFINOPortalBuyout()">إعادة الحسبة</button>
+      <button type="button" class="portal-option primary" onclick="portalPreviewDetailedImage(${index})">عرض بطاقة تفاصيل التمويل كاملة</button>
+      <button type="button" class="portal-option" onclick="portalPreviewCompactImage(${index})">عرض البطاقة المختصرة للحسبة</button>
+      <button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})">إرسال نص عبر واتساب</button>
     </div>
   </div>`);
 }
@@ -6765,6 +6793,60 @@ function prepareFINOPortalShare(i){
     if(note)note.value=finoPortal.clientNote||'';
     try{updateFeesControls()}catch(e){}
     try{updateClientCustomNote()}catch(e){}
+  }
+}
+
+async function blobToFINOPortalObjectUrl(blob){
+  return URL.createObjectURL(blob);
+}
+function portalMediaCardHtml(title,url,shareFn,index,helpText){
+  return `<div class="portal-media-card">
+    <b>${portalEsc(title)}</b>
+    <div class="portal-media-preview"><img src="${url}" alt="${portalEsc(title)}"></div>
+    <div class="portal-options">
+      <button type="button" class="portal-option primary" onclick="${shareFn}(${index})">مشاركة عبر واتساب</button>
+    </div>
+    <div class="portal-media-help">${portalEsc(helpText)}</div>
+  </div>`;
+}
+async function portalPreviewDetailedImage(i){
+  prepareFINOPortalShare(i);
+  portalAssistant('جاري تجهيز بطاقة التفاصيل كاملة…');
+  try{
+    const blob=await createDetailedResultPngBlob();
+    const url=await blobToFINOPortalObjectUrl(blob);
+    window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
+    window.__FINO_PORTAL_PREVIEW_URLS.push(url);
+    portalAssistant(portalMediaCardHtml(
+      'بطاقة تفاصيل التمويل كاملة',
+      url,
+      'portalShareDetailedImage',
+      i,
+      'عند الضغط على مشاركة عبر واتساب سيُطلب رقم العميل. إذا فتح واتساب بعد نسخ الصورة، ادخل محادثة العميل واضغط لصق ثم إرسال.'
+    ));
+  }catch(e){
+    console.error('FINO portal detailed preview',e);
+    portalAssistant('<div class="portal-alert">تعذر تجهيز بطاقة التفاصيل حاليًا.</div>');
+  }
+}
+async function portalPreviewCompactImage(i){
+  prepareFINOPortalShare(i);
+  portalAssistant('جاري تجهيز البطاقة المختصرة…');
+  try{
+    const blob=await createFINOPortalCompactPngBlob();
+    const url=await blobToFINOPortalObjectUrl(blob);
+    window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
+    window.__FINO_PORTAL_PREVIEW_URLS.push(url);
+    portalAssistant(portalMediaCardHtml(
+      'البطاقة المختصرة للحسبة',
+      url,
+      'portalShareCompactImage',
+      i,
+      'عند الضغط على مشاركة عبر واتساب سيُطلب رقم العميل. إذا فتح واتساب بعد نسخ الصورة، ادخل محادثة العميل واضغط لصق ثم إرسال.'
+    ));
+  }catch(e){
+    console.error('FINO portal compact preview',e);
+    portalAssistant('<div class="portal-alert">تعذر تجهيز البطاقة المختصرة حاليًا.</div>');
   }
 }
 function portalShareBuyoutText(i){
