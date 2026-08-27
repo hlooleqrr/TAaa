@@ -5415,6 +5415,15 @@ button{
 .portal-company-btn{border:1px solid #d3e2e9;border-radius:9px;background:#fff;padding:9px 6px;font:900 7.5px Cairo,Arial,sans-serif;color:#244d64}
 @media(max-width:600px){.portal-company-grid{grid-template-columns:1fr}}
 
+
+/* FINO V15 */
+.smart-finance-kind{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:7px}
+.smart-finance-kind button{border:1px solid #d6e4ea;background:#fff;border-radius:9px;padding:9px 6px;font:900 7px Cairo,Arial,sans-serif;color:#2d5369}
+.smart-finance-kind button.active{background:#073b67;color:#fff;border-color:#073b67}
+.smart-cap-breakdown{margin-top:8px;padding:10px;border-radius:10px;background:#f7fbfd;border:1px solid #d5e6ed;font-size:7.2px;line-height:1.85;color:#365c70;font-weight:800}
+.portal-smart-only .portal-back{display:none!important}
+@media(max-width:600px){.smart-finance-kind{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -5565,6 +5574,16 @@ button{
       <div class="smart-section-head"><div class="num">01</div><div><b>إعداد الحسبة</b><small>حدد المسمى والحالة ونسبة الاستقطاع والمدة</small></div></div>
 
       <div class="smart-input-card" style="margin-bottom:7px">
+        <label>نوع الحسبة</label>
+        <small>في التمويل الاستهلاكي أو تمويل الشركات: إجمالي الشخصي والالتزامات الأخرى غير العقاري لا يتجاوز 45% من صافي الراتب، ومع وجود عقاري نلتزم كذلك بالسقف الإجمالي المحدد.</small>
+        <div class="smart-finance-kind" id="smartFinanceKind">
+          <button type="button" class="active" data-kind="general" onclick="setSmartFinanceKind('general',this)">حسبة عامة</button>
+          <button type="button" data-kind="consumer" onclick="setSmartFinanceKind('consumer',this)">تمويل استهلاكي</button>
+          <button type="button" data-kind="company" onclick="setSmartFinanceKind('company',this)">تمويل شركات</button>
+        </div>
+      </div>
+
+      <div class="smart-input-card" style="margin-bottom:7px">
         <label>مسمى الحسبة في النتيجة والصور</label>
         <small>اختر مسمى جاهز أو اكتب أي عنوان، ويمكن تركه بدون عنوان.</small>
         <div class="smart-title-options" id="smartTitleOptions">
@@ -5634,13 +5653,18 @@ button{
       <div class="smart-section-head"><div class="num">05</div><div><b>المديونية السابقة والالتزامات</b><small>إذا لا توجد مديونية أو التزامات اكتب 0</small></div></div>
       <div class="smart-input-grid">
         <div class="smart-input-card">
+          <label>قسط التمويل الشخصي القائم</label>
+          <small>قسط التمويل الشخصي الحالي فقط. اكتب 0 إذا لا يوجد.</small>
+          <input id="smartPersonalInstallment" type="number" inputmode="numeric" min="0" value="0" placeholder="0" oninput="updateSmartEligibilityPreview()">
+        </div>
+        <div class="smart-input-card">
           <label>السداد المبكر للمديونية السابقة</label>
           <small>يخصم من صافي التمويل بعد الرسوم. اكتب 0 إذا لا توجد مديونية سابقة.</small>
           <input id="smartEarlySettlement" type="number" inputmode="numeric" min="0" value="0" placeholder="0">
         </div>
         <div class="smart-input-card">
-          <label>الالتزامات الشهرية الأخرى</label>
-          <small>جميع الالتزامات الشهرية غير العقاري. اكتب 0 إذا لا توجد.</small>
+          <label>الالتزامات الشهرية الأخرى غير الشخصي وغير العقاري</label>
+          <small>مثل تمويل إضافي أو بطاقات أو التزامات شهرية أخرى. لا تكرر قسط الشخصي أو العقاري.</small>
           <input id="smartExternal" type="number" inputmode="numeric" min="0" value="0" placeholder="0" oninput="updateSmartEligibilityPreview()">
         </div>
       </div>
@@ -5922,6 +5946,8 @@ let smartHasMortgage=false;
 let smartMortgageCurrent=0;
 let smartMortgageMax=0;
 let smartCustomFinancierName='';
+let smartFinanceKind='general';
+let smartPersonalInstallment=0;
 let smartDeductionPercent=33.33;
 let smartDeductionManual=false;
 let smartTitleMode='personal';
@@ -7121,7 +7147,7 @@ async function showFINOPortalCodeManager(editId=''){
       </div>
       <div class="portal-code-field"><label>الخدمة المتاحة</label><select id="pcService">
         <option value="buyout" ${c.allowedService==='buyout'?'selected':''}>تحويل المديونية فقط</option>
-        <option value="smart" ${c.allowedService==='smart'?'selected':''}>الحاسبة الذكية فقط</option>
+        <option value="smart" ${c.allowedService==='smart'?'selected':''}>الحاسبة الذكية فقط — العميل لا يرى أي خدمة أخرى</option>
         <option value="both" ${c.allowedService==='both'?'selected':''}>الحاسبتان</option>
         <option value="contract" ${c.allowedService==='contract'?'selected':''}>عقد فقط — يفتح صفحة العقد مباشرة</option>
       </select></div>
@@ -8298,6 +8324,11 @@ function resetFINOSmartPortal(){
   }
 }
 function FINOPortalBack(){
+  if(finoPortal.smartOnlyCode){
+    finoCentralClearEntry();activeAccess=null;pendingAccessAfterLogin=null;
+    document.getElementById('specialistBotPage')?.classList.remove('portal-smart-only');
+    finoPortal.smartOnlyCode=false;showPage('page1');return;
+  }
   if(finoCentralIsPortalLocked()){
     finoCentralClearEntry();
     activeAccess=null;pendingAccessAfterLogin=null;
@@ -8354,6 +8385,14 @@ function showFINOFreeConversationSettings(mode){
     <h4>إعدادات الحسبة قبل البدء</h4>
     <p>هذه نفس أهم أدوات التحكم الموجودة في الحاسبة النهائية. اختر اللي تبيه الآن، وتقدر تعدلها لاحقًا.</p>
     ${mode==='smart'?`<div class="portal-free-setting full">
+      <label>نوع الحسبة</label>
+      <select id="portalFreeSmartFinanceKind">
+        <option value="general">حسبة عامة</option>
+        <option value="consumer">تمويل استهلاكي</option>
+        <option value="company">تمويل شركات</option>
+      </select>
+    </div>
+    <div class="portal-free-setting full">
       <label>مسمى الحسبة</label>
       <select id="portalFreeSmartTitleMode">
         <option value="personal">حسبة شخصية</option>
@@ -8426,6 +8465,8 @@ function applyFINOFreeConversationSettings(mode){
     customAmountAfterResult:!!document.getElementById('portalFreeCustomAmount')?.checked
   };
   if(mode==='smart'){
+    smartFinanceKind=String(document.getElementById('portalFreeSmartFinanceKind')?.value||'general');
+    finoPortal.data.financeKind=smartFinanceKind;
     smartTitleMode=String(document.getElementById('portalFreeSmartTitleMode')?.value||'personal');
     smartCustomTitle=String(document.getElementById('portalFreeSmartCustomTitle')?.value||'').trim();
     finoPortal.data.smartTitleMode=smartTitleMode;finoPortal.data.smartCustomTitle=smartCustomTitle;
@@ -8479,11 +8520,26 @@ function startFINOPortalSmart(){
     smartTitleMode='personal';
     finoPortal.data.smartTitleMode='personal';
     portalAssistant(`حياك الله${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}. نبدأ بالحاسبة الذكية.`);
-    showFINOPortalSmartWorkTypes();
+    askFINOPortalSmartFinanceKind();
   }
 }
 
 
+
+function askFINOPortalSmartFinanceKind(){
+  finoPortal.step='smart_finance_kind';setPortalInput(false);
+  portalAssistant(`وش نوع الحسبة المطلوبة؟${portalOptions([
+    {label:'حسبة عامة',onclick:"chooseFINOPortalSmartFinanceKind('general')"},
+    {label:'تمويل استهلاكي',primary:true,onclick:"chooseFINOPortalSmartFinanceKind('consumer')"},
+    {label:'تمويل شركات',onclick:"chooseFINOPortalSmartFinanceKind('company')"}
+  ])}`);
+}
+function chooseFINOPortalSmartFinanceKind(kind){
+  smartFinanceKind=['consumer','company'].includes(kind)?kind:'general';
+  finoPortal.data.financeKind=smartFinanceKind;
+  portalUser(smartFinanceKindName());
+  showFINOPortalSmartWorkTypes();
+}
 function portalSmartFinancierOptions(){
   const companies=['إمكان','النايفات','السعودية للتمويل'];
   return `<div class="portal-financier-block"><b>البنوك</b>${portalBankGrid("chooseFINOPortalBank")}
@@ -8550,7 +8606,18 @@ function chooseFINOPortalMortgageStatus(on){
     finoPortal.data.mortgageMax=0;
     smartMortgageCurrent=0;smartMortgageMax=0;
     finoPortal.data.deductionPercent=45;smartDeductionPercent=45;
-    portalAssistant(`<div class="portal-note">لا يوجد عقاري قائم • الحد المبدئي للاستقطاع في هذه الحسبة 45% من صافي الراتب.</div>`);
+    const e=smartConsumerCompanyEligibility({
+      salary,personalInstallment:Number(finoPortal.data.personalInstallment||0),
+      external:Number(finoPortal.data.external||0),hasMortgage:false,deductionPercent:45
+    });
+    if(['consumer','company'].includes(finoPortal.data.financeKind||smartFinanceKind)){
+      const msg=e.available>0
+        ?`المتاح المبدئي لقسط ${smartFinanceKindName(finoPortal.data.financeKind)} حتى سقف 45%: ${money(e.available)}.`
+        :`لا يوجد متاح؛ التجاوز عن سقف 45% بمبلغ ${money(Math.abs(e.available))}.`;
+      portalAssistant(`<div class="portal-note">لا يوجد عقاري قائم • الشخصي ${money(e.personal)} • الالتزامات الأخرى ${money(e.other)} • ${msg}</div>`);
+    }else{
+      portalAssistant(`<div class="portal-note">لا يوجد عقاري قائم • الحد المبدئي للاستقطاع في هذه الحسبة 45% من صافي الراتب.</div>`);
+    }
     askFINOPortalSmartDebtChoice();
     return;
   }
@@ -8662,13 +8729,18 @@ function submitFINOPortalInput(){
     finoPortal.data.deductionPercent=auto;smartDeductionPercent=auto;
     const used=Math.max(Number(finoPortal.data.mortgageCurrent||0),n);
     const ext=Number(finoPortal.data.external||0);
+    const personal=Number(finoPortal.data.personalInstallment||0);
     const cap=salary*(auto/100);
-    const available=cap-ext-used;
+    const ce=smartConsumerCompanyEligibility({
+      salary,personalInstallment:personal,external:ext,hasMortgage:true,
+      mortgageCurrent:Number(finoPortal.data.mortgageCurrent||0),mortgageMax:n,deductionPercent:auto
+    });
+    const available=['consumer','company'].includes(finoPortal.data.financeKind||smartFinanceKind)?ce.available:cap-ext-used;
     const extra=salary>=25000?'<div class="portal-note">راتبك 25,000 ريال فأكثر: بعض الجهات قد تسمح بزيادة الاستقطاع حتى 80% حسب المنتج والسياسة.</div>':'';
     if(available<=0){
-      portalAssistant(`<div class="portal-alert">للأسف${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}، التزاماتك أعلى من الحد المسموح بهذه النسبة بمبلغ ${money(Math.abs(available))}. العقاري المحتسب ${money(used)} والالتزامات الأخرى ${money(ext)}.</div>${extra}`);
+      portalAssistant(`<div class="portal-alert">للأسف${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}، التزاماتك أعلى من الحد المسموح بهذه النسبة بمبلغ ${money(Math.abs(available))}. الشخصي ${money(personal)} • الالتزامات الأخرى ${money(ext)} • العقاري المحتسب ${money(used)}.</div>${extra}`);
     }else{
-      portalAssistant(`<div class="portal-note">العقاري المحتسب بأعلى قسط: ${money(used)} • الالتزامات الأخرى: ${money(ext)} • المتاح المبدئي لقسط جديد: ${money(available)}.</div>${extra}`);
+      portalAssistant(`<div class="portal-note">الشخصي ${money(personal)} • الالتزامات الأخرى ${money(ext)} • العقاري المحتسب بأعلى قسط ${money(used)} • المتاح المبدئي لقسط جديد ${money(available)}.</div>${extra}`);
     }
     finoPortal.step='smart_deduction_choice';setPortalInput(false);
     portalAssistant(`نسبة الاستقطاع المبدئية <b>${fmt(auto)}%</b>. ${salary<15000?'الراتب حتى 14,999 ريال → 55%.':'الراتب 15,000 ريال فأكثر → 65%.'}${portalOptions([
@@ -8688,9 +8760,16 @@ function submitFINOPortalInput(){
   }
   if(step==='smart_rate'){
     const n=portalParseNumber(raw);if(!(n>0)){portalAssistant('اكتب هامش الربح رقم، مثال 3.25');return}
-    finoPortal.data.rate=n;finoPortal.step='smart_external';
-    portalAssistant('كم الالتزامات الشهرية الأخرى غير العقاري؟ إذا ما فيه اكتب 0.');
-    setPortalInput(true,'0','number');return;
+    finoPortal.data.rate=n;finoPortal.step='smart_personal_installment';
+    portalAssistant('كم قسط التمويل الشخصي القائم عليك شهريًا؟ إذا ما عندك شخصي اكتب 0.');
+    setPortalInput(true,'مثال: 1200 أو 0','number');return;
+  }
+  if(step==='smart_personal_installment'){
+    const n=portalParseNumber(raw);if(!(n>=0)){portalAssistant('اكتب قسط الشخصي رقم فقط، وإذا ما عندك اكتب 0.');return}
+    finoPortal.data.personalInstallment=n;smartPersonalInstallment=n;
+    finoPortal.step='smart_external';
+    portalAssistant('كم الالتزامات الشهرية الأخرى غير الشخصي وغير العقاري؟ إذا ما فيه اكتب 0.');
+    setPortalInput(true,'مثال: 300 أو 0','number');return;
   }
   if(step==='smart_external'){
     const n=portalParseNumber(raw);if(!(n>=0)){portalAssistant('اكتب رقم صحيح، وإذا ما فيه اكتب 0.');return}
@@ -9316,6 +9395,8 @@ function runFINOPortalSmart(){
   smartSelectedBank=d.bankId;
   smartTitleMode=d.smartTitleMode||smartTitleMode||'personal';
   smartCustomTitle=d.smartCustomTitle||smartCustomTitle||'';
+  smartFinanceKind=d.financeKind||smartFinanceKind||'general';
+  smartPersonalInstallment=Number(d.personalInstallment||0);
   smartHasMortgage=!!d.hasMortgage;
   smartMortgageCurrent=Number(d.mortgageCurrent||0);
   smartMortgageMax=Number(d.mortgageMax||0);
@@ -9326,7 +9407,9 @@ function runFINOPortalSmart(){
   document.getElementById('smartSalary').value=String(d.salary);
   document.getElementById('smartRate').value=String(d.rate);
   document.getElementById('smartEarlySettlement').value=String(d.settlement||0);
+  const pi=document.getElementById('smartPersonalInstallment');if(pi)pi.value=String(smartPersonalInstallment||0);
   document.getElementById('smartExternal').value=String(d.external||0);
+  document.querySelectorAll('#smartFinanceKind button').forEach(x=>x.classList.toggle('active',x.dataset.kind===smartFinanceKind));
   const mortgageEl=document.getElementById('smartHasMortgage');if(mortgageEl)mortgageEl.checked=smartHasMortgage;
   document.getElementById('smartMortgageFields')?.classList.toggle('show',smartHasMortgage);
   const mc=document.getElementById('smartMortgageCurrent');if(mc)mc.value=String(smartMortgageCurrent||0);
@@ -9342,15 +9425,24 @@ function runFINOPortalSmart(){
   const smartCommodityValue=cs.commodityMode==='on'?true:cs.commodityMode==='off'?false:!!d.commodity;
   if(com)com.checked=smartCommodityValue;
   document.querySelectorAll('#smartTypeGrid .smart-type-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.type===smartCustomerType));
-  const eligibility=smartEligibilityForData({
-    salary:d.salary,deductionPercent:smartDeductionPercent,hasMortgage:smartHasMortgage,
-    mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax,external:d.external
-  });
+  const eligibility=['consumer','company'].includes(smartFinanceKind)
+    ?smartConsumerCompanyEligibility({
+      salary:d.salary,personalInstallment:smartPersonalInstallment,external:d.external,
+      deductionPercent:smartDeductionPercent,hasMortgage:smartHasMortgage,
+      mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax
+    })
+    :smartEligibilityForData({
+      salary:d.salary,deductionPercent:smartDeductionPercent,hasMortgage:smartHasMortgage,
+      mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax,external:d.external
+    });
   if(eligibility.available<=0){
     showPage('specialistBotPage');
     finoPortal.step='smart_result';
     setPortalInput(false);
-    portalAssistant(`<div class="portal-alert">للأسف${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}، ما يطلع لك قسط جديد بهذه البيانات. الالتزامات تتجاوز الحد المسموح بمبلغ ${money(Math.abs(eligibility.available))}.<br>حد الاستقطاع ${fmt(eligibility.pct)}% = ${money(eligibility.cap)} • الالتزامات المحتسبة = ${money(eligibility.obligations)}.</div>`);
+    const detail=['consumer','company'].includes(smartFinanceKind)
+      ?`سقف غير العقاري 45% = ${money(eligibility.nonMortgageCap)}${smartHasMortgage?` • السقف الإجمالي ${fmt(eligibility.overallPct)}% = ${money(eligibility.overallCap)}`:''}`
+      :`حد الاستقطاع ${fmt(eligibility.pct)}% = ${money(eligibility.cap)} • الالتزامات المحتسبة = ${money(eligibility.obligations)}`;
+    portalAssistant(`<div class="portal-alert">للأسف${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''}، ما يطلع لك قسط جديد بهذه البيانات. الالتزامات تتجاوز الحد المسموح بمبلغ ${money(Math.abs(eligibility.available))}.<br>${detail}</div>`);
     return;
   }
   calculateSmartPersonal();
@@ -10617,6 +10709,8 @@ function openSmartPersonalCalculator(){
   renderSmartBanks();
   showPage('smartPage');
   const term=document.getElementById('smartTermInputMain');if(term)term.value=String(normalizeSmartTermMonths(smartTermMonths||60));
+  document.querySelectorAll('#smartFinanceKind button').forEach(x=>x.classList.toggle('active',x.dataset.kind===smartFinanceKind));
+  const pi=document.getElementById('smartPersonalInstallment');if(pi)pi.value=String(smartPersonalInstallment||0);
   const mortgage=document.getElementById('smartHasMortgage');if(mortgage)mortgage.checked=smartHasMortgage;
   document.getElementById('smartMortgageFields')?.classList.toggle('show',smartHasMortgage);
   const mc=document.getElementById('smartMortgageCurrent');if(mc)mc.value=String(smartMortgageCurrent||0);
@@ -10933,6 +11027,34 @@ function recalculateSmartFromResult(){
 }
 
 
+
+function setSmartFinanceKind(kind,btn=null){
+  smartFinanceKind=['consumer','company'].includes(kind)?kind:'general';
+  document.querySelectorAll('#smartFinanceKind button').forEach(x=>x.classList.toggle('active',x.dataset.kind===smartFinanceKind));
+  updateSmartEligibilityPreview();
+}
+function smartFinanceKindName(kind=smartFinanceKind){
+  if(kind==='consumer')return 'تمويل استهلاكي';
+  if(kind==='company')return 'تمويل شركات';
+  return 'حسبة عامة';
+}
+function smartConsumerCompanyEligibility(data={}){
+  const salary=Math.max(0,Number(data.salary||0));
+  const personal=Math.max(0,Number(data.personalInstallment||0));
+  const other=Math.max(0,Number(data.external||0));
+  const hasMortgage=!!data.hasMortgage;
+  const mortgageCurrent=Math.max(0,Number(data.mortgageCurrent||0));
+  const mortgageMax=Math.max(0,Number(data.mortgageMax||0));
+  const mortgageUsed=hasMortgage?Math.max(mortgageCurrent,mortgageMax):0;
+  const overallPct=Math.max(0,Math.min(80,Number(data.deductionPercent||smartAutoDeductionPercent(salary))));
+  const nonMortgageCap=salary*0.45;
+  const nonMortgageUsed=personal+other;
+  const availableBy45=nonMortgageCap-nonMortgageUsed;
+  const overallCap=salary*(overallPct/100);
+  const availableByOverall=overallCap-(nonMortgageUsed+mortgageUsed);
+  const available=hasMortgage?Math.min(availableBy45,availableByOverall):availableBy45;
+  return {salary,personal,other,hasMortgage,mortgageUsed,overallPct,nonMortgageCap,nonMortgageUsed,availableBy45,overallCap,availableByOverall,available};
+}
 function normalizeSmartTermMonths(value){
   const n=Math.floor(Number(value||60));
   if(!Number.isFinite(n))return 60;
@@ -11008,6 +11130,27 @@ function updateSmartEligibilityPreview(){
   if(!el)return;
   const salary=Number(document.getElementById('smartSalary')?.value||0);
   if(!(salary>0)){el.className='smart-eligibility-box';el.textContent='أدخل البيانات وسيظهر لك المتاح من الاستقطاع.';return}
+  smartPersonalInstallment=Number(document.getElementById('smartPersonalInstallment')?.value||smartPersonalInstallment||0);
+  const external=Number(document.getElementById('smartExternal')?.value||0);
+  smartMortgageCurrent=Number(document.getElementById('smartMortgageCurrent')?.value||smartMortgageCurrent||0);
+  smartMortgageMax=Number(document.getElementById('smartMortgageMax')?.value||smartMortgageMax||0);
+
+  if(['consumer','company'].includes(smartFinanceKind)){
+    const e=smartConsumerCompanyEligibility({
+      salary,personalInstallment:smartPersonalInstallment,external,
+      hasMortgage:smartHasMortgage,mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax,
+      deductionPercent:smartDeductionPercent
+    });
+    if(e.available<=0){
+      el.className='smart-eligibility-box bad';
+      el.innerHTML=`لا يوجد قسط متاح لـ ${smartFinanceKindName()}. التجاوز ${money(Math.abs(e.available))}.<div class="smart-cap-breakdown">سقف غير العقاري 45% = ${money(e.nonMortgageCap)} • الشخصي ${money(e.personal)} • الالتزامات الأخرى ${money(e.other)}${e.hasMortgage?` • أعلى قسط عقاري ${money(e.mortgageUsed)} • السقف الإجمالي ${fmt(e.overallPct)}% = ${money(e.overallCap)}`:''}</div>`;
+    }else{
+      el.className='smart-eligibility-box good';
+      el.innerHTML=`المتاح المبدئي لقسط ${smartFinanceKindName()}: ${money(e.available)}.<div class="smart-cap-breakdown">سقف غير العقاري 45% = ${money(e.nonMortgageCap)} • الشخصي ${money(e.personal)} • الالتزامات الأخرى ${money(e.other)}${e.hasMortgage?` • أعلى قسط عقاري ${money(e.mortgageUsed)} • السقف الإجمالي ${fmt(e.overallPct)}% = ${money(e.overallCap)}`:''}</div>`;
+    }
+    return;
+  }
+
   const pct=Math.max(0,Math.min(80,Number(smartDeductionPercent||0)));
   const cap=salary*(pct/100);
   const obligations=smartTotalExistingObligations();
@@ -11060,21 +11203,42 @@ function calculateSmartPersonal(fromResult=false){
 
   refreshSmartAutoDeduction();
   const deductionPercent=Math.max(0,Math.min(80,Number(smartDeductionPercent||0)));
+  smartPersonalInstallment=Number(document.getElementById('smartPersonalInstallment')?.value||smartPersonalInstallment||0);
   smartMortgageCurrent=Number(document.getElementById('smartMortgageCurrent')?.value||smartMortgageCurrent||0);
   smartMortgageMax=Number(document.getElementById('smartMortgageMax')?.value||smartMortgageMax||0);
   const mortgageObligation=smartHasMortgage?Math.max(0,smartMortgageCurrent,smartMortgageMax):0;
-  const existingObligations=Math.max(0,external)+mortgageObligation;
-  const deductionCap=salary*(deductionPercent/100);
-  const totalCap=deductionCap;
-  if(existingObligations>=deductionCap){
-    const excess=existingObligations-deductionCap;
-    alert(`الالتزامات تتجاوز نسبة الاستقطاع المحددة ${fmt(deductionPercent)}% بمبلغ ${money(excess)}، ولا يوجد قسط متاح للحسبة.`);
-    return;
+
+  let existingObligations,deductionCap,totalCap,personalCap,availableAfterOther,installment,consumerEligibility=null;
+  if(['consumer','company'].includes(smartFinanceKind)){
+    consumerEligibility=smartConsumerCompanyEligibility({
+      salary,personalInstallment:smartPersonalInstallment,external,
+      hasMortgage:smartHasMortgage,mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax,
+      deductionPercent
+    });
+    existingObligations=consumerEligibility.nonMortgageUsed+consumerEligibility.mortgageUsed;
+    deductionCap=consumerEligibility.overallCap;
+    totalCap=deductionCap;
+    personalCap=consumerEligibility.nonMortgageCap;
+    availableAfterOther=Math.max(0,consumerEligibility.available);
+    installment=availableAfterOther;
+    if(!(installment>0)){
+      alert(`لا يوجد قسط متاح لـ ${smartFinanceKindName()}. الالتزامات تتجاوز الحد المسموح بمبلغ ${money(Math.abs(consumerEligibility.available))}.`);
+      return;
+    }
+  }else{
+    existingObligations=Math.max(0,external)+mortgageObligation;
+    deductionCap=salary*(deductionPercent/100);
+    totalCap=deductionCap;
+    if(existingObligations>=deductionCap){
+      const excess=existingObligations-deductionCap;
+      alert(`الالتزامات تتجاوز نسبة الاستقطاع المحددة ${fmt(deductionPercent)}% بمبلغ ${money(excess)}، ولا يوجد قسط متاح للحسبة.`);
+      return;
+    }
+    personalCap=deductionCap;
+    availableAfterOther=Math.max(0,deductionCap-existingObligations);
+    installment=availableAfterOther;
+    if(!(installment>0)){alert('لا يوجد قسط متاح حسب نسبة الاستقطاع والالتزامات المدخلة.');return;}
   }
-  const personalCap=deductionCap;
-  const availableAfterOther=Math.max(0,deductionCap-existingObligations);
-  const installment=availableAfterOther;
-  if(!(installment>0)){alert('لا يوجد قسط متاح حسب نسبة الاستقطاع والالتزامات المدخلة.');return;}
 
   const months=currentSmartTermMonths();
   const years=months/12;
@@ -11160,8 +11324,10 @@ function calculateSmartPersonal(fromResult=false){
   smartLastResult={
     salary,rate,earlySettlement,external,commodityEnabled,
     hasMortgage:smartHasMortgage,deductionPercent,
+    financeKind:smartFinanceKind,financeKindName:smartFinanceKindName(),
+    personalInstallment:smartPersonalInstallment,
     mortgageCurrent:smartMortgageCurrent,mortgageMax:smartMortgageMax,mortgageObligation,
-    existingObligations,
+    existingObligations,consumerEligibility,
     displayTitle:smartEffectiveTitle(),titleMode:smartTitleMode,
     totalCap,personalCap,availableAfterOther,
     months,years,maxGross,maxPrincipal,maxNetBeforeDebt,
@@ -11224,7 +11390,7 @@ function calculateSmartPersonal(fromResult=false){
       <span>نسبة الاستقطاع المستخدمة في الحسبة${smartHasMortgage?' • يوجد عقاري قائم':''}</span>
       <b>${fmt(deductionPercent)}%</b>
     </div>
-    ${smartHasMortgage?`<div class="smart-eligibility-box">القسط العقاري المحتسب: ${money(mortgageObligation)} • الالتزامات الأخرى: ${money(external)} • المتاح للقسط الجديد: ${money(availableAfterOther)}</div>`:''}
+    ${['consumer','company'].includes(smartFinanceKind)?`<div class="smart-eligibility-box">${smartFinanceKindName()} • قسط الشخصي القائم ${money(smartPersonalInstallment)} • الالتزامات الأخرى ${money(external)}${smartHasMortgage?` • أعلى قسط عقاري ${money(mortgageObligation)}`:''} • المتاح للقسط الجديد ${money(availableAfterOther)}</div>`:(smartHasMortgage?`<div class="smart-eligibility-box">القسط العقاري المحتسب: ${money(mortgageObligation)} • الالتزامات الأخرى: ${money(external)} • المتاح للقسط الجديد: ${money(availableAfterOther)}</div>`:'')}
     ${salary>=25000?`<div class="smart-ratio-note">${portalEsc(smartRatio80NoteText({salary}))}</div>`:''}
 
     <div class="finance-details">
@@ -11679,6 +11845,8 @@ function finishIdentityAndEnter(){
     }else{
       openFINOSmartPortal(services.length===1&&services[0]==='buyout');
       if(services.length===1&&services[0]==='smart'){
+        document.getElementById('specialistBotPage')?.classList.add('portal-smart-only');
+        finoPortal.smartOnlyCode=true;
         setTimeout(()=>startFINOPortalSmart(),60);
       }
     }
@@ -14179,7 +14347,7 @@ async function createSmartResultPngBlob(){
   ctx.fillText(`هامش الربح: ${englishNumber(r.rate,2)}%`,980,345);
   ctx.fillStyle='#718694';
   ctx.font='800 18px Cairo, Arial, sans-serif';
-  ctx.fillText(`مدة الحسبة: ${r.months} شهر • نسبة الاستقطاع: ${englishNumber(r.deductionPercent,2)}%${r.hasMortgage?' • عقاري قائم':''}`,980,378);
+  ctx.fillText(`${r.financeKindName||'الحاسبة الذكية'} • ${r.months} شهر • استقطاع ${englishNumber(r.deductionPercent,2)}%${r.hasMortgage?' • عقاري قائم':''}`,980,378);
 
   canvasRoundRect(ctx,70,425,940,215,26,'#f3f9fd','#bcddea');
   ctx.fillStyle='#607a8a';
@@ -14294,7 +14462,7 @@ async function createSmartDetailedPngBlob(){
   ctx.fillText('جهة العمل والراتب',610,infoY+28);
   ctx.fillStyle='#173042';
   ctx.font='900 22px Cairo, Arial, sans-serif';
-  ctx.fillText(`${smartTypeName()} • ${englishMoney(r.salary)} • استقطاع ${englishNumber(r.deductionPercent,2)}%${r.hasMortgage?' • عقاري قائم':''}`,610,infoY+62);
+  ctx.fillText(`${r.financeKindName||smartTypeName()} • ${englishMoney(r.salary)} • استقطاع ${englishNumber(r.deductionPercent,2)}%${r.hasMortgage?' • عقاري قائم':''}`,610,infoY+62);
 
   canvasRoundRect(ctx,665,infoY,345,82,16,'#fffafa','#efcaca');
   ctx.fillStyle='#a12626';
@@ -14336,7 +14504,8 @@ async function createSmartDetailedPngBlob(){
     ['ضريبة الرسوم الإدارية',englishMoneyExact(r.adminVat),false],
     ...(r.commodityEnabled?[['رسوم فرق السلعة 1%',englishMoneyExact(r.commodityFee),true]]:[]),
     ['مدة الحسبة',`${r.months} شهر`,false],
-    ['نسبة الاستقطاع',`${englishNumber(r.deductionPercent,2)}%`,false]
+    ['نسبة الاستقطاع',`${englishNumber(r.deductionPercent,2)}%`,false],
+    ['قسط الشخصي القائم',englishMoney(r.personalInstallment||0),false]
   ];
 
   const startY=cashY+210,bw=450,bh=86,gap=14;
@@ -15097,4 +15266,4 @@ async function testFINOSmartImageClipboardSupport(){
 
 </script>
 </body>
-</html>
+</html
