@@ -5204,6 +5204,40 @@ button{
  .portal-code-field.full{grid-column:auto}
 }
 
+
+/* FINO V7 — portal clarity */
+.portal-bubble{font-size:14px!important;line-height:2.05!important;font-weight:900!important}
+.portal-option{font-size:10.5px!important;font-weight:900!important}
+.portal-rank{min-height:58px;padding:10px!important}
+.portal-rank b{font-size:10px!important}
+.portal-rank small{font-size:7.5px!important;line-height:1.6}
+.portal-rank strong{font-size:10px!important}
+.portal-result-actions .portal-option{justify-content:flex-start!important}
+.portal-chat-actions{
+  display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;padding-top:9px;border-top:1px dashed #cfdee7
+}
+.portal-chat-actions .portal-option{min-height:42px!important}
+.portal-admin-section-title{
+  margin:10px 0 6px;color:#073b67;font-size:10px;font-weight:900
+}
+.portal-admin-menu-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px
+}
+.portal-admin-menu-grid .portal-option{width:100%;justify-content:flex-start}
+.portal-code-presets{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.portal-code-presets button{
+  border:1px solid #cfe0e9;border-radius:8px;background:#f7fbfd;color:#075488;
+  padding:7px 9px;font-size:7px;font-weight:900;cursor:pointer
+}
+.portal-image-overlay-body img{
+  max-width:min(650px,92vw)!important;
+  margin:auto;
+}
+@media(max-width:600px){
+  .portal-admin-menu-grid{grid-template-columns:1fr}
+  .portal-bubble{font-size:13px!important}
+}
+
 </style>
 </head>
 <body>
@@ -6741,7 +6775,15 @@ function showFINOPortalCodeManager(editId=''){
     <div class="portal-code-grid">
       <div class="portal-code-field"><label>اسم الكود / العرض</label><input id="pcName" value="${portalEsc(c.name||'')}"></div>
       <div class="portal-code-field"><label>الكود</label><input id="pcCode" value="${portalEsc(c.code||finoGenerateCode())}"></div>
-      <div class="portal-code-field"><label>مدة الصلاحية بالدقائق — 0 بدون مدة</label><input id="pcDuration" inputmode="numeric" value="${Number(c.durationMinutes||0)}"></div>
+      <div class="portal-code-field"><label>مدة الصلاحية بالدقائق — 0 بدون مدة</label><input id="pcDuration" inputmode="numeric" value="${Number(c.durationMinutes||0)}">
+        <div class="portal-code-presets">
+          <button type="button" onclick="document.getElementById('pcDuration').value=60">ساعة</button>
+          <button type="button" onclick="document.getElementById('pcDuration').value=120">ساعتان</button>
+          <button type="button" onclick="document.getElementById('pcDuration').value=1440">يوم</button>
+          <button type="button" onclick="document.getElementById('pcDuration').value=10080">أسبوع</button>
+          <button type="button" onclick="document.getElementById('pcDuration').value=0">بدون مدة</button>
+        </div>
+      </div>
       <div class="portal-code-field"><label>عدد الاستخدامات — 0 غير محدود</label><input id="pcUses" inputmode="numeric" value="${Number(c.maxUses||0)}"></div>
       <div class="portal-code-field"><label>عدد مرات إعادة الحسبة — 0 غير محدود</label><input id="pcRecalc" inputmode="numeric" value="${Number(c.maxRecalculations||0)}"></div>
       <div class="portal-code-field"><label>الخدمة المتاحة</label><select id="pcService">
@@ -6822,6 +6864,8 @@ async function deleteFINODynamicCode(id){
   showFINOPortalCodeManager();
 }
 function getFINOActiveDynamicCode(){
+  const id=activeAccess?.record?.dynamicId;
+  if(id)return getFINODynamicCodes().find(x=>x.id===id)||null;
   const code=String(activeAccess?.code||'').trim().toUpperCase();
   return getFINODynamicCodes().find(x=>String(x.code||'').toUpperCase()===code)||null;
 }
@@ -7310,6 +7354,18 @@ function showFINOPortalRank(index){
       ${(!finoPortal.activeCodeConfig||finoPortal.activeCodeConfig.showDetailed!==false)?`<button type="button" class="portal-option" onclick="portalPreviewDetailedImage(${index})"><span class="portal-action-icon">📄</span><span>عرض بطاقة تفاصيل التمويل كاملة</span></button>`:''}
       ${(!finoPortal.activeCodeConfig||finoPortal.activeCodeConfig.showText!==false)?`<button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})"><span class="portal-action-icon">💬</span><span>إرسال تفاصيل الحسبة كاملة كنص عبر واتساب</span></button>`:''}
     </div>
+
+    <div class="portal-actions-label">تبي تسأل عن الحسبة؟</div>
+    <div class="portal-chat-actions">
+      <button type="button" class="portal-option" onclick="portalAnswerResultQuestion('cash',${index})">كم الكاش؟</button>
+      <button type="button" class="portal-option" onclick="portalAnswerResultQuestion('installment',${index})">كم القسط؟</button>
+      <button type="button" class="portal-option" onclick="portalAnswerResultQuestion('term',${index})">كم المدة؟</button>
+      <button type="button" class="portal-option" onclick="portalAnswerResultQuestion('rate',${index})">كم النسبة؟</button>
+      <button type="button" class="portal-option" onclick="portalAnswerResultQuestion('profit',${index})">كم الأرباح؟</button>
+      ${includeServiceFees()?`<button type="button" class="portal-option" onclick="portalAnswerResultQuestion('fees',${index})">كم الأتعاب؟</button>`:''}
+      <button type="button" class="portal-option" onclick="portalOpenInquiry(${index},'question')">لدي استفسار</button>
+      <button type="button" class="portal-option primary" onclick="portalOpenInquiry(${index},'proceed')">أريد الإنجاز</button>
+    </div>
   </div>`);
 
   archiveFINOPortalConversation({
@@ -7438,8 +7494,7 @@ function shareCurrentFINOPortalPreview(){
 async function portalPreviewDetailedImage(i){
   prepareFINOPortalShare(i);
   try{
-    let blob=await createDetailedResultPngBlob();
-    blob=await upscaleFINOPortalBlob(blob,1440);
+    let blob=await createFINOPortalDetailedPngBlob();
     const url=await blobToFINOPortalObjectUrl(blob);
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
@@ -7454,7 +7509,6 @@ async function portalPreviewCompactImage(i){
   prepareFINOPortalShare(i);
   try{
     let blob=await createFINOPortalCompactPngBlob();
-    blob=await upscaleFINOPortalBlob(blob,1440);
     const url=await blobToFINOPortalObjectUrl(blob);
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
@@ -7464,6 +7518,44 @@ async function portalPreviewCompactImage(i){
     console.error('FINO portal compact preview',e);
     portalAssistant('<div class="portal-alert">تعذر تجهيز البطاقة المختصرة حاليًا.</div>');
   }
+}
+
+function portalAnswerResultQuestion(type,index){
+  const r=(latestResults||[])[Number(index||0)];
+  if(!r)return;
+  const n=cleanClientName(clientName);
+  const p=n?` يا ${n}`:'';
+  let msg='';
+  if(type==='cash')msg=`صافي الكاش المتوقع${p}: ${money(r.cashAfterDebt)} بعد سداد المديونية الحالية.`;
+  else if(type==='installment')msg=`القسط الشهري${p}: ${money(r.installment)} لمدة ${r.actualPayments} شهر.`;
+  else if(type==='term')msg=`مدة التمويل${p}: ${r.actualPayments} شهر.`;
+  else if(type==='rate')msg=`هامش الربح للعرض${p}: ${fmt(r.rate)}%.`;
+  else if(type==='profit')msg=`إجمالي الأرباح المتوقعة${p}: ${money(r.totalProfit)}.`;
+  else if(type==='fees'&&includeServiceFees())msg=`أتعاب إنجاز تحويل المديونية${p}: ${money(serviceFeesAmount())}.`;
+  if(msg){portalUser(type==='cash'?'كم الكاش؟':type==='installment'?'كم القسط؟':type==='term'?'كم المدة؟':type==='rate'?'كم النسبة؟':type==='profit'?'كم الأرباح؟':'كم الأتعاب؟');portalAssistant(msg);}
+}
+function portalInquiryMessage(index,kind){
+  const r=(latestResults||[])[Number(index||0)];
+  if(!r)return '';
+  const n=cleanClientName(clientName)||'عميل';
+  const head=kind==='proceed'?'السلام عليكم، أريد إنجاز هذا الطلب.':'السلام عليكم، لدي استفسار عن هذه الحسبة.';
+  return `${head}
+العميل: ${n}
+البنك المرشح: ${r.name}
+هامش الربح: ${fmt(r.rate)}%
+الراتب: ${money(Number(finoPortal.data.salary||0))}
+السداد المبكر: ${money(Number(finoPortal.data.settlement||0))}
+الالتزامات الأخرى: ${money(Number(finoPortal.data.external||0))}
+القسط: ${money(r.installment)}
+صافي الكاش: ${money(r.cashAfterDebt)}
+المدة: ${r.actualPayments} شهر
+إجمالي الأرباح: ${money(r.totalProfit)}${includeServiceFees()?`\nأتعاب الإنجاز: ${money(serviceFeesAmount())}`:''}${getClientCustomNote()?`\nملاحظة: ${getClientCustomNote()}`:''}`;
+}
+function portalOpenInquiry(index,kind){
+  const msg=portalInquiryMessage(index,kind);
+  const url=`https://wa.me/966506214458?text=${encodeURIComponent(msg)}`;
+  window.open(url,'_blank');
+  archiveFINOPortalConversation({kind:kind==='proceed'?'proceed':'inquiry',bank:(latestResults||[])[index]?.name||''});
 }
 function portalShareBuyoutText(i){
   prepareFINOPortalShare(i);
@@ -7482,38 +7574,43 @@ async function createFINOPortalCompactPngBlob(){
   if(!latestResults.length)throw new Error('NO_RESULT');
   const best=getSelectedResult();
   const early=Number(finoPortal.data.settlement||0);
+  const note=getClientCustomNote();
+  const feesOn=includeServiceFees();
 
+  // 1080x1200: mobile-friendly, sharp, no later enlargement.
   const canvas=document.createElement('canvas');
-  canvas.width=1080;canvas.height=1320;
-  const ctx=canvas.getContext('2d');
-  ctx.fillStyle='#fff';ctx.fillRect(0,0,1080,1320);
+  canvas.width=1080;canvas.height=1200;
+  const ctx=canvas.getContext('2d',{alpha:false});
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,1080,1200);
   ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='alphabetic';
 
-  ctx.fillStyle='#073b67';ctx.font='900 42px Cairo,Arial,sans-serif';ctx.fillText('FINO',1010,68);
-  ctx.fillStyle='#718694';ctx.font='700 18px Arial,sans-serif';ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()}`,1010,102);
-  ctx.strokeStyle='#e1ebf2';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(70,130);ctx.lineTo(1010,130);ctx.stroke();
+  // Header
+  ctx.fillStyle='#073b67';ctx.font='900 42px Cairo,Arial,sans-serif';ctx.fillText('FINO',1010,62);
+  ctx.fillStyle='#6f8491';ctx.font='800 16px Arial,sans-serif';ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()}`,1010,94);
+  ctx.strokeStyle='#dce8ef';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(60,118);ctx.lineTo(1020,118);ctx.stroke();
 
-  ctx.fillStyle='#0b78b7';ctx.font='800 15px Cairo,Arial,sans-serif';
-  ctx.fillText('بطاقة حسبة مختصرة',1010,153);
-  ctx.fillStyle='#073b67';ctx.font='900 31px Cairo,Arial,sans-serif';
-  ctx.fillText('ترشيح شراء مديونية التمويل الشخصي',1010,190);
+  ctx.fillStyle='#0b78b7';ctx.font='900 17px Cairo,Arial,sans-serif';ctx.fillText('بطاقة الحسبة المختصرة',1010,151);
+  ctx.fillStyle='#073b67';ctx.font='900 29px Cairo,Arial,sans-serif';ctx.fillText('شراء مديونية التمويل الشخصي',1010,188);
 
-  canvasRoundRect(ctx,70,215,940,125,20,'#fff','#dce8f0');
+  // Bank strip
+  canvasRoundRect(ctx,60,214,960,106,18,'#ffffff','#dce8ef');
   const bank=BANKS.find(x=>x.id===best.key);
   if(bank?.logo){
     try{
       const img=await loadImageForCanvas(bank.logo);
-      const scale=Math.min(180/img.width,76/img.height,1);
-      ctx.drawImage(img,95,239,img.width*scale,img.height*scale);
+      const scale=Math.min(170/img.width,62/img.height,1);
+      ctx.drawImage(img,84,234,img.width*scale,img.height*scale);
     }catch(e){}
   }
-  ctx.fillStyle='#073b67';ctx.font='900 28px Cairo,Arial,sans-serif';ctx.fillText(best.name,980,262);
-  ctx.fillStyle='#516e7e';ctx.font='800 20px Cairo,Arial,sans-serif';ctx.fillText(`هامش الربح: ${englishNumber(best.rate,2)}%`,980,305);
+  ctx.fillStyle='#073b67';ctx.font='900 25px Cairo,Arial,sans-serif';ctx.fillText(best.name,990,253);
+  ctx.fillStyle='#506d7e';ctx.font='900 18px Cairo,Arial,sans-serif';ctx.fillText(`هامش الربح ${englishNumber(best.rate,2)}%`,990,292);
 
-  canvasRoundRect(ctx,70,375,940,165,22,'#eef8fd','#b9dce9');
-  ctx.fillStyle='#607a8a';ctx.font='800 20px Cairo,Arial,sans-serif';ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',980,420);
-  ctx.fillStyle='#0b78b7';ctx.font='900 52px Cairo,Arial,sans-serif';ctx.fillText(englishMoney(best.cashAfterDebt),980,495);
+  // Cash hero
+  canvasRoundRect(ctx,60,344,960,148,20,'#eef8fd','#b9dce9');
+  ctx.fillStyle='#607a8a';ctx.font='900 18px Cairo,Arial,sans-serif';ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',990,384);
+  ctx.fillStyle='#0b78b7';ctx.font='900 48px Cairo,Arial,sans-serif';ctx.fillText(englishMoney(best.cashAfterDebt),990,457);
 
+  // Four core details
   const rows=[
     ['السداد المبكر',englishMoney(early)],
     ['القسط الشهري',englishMoney(best.installment)],
@@ -7522,51 +7619,170 @@ async function createFINOPortalCompactPngBlob(){
   ];
   rows.forEach((r,i)=>{
     const col=i%2,row=Math.floor(i/2);
-    const x=col===0?70:560,y=575+row*112;
-    canvasRoundRect(ctx,x,y,450,92,15,'#fff','#e1ebf2');
-    ctx.fillStyle='#6b8190';ctx.font='700 15px Cairo,Arial,sans-serif';ctx.fillText(r[0],x+420,y+30);
-    ctx.fillStyle='#173042';ctx.font='900 23px Cairo,Arial,sans-serif';ctx.fillText(r[1],x+420,y+67);
+    const x=col===0?60:550,y=520+row*98;
+    canvasRoundRect(ctx,x,y,470,80,13,'#ffffff','#e0eaf0');
+    ctx.fillStyle='#718694';ctx.font='800 14px Cairo,Arial,sans-serif';ctx.fillText(r[0],x+438,y+27);
+    ctx.fillStyle='#173e56';ctx.font='900 22px Cairo,Arial,sans-serif';ctx.fillText(r[1],x+438,y+60);
   });
 
-  let y=820;
-  if(!finoPortal.trial&&finoPortal.adminUnlocked&&finoPortal.clientNote){
-    canvasRoundRect(ctx,70,y,940,80,14,'#fffaf0','#ead6a5');
-    ctx.fillStyle='#805b12';ctx.font='900 15px Cairo,Arial,sans-serif';
-    drawWrappedArabic(ctx,`ملاحظة: ${finoPortal.clientNote}`,980,y+28,850,23,2);y+=95;
+  let y=730;
+  if(note){
+    canvasRoundRect(ctx,60,y,960,68,12,'#fff8f3','#ecd7b7');
+    ctx.fillStyle='#8a5b00';ctx.font='900 14px Cairo,Arial,sans-serif';
+    drawWrappedArabic(ctx,`ملاحظة: ${note}`,990,y+27,870,22,2);y+=78;
   }
-  if(!finoPortal.trial&&finoPortal.adminUnlocked&&finoPortal.includeFees){
-    canvasRoundRect(ctx,70,y,940,80,14,'#f7fbfe','#d7e7f1');
-    ctx.fillStyle='#073b67';ctx.font='900 16px Cairo,Arial,sans-serif';
-    ctx.fillText('أتعاب إنجاز تحويل مديونية التمويل الشخصي',980,y+29);
-    ctx.fillStyle='#111';ctx.font='900 27px Arial,sans-serif';
-    ctx.fillText(englishMoney(Number(finoPortal.feeAmount||2800)),980,y+64);y+=95;
+  if(feesOn){
+    canvasRoundRect(ctx,60,y,960,70,12,'#f7fbfe','#d7e7f1');
+    ctx.fillStyle='#073b67';ctx.font='900 14px Cairo,Arial,sans-serif';
+    ctx.fillText('أتعاب إنجاز تحويل مديونية التمويل الشخصي',990,y+27);
+    ctx.fillStyle='#111';ctx.font='900 24px Arial,sans-serif';ctx.fillText(englishMoney(serviceFeesAmount()),990,y+58);y+=80;
   }
 
-  ctx.fillStyle='#073b67';ctx.font='900 18px Cairo,Arial,sans-serif';
-  ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات:',980,y+25);
-  ctx.fillStyle='#111';ctx.font='900 31px Arial,sans-serif';ctx.fillText('0506214458',980,y+66);
-
+  // Contact + QR
+  ctx.fillStyle='#073b67';ctx.font='900 16px Cairo,Arial,sans-serif';ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات',990,y+25);
+  ctx.fillStyle='#111';ctx.font='900 29px Arial,sans-serif';ctx.fillText('0506214458',990,y+62);
   try{
     const qr=await loadImageForCanvas(SERVICES_QR_DATA);
-    const qx=70,qy=y-5,qsize=145;
-    canvasRoundRect(ctx,qx,qy,qsize,qsize,14,'#fff','#dce8f0');
-    ctx.drawImage(qr,qx+8,qy+8,qsize-16,qsize-16);
-    ctx.fillStyle='#5f7888';ctx.font='800 13px Cairo,Arial,sans-serif';ctx.textAlign='left';
-    ctx.fillText('بعض خدماتنا',70,qy+qsize+25);
+    const q=126,qx=60,qy=y-4;
+    canvasRoundRect(ctx,qx,qy,q,q,12,'#fff','#dce8ef');
+    ctx.drawImage(qr,qx+7,qy+7,q-14,q-14);
+    ctx.fillStyle='#607887';ctx.font='800 12px Cairo,Arial,sans-serif';ctx.textAlign='left';
+    ctx.fillText('امسح الباركود لمعرفة بعض خدماتنا',60,qy+148);
     ctx.textAlign='right';
   }catch(e){}
 
-  const cropH=Math.min(1320,Math.max(1090,y+190));
-  return await new Promise((resolve,reject)=>{
-    const out=document.createElement('canvas');out.width=1080;out.height=cropH;
-    out.getContext('2d').drawImage(canvas,0,0,1080,cropH,0,0,1080,cropH);
-    out.toBlob(b=>b?resolve(b):reject(new Error('PNG_FAILED')),'image/png',.95);
+  const usedBottom=Math.min(1200,Math.max(980,y+180));
+  const out=document.createElement('canvas');
+  out.width=1080;out.height=usedBottom;
+  const o=out.getContext('2d',{alpha:false});
+  o.fillStyle='#fff';o.fillRect(0,0,out.width,out.height);
+  o.drawImage(canvas,0,0,1080,usedBottom,0,0,1080,usedBottom);
+
+  return await new Promise((resolve,reject)=>out.toBlob(
+    b=>b?resolve(b):reject(new Error('PNG_FAILED')),
+    'image/png',1
+  ));
+}
+
+
+async function createFINOPortalDetailedPngBlob(){
+  if(!latestResults.length)throw new Error('NO_RESULT');
+  const best=getSelectedResult();
+  const salary=Number(finoPortal.data.salary||document.getElementById('salary')?.value||0);
+  const early=Number(finoPortal.data.settlement||document.getElementById('earlySettlement')?.value||0);
+  const external=Number(finoPortal.data.external||document.getElementById('externalObligations')?.value||0);
+  const note=getClientCustomNote();
+  const feesOn=includeServiceFees();
+
+  // Dense mobile card: 1080 logical pixels, direct PNG, no blur-producing resize.
+  const canvas=document.createElement('canvas');
+  canvas.width=1080;canvas.height=1800;
+  const ctx=canvas.getContext('2d',{alpha:false});
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,1080,1800);
+  ctx.direction='rtl';ctx.textAlign='right';ctx.textBaseline='alphabetic';
+
+  ctx.fillStyle='#073b67';ctx.font='900 42px Cairo,Arial,sans-serif';ctx.fillText('FINO',1010,60);
+  ctx.fillStyle='#718694';ctx.font='800 16px Arial,sans-serif';ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()} | ${saudiTimeEnglish()}`,1010,92);
+  ctx.strokeStyle='#dce8ef';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(60,116);ctx.lineTo(1020,116);ctx.stroke();
+
+  ctx.fillStyle='#073b67';ctx.font='900 28px Cairo,Arial,sans-serif';
+  ctx.fillText(currentClientName()?`تفاصيل شراء المديونية • ${currentClientName()}`:'تفاصيل شراء مديونية التمويل الشخصي',1010,164);
+
+  const bank=BANKS.find(x=>x.id===best.key);
+  canvasRoundRect(ctx,60,190,960,104,17,'#fff','#dce8ef');
+  if(bank?.logo){
+    try{
+      const img=await loadImageForCanvas(bank.logo);
+      const sc=Math.min(170/img.width,62/img.height,1);
+      ctx.drawImage(img,84,211,img.width*sc,img.height*sc);
+    }catch(e){}
+  }
+  ctx.fillStyle='#073b67';ctx.font='900 24px Cairo,Arial,sans-serif';ctx.fillText(best.name,990,232);
+  ctx.fillStyle='#506d7e';ctx.font='900 17px Cairo,Arial,sans-serif';ctx.fillText(`هامش الربح ${englishNumber(best.rate,2)}%`,990,269);
+
+  // summary strip
+  canvasRoundRect(ctx,60,318,960,80,14,'#f8fbfd','#dce8ef');
+  ctx.fillStyle='#173e56';ctx.font='900 17px Cairo,Arial,sans-serif';
+  ctx.fillText(`${typeName()} • الراتب ${englishMoney(salary)} • الالتزامات الأخرى ${external>0?englishMoney(external):'لا يوجد'}`,990,368);
+
+  // cash hero
+  canvasRoundRect(ctx,60,420,960,144,20,'#eef8fd','#b9dce9');
+  ctx.fillStyle='#607a8a';ctx.font='900 18px Cairo,Arial,sans-serif';ctx.fillText('صافي الكاش المتوقع بعد سداد المديونية',990,459);
+  ctx.fillStyle='#0b78b7';ctx.font='900 48px Cairo,Arial,sans-serif';ctx.fillText(englishMoney(best.cashAfterDebt),990,530);
+
+  const items=[
+    ['القسط الشهري',englishMoney(best.installment)],
+    ['السداد المبكر',englishMoney(early)],
+    ['المدة',`${best.actualPayments} شهر`],
+    ['إجمالي الأرباح',englishMoney(best.totalProfit)],
+    ['إجمالي التمويل مع الأرباح',englishMoney(best.grossWithProfit)],
+    ['صافي التمويل قبل الرسوم والسداد',englishMoney(best.principalBeforeFees)],
+    ['صافي التمويل بعد الرسوم وقبل السداد',englishMoney(best.netBeforeDebt)],
+    ['الرسوم الإدارية',englishMoneyExact(best.adminFee)],
+    ['ضريبة الرسوم الإدارية',englishMoneyExact(best.adminVat)],
+    ...(best.commodityEnabled?[['رسوم فرق السلعة 1%',englishMoneyExact(best.commodityFee)]]:[])
+  ];
+  items.forEach((it,i)=>{
+    const col=i%2,row=Math.floor(i/2);
+    const x=col===0?60:550,y=590+row*86;
+    canvasRoundRect(ctx,x,y,470,70,12,'#fff','#e0eaf0');
+    ctx.fillStyle='#718694';ctx.font='800 13px Cairo,Arial,sans-serif';ctx.fillText(it[0],x+438,y+24);
+    ctx.fillStyle='#173e56';ctx.font='900 18px Cairo,Arial,sans-serif';ctx.fillText(it[1],x+438,y+54);
   });
+
+  let y=590+Math.ceil(items.length/2)*86+12;
+  if(best.featureTitle){
+    canvasRoundRect(ctx,60,y,960,70,12,'#f7fbfe','#d7e7f1');
+    ctx.fillStyle='#0b78b7';ctx.font='900 14px Cairo,Arial,sans-serif';ctx.fillText('ميزة البنك',990,y+25);
+    ctx.fillStyle='#073b67';ctx.font='900 19px Cairo,Arial,sans-serif';ctx.fillText(best.featureTitle,990,y+54);y+=80;
+  }
+  if(customerType==='military'||customerType==='private'){
+    canvasRoundRect(ctx,60,y,960,82,12,'#fff7f7','#efcaca');
+    ctx.fillStyle='#a12626';ctx.font='900 13px Cairo,Arial,sans-serif';
+    drawWrappedArabic(ctx,customerType==='military'?`تنويه للعسكري: ${clientMilitaryNotice()}`:`تنويه القطاع الخاص: ${clientPrivateNotice()}`,990,y+27,870,21,3);y+=92;
+  }
+  if(note){
+    canvasRoundRect(ctx,60,y,960,72,12,'#fff8f3','#ead6a5');
+    ctx.fillStyle='#8a5b00';ctx.font='900 14px Cairo,Arial,sans-serif';
+    drawWrappedArabic(ctx,`ملاحظة: ${note}`,990,y+28,870,22,2);y+=82;
+  }
+  if(best.commodityEnabled){
+    canvasRoundRect(ctx,60,y,960,72,12,'#fff7f7','#efcaca');
+    ctx.fillStyle='#a12626';ctx.font='900 13px Cairo,Arial,sans-serif';
+    drawWrappedArabic(ctx,'رسوم فرق السلعة قد لا توجد في بعض البنوك أو بعض السلع وقد تختلف حسب البنك ونوع السلعة.',990,y+27,870,21,2);y+=82;
+  }
+  if(feesOn){
+    canvasRoundRect(ctx,60,y,960,72,12,'#f7fbfe','#d7e7f1');
+    ctx.fillStyle='#073b67';ctx.font='900 14px Cairo,Arial,sans-serif';ctx.fillText('أتعاب إنجاز تحويل مديونية التمويل الشخصي',990,y+26);
+    ctx.fillStyle='#111';ctx.font='900 23px Arial,sans-serif';ctx.fillText(englishMoney(serviceFeesAmount()),990,y+58);y+=82;
+  }
+
+  // disclaimer + contact, compact
+  canvasRoundRect(ctx,60,y,960,88,12,'#fff7f7','#efd1d1');
+  ctx.fillStyle='#8f2929';ctx.font='900 12.5px Cairo,Arial,sans-serif';
+  drawWrappedArabic(ctx,'الحسبة تقديرية، والاعتماد النهائي حسب سياسة الجهة الممولة وقت التقديم والتنفيذ. دورنا الوساطة والترشيح والمتابعة والإنجاز عبر الجهات المرخصة.',990,y+27,870,20,3);y+=100;
+
+  ctx.fillStyle='#073b67';ctx.font='900 15px Cairo,Arial,sans-serif';ctx.fillText('للتأكيد والاستفسار وبدء الإجراءات',990,y+24);
+  ctx.fillStyle='#111';ctx.font='900 28px Arial,sans-serif';ctx.fillText('0506214458',990,y+59);
+  try{
+    const qr=await loadImageForCanvas(SERVICES_QR_DATA);
+    const q=128,qx=60,qy=y-7;
+    canvasRoundRect(ctx,qx,qy,q,q,12,'#fff','#dce8ef');
+    ctx.drawImage(qr,qx+7,qy+7,q-14,q-14);
+    ctx.fillStyle='#607887';ctx.font='800 11px Cairo,Arial,sans-serif';ctx.textAlign='left';
+    ctx.fillText('امسح الباركود لمعرفة بعض خدماتنا',60,qy+148);ctx.textAlign='right';
+  }catch(e){}
+  y+=170;
+
+  const h=Math.min(1800,Math.max(1280,y));
+  const out=document.createElement('canvas');out.width=1080;out.height=h;
+  const o=out.getContext('2d',{alpha:false});
+  o.fillStyle='#fff';o.fillRect(0,0,1080,h);o.drawImage(canvas,0,0,1080,h,0,0,1080,h);
+  return await new Promise((resolve,reject)=>out.toBlob(b=>b?resolve(b):reject(new Error('PNG_FAILED')),'image/png',1));
 }
 
 async function shareFINOPortalDetailedImageDirect(phone){
-  let blob=await createDetailedResultPngBlob();
-  blob=await upscaleFINOPortalBlob(blob,1440);
+  let blob=await createFINOPortalDetailedPngBlob();
   try{
     if(navigator.clipboard&&window.ClipboardItem){
       await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
@@ -7587,7 +7803,6 @@ async function shareFINOPortalDetailedImageDirect(phone){
 }
 async function shareFINOPortalCompactImageDirect(phone){
   let blob=await createFINOPortalCompactPngBlob();
-  blob=await upscaleFINOPortalBlob(blob,1440);
   try{
     if(navigator.clipboard&&window.ClipboardItem){
       await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
@@ -7703,16 +7918,18 @@ async function verifyFINOPortalAdmin(raw){
 }
 function showFINOPortalAdminMenu(){
   finoPortal.step='admin_menu';setPortalInput(false);
-  portalAssistant(`وش تبغى تعدل؟${portalOptions([
-    {label:'تعديل نسبة',primary:true,onclick:"startFINOPortalRateEdit()"},
-    {label:'إرفاق صورة عرض',onclick:"startFINOPortalImageEdit()"},
-    {label:'إضافة بنك جديد',onclick:"startFINOPortalAddBank()"},
-    {label:'تفعيل / إعداد بنك',onclick:"startFINOPortalEnableBank()"},
-    {label:'إعداد الأتعاب والملاحظة للعميل',onclick:"showFINOPortalShareSettings()"},
-    {label:'إدارة أكواد العملاء',onclick:"showFINOPortalCodeManager()"},
-    {label:'أرشفة العملاء',onclick:"showFINOPortalArchive()"},
-    {label:'فتح لوحة المختص الكاملة',onclick:"openFINOPortalFullAdmin()"}
-  ])}`);
+  portalAssistant(`<div class="portal-admin-section-title">إعدادات المختص — اختر العملية</div>
+    <div class="portal-admin-menu-grid">
+      <button type="button" class="portal-option primary" onclick="startFINOPortalRateEdit()">📊 تعديل نسب بنك</button>
+      <button type="button" class="portal-option" onclick="startFINOPortalImageEdit()">🖼️ تحديث عرض من صورة</button>
+      <button type="button" class="portal-option" onclick="startFINOPortalAddBank()">🏦 إضافة بنك / جهة تمويل</button>
+      <button type="button" class="portal-option" onclick="startFINOPortalEnableBank()">⚙️ تفعيل وإعداد بنك</button>
+      <button type="button" class="portal-option" onclick="showFINOPortalShareSettings()">💰 الأتعاب والملاحظات</button>
+      <button type="button" class="portal-option" onclick="showFINOPortalCodeManager()">🔐 إدارة أكواد العملاء</button>
+      <button type="button" class="portal-option" onclick="showFINOPortalArchive()">🗂️ أرشفة العملاء</button>
+      <button type="button" class="portal-option" onclick="openFINOPortalFullAdmin()">🛠️ لوحة المختص الكاملة</button>
+    </div>
+    <div class="portal-note">أي تعديل تحفظه هنا يُطبّق فورًا على هذا الموقع في نفس الجهاز والمتصفح. المزامنة بين أجهزة مختلفة تحتاج قاعدة مركزية متصلة.</div>`);
 }
 function adminPortalBanksGrid(fn){
   const cfg=getFINOAdminConfig();
@@ -9743,6 +9960,8 @@ function finishIdentityAndEnter(){
 
   if(activeAccess.record && activeAccess.record.free){
     showPage('freeHub');
+  }else if(activeAccess.record && activeAccess.record.dynamic){
+    openFINOSmartPortal(activeAccess.record.trialSmart===true);
   }else if(activeAccess.record && activeAccess.record.trialSmart){
     openFINOSmartPortal(true);
   }else{
@@ -9801,7 +10020,30 @@ async function login(){
     return;
   }
 
-  const record=ACCESS_CODES.find(x=>x.hash===hash);
+  let record=ACCESS_CODES.find(x=>x.hash===hash);
+  let dynamicRecord=null;
+
+  if(!record){
+    const d=getFINODynamicCodes().find(x=>String(x.code||'').trim().toUpperCase()===value);
+    if(d){
+      const status=finoDynamicCodeValid(d);
+      if(!status.ok){
+        error.textContent=status.msg||'الكود منتهي.';
+        error.style.display='block';
+        return;
+      }
+      dynamicRecord=d;
+      record={
+        dynamic:true,
+        dynamicId:d.id,
+        label:d.name||'كود عميل',
+        days:0,
+        trialSmart:d.allowedService==='buyout',
+        smartOnly:d.allowedService==='smart',
+        bothServices:d.allowedService==='both'
+      };
+    }
+  }
 
   if(!record){
     const attempts=wrongAttemptCount()+1;
@@ -9821,6 +10063,26 @@ async function login(){
       state={activatedAt:now,free:true};
       setAccessState(hash,state);
     }
+  }else if(record.dynamic && dynamicRecord){
+    if(!state){
+      state={
+        activatedAt:now,
+        expiresAt:Number(dynamicRecord.expiresAt||0),
+        dynamic:true,
+        dynamicId:dynamicRecord.id
+      };
+      setAccessState(hash,state);
+    }
+    const status=finoDynamicCodeValid(dynamicRecord);
+    if(!status.ok){
+      error.textContent=status.msg||'الكود منتهي.';
+      error.style.display='block';
+      return;
+    }
+    dynamicRecord.used=Number(dynamicRecord.used||0)+1;
+    const all=getFINODynamicCodes();
+    const di=all.findIndex(x=>x.id===dynamicRecord.id);
+    if(di>=0){all[di]=dynamicRecord;saveFINODynamicCodes(all);}
   }else{
     if(!state){
       const durationMs=Number(record.days)*24*60*60*1000;
