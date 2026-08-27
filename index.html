@@ -5238,6 +5238,20 @@ button{
   .portal-bubble{font-size:13px!important}
 }
 
+
+/* FINO V8 — test package */
+.portal-package-banner{
+  margin:0 0 9px;padding:10px 12px;border:1px solid #bddcea;border-radius:11px;
+  background:linear-gradient(180deg,#eef8fd,#f8fcfe);color:#073b67;
+  font-size:8.5px;line-height:1.8;font-weight:900
+}
+.portal-package-banner b{font-size:10px}
+.portal-package-banner .remain{color:#0b78b7}
+.portal-package-expired{
+  margin-top:8px;padding:9px;border:1px solid #efcaca;border-radius:9px;background:#fff7f7;
+  color:#a12626;font-size:8px;line-height:1.7;font-weight:900
+}
+
 </style>
 </head>
 <body>
@@ -5262,6 +5276,7 @@ button{
 <a class="big-phone" href="https://wa.me/966506214458" target="_blank"><div class="mobile">📱</div><div><small>للاحتساب الدقيق • تأكيد المعلومات • وإنجاز تحويل المديونية</small><b>0506214458</b></div></a>
 </div>
 <div class="login-card"><div class="login-top"><h2>FINO LIVE</h2><span>● المنصة جاهزة</span></div><div class="date-box"><div class="today" id="today">—</div><div class="date-grid"><div class="date-cell"><small>الميلادي</small><b id="greg">—</b></div><div class="date-cell"><small>الهجري</small><b id="hijri">—</b></div></div><div class="clock" id="clock">—</div></div><label class="label">كود الاشتراك</label><input class="password" id="password" type="text" placeholder="أدخل كود الاشتراك" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"><button type="button" class="login-btn" onclick="login()">دخول المنصة ←</button><div class="error" id="loginError">أدخل كود الاشتراك</div>
+<button type="button" class="subscription-renew" id="packageRenewBtn" onclick="openSubscriptionRenewal()" style="margin-top:8px">💬 للتجديد اضغط هنا</button>
 <div class="identity-card" id="identityCard">
   <h3>خلّنا نتعرّف عليك 👋</h3>
   <p id="identityHelp">اكتب اسمك الأول عشان نخلي الحسبة والترشيح أوضح لك.</p>
@@ -5336,7 +5351,7 @@ button{
     <div class="portal-topbar">
       <div><b id="portalTopTitle">المنصة الذكية</b><small id="portalTopSub">اختر الخدمة ونكمل معك خطوة بخطوة</small></div>
       <div class="portal-top-actions">
-        <button class="portal-mini" type="button" onclick="resetFINOSmartPortal()">بدء من جديد</button>
+        <button class="portal-mini" type="button" onclick="handleFINOPortalRestart()">بدء من جديد</button>
       </div>
     </div>
 
@@ -5656,7 +5671,7 @@ button{
 </div>
 <script>
 const PHONE='0506214458', SERVICE_URL='https://hlooleqrr.github.io/mwaqe3/#services', INF=Infinity;
-const ACCESS_CODES=[{"hash":"7983a0a9c0a8cbdfc53cc674f07c4b8f533f01ba1ca0bcacb69c30d7a71cac15","days":7,"label":"اشتراك أسبوع"},{"hash":"eeb0a15a59f9d4694c7a68a8da1a1987390d30bba778d70d27496d31c08fa300","days":14,"label":"اشتراك أسبوعين"},{"hash":"edef3e7739361f80010a18823ca53d51ec8077c57a6a7a93ae3325f65abe479a","days":21,"label":"اشتراك ثلاثة أسابيع"},{"hash":"6950391d19ba548c3f7ff886a4c3000f183fb42bd52a3a27349a0e66071c73ea","days":35,"label":"اشتراك خمسة أسابيع"},{"hash":"349e7adad210783651792f2e271360c890d9839778312a8f8e1207fc3421faa1","days":1,"label":"تجربة المنصة الذكية • يوم واحد","trialSmart":true},{"hash":"03d3e6e947d3206c3c864d4b5f6f5baf0778f01ddf9ca392b57bd7866769a2f3","days":0,"label":"الكود الحر","free":true}];
+const ACCESS_CODES=[{"hash":"7983a0a9c0a8cbdfc53cc674f07c4b8f533f01ba1ca0bcacb69c30d7a71cac15","days":7,"label":"اشتراك أسبوع"},{"hash":"eeb0a15a59f9d4694c7a68a8da1a1987390d30bba778d70d27496d31c08fa300","days":14,"label":"اشتراك أسبوعين"},{"hash":"edef3e7739361f80010a18823ca53d51ec8077c57a6a7a93ae3325f65abe479a","days":21,"label":"اشتراك ثلاثة أسابيع"},{"hash":"6950391d19ba548c3f7ff886a4c3000f183fb42bd52a3a27349a0e66071c73ea","days":35,"label":"اشتراك خمسة أسابيع"},{"hash":"349e7adad210783651792f2e271360c890d9839778312a8f8e1207fc3421faa1","days":1,"label":"تجربة المنصة الذكية • يوم واحد","trialSmart":true},{"hash":"1ace18ca4dd38fdfb0ea83e3f7ed8965c55d5b8d2231cc59d20ae50da804fe7f","days":0,"minutes":15,"label":"عرض يوم التأسيس • باقة الثلاث حساب","trialSmart":true,"package3":true,"maxEntries":3,"maxRestartsPerEntry":2},{"hash":"03d3e6e947d3206c3c864d4b5f6f5baf0778f01ddf9ca392b57bd7866769a2f3","days":0,"label":"الكود الحر","free":true}];
 const ACCESS_STORAGE_PREFIX='fino_access_v1_';
 let activeAccess=null;
 let subscriptionTimer=null;
@@ -6758,11 +6773,58 @@ function renderFINODynamicCodes(){
     <button type="button" onclick="editFINODynamicCode('${c.id}')">تعديل</button>
   </div>`).join('');
 }
+
+async function refreshFINOCentralAdmin(){
+  if(!finoCentralAdminToken){
+    portalAssistant('<div class="portal-alert">جلسة المختص المركزية غير مفعلة. ادخل رمز المختص مرة أخرى بعد تهيئة كلمة مرور المركزية.</div>');
+    return;
+  }
+  const d=await finoCentralAdminDashboard(true);
+  if(!d.ok){
+    portalAssistant('<div class="portal-alert">تعذر تحديث المركزية أو انتهت جلسة المختص.</div>');
+    return;
+  }
+  portalAssistant(`<div class="portal-executed">✅ تم تحديث المركزية. الأكواد: ${d.data?.summary?.codes_total||0} • الأرشيف: ${d.data?.summary?.archives_total||0}</div>`);
+  showFINOPortalAdminMenu();
+}
+
+function finoCentralCodeToLocal(c){
+  return {
+    id:c.id||'',
+    centralId:c.id||'',
+    code:c.code||'',
+    name:c.name||'كود عميل',
+    enabled:c.enabled!==false,
+    durationMinutes:Number(c.duration_minutes||0),
+    maxUses:Number(c.max_entries||0),
+    maxRecalculations:Number(c.max_restarts_per_entry||0),
+    allowRestart:c.allow_restart!==false,
+    showCompact:c.show_compact_card!==false,
+    showDetailed:c.show_detailed_card!==false,
+    showText:c.show_text_share!==false,
+    feesEnabled:!!c.fees_enabled,
+    feeAmount:Number(c.fee_amount||0),
+    noteEnabled:!!c.note_enabled,
+    note:String(c.note_text||''),
+    bannerText:String(c.banner_text||''),
+    bannerImage:String(c.banner_image_url||''),
+    allowedService:Array.isArray(c.allowed_services)
+      ? (c.allowed_services.includes('buyout')&&c.allowed_services.includes('smart')?'both':(c.allowed_services[0]||'buyout'))
+      : 'buyout',
+    lockToDevice:!!c.lock_to_first_device,
+    requireLocation:!!c.require_location,
+    entriesUsed:Number(c.use_count||0),
+    expiresAt:c.expires_at||''
+  };
+}
 function showFINOPortalCodeManager(editId=''){
   if(!finoPortal.adminUnlocked)return;
   finoPortal.step='admin_codes';
   setPortalInput(false);
-  const list=getFINODynamicCodes();
+  const centralCodes=(finoCentralAdminToken&&finoCentralDashboardCache?.codes)
+    ? finoCentralDashboardCache.codes.map(finoCentralCodeToLocal)
+    : [];
+  const list=centralCodes.length?centralCodes:getFINODynamicCodes();
   const c=list.find(x=>x.id===editId)||{
     id:'',code:finoGenerateCode(),name:'كود عميل',enabled:true,
     durationMinutes:1440,maxUses:0,maxRecalculations:0,
@@ -6804,63 +6866,117 @@ function showFINOPortalCodeManager(editId=''){
           <label><input type="checkbox" id="pcText" ${c.showText!==false?'checked':''}> إرسال النص</label>
           <label><input type="checkbox" id="pcFees" ${c.feesEnabled?'checked':''}> تفعيل الأتعاب</label>
           <label><input type="checkbox" id="pcNoteEnabled" ${c.noteEnabled?'checked':''}> تفعيل الملاحظة</label>
+          <label><input type="checkbox" id="pcLockDevice" ${c.lockToDevice?'checked':''}> ربط الكود بأول جهاز</label>
+          <label><input type="checkbox" id="pcRequireLocation" ${c.requireLocation?'checked':''}> اشتراط السماح بالموقع</label>
         </div>
       </div>
     </div>
     <button class="portal-execute" type="button" onclick="saveFINODynamicCodeFromForm('${c.id||''}')">تنفيذ وحفظ الكود</button>
+    ${c.id&&finoCentralAdminToken?`<div class="portal-code-presets">
+      <button type="button" onclick="extendFINOCentralCode('${c.id}',15)">تمديد 15 دقيقة</button>
+      <button type="button" onclick="extendFINOCentralCode('${c.id}',60)">تمديد ساعة</button>
+      <button type="button" onclick="extendFINOCentralCode('${c.id}',1440)">تمديد يوم</button>
+      <button type="button" onclick="extendFINOCentralCode('${c.id}',10080)">تمديد أسبوع</button>
+    </div>`:''}
     ${c.id?`<button class="portal-option" type="button" onclick="deleteFINODynamicCode('${c.id}')">حذف الكود</button>`:''}
-    <div class="portal-central-status ${finoCentralConfig().endpoint?'online':''}">
-      ${finoCentralConfig().endpoint?'🌐 تم ضبط عنوان مزامنة مركزية. سيحاول النظام المزامنة ثم يستخدم النسخة المحلية عند تعذر الاتصال.':'📱 الوضع الحالي: حفظ محلي على هذا الجهاز. الكود جاهز تقنيًا للربط بعنوان API مركزي لاحقًا دون تغيير واجهة الإدارة.'}
+    <div class="portal-central-status ${finoCentralAdminToken?'online':''}">
+      ${finoCentralAdminToken?'🌐 متصل بـ FINO-Central: تنفيذ الأكواد والتمديدات مركزي.':'📱 إدارة الأكواد الحالية محلية حتى يتم تفعيل جلسة المختص المركزية.'}
     </div>
     <div id="portalDynamicCodeList">${renderFINODynamicCodes()}</div>
   </div>`);
 }
 function editFINODynamicCode(id){showFINOPortalCodeManager(id)}
 async function saveFINODynamicCodeFromForm(id=''){
-  const list=getFINODynamicCodes();
-  const old=list.find(x=>x.id===id);
   const duration=Math.max(0,Number(document.getElementById('pcDuration')?.value||0));
-  const now=Date.now();
-  const item={
-    ...(old||{}),
-    id:id||('C'+now.toString(36)+Math.random().toString(36).slice(2,6)),
+  const allowed=String(document.getElementById('pcService')?.value||'buyout');
+  const payload={
+    id:id||'',
     name:String(document.getElementById('pcName')?.value||'كود عميل').trim(),
     code:String(document.getElementById('pcCode')?.value||'').trim().toUpperCase(),
     enabled:!!document.getElementById('pcEnabled')?.checked,
-    durationMinutes:duration,
-    expiresAt:duration?now+duration*60000:0,
-    maxUses:Math.max(0,Number(document.getElementById('pcUses')?.value||0)),
-    maxRecalculations:Math.max(0,Number(document.getElementById('pcRecalc')?.value||0)),
-    allowRestart:!!document.getElementById('pcRestart')?.checked,
-    showCompact:!!document.getElementById('pcCompact')?.checked,
-    showDetailed:!!document.getElementById('pcDetailed')?.checked,
-    showText:!!document.getElementById('pcText')?.checked,
-    feesEnabled:!!document.getElementById('pcFees')?.checked,
-    feeAmount:Math.max(0,Number(document.getElementById('pcFee')?.value||2800)),
-    noteEnabled:!!document.getElementById('pcNoteEnabled')?.checked,
-    note:String(document.getElementById('pcNote')?.value||'').trim(),
-    bannerText:String(document.getElementById('pcBanner')?.value||'').trim(),
-    bannerImage:String(document.getElementById('pcBannerImage')?.value||'').trim(),
-    allowedService:String(document.getElementById('pcService')?.value||'buyout'),
-    updatedAt:new Date().toISOString(),
-    used:Number(old?.used||0),
-    recalculations:Number(old?.recalculations||0)
+    duration_minutes:duration,
+    activate_on_first_use:true,
+    max_entries:Math.max(0,Number(document.getElementById('pcUses')?.value||0)),
+    max_restarts_per_entry:Math.max(0,Number(document.getElementById('pcRecalc')?.value||0)),
+    allow_restart:!!document.getElementById('pcRestart')?.checked,
+    allowed_services:allowed==='both'?['buyout','smart']:[allowed],
+    lock_to_first_device:!!document.getElementById('pcLockDevice')?.checked,
+    require_location:!!document.getElementById('pcRequireLocation')?.checked,
+    fees_enabled:!!document.getElementById('pcFees')?.checked,
+    fee_amount:Math.max(0,Number(document.getElementById('pcFee')?.value||0)),
+    note_enabled:!!document.getElementById('pcNoteEnabled')?.checked,
+    note_text:String(document.getElementById('pcNote')?.value||'').trim(),
+    banner_text:String(document.getElementById('pcBanner')?.value||'').trim(),
+    banner_image_url:String(document.getElementById('pcBannerImage')?.value||'').trim(),
+    show_compact_card:!!document.getElementById('pcCompact')?.checked,
+    show_detailed_card:!!document.getElementById('pcDetailed')?.checked,
+    show_text_share:!!document.getElementById('pcText')?.checked,
+    config:{source:'FINO-Web'}
   };
-  if(!item.code){portalAssistant('<div class="portal-alert">اكتب الكود أولاً.</div>');return}
-  const duplicate=list.find(x=>x.code===item.code&&x.id!==item.id);
-  if(duplicate){portalAssistant('<div class="portal-alert">هذا الكود مستخدم مسبقًا.</div>');return}
+  if(!payload.code){portalAssistant('<div class="portal-alert">اكتب الكود أولاً.</div>');return}
+
+  if(finoCentralAdminToken){
+    const r=await finoCentralAdminCall('fino_admin_upsert_code',{p_payload:payload});
+    if(!r.ok||r.data?.ok===false){
+      portalAssistant(`<div class="portal-alert">تعذر الحفظ المركزي: ${portalEsc(finoCentralReasonMessage(r.data?.reason)||'راجع جلسة المختص.')}</div>`);
+      return;
+    }
+    await finoCentralAdminDashboard(true);
+    portalAssistant(`<div class="portal-executed">✅ تم التنفيذ مركزيًا. الكود ${portalEsc(payload.code)} أصبح متاحًا من الأجهزة الأخرى حسب شروطه.</div>`);
+    showFINOPortalCodeManager(r.data?.code?.id||id||'');
+    return;
+  }
+
+  // Local fallback
+  const list=getFINODynamicCodes();
+  const old=list.find(x=>x.id===id);
+  const now=Date.now();
+  const item={
+    ...(old||{}),id:id||('C'+now.toString(36)+Math.random().toString(36).slice(2,6)),
+    name:payload.name,code:payload.code,enabled:payload.enabled,
+    durationMinutes:duration,expiresAt:duration?now+duration*60000:0,
+    maxUses:payload.max_entries,maxRecalculations:payload.max_restarts_per_entry,
+    allowRestart:payload.allow_restart,showCompact:payload.show_compact_card,
+    showDetailed:payload.show_detailed_card,showText:payload.show_text_share,
+    feesEnabled:payload.fees_enabled,feeAmount:payload.fee_amount,
+    noteEnabled:payload.note_enabled,note:payload.note_text,
+    bannerText:payload.banner_text,bannerImage:payload.banner_image_url,
+    allowedService:allowed,lockToDevice:payload.lock_to_first_device,
+    requireLocation:payload.require_location,updatedAt:new Date().toISOString(),
+    used:Number(old?.used||0),recalculations:Number(old?.recalculations||0)
+  };
   const idx=list.findIndex(x=>x.id===item.id);
   if(idx>=0)list[idx]=item;else list.push(item);
   saveFINODynamicCodes(list);
-  const central=await finoCentralRequest('save_code',item);
-  portalAssistant(`<div class="portal-executed">✅ تم التنفيذ وحفظ الكود ${portalEsc(item.code)}.${central.ok?' وتمت المزامنة المركزية.':' الحفظ الحالي محلي.'}</div>`);
+  portalAssistant(`<div class="portal-executed">✅ تم الحفظ محليًا للكود ${portalEsc(item.code)}.</div>`);
   showFINOPortalCodeManager(item.id);
 }
+
+async function extendFINOCentralCode(id,minutes){
+  if(!finoCentralAdminToken)return;
+  const r=await finoCentralAdminCall('fino_admin_extend_code',{
+    p_code_id:id,p_minutes:Number(minutes),p_reset_entries:false,p_unlock_device:false
+  });
+  if(!r.ok||r.data?.ok===false){
+    portalAssistant('<div class="portal-alert">تعذر تمديد الكود.</div>');return;
+  }
+  await finoCentralAdminDashboard(true);
+  portalAssistant(`<div class="portal-executed">✅ تم تمديد الكود ${Number(minutes)} دقيقة مركزيًا.</div>`);
+  showFINOPortalCodeManager(id);
+}
 async function deleteFINODynamicCode(id){
+  if(finoCentralAdminToken){
+    const r=await finoCentralAdminCall('fino_admin_delete_code',{p_code_id:id});
+    if(!r.ok||r.data?.ok===false){
+      portalAssistant('<div class="portal-alert">تعذر حذف الكود مركزيًا.</div>');return;
+    }
+    await finoCentralAdminDashboard(true);
+    portalAssistant('<div class="portal-executed">✅ تم حذف الكود مركزيًا.</div>');
+    showFINOPortalCodeManager();return;
+  }
   const list=getFINODynamicCodes().filter(x=>x.id!==id);
   saveFINODynamicCodes(list);
-  await finoCentralRequest('delete_code',{id});
-  portalAssistant('<div class="portal-executed">تم حذف الكود.</div>');
+  portalAssistant('<div class="portal-executed">تم حذف الكود محليًا.</div>');
   showFINOPortalCodeManager();
 }
 function getFINOActiveDynamicCode(){
@@ -6876,6 +6992,300 @@ function applyFINOActiveCodeSettings(){
   finoPortal.includeFees=!!c.feesEnabled;
   finoPortal.feeAmount=Number(c.feeAmount||2800);
   finoPortal.clientNote=c.noteEnabled?String(c.note||''):'';
+}
+
+
+const FINO_SUPABASE_URL='https://nwfkqcfminvelvopbgrg.supabase.co';
+const FINO_SUPABASE_PUBLISHABLE_KEY='sb_publishable_RN-_31e1ztuJyajIftDunw_e2XE4nQB';
+const FINO_CENTRAL_DEVICE_KEY='FINO_CENTRAL_DEVICE_ID_V1';
+const FINO_CENTRAL_ADMIN_TOKEN_KEY='FINO_CENTRAL_ADMIN_TOKEN_V1';
+const FINO_CENTRAL_ENTRY_KEY='FINO_CENTRAL_ENTRY_V1';
+
+function finoSafeSessionGet(k){try{return sessionStorage.getItem(k)||''}catch(e){return ''}}
+function finoSafeSessionSet(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}
+function finoSafeSessionRemove(k){try{sessionStorage.removeItem(k)}catch(e){}}
+
+let finoCentralAdminToken=finoSafeSessionGet(FINO_CENTRAL_ADMIN_TOKEN_KEY);
+let finoCentralEntry=null;
+let finoCentralDashboardCache=null;
+let finoCentralHeartbeatTimer=null;
+
+function finoCentralDeviceId(){
+  try{
+    let id=localStorage.getItem(FINO_CENTRAL_DEVICE_KEY);
+    if(!id){
+      id=(crypto?.randomUUID?.()||('dev-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2)));
+      localStorage.setItem(FINO_CENTRAL_DEVICE_KEY,id);
+    }
+    return id;
+  }catch(e){
+    return 'dev-session-'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+  }
+}
+
+async function finoRpc(fn,args={},timeoutMs=12000){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const r=await fetch(`${FINO_SUPABASE_URL}/rest/v1/rpc/${fn}`,{
+      method:'POST',
+      headers:{
+        'apikey':FINO_SUPABASE_PUBLISHABLE_KEY,
+        'Content-Type':'application/json',
+        'Accept':'application/json'
+      },
+      body:JSON.stringify(args||{}),
+      signal:controller.signal
+    });
+    const text=await r.text();
+    let data=null;
+    try{ data=text?JSON.parse(text):null; }catch(e){ data={raw:text}; }
+    if(!r.ok)return {ok:false,httpStatus:r.status,error:data||text||'HTTP_ERROR'};
+    return {ok:true,data};
+  }catch(e){
+    return {ok:false,network:true,error:String(e?.message||e)};
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+function finoCentralReasonMessage(reason){
+  const map={
+    CODE_INVALID:'كود الاشتراك غير صحيح.',
+    CODE_DISABLED:'هذا الكود موقوف حاليًا.',
+    CODE_NOT_STARTED:'هذا الكود لم يبدأ بعد.',
+    CODE_EXPIRED:'انتهت مدة الكود.',
+    CODE_USES_FINISHED:'انتهى عدد استخدامات الكود. للتجديد تواصل معنا.',
+    DEVICE_REQUIRED:'تعذر التحقق من الجهاز.',
+    DEVICE_NOT_ALLOWED:'هذا الكود مرتبط بجهاز آخر ولا يمكن استخدامه من هذا الجهاز.',
+    LOCATION_REQUIRED:'هذا الكود يتطلب السماح بالموقع للمتابعة.',
+    RESTART_DISABLED:'إعادة الحسبة غير متاحة لهذه الباقة.',
+    RESTARTS_FINISHED:'انتهى عدد مرات إعادة الحسبة لهذه الدخلة.',
+    INVALID_PASSWORD:'رمز دخول المختص غير صحيح.',
+    ADMIN_SESSION_INVALID:'انتهت جلسة المختص. سجل الدخول مرة أخرى.'
+  };
+  return map[reason]||'تعذر تنفيذ العملية في المنطقة المركزية.';
+}
+
+async function finoCentralGetLocation(){
+  return await new Promise(resolve=>{
+    if(!navigator.geolocation){resolve(null);return}
+    navigator.geolocation.getCurrentPosition(
+      p=>resolve({latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy}),
+      ()=>resolve(null),
+      {enableHighAccuracy:false,timeout:8000,maximumAge:300000}
+    );
+  });
+}
+
+async function finoCentralOpenCode(code,clientNameValue=''){
+  const device=finoCentralDeviceId();
+  let res=await finoRpc('fino_client_open_code',{
+    p_code:String(code||'').trim(),
+    p_device_id:device,
+    p_client_name:clientNameValue||null,
+    p_user_agent:navigator.userAgent||'',
+    p_location:null
+  });
+  if(!res.ok)return {transport:false,...res};
+  let data=res.data;
+  if(data?.reason==='LOCATION_REQUIRED'){
+    const loc=await finoCentralGetLocation();
+    if(!loc)return {transport:true,data};
+    res=await finoRpc('fino_client_open_code',{
+      p_code:String(code||'').trim(),
+      p_device_id:device,
+      p_client_name:clientNameValue||null,
+      p_user_agent:navigator.userAgent||'',
+      p_location:loc
+    });
+    if(!res.ok)return {transport:false,...res};
+    data=res.data;
+  }
+  return {transport:true,data};
+}
+
+function finoCentralStoreEntry(data){
+  if(!data?.entry_token)return;
+  finoCentralEntry={
+    ...data,
+    entryToken:data.entry_token,
+    deviceId:finoCentralDeviceId()
+  };
+  try{finoSafeSessionSet(FINO_CENTRAL_ENTRY_KEY,JSON.stringify(finoCentralEntry));}catch(e){}
+}
+
+function finoCentralRestoreEntry(){
+  if(finoCentralEntry)return finoCentralEntry;
+  try{
+    const raw=finoSafeSessionGet(FINO_CENTRAL_ENTRY_KEY);
+    if(raw)finoCentralEntry=JSON.parse(raw);
+  }catch(e){}
+  return finoCentralEntry;
+}
+
+function finoCentralClearEntry(){
+  finoCentralEntry=null;
+  clearInterval(finoCentralHeartbeatTimer);
+  finoCentralHeartbeatTimer=null;
+  try{finoSafeSessionRemove(FINO_CENTRAL_ENTRY_KEY);}catch(e){}
+}
+
+function finoCentralApplyEntrySettings(data){
+  if(!data)return;
+  finoPortal.activeCodeConfig={
+    central:true,
+    id:data.code_id||'',
+    name:data.code_name||'',
+    allowedService:Array.isArray(data.allowed_services)
+      ? (data.allowed_services.includes('buyout')&&data.allowed_services.includes('smart')?'both':(data.allowed_services[0]||'buyout'))
+      : 'buyout',
+    allowRestart:data.allow_restart!==false,
+    maxRecalculations:Number(data.max_restarts_per_entry||0),
+    showCompact:data.show_compact_card!==false,
+    showDetailed:data.show_detailed_card!==false,
+    showText:data.show_text_share!==false,
+    feesEnabled:!!data.fees_enabled,
+    feeAmount:Number(data.fee_amount||0),
+    noteEnabled:!!data.note_enabled,
+    note:String(data.note_text||''),
+    bannerText:String(data.banner_text||''),
+    bannerImage:String(data.banner_image_url||''),
+    contractTemplateId:data.contract_template_id||''
+  };
+  finoPortal.includeFees=!!data.fees_enabled;
+  finoPortal.feeAmount=Number(data.fee_amount||0);
+  finoPortal.clientNote=data.note_enabled?String(data.note_text||''):'';
+}
+
+async function finoCentralRuntime(){
+  const e=finoCentralRestoreEntry();
+  if(!e?.entryToken)return {ok:true,local:true};
+  const r=await finoRpc('fino_client_runtime',{
+    p_entry_token:e.entryToken,
+    p_device_id:e.deviceId||finoCentralDeviceId()
+  });
+  if(!r.ok)return r;
+  if(r.data?.ok===false)return {ok:false,data:r.data};
+  Object.assign(finoCentralEntry,r.data||{});
+  return {ok:true,data:r.data};
+}
+
+function finoCentralStartHeartbeat(){
+  clearInterval(finoCentralHeartbeatTimer);
+  if(!finoCentralRestoreEntry()?.entryToken)return;
+  finoCentralHeartbeatTimer=setInterval(async()=>{
+    const r=await finoCentralRuntime();
+    if(r.ok)return;
+    clearInterval(finoCentralHeartbeatTimer);
+    const reason=r.data?.reason||'';
+    finoCentralClearEntry();
+    hideSubscriptionBadge?.();
+    activeAccess=null;
+    pendingAccessAfterLogin=null;
+    showPage('page1');
+    const err=document.getElementById('loginError');
+    if(err){
+      err.textContent=finoCentralReasonMessage(reason)||'انتهت صلاحية الجلسة.';
+      err.style.display='block';
+    }
+  },30000);
+}
+
+async function finoCentralRestart(){
+  const e=finoCentralRestoreEntry();
+  if(!e?.entryToken)return {ok:false,local:true};
+  const r=await finoRpc('fino_client_restart',{
+    p_entry_token:e.entryToken,
+    p_device_id:e.deviceId||finoCentralDeviceId()
+  });
+  if(!r.ok)return r;
+  return {ok:r.data?.ok!==false,data:r.data};
+}
+
+async function finoCentralSaveCase(event={},result=null){
+  const e=finoCentralRestoreEntry();
+  if(!e?.entryToken)return;
+  const d=finoPortal?.data||{};
+  const rr=result||getSelectedResult?.()||null;
+  const input={
+    client_name:cleanClientName(clientName)||'',
+    customer_type:d.customerType||customerType||'',
+    salary:Number(d.salary||0),
+    salary_bank:d.bankName||selectedBankName||'',
+    settlement:Number(d.settlement||0),
+    external:Number(d.external||0)
+  };
+  const resultData=rr?{
+    bank:rr.name||'',
+    bank_key:rr.key||'',
+    rate:Number(rr.rate||0),
+    cash:Number(rr.cashAfterDebt||0),
+    installment:Number(rr.installment||0),
+    months:Number(rr.actualPayments||0),
+    profit:Number(rr.totalProfit||0),
+    gross:Number(rr.grossWithProfit||0),
+    net:Number(rr.netBeforeDebt||0),
+    fees:includeServiceFees?.()?Number(serviceFeesAmount?.()||0):0,
+    note:getClientCustomNote?.()||''
+  }:{};
+  await finoRpc('fino_client_save_case',{
+    p_entry_token:e.entryToken,
+    p_device_id:e.deviceId||finoCentralDeviceId(),
+    p_input:input,
+    p_result:resultData,
+    p_event:event||null,
+    p_compact_card:null,
+    p_detailed_card:null
+  });
+}
+
+async function finoCentralSetPhone(phone){
+  const e=finoCentralRestoreEntry();
+  if(!e?.entryToken)return;
+  await finoRpc('fino_client_set_phone',{
+    p_entry_token:e.entryToken,
+    p_device_id:e.deviceId||finoCentralDeviceId(),
+    p_phone:String(phone||'')
+  });
+}
+
+async function finoCentralAdminLogin(password){
+  const r=await finoRpc('fino_admin_login',{p_password:String(password||''),p_user_agent:navigator.userAgent||''});
+  if(!r.ok)return r;
+  if(r.data?.ok){
+    finoCentralAdminToken=r.data.admin_token;
+    try{finoSafeSessionSet(FINO_CENTRAL_ADMIN_TOKEN_KEY,finoCentralAdminToken);}catch(e){}
+    return {ok:true,data:r.data};
+  }
+  return {ok:false,data:r.data};
+}
+
+async function finoCentralAdminDashboard(force=false){
+  if(!finoCentralAdminToken)return {ok:false,reason:'NO_ADMIN_TOKEN'};
+  if(finoCentralDashboardCache&&!force)return {ok:true,data:finoCentralDashboardCache};
+  const r=await finoRpc('fino_admin_dashboard',{p_token:finoCentralAdminToken});
+  if(!r.ok||r.data?.ok===false){
+    if(r.data?.reason==='ADMIN_SESSION_INVALID'){
+      finoCentralAdminToken='';
+      finoSafeSessionRemove(FINO_CENTRAL_ADMIN_TOKEN_KEY);
+    }
+    return {ok:false,data:r.data,error:r.error};
+  }
+  finoCentralDashboardCache=r.data;
+  return {ok:true,data:r.data};
+}
+
+async function finoCentralAdminCall(fn,args={}){
+  if(!finoCentralAdminToken)return {ok:false,reason:'NO_ADMIN_TOKEN'};
+  const r=await finoRpc(fn,{p_token:finoCentralAdminToken,...args});
+  if(r.ok&&r.data?.ok!==false)finoCentralDashboardCache=null;
+  return r;
+}
+
+function finoCentralStatusText(){
+  if(finoCentralAdminToken)return '🌐 المركزية متصلة للمختص';
+  return '🌐 اتصال العملاء بالمركزية جاهز • إدارة المختص المركزية تحتاج تسجيل دخولها';
 }
 
 const FINO_PORTAL_ARCHIVE_KEY='FINO_PORTAL_ARCHIVE_V1';
@@ -6955,7 +7365,7 @@ function incrementFINOPortalUsage(){
 function getFINOPortalUsage(){
   try{return JSON.parse(localStorage.getItem(FINO_PORTAL_USAGE_KEY)||'{}')}catch(e){return {}}
 }
-function showFINOPortalArchive(){
+function showFINOPortalArchiveLocal(){
   if(!finoPortal.adminUnlocked)return;
   finoPortal.step='admin_archive';
   setPortalInput(false);
@@ -6973,6 +7383,65 @@ function showFINOPortalArchive(){
     <div class="portal-admin-global-note">⚠️ هذه الأرشفة محلية على هذا الجهاز والمتصفح فقط. مزامنة الأرشيف أو أوامر المختص على جميع الجوالات تحتاج قاعدة بيانات/Backend مركزي، ولا يمكن تنفيذها بأمان داخل ملف HTML ثابت وحده.</div>
   </div>`);
 }
+
+async function showFINOPortalArchive(){
+  if(!finoPortal.adminUnlocked)return;
+  if(!finoCentralAdminToken){showFINOPortalArchiveLocal();return}
+  finoPortal.step='admin_archive';setPortalInput(false);
+  const r=await finoCentralAdminCall('fino_admin_archive_list',{
+    p_search:null,p_from:null,p_to:null,p_limit:200
+  });
+  if(!r.ok||r.data?.ok===false){
+    portalAssistant('<div class="portal-alert">تعذر تحميل الأرشيف المركزي.</div>');return;
+  }
+  const items=r.data?.items||[];
+  portalAssistant(`<div class="portal-admin-archive-box">
+    <h4>أرشفة العملاء المركزية <span class="portal-archive-count">${items.length}</span></h4>
+    <input class="portal-archive-search" id="portalCentralArchiveSearch" placeholder="ابحث بالاسم أو الجوال أو الكود أو البنك" onkeydown="if(event.key==='Enter')searchFINOCentralArchive(this.value)">
+    <div class="portal-archive-list" id="portalCentralArchiveList">${renderFINOCentralArchiveItems(items)}</div>
+  </div>`);
+}
+function renderFINOCentralArchiveItems(list){
+  if(!list?.length)return '<div class="portal-note">لا توجد عمليات مؤرشفة مركزيًا حتى الآن.</div>';
+  return list.map(x=>`<button type="button" class="portal-archive-item" onclick='openFINOCentralArchiveItem(${JSON.stringify(JSON.stringify(x))})'>
+    <b>${portalEsc(x.client_name||'بدون اسم')} • ${portalEsc(x.code_name||'')}</b>
+    <small>${portalEsc(x.phone||'بدون رقم')} • ${portalEsc(x.created_at||'')} • ${portalEsc(x.result_data?.bank||'')}</small>
+  </button>`).join('');
+}
+async function searchFINOCentralArchive(q){
+  const r=await finoCentralAdminCall('fino_admin_archive_list',{
+    p_search:String(q||''),p_from:null,p_to:null,p_limit:200
+  });
+  if(r.ok&&r.data?.ok!==false){
+    const el=document.getElementById('portalCentralArchiveList');
+    if(el)el.innerHTML=renderFINOCentralArchiveItems(r.data?.items||[]);
+  }
+}
+function openFINOCentralArchiveItem(raw){
+  let x={};try{x=JSON.parse(raw)}catch(e){}
+  portalAssistant(`<div class="portal-admin-archive-box">
+    <h4>${portalEsc(x.client_name||'بدون اسم')} • ${portalEsc(x.code_name||'')}</h4>
+    <div class="portal-detail-lines">
+      <div class="portal-detail-line"><span>الجوال</span><b>${portalEsc(x.phone||'—')}</b></div>
+      <div class="portal-detail-line"><span>البنك</span><b>${portalEsc(x.result_data?.bank||'—')}</b></div>
+      <div class="portal-detail-line"><span>النسبة</span><b>${portalEsc(String(x.result_data?.rate??'—'))}</b></div>
+      <div class="portal-detail-line"><span>الكاش</span><b>${portalEsc(String(x.result_data?.cash??'—'))}</b></div>
+      <div class="portal-detail-line"><span>القسط</span><b>${portalEsc(String(x.result_data?.installment??'—'))}</b></div>
+      <div class="portal-detail-line"><span>المدة</span><b>${portalEsc(String(x.result_data?.months??'—'))}</b></div>
+      <div class="portal-detail-line"><span>الأرباح</span><b>${portalEsc(String(x.result_data?.profit??'—'))}</b></div>
+      <div class="portal-detail-line"><span>الراتب</span><b>${portalEsc(String(x.input_data?.salary??'—'))}</b></div>
+      <div class="portal-detail-line"><span>السداد المبكر</span><b>${portalEsc(String(x.input_data?.settlement??'—'))}</b></div>
+      <div class="portal-detail-line"><span>الالتزامات الأخرى</span><b>${portalEsc(String(x.input_data?.external??'—'))}</b></div>
+    </div>
+    <div class="portal-note" style="margin-top:8px">سجل المحادثة/الأحداث: ${portalEsc(JSON.stringify(x.chat_log||[]))}</div>
+    <button type="button" class="portal-option" onclick="deleteFINOCentralArchive('${x.id}')">حذف من الأرشيف المركزي</button>
+  </div>`);
+}
+async function deleteFINOCentralArchive(id){
+  const r=await finoCentralAdminCall('fino_admin_archive_delete',{p_archive_id:id});
+  if(r.ok&&r.data?.ok!==false){portalAssistant('<div class="portal-executed">✅ تم الحذف من الأرشيف المركزي.</div>');showFINOPortalArchive();}
+}
+
 function renderFINOPortalArchiveItems(list){
   if(!list.length)return '<div class="portal-note">لا توجد عمليات مؤرشفة على هذا الجهاز حتى الآن.</div>';
   return list.map(x=>`<button type="button" class="portal-archive-item" onclick="openFINOPortalArchiveItem('${x.id}')">
@@ -7112,6 +7581,9 @@ function openFINOSmartPortal(trial=false){
   };
   loadFINOPortalClientDefaults();
   applyFINOActiveCodeSettings();
+  if(activeAccess?.record?.central && activeAccess.record.centralData){
+    finoCentralApplyEntrySettings(activeAccess.record.centralData);
+  }
   showPage('specialistBotPage');
   incrementFINOPortalUsage();
   const title=document.getElementById('portalMainTitle');
@@ -7147,6 +7619,82 @@ function openFINOSmartPortal(trial=false){
     portalAssistant(`<div class="portal-note">${dc.bannerImage?`<img src="${portalEsc(dc.bannerImage)}" alt="" style="max-width:100%;border-radius:10px;margin-bottom:6px">`:''}${dc.bannerText?portalEsc(dc.bannerText):''}</div>`);
   }
 }
+
+function FINOPackageRecord(){
+  return activeAccess?.record?.package3 ? activeAccess.record : null;
+}
+function FINOPackageState(){
+  return activeAccess?.state||null;
+}
+function FINOPackageRemainingEntries(){
+  const r=FINOPackageRecord(),s=FINOPackageState();
+  if(!r||!s)return null;
+  return Math.max(0,Number(r.maxEntries||3)-Number(s.entriesUsed||0));
+}
+function FINOPackageRemainingRestarts(){
+  const r=FINOPackageRecord(),s=FINOPackageState();
+  if(!r||!s)return null;
+  return Math.max(0,Number(r.maxRestartsPerEntry||2)-Number(s.sessionRestartsUsed||0));
+}
+function persistFINOPackageState(){
+  const s=FINOPackageState();
+  if(!s?.accessHash)return;
+  setAccessState(s.accessHash,s);
+}
+function FINOPackageBannerHtml(){
+  const r=FINOPackageRecord(),s=FINOPackageState();
+  if(!r||!s)return '';
+  const remainingEntries=FINOPackageRemainingEntries();
+  const remainingRestarts=FINOPackageRemainingRestarts();
+  return `<div class="portal-package-banner">
+    <b>🎁 عرض يوم التأسيس • باقة الثلاث حساب</b><br>
+    مدة الباقة: 15 دقيقة من أول تفعيل • عدد الدخولات: 3<br>
+    <span class="remain">بعد هذه الدخلة بقي لك ${remainingEntries} • إعادة الحسبة المتاحة في هذه الدخلة: ${remainingRestarts}</span>
+  </div>`;
+}
+async function handleFINOPortalRestart(){
+  if(activeAccess?.record?.central && finoCentralRestoreEntry()?.entryToken){
+    const r=await finoCentralRestart();
+    if(r.ok){
+      resetFINOSmartPortal();
+      portalAssistant(`<div class="portal-note">إعادة الحسبة المركزية تمت. ${r.data?.restarts_left===null||r.data?.restarts_left===undefined?'':`المتبقي: ${r.data.restarts_left}`}</div>`);
+      return;
+    }
+    const reason=r.data?.reason||'';
+    portalAssistant(`<div class="portal-alert">${portalEsc(finoCentralReasonMessage(reason))}</div>`);
+    if(['RESTARTS_FINISHED','RESTART_DISABLED','CODE_EXPIRED'].includes(reason)){
+      if(reason==='CODE_EXPIRED')finoCentralClearEntry();
+    }
+    return;
+  }
+
+  const r=FINOPackageRecord(),s=FINOPackageState();
+  if(!r||!s){
+    resetFINOSmartPortal();
+    return;
+  }
+  const max=Number(r.maxRestartsPerEntry||2);
+  const used=Number(s.sessionRestartsUsed||0);
+  if(used>=max){
+    hideSubscriptionBadge();
+    activeAccess=null;
+    pendingAccessAfterLogin=null;
+    showPage('page1');
+    const error=document.getElementById('loginError');
+    const rem=FINOPackageRemainingEntries();
+    if(error){
+      error.textContent=rem>0
+        ? `انتهت إعادتان للحسبة في هذه الدخلة. أدخل كود العرض من جديد. بقي لك ${rem} دخلة.`
+        : 'انتهت دخولات باقة الثلاث حساب. للتجديد اضغط على واتساب.';
+      error.style.display='block';
+    }
+    if(rem<=0)document.getElementById('packageRenewBtn')?.classList.add('show');
+    return;
+  }
+  s.sessionRestartsUsed=used+1;
+  persistFINOPackageState();
+  resetFINOSmartPortal();
+}
 function resetFINOSmartPortal(){
   const chat=document.getElementById('finoBotChat');
   if(chat)chat.innerHTML='';
@@ -7154,6 +7702,8 @@ function resetFINOSmartPortal(){
   finoPortal.adminBankId='';finoPortal.adminRateIndex=null;finoPortal.imageFile=null;finoPortal.imageRead=null;
   if(finoPortal.trial){
     finoPortal.mode='buyout';
+    const pkg=FINOPackageBannerHtml();
+    if(pkg)portalAssistant(pkg);
     portalAssistant(`${portalSaudiGreeting()}، حياك الله.<br>لنبدأ بترشيح أفضل بنك لشراء مديونية تمويلك الشخصي.<br>اختر${cleanClientName(clientName)?` يا ${cleanClientName(clientName)}`:''} جهة عملك.`);
     showPortalWorkTypes('buyout');
   }else{
@@ -7308,6 +7858,9 @@ function runFINOPortalBuyout(){
   }
   portalAssistant(`تمت الحسبة، وطلع لك ${out.length} ${out.length===1?'ترشيح':'ترشيحات'} متاحة. اختر البنك اللي تبي تشوف تفاصيله كاملة.${renderFINOPortalRankings(out)}`);
   archiveFINOPortalConversation({kind:'buyout-calculation',rankingCount:out.length});
+  if(activeAccess?.record?.central){
+    finoCentralSaveCase({type:'buyout-calculation',ranking_count:out.length},out[0]||null);
+  }
 }
 function renderFINOPortalRankings(out){
   return `<div class="portal-result">
@@ -7368,6 +7921,9 @@ function showFINOPortalRank(index){
     </div>
   </div>`);
 
+  if(activeAccess?.record?.central){
+    finoCentralSaveCase({type:'open-result',rank:index+1,bank:r.name},r);
+  }
   archiveFINOPortalConversation({
     kind:'result',
     rank:index+1,
@@ -7556,6 +8112,9 @@ function portalOpenInquiry(index,kind){
   const url=`https://wa.me/966506214458?text=${encodeURIComponent(msg)}`;
   window.open(url,'_blank');
   archiveFINOPortalConversation({kind:kind==='proceed'?'proceed':'inquiry',bank:(latestResults||[])[index]?.name||''});
+  if(activeAccess?.record?.central){
+    finoCentralSaveCase({type:kind==='proceed'?'proceed':'inquiry',bank:(latestResults||[])[index]?.name||''},(latestResults||[])[index]||null);
+  }
 }
 function portalShareBuyoutText(i){
   prepareFINOPortalShare(i);
@@ -7652,11 +8211,14 @@ async function createFINOPortalCompactPngBlob(){
   }catch(e){}
 
   const usedBottom=Math.min(1200,Math.max(980,y+180));
+  const outputWidth=900;
+  const outputHeight=Math.round(usedBottom*(outputWidth/1080));
   const out=document.createElement('canvas');
-  out.width=1080;out.height=usedBottom;
+  out.width=outputWidth;out.height=outputHeight;
   const o=out.getContext('2d',{alpha:false});
+  o.imageSmoothingEnabled=true;o.imageSmoothingQuality='high';
   o.fillStyle='#fff';o.fillRect(0,0,out.width,out.height);
-  o.drawImage(canvas,0,0,1080,usedBottom,0,0,1080,usedBottom);
+  o.drawImage(canvas,0,0,1080,usedBottom,0,0,outputWidth,outputHeight);
 
   return await new Promise((resolve,reject)=>out.toBlob(
     b=>b?resolve(b):reject(new Error('PNG_FAILED')),
@@ -7774,10 +8336,14 @@ async function createFINOPortalDetailedPngBlob(){
   }catch(e){}
   y+=170;
 
-  const h=Math.min(1800,Math.max(1280,y));
-  const out=document.createElement('canvas');out.width=1080;out.height=h;
+  const h=Math.min(1680,Math.max(1220,y));
+  const outputWidth=900;
+  const outputHeight=Math.round(h*(outputWidth/1080));
+  const out=document.createElement('canvas');out.width=outputWidth;out.height=outputHeight;
   const o=out.getContext('2d',{alpha:false});
-  o.fillStyle='#fff';o.fillRect(0,0,1080,h);o.drawImage(canvas,0,0,1080,h,0,0,1080,h);
+  o.imageSmoothingEnabled=true;o.imageSmoothingQuality='high';
+  o.fillStyle='#fff';o.fillRect(0,0,outputWidth,outputHeight);
+  o.drawImage(canvas,0,0,1080,h,0,0,outputWidth,outputHeight);
   return await new Promise((resolve,reject)=>out.toBlob(b=>b?resolve(b):reject(new Error('PNG_FAILED')),'image/png',1));
 }
 
@@ -7904,17 +8470,30 @@ function startFINOPortalAdmin(){
   setPortalInput(true,'رمز دخول المختص','password','الدخول مخصص للمسؤول أو المختص فقط.');
 }
 async function verifyFINOPortalAdmin(raw){
-  let ok=false;
+  let localOk=false;
   try{
-    if(window.crypto?.subtle)ok=(await sha256FINO(raw))===FINO_ADMIN_PASSWORD_HASH;
-    else ok=raw==='11qq11qQ@';
-  }catch(e){ok=raw==='11qq11qQ@'}
-  if(!ok){
+    if(window.crypto?.subtle)localOk=(await sha256FINO(raw))===FINO_ADMIN_PASSWORD_HASH;
+    else localOk=raw==='11qq11qQ@';
+  }catch(e){localOk=raw==='11qq11qQ@'}
+
+  const central=await finoCentralAdminLogin(raw);
+  const centralOk=!!central.ok;
+
+  if(!localOk&&!centralOk){
     portalAssistant('<div class="portal-alert">رمز الدخول غير صحيح. الدخول غير المصرح به قد يعرضك للمساءلة القانونية.</div>');
     setPortalInput(true,'رمز دخول المختص','password');return;
   }
+
   finoPortal.adminUnlocked=true;
+  if(centralOk){
+    await finoCentralAdminDashboard(true);
+  }
   showFINOPortalAdminMenu();
+  if(localOk&&!centralOk){
+    portalAssistant('<div class="portal-alert">دخلت للمختص المحلي، لكن دخول المختص المركزي لم يُفعّل بعد. وظائف الموقع المحلية تعمل، أما التعديل المركزي فيحتاج تهيئة كلمة مرور FINO-Central لاحقًا.</div>');
+  }else if(centralOk){
+    portalAssistant('<div class="portal-executed">✅ تم الاتصال بالمنطقة المركزية. أي كود أو تمديد تحفظه مركزيًا سيظهر على الأجهزة الأخرى.</div>');
+  }
 }
 function showFINOPortalAdminMenu(){
   finoPortal.step='admin_menu';setPortalInput(false);
@@ -7927,9 +8506,10 @@ function showFINOPortalAdminMenu(){
       <button type="button" class="portal-option" onclick="showFINOPortalShareSettings()">💰 الأتعاب والملاحظات</button>
       <button type="button" class="portal-option" onclick="showFINOPortalCodeManager()">🔐 إدارة أكواد العملاء</button>
       <button type="button" class="portal-option" onclick="showFINOPortalArchive()">🗂️ أرشفة العملاء</button>
+      <button type="button" class="portal-option" onclick="refreshFINOCentralAdmin()">🌐 تحديث بيانات المركزية</button>
       <button type="button" class="portal-option" onclick="openFINOPortalFullAdmin()">🛠️ لوحة المختص الكاملة</button>
     </div>
-    <div class="portal-note">أي تعديل تحفظه هنا يُطبّق فورًا على هذا الموقع في نفس الجهاز والمتصفح. المزامنة بين أجهزة مختلفة تحتاج قاعدة مركزية متصلة.</div>`);
+    <div class="portal-note">${portalEsc(finoCentralStatusText())}</div>`);
 }
 function adminPortalBanksGrid(fn){
   const cfg=getFINOAdminConfig();
@@ -9896,6 +10476,33 @@ function startSubscriptionBadge(record,state){
       return;
     }
 
+    if(record.central){
+      const exp=Number(state.expiresAt||0);
+      if(exp>0){
+        const left=exp-Date.now();
+        if(left<=0){expireCurrentSubscription();return;}
+        const entries=state.entriesLeft;
+        remaining.textContent=`${formatRemaining(left)}${entries===null||entries===undefined?'':` • المتبقي ${entries} دخلة`}`;
+      }else{
+        remaining.textContent=state.entriesLeft===null||state.entriesLeft===undefined
+          ? 'كود مركزي • غير محدد المدة'
+          : `كود مركزي • المتبقي ${state.entriesLeft} دخلة`;
+      }
+      type.textContent=`${record.label||'اشتراك مركزي'} • FINO-Central`;
+      return;
+    }
+
+    if(record.package3){
+      const now=Date.now();
+      const left=Number(state.expiresAt||0)-now;
+      if(left<=0){expireCurrentSubscription();return;}
+      const maxEntries=Number(record.maxEntries||3);
+      const rem=Math.max(0,maxEntries-Number(state.entriesUsed||0));
+      remaining.textContent=`${formatRemaining(left)} • بقي ${rem} دخلة بعد الحالية`;
+      type.textContent='عرض يوم التأسيس • باقة الثلاث حساب';
+      return;
+    }
+
     const now=Date.now();
     const left=Number(state.expiresAt||0)-now;
 
@@ -9949,7 +10556,9 @@ function openIdentityStep(record,state){
   if(skip)skip.classList.toggle('show',!!record.free);
   if(help)help.textContent=record.free
     ? 'اسم العميل اختياري في الكود الحر؛ إذا كتبته نضيفه للحسبة والرسالة والصورة.'
-    : 'اكتب اسمك الأول عشان نخلي الحسبة والترشيح أوضح لك.';
+    : record.package3
+      ? 'اكتب اسمك الأول. باقة الثلاث حساب صالحة 15 دقيقة من أول تفعيل، وبها 3 دخولات.'
+      : 'اكتب اسمك الأول عشان نخلي الحسبة والترشيح أوضح لك.';
   setTimeout(()=>{if(name)name.focus()},120);
 }
 function finishIdentityAndEnter(){
@@ -9958,8 +10567,24 @@ function finishIdentityAndEnter(){
   pendingAccessAfterLogin=null;
   document.getElementById('identityCard')?.classList.remove('show');
 
+  if(activeAccess?.record?.central){
+    if(activeAccess.record.centralData)finoCentralStoreEntry(activeAccess.record.centralData);
+    finoCentralStartHeartbeat();
+    setTimeout(()=>finoCentralSaveCase({type:'identity',client_name:cleanClientName(clientName)||''}),50);
+  }
+
   if(activeAccess.record && activeAccess.record.free){
     showPage('freeHub');
+  }else if(activeAccess.record && activeAccess.record.central){
+    const services=activeAccess.record.centralData?.allowed_services||[];
+    if(activeAccess.record.free){
+      showPage('freeHub');
+    }else{
+      openFINOSmartPortal(services.length===1&&services[0]==='buyout');
+      if(services.length===1&&services[0]==='smart'){
+        setTimeout(()=>startFINOPortalSmart(),60);
+      }
+    }
   }else if(activeAccess.record && activeAccess.record.dynamic){
     openFINOSmartPortal(activeAccess.record.trialSmart===true);
   }else if(activeAccess.record && activeAccess.record.trialSmart){
@@ -10004,6 +10629,7 @@ async function login(){
   const error=document.getElementById('loginError');
   if(!input||!error)return;
 
+  document.getElementById('packageRenewBtn')?.classList.remove('show');
   const value=String(input.value||'').trim().toUpperCase();
   if(!value){
     error.textContent='أدخل كود الاشتراك';
@@ -10020,7 +10646,52 @@ async function login(){
     return;
   }
 
-  let record=ACCESS_CODES.find(x=>x.hash===hash);
+  const staticRecord=ACCESS_CODES.find(x=>x.hash===hash)||null;
+
+  // First: central validation. If code is present centrally, central rules are authoritative.
+  let centralAttempt=await finoCentralOpenCode(value,'');
+  if(centralAttempt.transport && centralAttempt.data && centralAttempt.data.reason!=='CODE_INVALID'){
+    if(centralAttempt.data.ok===false){
+      error.textContent=finoCentralReasonMessage(centralAttempt.data.reason);
+      error.style.display='block';
+      if(['CODE_EXPIRED','CODE_USES_FINISHED'].includes(centralAttempt.data.reason)){
+        document.getElementById('packageRenewBtn')?.classList.add('show');
+      }
+      return;
+    }
+    if(centralAttempt.data.ok===true){
+      finoCentralStoreEntry(centralAttempt.data);
+      const services=Array.isArray(centralAttempt.data.allowed_services)?centralAttempt.data.allowed_services:['buyout'];
+      const record={
+        ...(staticRecord||{}),
+        central:true,
+        label:centralAttempt.data.code_name||staticRecord?.label||'كود مركزي',
+        free:!!staticRecord?.free,
+        package3:false,
+        dynamic:true,
+        trialSmart:!staticRecord?.free && services.length===1 && services[0]==='buyout',
+        smartOnly:services.length===1 && services[0]==='smart',
+        bothServices:services.includes('buyout')&&services.includes('smart'),
+        centralData:centralAttempt.data
+      };
+      const state={
+        central:true,
+        entryToken:centralAttempt.data.entry_token,
+        expiresAt:centralAttempt.data.expires_at?Date.parse(centralAttempt.data.expires_at):0,
+        entriesLeft:centralAttempt.data.entries_left,
+        maxRestarts:Number(centralAttempt.data.max_restarts_per_entry||0)
+      };
+      setWrongAttemptCount(0);
+      error.style.display='none';
+      input.value='';
+      activeAccess={record,state};
+      startSubscriptionBadge(record,state);
+      openIdentityStep(record,state);
+      return;
+    }
+  }
+
+  let record=staticRecord;
   let dynamicRecord=null;
 
   if(!record){
@@ -10060,16 +10731,44 @@ async function login(){
 
   if(record.free){
     if(!state){
-      state={activatedAt:now,free:true};
+      state={activatedAt:now,free:true,accessHash:hash};
       setAccessState(hash,state);
     }
+  }else if(record.package3){
+    if(!state){
+      state={
+        activatedAt:now,
+        expiresAt:now+Number(record.minutes||15)*60*1000,
+        entriesUsed:0,
+        sessionRestartsUsed:0,
+        accessHash:hash
+      };
+    }
+    state.accessHash=hash;
+    if(Number(state.expiresAt||0)<=now){
+      error.textContent='انتهت مدة عرض يوم التأسيس.';
+      error.style.display='block';
+      document.getElementById('packageRenewBtn')?.classList.add('show');
+      return;
+    }
+    const maxEntries=Number(record.maxEntries||3);
+    if(Number(state.entriesUsed||0)>=maxEntries){
+      error.textContent='انتهت دخولات باقة الثلاث حساب. للتجديد اضغط على واتساب.';
+      error.style.display='block';
+      document.getElementById('packageRenewBtn')?.classList.add('show');
+      return;
+    }
+    state.entriesUsed=Number(state.entriesUsed||0)+1;
+    state.sessionRestartsUsed=0;
+    setAccessState(hash,state);
   }else if(record.dynamic && dynamicRecord){
     if(!state){
       state={
         activatedAt:now,
         expiresAt:Number(dynamicRecord.expiresAt||0),
         dynamic:true,
-        dynamicId:dynamicRecord.id
+        dynamicId:dynamicRecord.id,
+        accessHash:hash
       };
       setAccessState(hash,state);
     }
@@ -10089,7 +10788,8 @@ async function login(){
       state={
         activatedAt:now,
         expiresAt:now+durationMs,
-        durationDays:Number(record.days)
+        durationDays:Number(record.days),
+        accessHash:hash
       };
       setAccessState(hash,state);
     }
@@ -11641,6 +12341,10 @@ function handleShareToClient(){
   if(String(shareMode||'').startsWith('portal-')){
     updateFINOPortalArchivePhone(phone);
     archiveFINOPortalConversation({kind:'share',mode:shareMode,phone});
+    if(activeAccess?.record?.central){
+      finoCentralSetPhone(phone);
+      finoCentralSaveCase({type:'share',mode:shareMode,phone});
+    }
   }
 
   if(shareMode==='smart-image'){
