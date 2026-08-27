@@ -5015,6 +5015,77 @@ button{
   .portal-media-preview img{max-height:420px}
 }
 
+
+/* FINO SMART PORTAL V4 */
+#portalTopTitle.portal-warning-title{color:#b42323!important}
+#portalTopTitle.portal-warning-title:before{content:'⚠️ ';font-size:12px}
+#portalTopSub.portal-warning-sub{color:#b42323!important;font-weight:900!important}
+
+.portal-result-actions{
+  grid-template-columns:1fr!important;
+}
+.portal-result-actions .portal-option{
+  min-height:42px;display:flex;align-items:center;justify-content:flex-start;
+  gap:8px;text-align:right;padding:0 12px;font-size:7.4px
+}
+.portal-action-icon{
+  width:28px;height:28px;border-radius:8px;background:#eaf5fb;color:#075488;
+  display:inline-grid;place-items:center;font-size:14px;flex:0 0 auto
+}
+.portal-option.primary .portal-action-icon{background:rgba(255,255,255,.16);color:#fff}
+
+.portal-image-overlay{
+  position:fixed;inset:0;z-index:1000300;background:#eef3f6;
+  display:none;flex-direction:column;direction:rtl
+}
+.portal-image-overlay.show{display:flex}
+.portal-image-overlay-head{
+  min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:9px 13px;background:#fff;border-bottom:1px solid #dbe7ed
+}
+.portal-image-overlay-head b{color:#073b67;font-size:10px;font-weight:900}
+.portal-image-overlay-head button{
+  min-height:36px;border:1px solid #d5e3ea;border-radius:9px;background:#fff;
+  color:#31566c;padding:0 11px;font-size:7px;font-weight:900;cursor:pointer
+}
+.portal-image-overlay-body{
+  flex:1;min-height:0;overflow:auto;display:flex;align-items:flex-start;justify-content:center;
+  padding:12px
+}
+.portal-image-overlay-body img{
+  display:block;width:auto;height:auto;max-width:min(920px,100%);max-height:none;
+  border-radius:12px;background:#fff;box-shadow:0 12px 35px rgba(7,45,68,.12)
+}
+.portal-image-overlay-foot{
+  padding:10px;background:#fff;border-top:1px solid #dbe7ed;
+  display:grid;grid-template-columns:1fr 1fr;gap:7px
+}
+.portal-image-overlay-foot button{
+  min-height:42px;border:0;border-radius:10px;font-size:7.5px;font-weight:900;cursor:pointer
+}
+.portal-image-overlay-share{background:#128c67;color:#fff}
+.portal-image-overlay-back{background:#eef4f7;color:#31566c}
+.portal-image-overlay-note{
+  grid-column:1/-1;padding:7px 8px;border:1px solid #efcaca;border-radius:8px;background:#fff7f7;
+  color:#a12626;font-size:6.3px;line-height:1.6;font-weight:900
+}
+
+.phone-modal-card .portal-phone-warning{
+  margin:7px 0;padding:8px;border:1px solid #efcaca;border-radius:9px;background:#fff7f7;
+  color:#a12626;font-size:6.5px;line-height:1.65;font-weight:900
+}
+
+.portal-execute{
+  width:100%;min-height:40px;margin-top:8px;border:0;border-radius:9px;
+  background:#073b67;color:#fff;font-size:7.5px;font-weight:900;cursor:pointer
+}
+.portal-executed{
+  margin-top:7px;padding:8px;border:1px solid #cbe7da;border-radius:9px;background:#f2fbf7;
+  color:#137451;font-size:6.5px;font-weight:900
+}
+
+.portal-compact-card{font-family:Cairo,Arial,sans-serif}
+
 </style>
 </head>
 <body>
@@ -6459,9 +6530,42 @@ let finoPortal={
   imageRead:null,
   includeFees:false,
   feeAmount:2800,
-  clientNote:''
+  clientNote:'',
+  currentPreviewType:'',
+  currentPreviewIndex:0,
+  currentPreviewUrl:''
 };
 
+
+const FINO_PORTAL_CLIENT_DEFAULTS_KEY='FINO_PORTAL_CLIENT_DEFAULTS_V1';
+
+function loadFINOPortalClientDefaults(){
+  try{
+    const raw=localStorage.getItem(FINO_PORTAL_CLIENT_DEFAULTS_KEY);
+    if(!raw)return;
+    const x=JSON.parse(raw);
+    finoPortal.includeFees=!!x.includeFees;
+    finoPortal.feeAmount=Number.isFinite(Number(x.feeAmount))?Number(x.feeAmount):2800;
+    finoPortal.clientNote=String(x.clientNote||'');
+  }catch(e){}
+}
+function executeFINOPortalClientDefaults(){
+  if(!finoPortal.adminUnlocked)return;
+  const data={
+    includeFees:!!finoPortal.includeFees,
+    feeAmount:Number(finoPortal.feeAmount||2800),
+    clientNote:String(finoPortal.clientNote||'')
+  };
+  try{
+    localStorage.setItem(FINO_PORTAL_CLIENT_DEFAULTS_KEY,JSON.stringify(data));
+    portalAssistant('<div class="portal-executed">✅ تم التنفيذ والحفظ. ستُطبق هذه الإعدادات تلقائيًا عند فتح المنصة مرة أخرى على هذا الجهاز والمتصفح.</div>');
+  }catch(e){
+    portalAssistant('<div class="portal-alert">تعذر حفظ إعدادات العميل على هذا الجهاز.</div>');
+  }
+}
+function portalDefaultsApply(){
+  return !!(finoPortal && (finoPortal.includeFees || finoPortal.clientNote));
+}
 function portalSaudiGreeting(){
   const p=saudiDateParts();
   const h=Number(p.hour||0);
@@ -6519,8 +6623,10 @@ function openFINOSmartPortal(trial=false){
     trial:!!trial||isSmartTrialAccess(),
     mode:null,step:null,data:{},
     adminUnlocked:false,adminBankId:'',adminRateIndex:null,imageFile:null,imageRead:null,
-    includeFees:false,feeAmount:2800,clientNote:''
+    includeFees:false,feeAmount:2800,clientNote:'',
+    currentPreviewType:'',currentPreviewIndex:0,currentPreviewUrl:''
   };
+  loadFINOPortalClientDefaults();
   showPage('specialistBotPage');
   const title=document.getElementById('portalMainTitle');
   const sub=document.getElementById('portalMainSub');
@@ -6529,13 +6635,25 @@ function openFINOSmartPortal(trial=false){
   if(finoPortal.trial){
     if(title)title.textContent='المنصة الذكية';
     if(sub)sub.textContent='ترشيح أفضل عرض لشراء مديونية تمويلك الشخصي من بنكك الحالي حسب بياناتك.';
-    if(top)top.textContent='شروط الحسبة';
-    if(topSub)topSub.textContent='لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.';
+    if(top){
+      top.textContent='تنويه مهم';
+      top.classList.add('portal-warning-title');
+    }
+    if(topSub){
+      topSub.textContent='لا يوجد تمويل عقاري قائم، ولا يوجد ما يمنع إصدار خطاب تحويل المديونية.';
+      topSub.classList.add('portal-warning-sub');
+    }
   }else{
     if(title)title.textContent='المنصة الذكية';
     if(sub)sub.textContent='تحويل المديونية، التمويل الشخصي، وأدوات المختص.';
-    if(top)top.textContent='المنصة الذكية';
-    if(topSub)topSub.textContent='اختر الخدمة ونكمل معك خطوة بخطوة';
+    if(top){
+      top.textContent='المنصة الذكية';
+      top.classList.remove('portal-warning-title');
+    }
+    if(topSub){
+      topSub.textContent='اختر الخدمة ونكمل معك خطوة بخطوة';
+      topSub.classList.remove('portal-warning-sub');
+    }
   }
   resetFINOSmartPortal();
 }
@@ -6733,9 +6851,11 @@ function showFINOPortalRank(index){
     ${r.adminNote?`<div class="portal-note">📌 ${portalEsc(r.adminNote)}</div>`:''}
     ${renderFINOPortalExpertShareControls()}
     <div class="portal-result-actions">
-      <button type="button" class="portal-option primary" onclick="portalPreviewDetailedImage(${index})">عرض بطاقة تفاصيل التمويل كاملة</button>
-      <button type="button" class="portal-option" onclick="portalPreviewCompactImage(${index})">عرض البطاقة المختصرة للحسبة</button>
-      <button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})">إرسال نص عبر واتساب</button>
+      <button type="button" class="portal-option primary" onclick="portalPreviewDetailedImage(${index})"><span class="portal-action-icon">📄</span><span>عرض بطاقة تفاصيل التمويل كاملة</span></button>
+      <button type="button" class="portal-option" onclick="portalShareDetailedImage(${index})"><span class="portal-action-icon">📲</span><span>مشاركة بطاقة التفاصيل كاملة عبر واتساب</span></button>
+      <button type="button" class="portal-option" onclick="portalPreviewCompactImage(${index})"><span class="portal-action-icon">🧾</span><span>عرض البطاقة المختصرة للحسبة</span></button>
+      <button type="button" class="portal-option" onclick="portalShareCompactImage(${index})"><span class="portal-action-icon">📲</span><span>مشاركة البطاقة المختصرة عبر واتساب</span></button>
+      <button type="button" class="portal-option" onclick="portalShareBuyoutText(${index})"><span class="portal-action-icon">💬</span><span>إرسال تفاصيل الحسبة كاملة كنص</span></button>
     </div>
   </div>`);
 }
@@ -6784,7 +6904,7 @@ function prepareFINOPortalShare(i){
     Number(finoPortal.data.external||0),
     latestResults
   );
-  if(!finoPortal.trial&&finoPortal.adminUnlocked){
+  {
     const toggle=document.getElementById('includeFeesToggle');
     const amount=document.getElementById('serviceFeesAmount');
     const note=document.getElementById('clientCustomNote');
@@ -6796,34 +6916,44 @@ function prepareFINOPortalShare(i){
   }
 }
 
+
 async function blobToFINOPortalObjectUrl(blob){
   return URL.createObjectURL(blob);
 }
-function portalMediaCardHtml(title,url,shareFn,index,helpText){
-  return `<div class="portal-media-card">
-    <b>${portalEsc(title)}</b>
-    <div class="portal-media-preview"><img src="${url}" alt="${portalEsc(title)}"></div>
-    <div class="portal-options">
-      <button type="button" class="portal-option primary" onclick="${shareFn}(${index})">مشاركة عبر واتساب</button>
-    </div>
-    <div class="portal-media-help">${portalEsc(helpText)}</div>
-  </div>`;
+function openFINOPortalImageOverlay(title,url,type,index){
+  finoPortal.currentPreviewType=type;
+  finoPortal.currentPreviewIndex=Number(index||0);
+  finoPortal.currentPreviewUrl=url||'';
+  const overlay=document.getElementById('portalImageOverlay');
+  const img=document.getElementById('portalImageOverlayImg');
+  const ttl=document.getElementById('portalImageOverlayTitle');
+  const note=document.getElementById('portalImageOverlayNote');
+  if(ttl)ttl.textContent=title;
+  if(img)img.src=url;
+  if(note){
+    const n=cleanClientName(clientName);
+    note.textContent=`⚠️ ${n?`يا ${n}، `:''}إذا فتح واتساب بعد نسخ الصورة، افتح محادثة العميل واضغط لصق ثم إرسال.`;
+  }
+  overlay?.classList.add('show');
+}
+function closeFINOPortalImageOverlay(){
+  document.getElementById('portalImageOverlay')?.classList.remove('show');
+}
+function shareCurrentFINOPortalPreview(){
+  const i=Number(finoPortal.currentPreviewIndex||0);
+  const type=finoPortal.currentPreviewType;
+  closeFINOPortalImageOverlay();
+  if(type==='detail')portalShareDetailedImage(i);
+  else portalShareCompactImage(i);
 }
 async function portalPreviewDetailedImage(i){
   prepareFINOPortalShare(i);
-  portalAssistant('جاري تجهيز بطاقة التفاصيل كاملة…');
   try{
     const blob=await createDetailedResultPngBlob();
     const url=await blobToFINOPortalObjectUrl(blob);
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
-    portalAssistant(portalMediaCardHtml(
-      'بطاقة تفاصيل التمويل كاملة',
-      url,
-      'portalShareDetailedImage',
-      i,
-      'عند الضغط على مشاركة عبر واتساب سيُطلب رقم العميل. إذا فتح واتساب بعد نسخ الصورة، ادخل محادثة العميل واضغط لصق ثم إرسال.'
-    ));
+    openFINOPortalImageOverlay('بطاقة تفاصيل التمويل كاملة',url,'detail',i);
   }catch(e){
     console.error('FINO portal detailed preview',e);
     portalAssistant('<div class="portal-alert">تعذر تجهيز بطاقة التفاصيل حاليًا.</div>');
@@ -6831,19 +6961,12 @@ async function portalPreviewDetailedImage(i){
 }
 async function portalPreviewCompactImage(i){
   prepareFINOPortalShare(i);
-  portalAssistant('جاري تجهيز البطاقة المختصرة…');
   try{
     const blob=await createFINOPortalCompactPngBlob();
     const url=await blobToFINOPortalObjectUrl(blob);
     window.__FINO_PORTAL_PREVIEW_URLS=window.__FINO_PORTAL_PREVIEW_URLS||[];
     window.__FINO_PORTAL_PREVIEW_URLS.push(url);
-    portalAssistant(portalMediaCardHtml(
-      'البطاقة المختصرة للحسبة',
-      url,
-      'portalShareCompactImage',
-      i,
-      'عند الضغط على مشاركة عبر واتساب سيُطلب رقم العميل. إذا فتح واتساب بعد نسخ الصورة، ادخل محادثة العميل واضغط لصق ثم إرسال.'
-    ));
+    openFINOPortalImageOverlay('البطاقة المختصرة للحسبة',url,'compact',i);
   }catch(e){
     console.error('FINO portal compact preview',e);
     portalAssistant('<div class="portal-alert">تعذر تجهيز البطاقة المختصرة حاليًا.</div>');
@@ -6851,11 +6974,11 @@ async function portalPreviewCompactImage(i){
 }
 function portalShareBuyoutText(i){
   prepareFINOPortalShare(i);
-  shareWhats();
+  openSharePhone('portal-text');
 }
 function portalShareDetailedImage(i){
   prepareFINOPortalShare(i);
-  shareDetailedResultImage();
+  openSharePhone('portal-detail');
 }
 function portalShareCompactImage(i){
   prepareFINOPortalShare(i);
@@ -6877,8 +7000,10 @@ async function createFINOPortalCompactPngBlob(){
   ctx.fillStyle='#718694';ctx.font='700 18px Arial,sans-serif';ctx.fillText(`${saudiGregorianDate()} | ${saudiHijriDate()}`,1010,102);
   ctx.strokeStyle='#e1ebf2';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(70,130);ctx.lineTo(1010,130);ctx.stroke();
 
+  ctx.fillStyle='#0b78b7';ctx.font='800 15px Cairo,Arial,sans-serif';
+  ctx.fillText('بطاقة حسبة مختصرة',1010,153);
   ctx.fillStyle='#073b67';ctx.font='900 31px Cairo,Arial,sans-serif';
-  ctx.fillText('ترشيح شراء مديونية التمويل الشخصي',1010,185);
+  ctx.fillText('ترشيح شراء مديونية التمويل الشخصي',1010,190);
 
   canvasRoundRect(ctx,70,215,940,125,20,'#fff','#dce8f0');
   const bank=BANKS.find(x=>x.id===best.key);
@@ -7097,7 +7222,8 @@ function showFINOPortalShareSettings(){
         <textarea onchange="setFINOPortalClientNote(this.value)" placeholder="اختياري">${portalEsc(finoPortal.clientNote||'')}</textarea>
       </div>
     </div>
-    ${portalOptions([{label:'تم',primary:true,onclick:"showFINOPortalAdminMenu()"}])}
+    <button type="button" class="portal-execute" onclick="executeFINOPortalClientDefaults()">تنفيذ وحفظ الإعدادات</button>
+    ${portalOptions([{label:'رجوع لقائمة المختص',onclick:"showFINOPortalAdminMenu()"}])}
   </div>`);
 }
 function startFINOPortalRateEdit(){
@@ -7132,7 +7258,7 @@ function saveFINOPortalSingleRate(rate){
   const oldRate=r.rate;
   r.rate=Number(rate);
   saveFINOAdminConfig(cfg);
-  portalAssistant(`تم ✅ تغيرت النسبة من ${oldRate}% إلى ${rate}% لبنك ${portalEsc(b.name)}.`);
+  portalAssistant(`تم التنفيذ ✅ تغيرت النسبة من ${oldRate}% إلى ${rate}% لبنك ${portalEsc(b.name)}، وتم حفظها على هذا الجهاز.`);
   showFINOPortalAdminMenu();
 }
 function startFINOPortalImageEdit(){
@@ -7193,7 +7319,7 @@ function confirmFINOPortalImageRates(){
   b.tables.general=cloneAdminValue(x.rows);
   b.buyoutEnabled=true;
   saveFINOAdminConfig(cfg);
-  portalAssistant(`تم تحديث شرائح ${portalEsc(b.name)} ✅ وأخذنا نسخة احتياطية قبل الحفظ.`);
+  portalAssistant(`تم التنفيذ ✅ تم تحديث شرائح ${portalEsc(b.name)} وأخذ نسخة احتياطية قبل الحفظ.`);
   showFINOPortalAdminMenu();
 }
 function startFINOPortalAddBank(){
@@ -7214,7 +7340,7 @@ function createFINOPortalNewBank(){
   };
   saveFINOAdminConfig(cfg);
   finoAdminEditingBankId=id;
-  portalAssistant(`تمت إضافة ${portalEsc(finoPortal.data.newBankName)}. افتح لوحة المختص لإضافة الشعار والشرائح والتفاصيل.${portalOptions([{label:'فتح البنك في لوحة المختص',primary:true,onclick:"openFINOPortalFullAdmin()"}])}`);
+  portalAssistant(`تم التنفيذ ✅ تمت إضافة ${portalEsc(finoPortal.data.newBankName)}. افتح لوحة المختص لإضافة الشعار والشرائح والتفاصيل.${portalOptions([{label:'فتح البنك في لوحة المختص',primary:true,onclick:"openFINOPortalFullAdmin()"}])}`);
 }
 function startFINOPortalEnableBank(){
   portalAssistant(`اختر البنك اللي تبي تراجع تفعيله وإعداداته.${adminPortalBanksGrid("chooseFINOPortalEnableBank")}`);
@@ -7230,7 +7356,7 @@ function chooseFINOPortalEnableBank(id){
 function toggleFINOPortalBankEnabled(){
   const cfg=getFINOAdminConfig();const b=cfg.banks?.[finoPortal.adminBankId];if(!b)return;
   b.buyoutEnabled=!b.buyoutEnabled;saveFINOAdminConfig(cfg);
-  portalAssistant(`تم ${b.buyoutEnabled?'تفعيل':'إيقاف'} ${portalEsc(b.name)}.`);
+  portalAssistant(`تم التنفيذ ✅ ${b.buyoutEnabled?'تم تفعيل':'تم إيقاف'} ${portalEsc(b.name)}.`);
   showFINOPortalAdminMenu();
 }
 function openFINOPortalFullAdmin(){
@@ -10445,11 +10571,18 @@ function validateFeesBeforeShare(){
 }
 
 function includeServiceFees(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive && typeof finoPortal!=='undefined' && finoPortal.includeFees)return true;
   const isFree=!!(activeAccess && activeAccess.record && activeAccess.record.free);
   const toggle=document.getElementById('includeFeesToggle');
   return !!(isFree && toggle && toggle.checked);
 }
 function serviceFeesAmount(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive && typeof finoPortal!=='undefined' && finoPortal.includeFees){
+    const pv=Number(finoPortal.feeAmount||2800);
+    if(Number.isFinite(pv)&&pv>=0)return pv;
+  }
   const el=document.getElementById('serviceFeesAmount');
   const value=Number(el?el.value:2800);
   return Number.isFinite(value)&&value>=0 ? value : 2800;
@@ -10483,6 +10616,8 @@ function serviceFeesWhatsappBlock(){
 }
 
 function getClientCustomNote(){
+  const portalActive=!!document.getElementById('specialistBotPage')?.classList.contains('active');
+  if(portalActive && typeof finoPortal!=='undefined' && finoPortal.clientNote)return String(finoPortal.clientNote||'').trim();
   const isFree=!!(activeAccess && activeAccess.record && activeAccess.record.free);
   if(!isFree)return '';
   const el=document.getElementById('clientCustomNote');
@@ -10586,18 +10721,39 @@ function openSharePhone(mode){
   const desc=document.querySelector('#phoneModal .phone-modal-card p');
   const note=document.getElementById('shareModeNote');
 
+  const isPortalMode=String(mode||'').startsWith('portal-');
+  const portalName=(typeof clientName!=='undefined'?cleanClientName(clientName):'');
   if(title){
-    title.textContent=(mode==='image'||mode==='smart-image')
-      ? '🖼️ مشاركة الصورة المختصرة'
-      : (mode==='detail'||mode==='smart-detail')
-        ? '🧾 مشاركة بطاقة تفاصيل التمويل'
-        : '📱 إرسال الحسبة عبر واتساب';
+    title.textContent=mode==='portal-detail'
+      ? '📄 مشاركة بطاقة تفاصيل التمويل كاملة'
+      : mode==='portal-compact'
+        ? '🧾 مشاركة البطاقة المختصرة للحسبة'
+        : mode==='portal-text'
+          ? '💬 إرسال تفاصيل الحسبة كاملة كنص'
+          : (mode==='image'||mode==='smart-image')
+            ? '🖼️ مشاركة الصورة المختصرة'
+            : (mode==='detail'||mode==='smart-detail')
+              ? '🧾 مشاركة بطاقة تفاصيل التمويل'
+              : '📱 إرسال الحسبة عبر واتساب';
   }
-  if(desc)desc.textContent='أدخل رقم جوال العميل أولاً.';
+  if(desc){
+    desc.textContent=isPortalMode
+      ? `${portalName?`أدخل رقم جوالك يا ${portalName}`:'أدخل رقم الجوال'}`
+      : 'أدخل رقم جوال العميل أولاً.';
+  }
   if(note){
-    note.textContent=(mode==='text'||mode==='smart-text')
-      ? 'سيتم فتح محادثة واتساب للرقم المدخل بالرسالة الجاهزة.'
-      : 'سيتم تجهيز ملف PNG للحسبة، ثم يمكنك مشاركته للعميل أو فتح محادثته مباشرة.';
+    note.textContent=(mode==='text'||mode==='smart-text'||mode==='portal-text')
+      ? 'سيتم فتح محادثة واتساب للرقم المدخل بالتفاصيل الجاهزة.'
+      : isPortalMode
+        ? 'سيتم نسخ بطاقة الحسبة أولًا ثم فتح واتساب على الرقم المدخل.'
+        : 'سيتم تجهيز ملف PNG للحسبة، ثم يمكنك مشاركته للعميل أو فتح محادثته مباشرة.';
+  }
+  const portalWarn=document.getElementById('portalPhoneWarning');
+  if(portalWarn){
+    portalWarn.style.display=isPortalMode?'block':'none';
+    portalWarn.textContent=isPortalMode
+      ? `⚠️ ${portalName?`يا ${portalName}، `:''}إذا دخلت محادثة واتساب بعد نسخ الصورة اضغط لصق ثم إرسال.`
+      : '';
   }
 
   document.getElementById('clientPhoneError').textContent='';
@@ -10712,9 +10868,14 @@ function handleShareToClient(){
     const msg=buildSmartWhatsAppMessage();
     closePhoneModal();
     openWhatsappToClient(phone,msg);
+  }else if(shareMode==='portal-detail'){
+    closePhoneModal();
+    shareDetailedResultImageDirect(phone);
   }else if(shareMode==='portal-compact'){
     closePhoneModal();
     shareFINOPortalCompactImageDirect(phone);
+  }else if(shareMode==='portal-text'){
+    sendWhatsToClient();
   }else if(shareMode==='image'){
     closePhoneModal();
     shareResultImageDirect(phone);
@@ -12092,10 +12253,28 @@ document.getElementById('password')?.addEventListener('keydown',e=>{
 </div>
 <div class="admin-toast" id="adminToast"></div>
 
+
+<div class="portal-image-overlay" id="portalImageOverlay">
+  <div class="portal-image-overlay-head">
+    <b id="portalImageOverlayTitle">بطاقة التمويل</b>
+    <button type="button" onclick="closeFINOPortalImageOverlay()">الرجوع إلى المحادثة</button>
+  </div>
+  <div class="portal-image-overlay-body">
+    <img id="portalImageOverlayImg" alt="بطاقة التمويل">
+  </div>
+  <div class="portal-image-overlay-foot">
+    <button class="portal-image-overlay-share" type="button" onclick="shareCurrentFINOPortalPreview()">📲 مشاركة عبر واتساب</button>
+    <button class="portal-image-overlay-back" type="button" onclick="closeFINOPortalImageOverlay()">↩ الرجوع إلى المحادثة</button>
+    <div class="portal-image-overlay-note" id="portalImageOverlayNote">
+      عند فتح واتساب بعد نسخ الصورة، افتح محادثة العميل واضغط لصق ثم إرسال.
+    </div>
+  </div>
+</div>
+
 <div class="phone-modal" id="phoneModal">
   <div class="phone-modal-card">
     <h3>📱 إرسال الحسبة عبر واتساب</h3>
-    <p>أدخل رقم جوال العميل أولاً.</p><div class="mode-note" id="shareModeNote"></div>
+    <p>أدخل رقم جوال العميل أولاً.</p><div class="mode-note" id="shareModeNote"></div><div class="portal-phone-warning" id="portalPhoneWarning" style="display:none"></div>
     <div class="free-share-name" id="freeShareNameWrap">
       <label for="freeShareClientName">اسم العميل (اختياري للكود الحر)</label>
       <input id="freeShareClientName" type="text" maxlength="40" placeholder="اكتب اسم العميل إذا رغبت">
