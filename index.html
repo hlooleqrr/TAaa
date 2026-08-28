@@ -5442,167 +5442,6 @@ button{
 .portal-adjust-options button{border:1px solid #d3e1e8;background:#fff;border-radius:8px;padding:8px;font:900 7px Cairo,Arial,sans-serif;color:#2d5268}
 @media(max-width:600px){.portal-code-admin-toolbar,.portal-adjust-options{grid-template-columns:1fr}}
 
-
-/* =========================================================
-   FINO V20 — exterior + owner workspace + print studio
-========================================================= */
-:root{--finium-ink:#0b2940;--finium-blue:#0d6d9f;--finium-soft:#eef7fb;--finium-line:#d8e7ee;--finium-card:rgba(255,255,255,.90)}
-#page1{min-height:100vh;background:#eef5f9;overflow:hidden;position:relative}
-#page1 .viewport{min-height:100vh;max-width:none!important;width:100%;padding:0!important;background:transparent!important;position:relative;display:flex;align-items:center;justify-content:center}
-.finium-sky{position:absolute;inset:0;overflow:hidden;background:linear-gradient(145deg,#edf8ff,#f8fbfd 58%,#e6f2f7);transition:background .8s ease}
-.finium-sky:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 75% 22%,rgba(255,255,255,.88),transparent 24%),radial-gradient(circle at 20% 82%,rgba(76,164,207,.13),transparent 25%);animation:finiumDrift 18s ease-in-out infinite alternate}
-.finium-sky.night{background:linear-gradient(160deg,#061426 0%,#0c2942 52%,#133c57 100%)}
-.finium-sky.rain{background:linear-gradient(155deg,#dce9ef,#eff5f7 50%,#d3e2e9)}
-.finium-sky.cloud{background:linear-gradient(155deg,#e4eef2,#f7fafb 50%,#dbe7ec)}
-.finium-orb{position:absolute;width:130px;height:130px;border-radius:50%;top:8%;right:9%;background:radial-gradient(circle at 34% 34%,#fffde7,#ffd778 46%,#f2b93c 70%,rgba(255,206,91,.08));box-shadow:0 0 70px rgba(255,198,65,.38);transition:.8s}
-.night .finium-orb{width:90px;height:90px;background:radial-gradient(circle at 35% 35%,#fff,#e9f2ff 56%,#b9c9db 100%);box-shadow:0 0 55px rgba(220,235,255,.22)}
-.finium-stars{display:none;position:absolute;inset:0;background-image:radial-gradient(circle,#fff 1px,transparent 1.6px),radial-gradient(circle,#cceaff .8px,transparent 1.4px);background-size:73px 73px,109px 109px;background-position:10px 20px,45px 67px;opacity:.48}.night .finium-stars{display:block}
-.finium-cloud{position:absolute;width:190px;height:62px;background:rgba(255,255,255,.72);filter:blur(.3px);border-radius:999px;box-shadow:0 12px 35px rgba(66,112,139,.12);animation:finiumCloud 22s linear infinite}
-.finium-cloud:before,.finium-cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}.finium-cloud:before{width:82px;height:82px;right:28px;top:-34px}.finium-cloud:after{width:64px;height:64px;left:35px;top:-22px}.finium-cloud.c1{top:25%;left:-200px}.finium-cloud.c2{top:68%;left:-280px;animation-delay:-10s;opacity:.55;transform:scale(.72)}
-.finium-rain{display:none;position:absolute;inset:0;background-image:linear-gradient(115deg,transparent 48%,rgba(92,143,169,.28) 49%,rgba(92,143,169,.28) 51%,transparent 52%);background-size:28px 80px;animation:finiumRain .8s linear infinite}.rain .finium-rain{display:block}
-@keyframes finiumCloud{to{transform:translateX(calc(100vw + 500px))}}@keyframes finiumRain{to{background-position:0 80px}}@keyframes finiumDrift{to{transform:translate3d(2%,-2%,0) scale(1.03)}}
-.finium-entry{position:relative;z-index:5;width:min(92vw,520px);padding:24px;border:1px solid rgba(255,255,255,.65);border-radius:34px;background:rgba(255,255,255,.76);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 35px 90px rgba(31,78,104,.18);text-align:center}
-.night~.finium-entry,.night .finium-entry{background:rgba(7,28,46,.72);color:#fff;border-color:rgba(255,255,255,.12)}
-.finium-logo-row{display:flex;align-items:center;justify-content:center;gap:10px}.finium-logo-mark{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,#0b6b9e,#123b58);color:#fff;font:1000 26px Arial;box-shadow:0 10px 28px rgba(12,95,141,.23)}
-.finium-brand-code{font:1000 clamp(30px,8vw,48px) Arial;letter-spacing:5px;color:var(--finium-ink);direction:ltr}.night .finium-brand-code{color:#fff}
-.finium-platform-ar{margin:19px 0 2px;font:1000 clamp(18px,5vw,25px) Cairo,Arial;color:#153f58}.night .finium-platform-ar{color:#f4fbff}.finium-platform-en{font:800 11px Arial;letter-spacing:2.2px;color:#7590a0;text-transform:uppercase}.night .finium-platform-en{color:#a8c5d4}
-.finium-status-line{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:18px 0}.finium-chip{padding:7px 10px;border-radius:999px;background:rgba(242,249,252,.9);border:1px solid #dceaf0;font:800 7px Cairo;color:#365b70}.night .finium-chip{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.1);color:#dcecf4}
-.finium-entry label{display:block;text-align:right;font:900 9px Cairo;color:#274d64;margin:8px 3px}.night .finium-entry label{color:#d7eaf4}.finium-entry input{width:100%;box-sizing:border-box;padding:15px;border-radius:15px;border:1.5px solid #d2e3eb;background:#fff;font:900 14px Arial;text-align:center;letter-spacing:2px;color:#173e56;outline:none}.finium-entry input:focus{border-color:#1782b4;box-shadow:0 0 0 4px rgba(23,130,180,.09)}
-.finium-entry-btn{width:100%;margin-top:10px;border:0;border-radius:15px;padding:14px;background:linear-gradient(135deg,#0a6f9f,#0a5079);color:#fff;font:1000 10px Cairo;box-shadow:0 12px 28px rgba(9,99,148,.24)}
-.finium-entry .error{margin-top:8px}
-.finium-date-strip{margin-top:16px;display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:7px}.finium-date-box{padding:9px 6px;border-radius:13px;background:rgba(247,251,253,.9);border:1px solid #e0ecf1}.finium-date-box small{display:block;font:700 6px Cairo;color:#8296a2}.finium-date-box b{display:block;margin-top:2px;font:900 7.5px Cairo;color:#234b62}.night .finium-date-box{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.09)}.night .finium-date-box b{color:#fff}.night .finium-date-box small{color:#9eb7c5}
-.finium-weather-label{margin-top:8px;font:800 6.6px Cairo;color:#77909e}.night .finium-weather-label{color:#9bb7c7}
-
-/* Owner workspace */
-#ownerHub{background:linear-gradient(160deg,#f4f9fc,#eef5f8)}#ownerHub .viewport{max-width:1180px!important;padding:18px!important;background:transparent!important}
-.owner-shell{padding:6px 0 40px}.owner-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.owner-title b{font:1000 22px Cairo;color:#123f58}.owner-title small{display:block;font:800 7px Cairo;color:#748d9a;margin-top:3px}.owner-exit{border:1px solid #d4e3ea;background:#fff;border-radius:12px;padding:9px 12px;font:900 7px Cairo;color:#385c70}
-.owner-hero{padding:20px;border-radius:24px;background:linear-gradient(135deg,#0b597f,#0a789f);color:#fff;box-shadow:0 22px 55px rgba(12,92,128,.19);margin-bottom:16px}.owner-hero small{font:700 7px Cairo;opacity:.8}.owner-hero h1{margin:5px 0 3px;font:1000 23px Cairo}.owner-hero p{margin:0;font:700 8px/1.8 Cairo;opacity:.9}
-.owner-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.owner-tile{min-height:130px;text-align:right;border:1px solid #dbe8ee;background:rgba(255,255,255,.93);border-radius:19px;padding:15px;box-shadow:0 10px 28px rgba(44,88,111,.07);cursor:pointer;transition:.18s}.owner-tile:hover{transform:translateY(-2px);box-shadow:0 16px 35px rgba(44,88,111,.11)}.owner-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#edf7fb;font-size:18px;margin-bottom:12px}.owner-tile b{display:block;font:1000 10px Cairo;color:#173f57}.owner-tile small{display:block;margin-top:5px;font:700 6.5px/1.65 Cairo;color:#768d99}.owner-tile.primary{background:linear-gradient(145deg,#fff,#eefaff);border-color:#c4e2ee}.owner-tile.warn .owner-icon{background:#fff6e8}
-.owner-section-title{margin:20px 2px 9px;font:1000 10px Cairo;color:#274e64}
-.owner-platform-card{margin-top:13px;padding:15px;border:1px solid #d8e7ed;border-radius:18px;background:#fff}.owner-platform-card h3{margin:0 0 3px;font:1000 11px Cairo;color:#153f58}.owner-platform-card p{margin:0 0 10px;font:700 6.8px/1.7 Cairo;color:#7b919d}.owner-settings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.owner-field label{display:block;font:900 7px Cairo;color:#375a6e;margin-bottom:4px}.owner-field input,.owner-field select,.owner-field textarea{width:100%;box-sizing:border-box;border:1px solid #d1e2e9;border-radius:10px;padding:9px;font:800 8px Cairo;background:#fbfdfe;color:#1e485f}.owner-save{border:0;border-radius:11px;padding:11px 14px;background:#0b709e;color:#fff;font:1000 8px Cairo;margin-top:9px}.owner-save.secondary{background:#fff;color:#27556d;border:1px solid #cfe0e8;margin-right:6px}
-
-/* Print studio */
-#printStudio{background:#f3f8fb}#printStudio .viewport{max-width:1080px!important;padding:18px!important;background:transparent!important}.print-layout{display:grid;grid-template-columns:380px 1fr;gap:16px;align-items:start}.print-controls,.print-preview-wrap{border:1px solid #d9e7ed;border-radius:20px;background:#fff;padding:16px}.print-controls h2,.print-preview-wrap h2{margin:0 0 10px;font:1000 14px Cairo;color:#153f58}.print-field{margin-bottom:8px}.print-field label{display:block;font:900 7px Cairo;color:#3e5f71;margin-bottom:4px}.print-field input,.print-field textarea,.print-field select{width:100%;box-sizing:border-box;border:1px solid #d2e2e9;border-radius:10px;padding:9px;font:800 8px Cairo}.print-field textarea{min-height:105px;resize:vertical}.print-check{display:flex;gap:8px;align-items:center;padding:7px 0;font:800 7px Cairo;color:#466779}.print-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.print-actions button{border:0;border-radius:10px;padding:10px;font:900 7px Cairo;background:#0b709e;color:#fff}.print-actions button.alt{background:#eef6fa;color:#2b5870;border:1px solid #d2e3eb}.print-paper{width:min(100%,700px);margin:auto;aspect-ratio:1/1.414;background:#fff;border:1px solid #e1e8ec;box-shadow:0 20px 55px rgba(35,67,84,.12);padding:42px;box-sizing:border-box;position:relative;overflow:hidden}.print-paper h1{margin:0 0 10px;font:1000 23px Cairo;color:#173e55}.print-paper .company{font:900 9px Cairo;color:#0a719f;margin-bottom:20px}.print-paper .date{position:absolute;top:42px;left:42px;font:800 7px Cairo;color:#728996}.print-paper .body{white-space:pre-wrap;font:800 10px/2 Cairo;color:#263f4d}.print-paper .note{margin-top:20px;padding:12px;border-right:4px solid #b14545;background:#fff7f7;font:800 8px/1.8 Cairo;color:#843333}.print-paper .link{position:absolute;bottom:42px;right:42px;left:42px;border-top:1px solid #e2eaee;padding-top:10px;font:700 7px Cairo;color:#587383;direction:ltr;text-align:left}
-@media(max-width:850px){.owner-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.owner-settings-grid{grid-template-columns:1fr}.print-layout{grid-template-columns:1fr}.print-paper{padding:28px}.print-paper .date{top:28px;left:28px}.print-paper .link{bottom:28px;right:28px;left:28px}}
-@media(max-width:480px){.owner-grid{grid-template-columns:1fr}.finium-entry{padding:19px;border-radius:25px}.finium-date-strip{grid-template-columns:1fr 1fr}.finium-date-box:first-child{grid-column:1/-1}}
-@media print{body *{visibility:hidden!important}#finiumPrintPaper,#finiumPrintPaper *{visibility:visible!important}#finiumPrintPaper{position:absolute;inset:0;width:100%!important;height:auto!important;aspect-ratio:auto!important;border:0!important;box-shadow:none!important}}
-
-
-/* ==========================================================
-   FINO V21 — BROADCAST / LIVE MODE
-   ========================================================== */
-.broadcast-gateway{
-  min-height:100vh;display:none;align-items:center;justify-content:center;
-  padding:24px;background:
-    radial-gradient(circle at 20% 15%,rgba(86,164,214,.14),transparent 30%),
-    radial-gradient(circle at 85% 80%,rgba(46,120,170,.10),transparent 30%),
-    linear-gradient(160deg,#f8fbfd 0%,#eef5f8 52%,#f9fbfc 100%);
-}
-.broadcast-gateway.active{display:flex}
-.broadcast-gateway-card{width:min(920px,94vw);text-align:center}
-.broadcast-gateway-title{font:1000 clamp(28px,5vw,54px) Cairo,Arial,sans-serif;color:#123f58;line-height:1.25}
-.broadcast-gateway-sub{font:800 clamp(14px,2.3vw,22px) Cairo,Arial,sans-serif;color:#6c8797;margin-top:8px}
-.broadcast-gateway-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
-.broadcast-gateway-btn{
-  min-height:170px;border:1px solid #d4e3ea;border-radius:24px;background:#fff;
-  box-shadow:0 16px 40px rgba(27,74,102,.10);padding:26px;cursor:pointer;
-  font:1000 clamp(24px,4vw,42px) Cairo,Arial,sans-serif;color:#16445e;
-}
-.broadcast-gateway-btn small{display:block;font:800 clamp(11px,1.6vw,16px) Cairo,Arial,sans-serif;color:#7b929f;margin-top:8px}
-.broadcast-gateway-btn.primary{background:linear-gradient(135deg,#0c5378,#0b709e);color:#fff}
-.broadcast-gateway-btn.primary small{color:#e9f5fb}
-.broadcast-shell{
-  min-height:100vh;display:none;background:
-    radial-gradient(circle at 15% 10%,rgba(255,255,255,.95),transparent 28%),
-    linear-gradient(145deg,#f8fbfd,#eef5f8 55%,#f8fbfd);
-  color:#173f57;padding:18px 18px 48px;
-}
-.broadcast-shell.active{display:block}
-.broadcast-top{
-  max-width:1220px;margin:0 auto 16px;padding:18px 22px;border-radius:24px;
-  background:rgba(255,255,255,.92);box-shadow:0 12px 32px rgba(27,74,102,.08);
-  border:1px solid #dce9ee;text-align:center;
-}
-.broadcast-greeting{font:1000 clamp(26px,5vw,56px) Cairo,Arial,sans-serif;color:#103f5a;line-height:1.2}
-.broadcast-clock{margin-top:7px;font:900 clamp(11px,1.8vw,18px) Cairo,Arial,sans-serif;color:#73909f}
-.broadcast-main{max-width:1220px;margin:0 auto}
-.broadcast-home-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.broadcast-home-card{
-  min-height:220px;border:1px solid #d4e5ec;border-radius:24px;background:#fff;
-  box-shadow:0 14px 34px rgba(31,82,111,.08);display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:10px;padding:24px;cursor:pointer;text-align:center;
-}
-.broadcast-home-card b{font:1000 clamp(24px,4vw,44px) Cairo,Arial,sans-serif;color:#123f58}
-.broadcast-home-card span{font:800 clamp(11px,1.7vw,17px) Cairo,Arial,sans-serif;color:#77909f}
-.broadcast-home-card .emoji{font-size:clamp(38px,6vw,70px)}
-.broadcast-panel{
-  display:none;background:#fff;border:1px solid #d9e7ed;border-radius:24px;
-  padding:18px;box-shadow:0 12px 34px rgba(31,82,111,.07)
-}
-.broadcast-panel.active{display:block}
-.broadcast-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-.broadcast-panel-head h2{margin:0;font:1000 clamp(24px,3.6vw,42px) Cairo,Arial,sans-serif;color:#123f58}
-.broadcast-back{
-  border:1px solid #d3e3ea;background:#fff;border-radius:12px;padding:10px 14px;
-  font:900 13px Cairo,Arial,sans-serif;color:#25536d
-}
-.broadcast-chat{
-  min-height:520px;border-radius:20px;background:#f8fbfc;border:1px solid #e0ebef;padding:16px;
-  overflow:auto
-}
-.broadcast-msg{
-  width:min(900px,94%);margin:12px auto;padding:18px 22px;border-radius:18px;
-  font:900 clamp(18px,2.7vw,30px) Cairo,Arial,sans-serif;line-height:1.75;color:#1a475e;
-  background:#fff;border:1px solid #dbe8ed;box-shadow:0 8px 22px rgba(29,76,102,.06)
-}
-.broadcast-msg.user{background:#0c5f88;color:#fff;border-color:#0c5f88}
-.broadcast-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
-.broadcast-option{
-  border:1px solid #cfe0e8;background:#fff;border-radius:14px;padding:16px;
-  font:1000 clamp(17px,2.3vw,26px) Cairo,Arial,sans-serif;color:#194960
-}
-.broadcast-option.primary{background:#0c5f88;color:#fff;border-color:#0c5f88}
-.broadcast-input-wrap{
-  display:flex;gap:10px;margin-top:14px;align-items:stretch
-}
-.broadcast-input{
-  flex:1;border:2px solid #cfe0e8;border-radius:14px;padding:16px 18px;
-  font:900 clamp(18px,2.4vw,28px) Cairo,Arial,sans-serif;color:#173f57;background:#fff
-}
-.broadcast-send{
-  min-width:120px;border:0;border-radius:14px;background:#0c5f88;color:#fff;
-  font:1000 clamp(16px,2vw,24px) Cairo,Arial,sans-serif;padding:14px 18px
-}
-.broadcast-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
-.broadcast-result-card{
-  position:relative;border:1px solid #d3e4eb;border-radius:20px;background:#fff;padding:18px;
-  box-shadow:0 10px 26px rgba(27,77,105,.07)
-}
-.broadcast-result-card h3{font:1000 clamp(20px,2.4vw,30px) Cairo,Arial,sans-serif;color:#123f58;margin:0 0 8px}
-.broadcast-result-card .cash{font:1000 clamp(26px,3.4vw,40px) Cairo,Arial,sans-serif;color:#0c6b98;margin:8px 0}
-.broadcast-result-card .row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed #e4edf1;font:900 15px Cairo,Arial,sans-serif;color:#496a7c}
-.broadcast-result-card .row:last-child{border-bottom:0}
-.broadcast-expiry{
-  display:inline-block;margin-bottom:9px;padding:7px 10px;border-radius:999px;
-  background:#fff4f4;border:1px solid #efc7c7;color:#a12e2e;font:1000 13px Cairo,Arial,sans-serif
-}
-.broadcast-expiry.ok{background:#f3fbf6;border-color:#cbe6d5;color:#2d744f}
-.broadcast-expiry.warn{background:#fff8e9;border-color:#ecd9a8;color:#83611f}
-.broadcast-note{
-  margin-top:10px;padding:10px 12px;border-radius:12px;background:#f6fafc;border:1px solid #dce9ee;
-  font:800 13px Cairo,Arial,sans-serif;line-height:1.65;color:#617c8b
-}
-.broadcast-no-meta .package-float,
-.broadcast-no-meta .subscription-float,
-.broadcast-no-meta [class*="renew"],
-.broadcast-no-meta [id*="renew"],
-.broadcast-no-meta [class*="whatsapp"],
-.broadcast-no-meta [id*="whatsapp"]{display:none!important}
-@media(max-width:860px){
-  .broadcast-results{grid-template-columns:1fr}
-  .broadcast-home-grid,.broadcast-gateway-actions{grid-template-columns:1fr}
-}
-
 </style>
 </head>
 <body>
@@ -5621,44 +5460,33 @@ button{
 </div>
 
 <section class="page active" id="page1"><div class="viewport">
-  <div class="finium-sky" id="finiumSky">
-    <div class="finium-stars"></div><div class="finium-orb"></div>
-    <div class="finium-cloud c1"></div><div class="finium-cloud c2"></div><div class="finium-rain"></div>
+<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>SMART FINANCE MATCH</small></div></div><a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>احتساب دقيق • تأكيد المعلومات • إنجاز التمويل</small><b>0506214458</b></span></a></header>
+<div class="hero"><div class="hero-main"><div class="live-badge"><span class="pulse"></span>منصة FINO • احتساب وترشيح مباشر</div><div class="kicker">منصة FINO الذكية لتحويل مديونية التمويل الشخصي</div><h1>احسب والترشيح فورًا</h1><p class="hero-sub">نرشّح لك فورًا أفضل عروض شراء المديونية حسب راتبك وفئتك وبنك الراتب، مع مراجعة الحسبة وتأكيد المعلومات ثم <span class="finance-delivery">إنجاز التمويل بأسرع وقت وبدون تعقيدات</span>.</p>
+<div class="services"><div class="service"><i>🧮</i><div><b>احتساب فوري</b><small>ترشيح خلال ثوانٍ</small></div></div><div class="service"><i>✓</i><div><b>تأكيد المعلومات</b><small>مطابقة قبل التنفيذ</small></div></div><div class="service"><i>⚡</i><div><b>إنجاز التمويل</b><small>إجراءات أسرع</small></div></div></div>
+<a class="big-phone" href="https://wa.me/966506214458" target="_blank"><div class="mobile">📱</div><div><small>للاحتساب الدقيق • تأكيد المعلومات • وإنجاز تحويل المديونية</small><b>0506214458</b></div></a>
+</div>
+<div class="login-card"><div class="login-top"><h2>FINO LIVE</h2><span>● المنصة جاهزة</span></div><div class="date-box"><div class="today" id="today">—</div><div class="date-grid"><div class="date-cell"><small>الميلادي</small><b id="greg">—</b></div><div class="date-cell"><small>الهجري</small><b id="hijri">—</b></div></div><div class="clock" id="clock">—</div></div><label class="label">كود الاشتراك</label><input class="password" id="password" type="text" placeholder="أدخل كود الاشتراك" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false"><button type="button" class="login-btn" onclick="login()">دخول المنصة ←</button><div class="error" id="loginError">أدخل كود الاشتراك</div>
+<button type="button" class="subscription-renew" id="packageRenewBtn" onclick="openSubscriptionRenewal()" style="margin-top:8px">💬 للتجديد اضغط هنا</button>
+<div class="identity-card" id="identityCard">
+  <h3>خلّنا نتعرّف عليك 👋</h3>
+  <p id="identityHelp">اكتب اسمك الأول عشان نخلي الحسبة والترشيح أوضح لك.</p>
+  <input id="clientNameOnboarding" type="text" maxlength="40" autocomplete="name" placeholder="اكتب اسمك الأول">
+  <div class="identity-error" id="identityError">اكتب اسمك للمتابعة.</div>
+  <div class="identity-actions">
+    <button type="button" class="identity-continue" onclick="continueAfterIdentity()">ابدأ الحسبة ←</button>
+    <button type="button" class="identity-skip" id="identitySkip" onclick="skipIdentity()">تخطي</button>
   </div>
-  <div class="finium-entry">
-    <div class="finium-logo-row"><div class="finium-logo-mark" id="finiumLogoMark">F</div><div class="finium-brand-code" data-platform-code>FINO</div></div>
-    <div class="finium-platform-ar" data-platform-ar>منصة الحسبة والترشيح المباشر</div>
-    <div class="finium-platform-en" data-platform-en>THE SMART PLATFORM</div>
-    <div class="finium-status-line"><span class="finium-chip" id="finiumWeatherChip">● المنصة جاهزة</span><span class="finium-chip" id="finiumTimeGreeting">—</span></div>
-    <label for="password">دخول المنصة</label>
-    <input id="password" type="text" placeholder="أدخل الكود" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false">
-    <button type="button" class="finium-entry-btn" onclick="login()">دخول المنصة</button>
-    <div class="error" id="loginError">أدخل الكود</div>
-    <button type="button" class="subscription-renew" id="packageRenewBtn" onclick="openSubscriptionRenewal()" style="margin-top:8px">للتجديد اضغط هنا</button>
-    <div class="finium-date-strip">
-      <div class="finium-date-box"><small>اليوم</small><b id="today">—</b></div>
-      <div class="finium-date-box"><small>الميلادي</small><b id="greg">—</b></div>
-      <div class="finium-date-box"><small>الهجري</small><b id="hijri">—</b></div>
-      <div class="finium-date-box"><small>الوقت</small><b id="clock">—</b></div>
-    </div>
-    <div class="finium-weather-label" id="finiumWeatherLabel">تتغير الخلفية تلقائيًا حسب الوقت وحالة الطقس المتاحة.</div>
-    <div class="identity-card" id="identityCard">
-      <h3>حياك الله 👋</h3><p id="identityHelp">اكتب اسمك الأول للمتابعة.</p>
-      <input id="clientNameOnboarding" type="text" maxlength="40" autocomplete="name" placeholder="اكتب اسمك الأول">
-      <div class="identity-error" id="identityError">اكتب اسمك للمتابعة.</div>
-      <div class="identity-actions"><button type="button" class="identity-continue" onclick="continueAfterIdentity()">متابعة</button><button type="button" class="identity-skip" id="identitySkip" onclick="skipIdentity()">تخطي</button></div>
-    </div>
-  </div>
+</div></div></div>
 </div></section>
 
 <section class="page" id="freeHub"><div class="viewport">
-<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>OWNER TOOLS</small></div></div>
+<header class="header"><div class="brand"><div class="brand-mark">F</div><div class="brand-name">FINO<small>FREE TOOLS</small></div></div>
 <a class="contact-mini" href="https://wa.me/966506214458" target="_blank"><span class="m">📱</span><span><small>للاحتساب والتأكيد والإنجاز</small><b>0506214458</b></span></a></header>
 <div class="free-hub-wrap">
   <div class="free-hub-title">
     <div class="eyebrow">أدوات FINO الذكية</div>
     <h1>اختر الحاسبة التي تحتاجها</h1>
-    <p>كود المالك يتيح لك حاسبة تحويل المديونية والحاسبة الذكية.</p>
+    <p>الكود الحر يتيح لك حاسبة تحويل المديونية والحاسبة الذكية.</p>
   </div>
   <div class="free-tool-grid">
     <button type="button" class="free-tool" onclick="openBuyoutFromFree()">
@@ -5687,54 +5515,6 @@ button{
 </div>
 </div></section>
 
-
-
-<section class="page" id="ownerHub"><div class="viewport">
-  <div class="owner-shell">
-    <div class="owner-top"><div class="owner-title"><b><span data-platform-code>FINO</span> • التحكم في كامل المنصة</b><small>كود المالك • إدارة الخدمات والأكواد والعقود والمطبوعات والتصميم</small></div><button type="button" class="owner-exit" onclick="ownerLogout()">خروج</button></div>
-    <div class="owner-hero"><small>OWNER CONTROL CENTER</small><h1>كل أدوات المنصة من مكان واحد</h1><p>اختر القسم المطلوب. التعديلات المركزية تحفظ عبر FINO-Central وتظهر للعملاء بعد اعتمادها.</p></div>
-    <div class="owner-grid">
-      <button class="owner-tile primary" onclick="ownerOpenSmartPortal()"><span class="owner-icon">✦</span><b>المنصة الذكية</b><small>فتح واجهة المحادثة الذكية والوصول لخدمات المنصة.</small></button>
-      <button class="owner-tile" onclick="ownerOpenBuyout()"><span class="owner-icon">↔</span><b>تحويل المديونية</b><small>الدخول المباشر لحاسبة وترشيح شراء المديونية.</small></button>
-      <button class="owner-tile" onclick="ownerOpenSmartCalculator()"><span class="owner-icon">∑</span><b>الحاسبة الذكية</b><small>حساب شخصي، استهلاكي، شركات وعقاري وفق إعدادات المالك.</small></button>
-      <button class="owner-tile" onclick="ownerOpenAdminSection('codes')"><span class="owner-icon">⌘</span><b>التحكم بالأكواد</b><small>إنشاء، تعديل، تفعيل، إيقاف، تمديد وحذف الأكواد وصلاحيات كل كود.</small></button>
-      <button class="owner-tile" onclick="ownerOpenAdminSection('contracts')"><span class="owner-icon">§</span><b>إدارة العقود والاتفاقات</b><small>قوالب العقود، ربطها بالأكواد، الأرشفة وحالة الاعتماد.</small></button>
-      <button class="owner-tile" onclick="openFINOPrintStudio()"><span class="owner-icon">▤</span><b>المطبوعات</b><small>إنشاء بطاقة أو خطاب أو إشعار ومشاركته كنص أو صورة أو PDF عبر الطباعة.</small></button>
-      <button class="owner-tile" onclick="ownerOpenAdminSection('archive')"><span class="owner-icon">⌂</span><b>الأرشيف والعملاء</b><small>البحث في العمليات والعملاء والعقود والحسب السابقة.</small></button>
-      <button class="owner-tile warn" onclick="ownerOpenAdminSection('full')"><span class="owner-icon">⚙</span><b>التحكم الكامل</b><small>النسب، البنوك، العروض، الأتعاب، الملاحظات والإعدادات المتقدمة.</small></button>
-    </div>
-    <div class="owner-section-title">هوية المنصة وتصميمها</div>
-    <div class="owner-platform-card">
-      <h3>اسم المنصة الخارجي</h3><p>المسمى المختصر مكوّن من <b>4 أحرف فقط</b>. التعديل المحلي فوري، ولتطبيقه على جميع الأجهزة أدخل كلمة مرور المختص المركزي عند الحفظ.</p>
-      <div class="owner-settings-grid">
-        <div class="owner-field"><label>اسم المنصة — 4 أحرف</label><input id="ownerPlatformCode" maxlength="4" minlength="4" value="FINO" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4)"></div>
-        <div class="owner-field"><label>العنوان العربي</label><input id="ownerPlatformAr" value="منصة الحسبة والترشيح المباشر"></div>
-        <div class="owner-field"><label>العنوان الإنجليزي</label><input id="ownerPlatformEn" value="THE SMART PLATFORM"></div>
-        <div class="owner-field"><label>مؤثر الخلفية</label><select id="ownerPlatformWeather"><option value="auto">تلقائي — الوقت والطقس</option><option value="sunny">مشمس</option><option value="cloud">غائم</option><option value="rain">مطر</option><option value="night">ليل</option></select></div>
-        <div class="owner-field"><label>كلمة مرور المختص المركزي — عند المزامنة فقط</label><input id="ownerCentralPassword" type="password" autocomplete="current-password" placeholder="اختياري إذا كانت الجلسة المركزية مفتوحة"></div>
-      </div>
-      <button type="button" class="owner-save" onclick="saveOwnerPlatformIdentity(true)">حفظ وتطبيق على جميع الأجهزة</button><button type="button" class="owner-save secondary" onclick="restoreFINIUMDefaultIdentity()">استعادة تصميم FINO الأساسي</button>
-      <div id="ownerPlatformStatus" class="portal-note" style="margin-top:8px"></div>
-    </div>
-  </div>
-</div></section>
-
-<section class="page" id="printStudio"><div class="viewport">
-  <div style="width:100%"><div class="owner-top"><div class="owner-title"><b>المطبوعات</b><small>أنشئ نصًا أو بطاقة أو مستندًا قابلًا للحفظ PDF من شاشة الطباعة</small></div><button class="owner-exit" onclick="showPage('ownerHub')">رجوع</button></div>
-  <div class="print-layout">
-    <div class="print-controls"><h2>إعداد المطبوعة</h2>
-      <div class="print-field"><label>العنوان</label><input id="printTitle" value="إشعار للعميل" oninput="renderFINOPrintPreview()"></div>
-      <label class="print-check"><input id="printShowCompany" type="checkbox" checked onchange="renderFINOPrintPreview()"> إظهار اسم المنصة</label>
-      <div class="print-field"><label>اسم الجهة — اختياري</label><input id="printCompany" value="" placeholder="يترك فارغًا لاستخدام اسم المنصة" oninput="renderFINOPrintPreview()"></div>
-      <div class="print-field"><label>النص</label><textarea id="printBody" oninput="renderFINOPrintPreview()">اكتب هنا النص الذي تريد مشاركته مع العميل.</textarea></div>
-      <div class="print-field"><label>ملاحظة مميزة — اختياري</label><textarea id="printNote" oninput="renderFINOPrintPreview()"></textarea></div>
-      <div class="print-field"><label>رابط — اختياري</label><input id="printLink" type="url" placeholder="https://" oninput="renderFINOPrintPreview()"></div>
-      <label class="print-check"><input id="printShowDate" type="checkbox" checked onchange="renderFINOPrintPreview()"> إظهار التاريخ والوقت</label>
-      <div class="print-actions"><button type="button" onclick="copyFINOPrintText()">نسخ كنص</button><button type="button" class="alt" onclick="shareFINOPrintText()">مشاركة</button><button type="button" onclick="downloadFINOPrintImage()">حفظ كصورة</button><button type="button" class="alt" onclick="window.print()">طباعة / حفظ PDF</button></div>
-    </div>
-    <div class="print-preview-wrap"><h2>المعاينة</h2><div class="print-paper" id="finiumPrintPaper"><div class="date" id="printPreviewDate"></div><div class="company" id="printPreviewCompany"></div><h1 id="printPreviewTitle"></h1><div class="body" id="printPreviewBody"></div><div class="note" id="printPreviewNote" style="display:none"></div><div class="link" id="printPreviewLink" style="display:none"></div></div></div>
-  </div></div>
-</div></section>
 
 <section class="page" id="specialistBotPage"><div class="viewport">
 <header class="header">
@@ -6162,11 +5942,7 @@ button{
 </div>
 <script>
 const PHONE='0506214458', SERVICE_URL='https://hlooleqrr.github.io/mwaqe3/#services', INF=Infinity;
-const ACCESS_CODES=[
-  {"hash":"03d3e6e947d3206c3c864d4b5f6f5baf0778f01ddf9ca392b57bd7866769a2f3","days":0,"label":"كود المالك","free":true,"owner":true},
-  {"hash":"349e7adad210783651792f2e271360c890d9839778312a8f8e1207fc3421faa1","days":1,"label":"كود التجربة • يوم واحد","trialSmart":true},
-  {"hash":"35e0d0360a0af6d115f9df30e1b00b5b544ebf4bb93272aa02cd5d64b064a64b","days":0,"label":"كود البث","broadcast":true,"ownerControl":true}
-];
+const ACCESS_CODES=[{"hash":"7983a0a9c0a8cbdfc53cc674f07c4b8f533f01ba1ca0bcacb69c30d7a71cac15","days":7,"label":"اشتراك أسبوع"},{"hash":"eeb0a15a59f9d4694c7a68a8da1a1987390d30bba778d70d27496d31c08fa300","days":14,"label":"اشتراك أسبوعين"},{"hash":"edef3e7739361f80010a18823ca53d51ec8077c57a6a7a93ae3325f65abe479a","days":21,"label":"اشتراك ثلاثة أسابيع"},{"hash":"6950391d19ba548c3f7ff886a4c3000f183fb42bd52a3a27349a0e66071c73ea","days":35,"label":"اشتراك خمسة أسابيع"},{"hash":"349e7adad210783651792f2e271360c890d9839778312a8f8e1207fc3421faa1","days":1,"label":"تجربة المنصة الذكية • يوم واحد","trialSmart":true},{"hash":"1ace18ca4dd38fdfb0ea83e3f7ed8965c55d5b8d2231cc59d20ae50da804fe7f","days":0,"minutes":15,"label":"عرض يوم التأسيس • باقة الثلاث حساب","trialSmart":true,"package3":true,"maxEntries":3,"maxRestartsPerEntry":2},{"hash":"03d3e6e947d3206c3c864d4b5f6f5baf0778f01ddf9ca392b57bd7866769a2f3","days":0,"label":"الكود الحر","free":true}];
 const ACCESS_STORAGE_PREFIX='fino_access_v1_';
 let activeAccess=null;
 let subscriptionTimer=null;
@@ -8228,7 +8004,7 @@ function archiveFINOPortalConversation(extra={}){
     const list=getFINOPortalArchive();
     const now=new Date();
     const client=cleanClientName(clientName)||'بدون اسم';
-    const source=isFreeAccess()?'كود المالك':(isSmartTrialAccess()?'كود التجربة':'اشتراك عميل');
+    const source=isFreeAccess()?'الكود الحر':(isSmartTrialAccess()?'كود التجربة':'اشتراك عميل');
     const key=[
       source,client,
       finoPortal.data?.salary||'',
@@ -9871,7 +9647,7 @@ async function verifyFINOPortalAdmin(raw){
   if(centralOk){
     await finoCentralAdminDashboard(true);
   }
-  if(finoPortal.ownerRequestedSection){const s=finoPortal.ownerRequestedSection;finoPortal.ownerRequestedSection='';ownerRouteAdminSection(s);}else showFINOPortalAdminMenu();
+  showFINOPortalAdminMenu();
   if(localOk&&!centralOk){
     portalAssistant('<div class="portal-alert">دخلت للمختص المحلي، لكن دخول المختص المركزي لم يُفعّل بعد. وظائف الموقع المحلية تعمل، أما التعديل المركزي فيحتاج تهيئة كلمة مرور FINO-Central لاحقًا.</div>');
   }else if(centralOk){
@@ -12115,7 +11891,7 @@ function startSubscriptionBadge(record,state){
     updateRenewalButton(record,state);
 
     if(record.free){
-      remaining.textContent='كود المالك • غير محدد المدة';
+      remaining.textContent='الكود الحر • غير محدد المدة';
       type.textContent='دخول دائم';
       return;
     }
@@ -12165,115 +11941,6 @@ function startSubscriptionBadge(record,state){
 }
 
 
-
-const FINIUM_IDENTITY_KEY='FINIUM_PLATFORM_IDENTITY_V20';
-const FINIUM_DEFAULT_IDENTITY={code:'FINO',ar:'منصة الحسبة والترشيح المباشر',en:'THE SMART PLATFORM',weather:'auto'};
-let finiumIdentity={...FINIUM_DEFAULT_IDENTITY};
-function normalizeFINIUMIdentity(x={}){
-  let code=String(x.code||x.platform_code||'FINO').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4);
-  if(code.length!==4)code='FINO';
-  return {code,ar:String(x.ar||x.title_ar||FINIUM_DEFAULT_IDENTITY.ar).trim().slice(0,80)||FINIUM_DEFAULT_IDENTITY.ar,en:String(x.en||x.title_en||FINIUM_DEFAULT_IDENTITY.en).trim().slice(0,80)||FINIUM_DEFAULT_IDENTITY.en,weather:['auto','sunny','cloud','rain','night'].includes(x.weather)?x.weather:'auto'};
-}
-function loadLocalFINIUMIdentity(){
-  try{finiumIdentity=normalizeFINIUMIdentity(JSON.parse(localStorage.getItem(FINIUM_IDENTITY_KEY)||'{}'))}catch(e){finiumIdentity={...FINIUM_DEFAULT_IDENTITY}}
-  applyFINIUMIdentity();return finiumIdentity;
-}
-function applyFINIUMIdentity(){
-  document.querySelectorAll('[data-platform-code]').forEach(el=>el.textContent=finiumIdentity.code);
-  document.querySelectorAll('[data-platform-ar]').forEach(el=>el.textContent=finiumIdentity.ar);
-  document.querySelectorAll('[data-platform-en]').forEach(el=>el.textContent=finiumIdentity.en);
-  const mark=document.getElementById('finiumLogoMark');if(mark)mark.textContent=finiumIdentity.code[0]||'F';
-  document.title=`${finiumIdentity.code} | ${finiumIdentity.ar}`;
-  const c=document.getElementById('ownerPlatformCode');if(c)c.value=finiumIdentity.code;
-  const a=document.getElementById('ownerPlatformAr');if(a)a.value=finiumIdentity.ar;
-  const e=document.getElementById('ownerPlatformEn');if(e)e.value=finiumIdentity.en;
-  const w=document.getElementById('ownerPlatformWeather');if(w)w.value=finiumIdentity.weather;
-  applyFINIUMWeatherScene(finiumIdentity.weather);
-}
-async function loadPublicFINIUMIdentity(){
-  loadLocalFINIUMIdentity();
-  try{
-    const r=await finoRpc('fino_public_settings',{});
-    const v=r?.data?.settings?.platform_identity||r?.data?.platform_identity;
-    if(v){finiumIdentity=normalizeFINIUMIdentity(v);localStorage.setItem(FINIUM_IDENTITY_KEY,JSON.stringify(finiumIdentity));applyFINIUMIdentity()}
-  }catch(e){}
-}
-function finiumWeatherFromCode(code){
-  const c=Number(code);
-  if([51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(c))return 'rain';
-  if([1,2,3,45,48].includes(c))return 'cloud';
-  return 'sunny';
-}
-function applyFINIUMWeatherScene(mode='auto'){
-  const sky=document.getElementById('finiumSky');if(!sky)return;
-  const hour=new Date().getHours();
-  let scene=mode;
-  if(scene==='auto')scene=(hour>=18||hour<6)?'night':'sunny';
-  sky.classList.remove('night','rain','cloud');if(scene==='night')sky.classList.add('night');if(scene==='rain')sky.classList.add('rain');if(scene==='cloud')sky.classList.add('cloud');
-  const g=document.getElementById('finiumTimeGreeting');if(g)g.textContent=hour<12?'صباح الخير':hour<18?'مساء الخير':'مساء الخير';
-}
-async function refreshFINIUMWeather(){
-  if(finiumIdentity.weather!=='auto'){applyFINIUMWeatherScene(finiumIdentity.weather);return}
-  const hour=new Date().getHours();if(hour>=18||hour<6){applyFINIUMWeatherScene('night');return}
-  try{
-    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=24.7136&longitude=46.6753&current=weather_code,temperature_2m&timezone=Asia%2FRiyadh',{cache:'no-store'});
-    if(!r.ok)throw new Error('WEATHER');const d=await r.json();const scene=finiumWeatherFromCode(d?.current?.weather_code);applyFINIUMWeatherScene(scene);
-    const chip=document.getElementById('finiumWeatherChip');if(chip)chip.textContent=`${scene==='rain'?'مطر':scene==='cloud'?'غائم':'مشمس'} • ${Math.round(Number(d?.current?.temperature_2m||0))}°`;
-    const lab=document.getElementById('finiumWeatherLabel');if(lab)lab.textContent='الخلفية مرتبطة بحالة الطقس الحالية في الرياض مع تحديث تلقائي، ويعمل التصميم الزمني كخيار احتياطي.';
-  }catch(e){applyFINIUMWeatherScene('sunny')}
-}
-function openOwnerHub(){activeAccess=activeAccess||{record:{free:true,owner:true,label:'كود المالك'},state:{free:true}};showPage('ownerHub');loadLocalFINIUMIdentity();}
-function ownerLogout(){activeAccess=null;clientName='';finoPortal.adminUnlocked=false;finoCentralAdminToken=null;showPage('page1')}
-function ownerOpenSmartPortal(){openFINOSmartPortal(false)}
-function ownerOpenBuyout(){openFINOSmartPortal(false);setTimeout(()=>startFINOPortalBuyout(),40)}
-function ownerOpenSmartCalculator(){renderSmartBanks();showPage('smartPage');setTimeout(()=>document.getElementById('smartSalary')?.focus(),100)}
-function ownerOpenAdminSection(section){
-  openFINOSmartPortal(false);
-  setTimeout(()=>{
-    if(!finoPortal.adminUnlocked){startFINOPortalAdmin();finoPortal.ownerRequestedSection=section;return}
-    ownerRouteAdminSection(section);
-  },40)
-}
-function ownerRouteAdminSection(section){
-  if(section==='codes')return showFINOPortalCodeManager();
-  if(section==='contracts')return showFINOContractManager();
-  if(section==='archive')return showFINOPortalArchive();
-  if(section==='full')return openFINOPortalFullAdmin();
-  return showFINOPortalAdminMenu();
-}
-async function saveOwnerPlatformIdentity(sync=true){
-  const status=document.getElementById('ownerPlatformStatus');
-  const code=String(document.getElementById('ownerPlatformCode')?.value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-  if(code.length!==4){if(status)status.textContent='اسم المنصة يجب أن يكون 4 أحرف أو أرقام إنجليزية بالضبط.';return}
-  const next=normalizeFINIUMIdentity({code,ar:document.getElementById('ownerPlatformAr')?.value,en:document.getElementById('ownerPlatformEn')?.value,weather:document.getElementById('ownerPlatformWeather')?.value});
-  finiumIdentity=next;localStorage.setItem(FINIUM_IDENTITY_KEY,JSON.stringify(next));applyFINIUMIdentity();refreshFINIUMWeather();
-  if(!sync){if(status)status.textContent='تم الحفظ على هذا الجهاز.';return}
-  try{
-    if(!finoCentralAdminToken){
-      const pw=String(document.getElementById('ownerCentralPassword')?.value||'');
-      if(!pw){if(status)status.textContent='تم الحفظ محليًا. للتطبيق على جميع الأجهزة أدخل كلمة مرور المختص المركزي ثم اضغط الحفظ مرة أخرى.';return}
-      const login=await finoCentralAdminLogin(pw);if(!login.ok){if(status)status.textContent='تم الحفظ محليًا، لكن كلمة مرور المختص المركزي غير صحيحة.';return}
-    }
-    const r=await finoCentralAdminCall('fino_admin_upsert_setting',{p_setting_key:'platform_identity',p_value:next});
-    if(!r.ok||r.data?.ok===false)throw new Error(finoCentralDebugMessage(r));
-    if(status)status.textContent='✅ تم الحفظ مركزيًا. الاسم والتصميم سيظهران على الأجهزة عند فتح أو تحديث المنصة.';
-  }catch(e){if(status)status.textContent='تم الحفظ محليًا، وتعذرت المزامنة المركزية: '+String(e.message||e)}
-}
-function restoreFINIUMDefaultIdentity(){finiumIdentity={...FINIUM_DEFAULT_IDENTITY};localStorage.setItem(FINIUM_IDENTITY_KEY,JSON.stringify(finiumIdentity));applyFINIUMIdentity();refreshFINIUMWeather();document.getElementById('ownerPlatformStatus').textContent='تمت استعادة هوية FINO الأساسية محليًا. اضغط حفظ وتطبيق على جميع الأجهزة لمزامنتها.'}
-function openFINOPrintStudio(){showPage('printStudio');renderFINOPrintPreview()}
-function FINIUMPrintValues(){return {title:String(document.getElementById('printTitle')?.value||''),showCompany:!!document.getElementById('printShowCompany')?.checked,company:String(document.getElementById('printCompany')?.value||'').trim(),body:String(document.getElementById('printBody')?.value||''),note:String(document.getElementById('printNote')?.value||''),link:String(document.getElementById('printLink')?.value||''),showDate:!!document.getElementById('printShowDate')?.checked}}
-function renderFINOPrintPreview(){const v=FINIUMPrintValues();document.getElementById('printPreviewTitle').textContent=v.title;document.getElementById('printPreviewCompany').textContent=v.showCompany?(v.company||finiumIdentity.code):'';document.getElementById('printPreviewBody').textContent=v.body;const n=document.getElementById('printPreviewNote');n.textContent=v.note;n.style.display=v.note?'block':'none';const l=document.getElementById('printPreviewLink');l.textContent=v.link;l.style.display=v.link?'block':'none';document.getElementById('printPreviewDate').textContent=v.showDate?new Date().toLocaleString('ar-SA',{timeZone:'Asia/Riyadh'}):''}
-function FINIUMPrintText(){const v=FINIUMPrintValues();return [v.showCompany?(v.company||finiumIdentity.code):'',v.title,v.showDate?new Date().toLocaleString('ar-SA',{timeZone:'Asia/Riyadh'}):'',v.body,v.note?`ملاحظة: ${v.note}`:'',v.link].filter(Boolean).join('\n\n')}
-async function copyFINOPrintText(){try{await navigator.clipboard.writeText(FINIUMPrintText());alert('تم نسخ النص')}catch(e){prompt('انسخ النص',FINIUMPrintText())}}
-async function shareFINOPrintText(){const text=FINIUMPrintText();if(navigator.share){try{await navigator.share({title:FINIUMPrintValues().title,text});return}catch(e){}}window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank')}
-async function downloadFINOPrintImage(){
-  const v=FINIUMPrintValues(),c=document.createElement('canvas');c.width=1240;c.height=1754;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.textAlign='right';x.direction='rtl';
-  x.fillStyle='#163e56';x.font='900 48px Cairo,Arial';x.fillText(v.title||'مطبوعة',1150,150);if(v.showCompany){x.fillStyle='#0a719f';x.font='900 26px Cairo,Arial';x.fillText(v.company||finiumIdentity.code,1150,205)}if(v.showDate){x.fillStyle='#758b97';x.font='700 20px Cairo,Arial';x.fillText(new Date().toLocaleString('ar-SA',{timeZone:'Asia/Riyadh'}),1150,250)}
-  function wrap(text,y,color='#263f4d',font='800 27px Cairo,Arial',lh=50,max=1000){x.fillStyle=color;x.font=font;const words=String(text||'').split(/\s+/);let line='',yy=y;for(const w of words){const t=line?line+' '+w:w;if(x.measureText(t).width>max&&line){x.fillText(line,1150,yy);yy+=lh;line=w}else line=t}if(line)x.fillText(line,1150,yy);return yy+lh}
-  let y=340;y=wrap(v.body,y);if(v.note){y+=20;x.fillStyle='#fff6f6';x.fillRect(90,y-30,1060,Math.min(260,Math.max(120,String(v.note).length*1.4)));y=wrap('ملاحظة: '+v.note,y+25,'#8c3535','800 24px Cairo,Arial',44,970)}if(v.link){x.direction='ltr';x.textAlign='left';x.fillStyle='#5e7887';x.font='700 20px Arial';x.fillText(v.link,90,1640)}
-  const a=document.createElement('a');a.download=`${finiumIdentity.code}-print-${Date.now()}.png`;a.href=c.toDataURL('image/png',1);a.click();
-}
-
 function cleanClientName(v){
   return String(v||'').replace(/[<>`]/g,'').replace(/\s+/g,' ').trim().slice(0,40);
 }
@@ -12308,7 +11975,7 @@ function openIdentityStep(record,state){
   if(card)card.classList.add('show');
   if(skip)skip.classList.toggle('show',!!record.free);
   if(help)help.textContent=record.free
-    ? 'اسم العميل اختياري في كود المالك؛ إذا كتبته نضيفه للحسبة والرسالة والصورة.'
+    ? 'اسم العميل اختياري في الكود الحر؛ إذا كتبته نضيفه للحسبة والرسالة والصورة.'
     : record.package3
       ? 'اكتب اسمك الأول. باقة الثلاث حساب صالحة 15 دقيقة من أول تفعيل، وبها 3 دخولات.'
       : 'اكتب اسمك الأول عشان نخلي الحسبة والترشيح أوضح لك.';
@@ -12326,9 +11993,7 @@ function finishIdentityAndEnter(){
     setTimeout(()=>finoCentralSaveCase({type:'identity',client_name:cleanClientName(clientName)||''}),50);
   }
 
-  if(activeAccess.record && activeAccess.record.owner){
-    openOwnerHub();
-  }else if(activeAccess.record && activeAccess.record.free){
+  if(activeAccess.record && activeAccess.record.free){
     showPage('freeHub');
   }else if(activeAccess.record && activeAccess.record.central){
     const services=activeAccess.record.centralData?.allowed_services||[];
@@ -12394,19 +12059,6 @@ function refreshPersonalizedCopy(){
 }
 
 async function login(){
-  try{
-    const __finiumEnteredCode=String(
-      document.getElementById('password')?.value||
-      document.getElementById('accessCode')?.value||
-      document.getElementById('codeInput')?.value||
-      document.getElementById('loginCode')?.value||''
-    ).trim().toUpperCase();
-    if(finiumIsBroadcastCode(__finiumEnteredCode)){
-      enterFINIUMBroadcastGateway();
-      return;
-    }
-  }catch(e){}
-
   const input=document.getElementById('password');
   const error=document.getElementById('loginError');
   if(!input||!error)return;
@@ -12479,8 +12131,6 @@ async function login(){
       input.value='';
       activeAccess={record,state};
       startSubscriptionBadge(record,state);
-      if(record.owner){clientName='';pendingAccessAfterLogin=null;openOwnerHub();return;}
-      if(record.broadcast||services.includes('broadcast')){clientName='';pendingAccessAfterLogin=null;enterFINIUMBroadcastGateway();return;}
       openIdentityStep(record,state);
       return;
     }
@@ -12488,15 +12138,6 @@ async function login(){
 
   let record=staticRecord;
   let dynamicRecord=null;
-
-  if(record?.broadcast){
-    setWrongAttemptCount(0);
-    error.style.display='none';
-    input.value='';
-    activeAccess={record,state:{broadcast:true}};
-    enterFINIUMBroadcastGateway();
-    return;
-  }
 
   if(!record){
     const d=getFINODynamicCodes().find(x=>String(x.code||'').trim().toUpperCase()===value);
@@ -15792,406 +15433,6 @@ async function testFINOSmartImageClipboardSupport(){
   return result;
 }
 
-
-try{loadLocalFINIUMIdentity();setTimeout(()=>{loadPublicFINIUMIdentity();refreshFINIUMWeather()},80);setInterval(()=>refreshFINIUMWeather(),15*60*1000);}catch(e){}
-
-// ============================================================
-// FINO V21 — Broadcast Mode
-// ============================================================
-const FINIUM_BROADCAST_CODE='LIVE';
-
-function finiumIsBroadcastCode(code){
-  return String(code||'').trim().toUpperCase()===FINIUM_BROADCAST_CODE;
-}
-function finiumBrand4(){
-  try{
-    const name=(typeof getFINIUMBrandName==='function'?getFINIUMBrandName():'') ||
-               localStorage.getItem('finium_brand_name') || 'FINO';
-    return String(name||'FINO').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4)||'FINO';
-  }catch(e){return 'FINO'}
-}
-function finiumBroadcastGreeting(){
-  const h=new Date().getHours();
-  if(h>=4&&h<12)return 'صباح الخير للجميع';
-  if(h>=12&&h<18)return 'حياكم الله جميعًا';
-  if(h>=18&&h<23)return 'مساء الخير للجميع';
-  return 'مرحبًا بالجميع';
-}
-function updateBroadcastClock(){
-  const el=document.getElementById('broadcastClock');
-  if(!el)return;
-  const d=new Date();
-  const ar=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{weekday:'long',day:'numeric',month:'long',year:'numeric',hour:'numeric',minute:'2-digit'}).format(d);
-  const en=new Intl.DateTimeFormat('ar-SA',{day:'numeric',month:'long',year:'numeric'}).format(d);
-  el.textContent=`${ar} • ${en}`;
-}
-function enterFINIUMBroadcastGateway(){
-  document.querySelectorAll('body > section, body > main').forEach(x=>{
-    if(!['broadcastGateway','broadcastShell'].includes(x.id))x.classList.remove('active');
-  });
-  const g=document.getElementById('broadcastGateway');
-  if(g)g.classList.add('active');
-  const s=document.getElementById('broadcastShell');
-  if(s)s.classList.remove('active');
-  const brand=finiumBrand4();
-  const b=document.getElementById('broadcastGatewayBrand');if(b)b.textContent=brand;
-  document.title=`${brand} • البث`;
-}
-function openFINIUMBroadcastControl(){
-  document.getElementById('broadcastGateway')?.classList.remove('active');
-  // نفس لوحة المالك تمامًا.
-  if(typeof openOwnerHub==='function'){openOwnerHub();return}
-  if(typeof openFINIUMOwnerDashboard==='function'){openFINIUMOwnerDashboard();return}
-  if(typeof openOwnerDashboard==='function'){openOwnerDashboard();return}
-  if(typeof showFINIUMOwnerDashboard==='function'){showFINIUMOwnerDashboard();return}
-  if(document.getElementById('ownerHub')){showPage('ownerHub');return}
-  if(document.getElementById('ownerDashboard')){showPage('ownerDashboard');return}
-  if(document.getElementById('freeHub')){showPage('freeHub');return}
-}
-function openFINIUMBroadcast(){
-  document.getElementById('broadcastGateway')?.classList.remove('active');
-  document.getElementById('broadcastShell')?.classList.add('active');
-  const g=document.getElementById('broadcastGreeting');if(g)g.textContent=finiumBroadcastGreeting();
-  updateBroadcastClock();
-  backBroadcastHome();
-}
-function backBroadcastHome(){
-  document.getElementById('broadcastHome').style.display='grid';
-  document.getElementById('broadcastBuyoutPanel')?.classList.remove('active');
-  document.getElementById('broadcastSmartPanel')?.classList.remove('active');
-}
-function broadcastMsg(target,html,user=false){
-  const box=document.getElementById(target);if(!box)return;
-  const d=document.createElement('div');
-  d.className='broadcast-msg'+(user?' user':'');
-  d.innerHTML=html;
-  box.appendChild(d);
-  box.scrollTop=box.scrollHeight;
-}
-function broadcastOptions(target,items){
-  const box=document.getElementById(target);if(!box)return;
-  const wrap=document.createElement('div');
-  wrap.className='broadcast-options';
-  items.forEach((it,i)=>{
-    const b=document.createElement('button');
-    b.className='broadcast-option'+(i===0?' primary':'');
-    b.type='button';b.textContent=it.label;b.onclick=it.onclick;
-    wrap.appendChild(b);
-  });
-  box.appendChild(wrap);box.scrollTop=box.scrollHeight;
-}
-function broadcastAsk(inputId,wrapId,placeholder,type='text'){
-  const wrap=document.getElementById(wrapId);
-  const input=document.getElementById(inputId);
-  if(wrap)wrap.style.display='flex';
-  if(input){
-    input.type=type;input.value='';input.placeholder=placeholder||'';
-    setTimeout(()=>input.focus(),60);
-  }
-}
-function broadcastHideInput(wrapId){const w=document.getElementById(wrapId);if(w)w.style.display='none'}
-
-// ---------- Broadcast Buyout ----------
-const broadcastBuyout={step:null,data:{}};
-function openBroadcastBuyout(){
-  document.getElementById('broadcastHome').style.display='none';
-  document.getElementById('broadcastBuyoutPanel').classList.add('active');
-  const chat=document.getElementById('broadcastBuyoutChat');chat.innerHTML='';
-  broadcastBuyout.step='work';broadcastBuyout.data={};
-  broadcastMsg('broadcastBuyoutChat','حياكم الله جميعًا 👋<br>نبدأ بترشيح تحويل المديونية.');
-  broadcastOptions('broadcastBuyoutChat',[
-    {label:'حكومي',onclick:()=>chooseBroadcastBuyoutWork('government','حكومي')},
-    {label:'عسكري',onclick:()=>chooseBroadcastBuyoutWork('military','عسكري')},
-    {label:'قطاع خاص',onclick:()=>chooseBroadcastBuyoutWork('private','قطاع خاص')},
-    {label:'متقاعد',onclick:()=>chooseBroadcastBuyoutWork('retired','متقاعد')}
-  ]);
-}
-function chooseBroadcastBuyoutWork(v,label){
-  broadcastBuyout.data.work=v;broadcastMsg('broadcastBuyoutChat',label,true);
-  broadcastBuyout.step='salary';
-  broadcastMsg('broadcastBuyoutChat','اذكر صافي الراتب.');
-  broadcastAsk('broadcastBuyoutInput','broadcastBuyoutInputWrap','مثال: 12000','number');
-}
-function submitBroadcastBuyoutInput(){
-  const i=document.getElementById('broadcastBuyoutInput');
-  const raw=String(i?.value||'').trim();if(!raw)return;
-  broadcastMsg('broadcastBuyoutChat',raw,true);
-  const n=Number(raw.replace(/,/g,''));
-  if(!(n>=0)){broadcastMsg('broadcastBuyoutChat','اكتب الرقم فقط.');return}
-  if(broadcastBuyout.step==='salary'){
-    broadcastBuyout.data.salary=n;broadcastBuyout.step='settlement';
-    broadcastMsg('broadcastBuyoutChat','كم مبلغ السداد المبكر للمديونية الحالية؟');
-    broadcastAsk('broadcastBuyoutInput','broadcastBuyoutInputWrap','مثال: 85000','number');return;
-  }
-  if(broadcastBuyout.step==='settlement'){
-    broadcastBuyout.data.settlement=n;
-    broadcastHideInput('broadcastBuyoutInputWrap');
-    renderBroadcastBuyoutResults();
-  }
-}
-function broadcastExpiryBadge(expiry){
-  if(!expiry)return '';
-  const end=new Date(expiry);if(Number.isNaN(end.getTime()))return '';
-  const now=new Date();
-  const days=Math.ceil((end-now)/(86400000));
-  if(days<0)return '<div class="broadcast-expiry">العرض منتهي</div>';
-  if(days===0)return '<div class="broadcast-expiry">العرض ينتهي اليوم</div>';
-  if(days<=2)return `<div class="broadcast-expiry warn">باقي ${days} ${days===1?'يوم':'يومين'} وينتهي العرض</div>`;
-  return `<div class="broadcast-expiry ok">العرض ساري • باقي ${days} يوم</div>`;
-}
-function getBroadcastBuyoutCandidates(){
-  // Prefer the exact existing FINIUM calculation engine.
-  try{
-    const salary=Number(broadcastBuyout.data.salary||0);
-    const settlement=Number(broadcastBuyout.data.settlement||0);
-    const work=broadcastBuyout.data.work||'government';
-    if(typeof calculateBuyoutCandidates==='function'){
-      return calculateBuyoutCandidates({salary,settlement,work})||[];
-    }
-    if(typeof getBuyoutResults==='function'){
-      return getBuyoutResults({salary,settlement,work})||[];
-    }
-  }catch(e){}
-  // Fallback: derive visual candidates from the current BANKS/rates without exposing admin meta.
-  const banks=(window.BANKS||[]).slice(0,3);
-  return banks.map((b,idx)=>({
-    bankName:b.name||b.bankName||`الترشيح ${idx+1}`,
-    cash:Math.max(0,Math.round(Number(broadcastBuyout.data.salary||0)*(16-idx*1.5)-Number(broadcastBuyout.data.settlement||0))),
-    installment:Math.round(Number(broadcastBuyout.data.salary||0)*0.3333),
-    months:60,
-    rate:b.rate||b.profit||'—',
-    expiry:b.expiry||b.offer_expiry||''
-  }));
-}
-function normalizeBroadcastCandidate(x,idx){
-  return {
-    bankName:x.bankName||x.bank?.name||x.name||`الترشيح ${idx+1}`,
-    cash:Number(x.cash??x.net??x.netCash??x.net_finance??0),
-    installment:Number(x.installment??x.monthly??x.payment??0),
-    months:Number(x.months??x.termMonths??x.term??60),
-    rate:x.rate??x.profitRate??x.profit??'—',
-    expiry:x.expiry||x.offerExpiry||x.offer_expiry||''
-  };
-}
-function renderBroadcastBuyoutResults(){
-  const rows=getBroadcastBuyoutCandidates().slice(0,3).map(normalizeBroadcastCandidate);
-  const chat=document.getElementById('broadcastBuyoutChat');
-  const wrap=document.createElement('div');wrap.className='broadcast-results';
-  rows.forEach((r,idx)=>{
-    const c=document.createElement('div');c.className='broadcast-result-card';
-    c.innerHTML=`${broadcastExpiryBadge(r.expiry)}
-      <h3>الترشيح ${idx+1} • ${r.bankName}</h3>
-      <div class="cash">${typeof money==='function'?money(r.cash):Math.round(r.cash).toLocaleString('ar-SA')+' ريال'}</div>
-      <div class="row"><span>القسط</span><b>${typeof money==='function'?money(r.installment):Math.round(r.installment).toLocaleString('ar-SA')+' ريال'}</b></div>
-      <div class="row"><span>المدة</span><b>${r.months} شهر</b></div>
-      <div class="row"><span>النسبة</span><b>${r.rate==='—'?'—':r.rate+'%'}</b></div>`;
-    wrap.appendChild(c);
-  });
-  chat.appendChild(wrap);chat.scrollTop=chat.scrollHeight;
-  broadcastMsg('broadcastBuyoutChat','هذه الترشيحات للعرض في البث فقط، وتُعرض بدون أتعاب أو معلومات إدارية أو أزرار مشاركة.');
-}
-
-// ---------- Broadcast Smart ----------
-const broadcastSmart={step:null,data:{}};
-function openBroadcastSmart(){
-  document.getElementById('broadcastHome').style.display='none';
-  document.getElementById('broadcastSmartPanel').classList.add('active');
-  const chat=document.getElementById('broadcastSmartChat');chat.innerHTML='';
-  broadcastSmart.step='kind';broadcastSmart.data={};
-  broadcastMsg('broadcastSmartChat','حياكم الله جميعًا 👋<br>وش نوع التمويل اللي نبي نحسبه؟');
-  broadcastOptions('broadcastSmartChat',[
-    {label:'تمويل استهلاكي',onclick:()=>chooseBroadcastSmartKind('consumer','تمويل استهلاكي')},
-    {label:'تمويل شركات',onclick:()=>chooseBroadcastSmartKind('company','تمويل شركات')},
-    {label:'حسبة عامة',onclick:()=>chooseBroadcastSmartKind('general','حسبة عامة')}
-  ]);
-}
-function chooseBroadcastSmartKind(v,label){
-  broadcastSmart.data.financeKind=v;broadcastMsg('broadcastSmartChat',label,true);
-  broadcastSmart.step='work';
-  broadcastMsg('broadcastSmartChat','اختر جهة العمل.');
-  broadcastOptions('broadcastSmartChat',[
-    {label:'حكومي',onclick:()=>chooseBroadcastSmartWork('government','حكومي')},
-    {label:'عسكري',onclick:()=>chooseBroadcastSmartWork('military','عسكري')},
-    {label:'قطاع خاص',onclick:()=>chooseBroadcastSmartWork('private','قطاع خاص')},
-    {label:'متقاعد',onclick:()=>chooseBroadcastSmartWork('retired','متقاعد')}
-  ]);
-}
-function chooseBroadcastSmartWork(v,label){
-  broadcastSmart.data.customerType=v;broadcastMsg('broadcastSmartChat',label,true);
-  broadcastSmart.step='salary';broadcastMsg('broadcastSmartChat','اذكر صافي الراتب.');
-  broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 14600','number');
-}
-function submitBroadcastSmartInput(){
-  const i=document.getElementById('broadcastSmartInput');
-  const raw=String(i?.value||'').trim();if(!raw)return;
-  broadcastMsg('broadcastSmartChat',raw,true);
-  const n=Number(raw.replace(/,/g,''));
-  if(!(n>=0)){broadcastMsg('broadcastSmartChat','اكتب الرقم فقط.');return}
-  const d=broadcastSmart.data;
-  if(broadcastSmart.step==='salary'){
-    d.salary=n;broadcastSmart.step='rate';
-    broadcastMsg('broadcastSmartChat','كم هامش الربح؟');
-    broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 3.25','number');return;
-  }
-  if(broadcastSmart.step==='rate'){
-    d.rate=n;broadcastSmart.step='personal';
-    broadcastMsg('broadcastSmartChat','كم قسط التمويل الشخصي القائم؟ إذا ما فيه اكتب 0.');
-    broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 1200 أو 0','number');return;
-  }
-  if(broadcastSmart.step==='personal'){
-    d.personalInstallment=n;broadcastSmart.step='other';
-    broadcastMsg('broadcastSmartChat','كم الالتزامات الأخرى غير الشخصي وغير العقاري؟ إذا ما فيه اكتب 0.');
-    broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 300 أو 0','number');return;
-  }
-  if(broadcastSmart.step==='other'){
-    d.external=n;broadcastHideInput('broadcastSmartInputWrap');
-    broadcastSmart.step='mortgage';
-    broadcastMsg('broadcastSmartChat','هل يوجد تمويل عقاري قائم؟');
-    broadcastOptions('broadcastSmartChat',[
-      {label:'لا يوجد عقاري',onclick:()=>chooseBroadcastSmartMortgage(false)},
-      {label:'يوجد عقاري',onclick:()=>chooseBroadcastSmartMortgage(true)}
-    ]);return;
-  }
-  if(broadcastSmart.step==='mortgageCurrent'){
-    d.mortgageCurrent=n;broadcastSmart.step='mortgageMax';
-    broadcastMsg('broadcastSmartChat','كم أعلى قسط عقاري ممكن يصل له؟');
-    broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 4500','number');return;
-  }
-  if(broadcastSmart.step==='mortgageMax'){
-    d.mortgageMax=n;broadcastHideInput('broadcastSmartInputWrap');
-    finalizeBroadcastSmart();
-  }
-}
-function chooseBroadcastSmartMortgage(on){
-  broadcastSmart.data.hasMortgage=!!on;
-  broadcastMsg('broadcastSmartChat',on?'يوجد عقاري':'لا يوجد عقاري',true);
-  if(!on){
-    broadcastSmart.data.mortgageCurrent=0;broadcastSmart.data.mortgageMax=0;
-    finalizeBroadcastSmart();return;
-  }
-  broadcastSmart.step='mortgageCurrent';
-  broadcastMsg('broadcastSmartChat','كم القسط العقاري الحالي؟');
-  broadcastAsk('broadcastSmartInput','broadcastSmartInputWrap','مثال: 3500','number');
-}
-function broadcastOwnerDeductionPercent(d){
-  // Broadcast never lets the viewer choose the percentage.
-  // It follows the FINIUM owner-side rules.
-  if(!d.hasMortgage)return 45;
-  if(Number(d.salary||0)<15000)return 55;
-  return 65;
-}
-function finalizeBroadcastSmart(){
-  const d=broadcastSmart.data;
-  d.deductionPercent=broadcastOwnerDeductionPercent(d);
-  d.months=60;
-  let eligibility=null;
-  try{
-    if(['consumer','company'].includes(d.financeKind)&&typeof smartConsumerCompanyEligibility==='function'){
-      eligibility=smartConsumerCompanyEligibility({
-        salary:d.salary,personalInstallment:d.personalInstallment,external:d.external,
-        hasMortgage:d.hasMortgage,mortgageCurrent:d.mortgageCurrent,mortgageMax:d.mortgageMax,
-        deductionPercent:d.deductionPercent
-      });
-    }else if(typeof smartEligibilityForData==='function'){
-      eligibility=smartEligibilityForData(d);
-    }
-  }catch(e){}
-  if(!eligibility){
-    const cap=Number(d.salary||0)*(d.deductionPercent/100);
-    const obligations=Number(d.personalInstallment||0)+Number(d.external||0)+(d.hasMortgage?Math.max(Number(d.mortgageCurrent||0),Number(d.mortgageMax||0)):0);
-    eligibility={available:cap-obligations,overallPct:d.deductionPercent,overallCap:cap,obligations};
-  }
-  if(Number(eligibility.available||0)<=0){
-    broadcastMsg('broadcastSmartChat',`<div class="portal-reason-box"><b>سبب عدم ظهور تمويل بهذه البيانات</b>الالتزامات أعلى من الحد المتاح بمبلغ ${typeof money==='function'?money(Math.abs(eligibility.available)):Math.round(Math.abs(eligibility.available)).toLocaleString('ar-SA')+' ريال'}.</div>`);
-    return;
-  }
-  const installment=Math.max(0,Number(eligibility.available||0));
-  const months=Number(d.months||60);
-  const rate=Number(d.rate||0);
-  const years=months/12;
-  const factor=1+(years*rate/100);
-  const net=Math.max(0,(installment*months)/factor);
-  const card=document.createElement('div');card.className='broadcast-results';
-  card.innerHTML=`<div class="broadcast-result-card" style="grid-column:1/-1">
-    <h3>${d.financeKind==='consumer'?'تمويل استهلاكي':d.financeKind==='company'?'تمويل شركات':'الحاسبة الذكية'}</h3>
-    <div class="cash">${typeof money==='function'?money(net):Math.round(net).toLocaleString('ar-SA')+' ريال'}</div>
-    <div class="row"><span>القسط المتاح</span><b>${typeof money==='function'?money(installment):Math.round(installment).toLocaleString('ar-SA')+' ريال'}</b></div>
-    <div class="row"><span>المدة</span><b>${months} شهر</b></div>
-    <div class="row"><span>هامش الربح</span><b>${rate}%</b></div>
-    <div class="row"><span>نسبة الاستقطاع المستخدمة</span><b>${d.deductionPercent}%</b></div>
-    ${d.hasMortgage?`<div class="row"><span>أعلى قسط عقاري محتسب</span><b>${typeof money==='function'?money(Math.max(d.mortgageCurrent||0,d.mortgageMax||0)):Math.round(Math.max(d.mortgageCurrent||0,d.mortgageMax||0)).toLocaleString('ar-SA')+' ريال'}</b></div>`:''}
-  </div>`;
-  document.getElementById('broadcastSmartChat').appendChild(card);
-  document.getElementById('broadcastSmartChat').scrollTop=document.getElementById('broadcastSmartChat').scrollHeight;
-}
-setInterval(()=>{if(document.getElementById('broadcastShell')?.classList.contains('active'))updateBroadcastClock()},30000);
-
 </script>
-
-<!-- FINO V21 — Broadcast Gateway -->
-<section id="broadcastGateway" class="broadcast-gateway">
-  <div class="broadcast-gateway-card">
-    <div class="broadcast-gateway-title" id="broadcastGatewayBrand">FINO</div>
-    <div class="broadcast-gateway-sub">وضع البث المباشر</div>
-    <div class="broadcast-gateway-actions">
-      <button class="broadcast-gateway-btn primary" type="button" onclick="openFINIUMBroadcast()">
-        📡 البث
-        <small>واجهة واضحة ومخصصة للبث المباشر</small>
-      </button>
-      <button class="broadcast-gateway-btn" type="button" onclick="openFINIUMBroadcastControl()">
-        ⚙️ التحكم
-        <small>فتح لوحة المالك الكاملة</small>
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- FINO V21 — Broadcast Shell -->
-<section id="broadcastShell" class="broadcast-shell broadcast-no-meta">
-  <div class="broadcast-top">
-    <div class="broadcast-greeting" id="broadcastGreeting">حياكم الله جميعًا</div>
-    <div class="broadcast-clock" id="broadcastClock"></div>
-  </div>
-
-  <main class="broadcast-main">
-    <div id="broadcastHome" class="broadcast-home-grid">
-      <button class="broadcast-home-card" type="button" onclick="openBroadcastBuyout()">
-        <div class="emoji">🏦</div>
-        <b>تحويل المديونية</b>
-        <span>ترشيح العروض ومقارنة النتائج</span>
-      </button>
-      <button class="broadcast-home-card" type="button" onclick="openBroadcastSmart()">
-        <div class="emoji">🧮</div>
-        <b>الحاسبة الذكية</b>
-        <span>حسبة مباشرة وواضحة للبث</span>
-      </button>
-    </div>
-
-    <section id="broadcastBuyoutPanel" class="broadcast-panel">
-      <div class="broadcast-panel-head">
-        <h2>تحويل المديونية</h2>
-        <button class="broadcast-back" type="button" onclick="backBroadcastHome()">رجوع</button>
-      </div>
-      <div id="broadcastBuyoutChat" class="broadcast-chat"></div>
-      <div id="broadcastBuyoutInputWrap" class="broadcast-input-wrap" style="display:none">
-        <input id="broadcastBuyoutInput" class="broadcast-input" autocomplete="off">
-        <button class="broadcast-send" type="button" onclick="submitBroadcastBuyoutInput()">إرسال</button>
-      </div>
-    </section>
-
-    <section id="broadcastSmartPanel" class="broadcast-panel">
-      <div class="broadcast-panel-head">
-        <h2>الحاسبة الذكية</h2>
-        <button class="broadcast-back" type="button" onclick="backBroadcastHome()">رجوع</button>
-      </div>
-      <div id="broadcastSmartChat" class="broadcast-chat"></div>
-      <div id="broadcastSmartInputWrap" class="broadcast-input-wrap" style="display:none">
-        <input id="broadcastSmartInput" class="broadcast-input" autocomplete="off">
-        <button class="broadcast-send" type="button" onclick="submitBroadcastSmartInput()">إرسال</button>
-      </div>
-    </section>
-  </main>
-</section>
-
 </body>
 </html>
